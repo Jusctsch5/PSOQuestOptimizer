@@ -1,0 +1,158 @@
+{
+  "Adept": {
+    "base": "33"
+  },
+  "Centurion/Ability": {
+    "base": "8"
+  },
+  "Cure/Confuse": {
+    "base": "0.5-1"
+  },
+  "Cure/Freeze": {
+    "base": "1"
+  },
+  "Cure/Paralysis": {
+    "base": "0.5-1"
+  },
+  "Cure/Poison": {
+    "base": "0"
+  },
+  "Cure/Shock": {
+    "base": "1"
+  },
+  "Cure/Slow": {
+    "base": "0.5-1"
+  },
+  "Cure set": {
+    "base": "3"
+  },
+  "Divine Protection": {
+    "base": "0"
+  },
+  "Devil/Technique": {
+    "base": "0.5"
+  },
+  "Friend Ring": {
+    "base": "0"
+  },
+  "God/Ability": {
+    "base": "0.25"
+  },
+  "God/Arm": {
+    "base": "1"
+  },
+  "God/Battle": {
+    "base": "0.5"
+  },
+  "God/Body": {
+    "base": "0"
+  },
+  "God/HP": {
+    "base": "0.5"
+  },
+  "God/Legs": {
+    "base": "0"
+  },
+  "God/Luck": {
+    "base": "0"
+  },
+  "God/Mind": {
+    "base": "0.5"
+  },
+  "God/Power": {
+    "base": "0.5"
+  },
+  "God/Technique": {
+    "base": "3-5"
+  },
+  "God/TP": {
+    "base": "0"
+  },
+  "Heavenly/Ability": {
+    "base": "1-2"
+  },
+  "Heavenly/Arms": {
+    "base": "3"
+  },
+  "Heavenly/Battle": {
+    "base": "1"
+  },
+  "Heavenly/Body": {
+    "base": "0"
+  },
+  "Heavenly/HP": {
+    "base": "1"
+  },
+  "Heavenly/Legs": {
+    "base": "0"
+  },
+  "Heavenly/Luck": {
+    "base": "0"
+  },
+  "Heavenly/Mind": {
+    "base": "1"
+  },
+  "Heavenly/Power": {
+    "base": "1"
+  },
+  "Heavenly/Resist": {
+    "base": "2"
+  },
+  "Heavenly/Technique": {
+    "base": "1"
+  },
+  "Heavenly/TP": {
+    "base": "0"
+  },
+  "HP/Resurrection": {
+    "base": "1"
+  },
+  "HP/Revival": {
+    "base": "0.5"
+  },
+  "Limiter": {
+    "base": "26"
+  },
+  "PB/Create": {
+    "base": "1"
+  },
+  "PB/Increase": {
+    "base": "5-8"
+  },
+  "Perfect/Resist": {
+    "base": "0.5"
+  },
+  "Proof of Sword-Saint": {
+    "base": "20"
+  },
+  "TP/Resurrection": {
+    "base": "1"
+  },
+  "TP/Revival": {
+    "base": "0.5"
+  },
+  "Smartlink": {
+    "base": "1-2"
+  },
+  "Swordsman Lore": {
+    "base": "10-13"
+  },
+  "V101": {
+    "base": "19-20"
+  },
+  "V501": {
+    "base": "2-3"
+  },
+  "V502": {
+    "base": "28-30"
+  },
+  "V801": {
+    "base": "7-8"
+  },
+  "Yasakani Magatama": {
+    "base": "0.5"
+  },
+  "Cure/\" \" set": {
+    "base": "3"
+  }
+}

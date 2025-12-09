@@ -1,0 +1,144 @@
+{
+  "weapons": {
+    "ES BLADE": {
+      "base": "35"
+    },
+    "ES CANE": {
+      "base": "35"
+    },
+    "ES CLAW": {
+      "base": "35"
+    },
+    "ES GUN": {
+      "base": "35"
+    },
+    "ES MECHGUN": {
+      "base": "35"
+    },
+    "ES PARTISAN": {
+      "base": "35"
+    },
+    "ES RIFLE": {
+      "base": "35"
+    },
+    "ES ROD": {
+      "base": "35"
+    },
+    "ES SABER": {
+      "base": "35"
+    },
+    "ES SHOT": {
+      "base": "35"
+    },
+    "ES SLICER": {
+      "base": "35"
+    },
+    "ES SWORD": {
+      "base": "35"
+    },
+    "ES TWIN": {
+      "base": "35"
+    },      
+    "ES WAND": {
+      "base": "35"
+    },
+    "ES AXE": {
+      "base": "30"
+    },
+    "ES BAZOOKA": {
+      "base": "30"
+    },
+    "ES CARDS": {
+      "base": "30"
+    },
+    "ES HARISEN": {
+      "base": "30"
+    },
+    "ES HAMMER": {
+      "base": "30"
+    },
+    "ES J-CUTTER": {
+      "base": "30"
+    },
+    "ES KATANA": {
+      "base": "30"
+    },
+    "ES KNUCKLE": {
+      "base": "30"
+    },
+    "ES LAUNCHER": {
+      "base": "30"
+    },
+    "ES MOON": {
+      "base": "30"
+    },
+    "ES NEEDLE": {
+      "base": "30"
+    },
+    "ES PSYCHOGUN": {
+      "base": "30"
+    },
+    "ES PUNCH": {
+      "base": "30"
+    },
+    "ES SCYTHE": {
+      "base": "30"
+    },
+    "ES SWORDS": {
+      "base": "30"
+    },
+    "ES WINDMILL": {
+      "base": "30"
+    }
+  },
+  "modifiers": {
+    "HP REVIVAL": {
+      "base": "30"
+    },
+    "TP REVIVAL": {
+      "base": "30"
+    },
+    "BLIZZARD": {
+      "base": "30"
+    },
+    "BURNING": {
+      "base": "30"
+    },
+    "TEMPOEST": {
+      "base": "30"
+    },
+    "BERSERK": {
+      "base": "40"
+    },
+    "CHAOS": {
+      "base": "40"
+    },
+    "GEIST": {
+      "base": "40"
+    },
+    "GUSH": {
+      "base": "40"
+    },
+    "KING'S": {
+      "base": "40"
+    },
+    "SPIRIT": {
+      "base": "40"
+    },
+    "ARREST": {
+      "base": "50"
+    },
+    "DEMON'S": {
+      "base": "50"
+    },
+    "HELL": {
+      "base": "50"
+    },
+    "JELLEN": {
+      "base": "60"
+    },
+    "ZALURE": {
+      "base": "60"
+    }    
+  }
+}

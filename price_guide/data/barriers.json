@@ -1,0 +1,215 @@
+{
+  "Bunny Ears": {
+    "base": "3"
+  },
+  "Cat Ears": {
+    "base": "3"
+  },
+  "DF Shield": {
+    "base": "20-30"
+  },
+  "Epsiguard": {
+    "base": "2"
+  },
+  "Gods Shield \"Byakko\"": {
+    "base": "2-3"
+  },
+  "Gods Shield \"Genbu\"": {
+    "base": "1"
+  },
+  "Gods Shield \"Suzaku\"": {
+    "base": "2-3"
+  },
+  "Gods Shield \"Seiryuu\"": {
+    "base": "1"
+  },
+  "Gods Shield \"Kouryu\"": {
+    "base": "6-8"
+  },
+  "Honeycomb Reflector": {
+    "base": "15-20"
+  },
+  "Rupika": {
+    "base": "10"
+  },
+  "Safety Heart": {
+    "base": "35-50"
+  },
+  "Secure Feet": {
+    "base": "2"
+  },
+  "Shield of Delsaber": {
+    "base": "2"
+  },
+  "Standstill Shield": {
+    "base": "2"
+  },
+  "Stink Shield": {
+    "base": "1"
+  },
+  "Angel Ring": {
+    "base": "See CD5"
+  },
+  "Attribute Wall": {
+    "base": "1"
+  },
+  "Black Gear": {
+    "base": "5-10"
+  },
+  "Custom Barrier ver.OO": {
+    "base": "0"
+  },
+  "DB's Shield": {
+    "base": "0"
+  },
+  "De Rol Le Shield": {
+    "base": "See Stink Shield (below) & Combination items (De Rol Le Shell)"
+  },
+  "Flowen's Shield": {
+    "base": "1"
+  },
+  "From the Depths": {
+    "base": "See CD5"
+  },
+  "Genpei": {
+    "base": "3-5"
+  },
+  "Gods Shield \"Seiryu\"": {
+    "base": "1"
+  },
+  "Gratia": {
+    "base": "0"
+  },
+  "Hunter's Shell": {
+    "base": "0-5"
+  },
+  "Invisible Guard": {
+    "base": "1"
+  },
+  "Light Relief": {
+    "base": "1"
+  },
+  "Proto Regene Gear": {
+    "base": "0"
+  },
+  "Ragol Ring": {
+    "base": "0.5"
+  },
+  "Regene Gear Adv.": {
+    "base": "1-10"
+  },
+  "Regenerate Gear": {
+    "base": "0"
+  },
+  "Regenerate Gear B.P.": {
+    "base": "0"
+  },
+  "Rico's Earring": {
+    "base": "1"
+  },
+  "Rico's Glasses": {
+    "base": "1"
+  },
+  "S-Parts ver1.16": {
+    "base": "0"
+  },
+  "Sacred Guard": {
+    "base": "2"
+  },
+  "Secret Gear": {
+    "base": "1"
+  },
+  "Striker Plus": {
+    "base": "0"
+  },
+  "Three Seals": {
+    "base": "1-3"
+  },
+  "Tripolic Reflector": {
+    "base": "0"
+  },
+  "Tripolic Shield": {
+    "base": "0"
+  },
+  "Union Guard": {
+    "base": "0.5"
+  },
+  "Combat Gear": {
+    "base": "1"
+  },
+  "Force Wall": {
+    "base": "0"
+  },
+  "Hunter Wall": {
+    "base": "0"
+  },
+  "Kasami Bracer": {
+    "base": "3-4"
+  },
+  "Ranger Wall": {
+    "base": "2"
+  },
+  "S-Parts ver2.01": {
+    "base": "20-25"
+  },
+  "Yata Mirror": {
+    "base": "1"
+  },
+  "Foie Merge": {
+    "base": "Red Barrier"
+  },
+  "Barta Merge": {
+    "base": "Blue Barrier"
+  },
+  "Zonde Merge": {
+    "base": "Yellow Barrier"
+  },
+  "Resta Merge": {
+    "base": "Recovery Barrier"
+  },
+  "Shifta Merge": {
+    "base": "Assist Barrier"
+  },
+  "Assist Barrier": {
+    "base": "1"
+  },
+  "Blue Barrier": {
+    "base": "0.5"
+  },
+  "Recovery Barrier": {
+    "base": "1"
+  },
+  "Red Barrier": {
+    "base": "3"
+  },
+  "Yellow Barrier": {
+    "base": "0.5"
+  },
+  "Anti-Dark Ring": {
+    "base": "20-25"
+  },
+  "Anti-Light Ring": {
+    "base": "1"
+  },
+  "Black Ring": {
+    "base": "0"
+  },
+  "Blue Ring": {
+    "base": "0"
+  },
+  "Green Ring": {
+    "base": "0"
+  },
+  "Purple Ring": {
+    "base": "0"
+  },
+  "Red Ring": {
+    "base": "40-80"
+  },
+  "White Ring": {
+    "base": "0"
+  },
+  "Yellow Ring": {
+    "base": "0"
+  }
+}

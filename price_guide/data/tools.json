@@ -1,0 +1,341 @@
+{
+  "Photon Crystal": {
+    "base": "1"
+  },
+  "Photon Hoard": {
+    "base": "99"
+  },
+  "Photon Sphere": {
+    "base": "97-99"
+  },
+  "Monogrinder": {
+    "base": "0.005-0.010"
+  },
+  "Digrinder": {
+    "base": "0.010-0.020"
+  },
+  "Trigrinder": {
+    "base": "0.015-0.030"
+  },
+  "Def Material": {
+    "base": "0.020"
+  },
+  "Evade Material": {
+    "base": "0.010"
+  },
+  "HP Material": {
+    "base": "0.071"
+  },
+  "Luck Material": {
+    "base": "0.250-0.333"
+  },
+  "Mind Material": {
+    "base": "0.040-0.050"
+  },
+  "Power Material": {
+    "base": "0.071-0.077"
+  },
+  "TP Material": {
+    "base": "0.333"
+  },
+  "Berill Photon": {
+    "base": "10-15"
+  },
+  "Blue-black Stone": {
+    "base": "35-45"
+  },
+  "Book of Hitogata": {
+    "base": "5-10"
+  },
+  "Magic Rock \"Heart Key\"": {
+    "base": "45-50"
+  },
+  "Magic Rock \"Moola\"": {
+    "base": "0.5"
+  },
+  "Magic Stone \"Iritista\"": {
+    "base": "10-15"
+  },
+  "Magic Water": {
+    "base": "-"
+  },
+  "Parasitic Cell Type D": {
+    "base": "6-20"
+  },
+  "Parasitic Gene \"Flow\"": {
+    "base": "45-55"
+  },
+  "Parts of Egg Blaster": {
+    "base": "0.5"
+  },
+  "Photon Booster": {
+    "base": "45-50"
+  },
+  "Star Amplifier": {
+    "base": "0.5-1"
+  },
+  "Syncesta": {
+    "base": "40-45"
+  },
+  "Amplifier of Foie": {
+    "base": "0.5"
+  },
+  "Amplifier of Gifoie": {
+    "base": "7-12"
+  },
+  "Amplifier of Rafoie": {
+    "base": "1-2"
+  },
+  "Amplifier of Red": {
+    "base": "0.5"
+  },
+  "Amplifier of Barta": {
+    "base": "0.5"
+  },
+  "Amplifier of Gibarta": {
+    "base": "0.5"
+  },
+  "Amplifier of Rabarta": {
+    "base": "1-2"
+  },
+  "Amplifier of Blue": {
+    "base": "0.5"
+  },
+  "Amplifier of Zonde": {
+    "base": "0.5"
+  },
+  "Amplifier of Gizonde": {
+    "base": "1"
+  },
+  "Amplifier of Razonde": {
+    "base": "0.5"
+  },
+  "Amplifier of Yellow": {
+    "base": "0.5"
+  },
+  "Amplifier of Resta": {
+    "base": "5"
+  },
+  "Amplifier of Anti": {
+    "base": "0"
+  },
+  "Amplifier of Shifta": {
+    "base": "0"
+  },
+  "Amplifier of Deband": {
+    "base": "0"
+  },
+  "Neutralizer": {
+    "base": "0"
+  },
+  "Photon Filter": {
+    "base": "25-30"
+  },
+  "Red Paint": {
+    "base": "0"
+  },
+  "Heart of Ancient Saber": {
+    "base": "80-120"
+  },
+  "Heart of Angel Harp": {
+    "base": "150"
+  },
+  "Heart of Chameleon Scythe": {
+    "base": "60-200"
+  },
+  "Heart of Crazy Tune": {
+    "base": "60-90"
+  },
+  "Heart of Daisy Chain": {
+    "base": "50-100"
+  },
+  "Heart of DB's Saber": {
+    "base": "20-65"
+  },
+  "Heart of Delsaber's Buster": {
+    "base": "50-70"
+  },
+  "Heart of Diska of Liberator": {
+    "base": "25-55"
+  },
+  "Heart of Egg Blaster": {
+    "base": "-"
+  },
+  "Heart of Flamberge": {
+    "base": "150-250"
+  },
+  "Heart of Izmaela": {
+    "base": "20-50"
+  },
+  "Heart of Laconium Axe": {
+    "base": "50-100"
+  },
+  "Heart of Lollipop": {
+    "base": "25-70"
+  },
+  "Heart of Plantain Huge Fan": {
+    "base": "10-15"
+  },
+  "Heart of Rabbit Wand": {
+    "base": "-"
+  },
+  "Heart of Rianov 303SNR": {
+    "base": "20"
+  },
+  "Heart of Ruby Bullet": {
+    "base": "75-198"
+  },
+  "Heart of Samba Maracas": {
+    "base": "40-60"
+  },
+  "Heart of Sorcerer's Cane": {
+    "base": "20-40"
+  },
+  "Heart of Soul Banish": {
+    "base": "100-120"
+  },
+  "Heart of Suppressed Gun": {
+    "base": "40-60"
+  },
+  "Heart of Tension Blaster": {
+    "base": "100"
+  },
+  "Heart of The Sigh of a God": {
+    "base": "80-100"
+  },
+  "Heart of Yasminkov 9000M": {
+    "base": "45-100"
+  },
+  "Black Paint": {
+    "base": "2-3"
+  },
+  "Blue Paint": {
+    "base": "2-3"
+  },
+  "Green Paint": {
+    "base": "2-3"
+  },
+  "Purple Paint": {
+    "base": "2-3"
+  },
+  "Yellow Paint": {
+    "base": "2-3"
+  },
+  "White Paint": {
+    "base": "2-3"
+  },
+  "Chartreuse Paint": {
+    "base": "5"
+  },
+  "Cyan Paint": {
+    "base": "5"
+  },
+  "Onyx Paint": {
+    "base": "5"
+  },
+  "Orange Paint": {
+    "base": "5"
+  },
+  "Rose Paint": {
+    "base": "5"
+  },
+  "Ultramarine Paint": {
+    "base": "5"
+  },
+  "Violet Paint": {
+    "base": "5"
+  },
+  "AddSlot": {
+    "base": "0.5"
+  },
+  "Item Ticket": {
+    "base": "1-2"
+  },
+  "Event Egg": {
+    "base": "0.5"
+  },
+  "Anniv. Bronze Badge": {
+    "base": "0.0625"
+  },
+  "Anniv. Silver Badge": {
+    "base": "0.1"
+  },
+  "Anniv. Gold Badge": {
+    "base": "1"
+  },
+  "Anniv. Platinum Badge": {
+    "base": "250-300"
+  },
+  "Halloween Cookie": {
+    "base": "4"
+  },
+  "Coal": {
+    "base": "0.125"
+  },
+  "MESETA": {
+    "base": "0.000002"
+  },
+  "MAE Ticket": {
+    "base": "0.016"
+  },
+  "Cladding of Epsilon": {
+    "base": "1-2"
+  },
+  "De Rol Le Shell": {
+    "base": "1"
+  },
+  "Heart of Blade Dance": {
+    "base": "25-30"
+  },
+  "Heart of Partisan of Lightning": {
+    "base": "20-50"
+  },
+  "Heart of Twin Chakram": {
+    "base": "100-120"
+  },
+  "Heart of TypeDS/D.Saber": {
+    "base": "80"
+  },
+  "Heart of TypeSS/Swords": {
+    "base": "70-100"
+  },
+  "Heart of Wok of Akiko's Shop": {
+    "base": "15-30"
+  },
+  "Angel Plating": {
+    "base": "300"
+  },
+  "Bunny Plating": {
+    "base": "See The Forgeand required materials"
+  },
+  "Deep Plating": {
+    "base": "150"
+  },
+  "Delsaber Plating": {
+    "base": "100"
+  },
+  "Epsilon Plating": {
+    "base": "See The Forgeand required materials"
+  },
+  "Book of Katana 1": {
+    "base": "See CD5"
+  },
+  "Book of Katana 2": {
+    "base": "See CD5"
+  },
+  "Book of Katana 3": {
+    "base": "See CD5"
+  },
+  "Music disks": {
+    "base": "0-0.125"
+  },
+  "Photon Ticket": {
+    "base": "0.5"
+  },
+  "Jack-O'-Lantern": {
+    "base": "2-3"
+  },
+  "Present": {
+    "base": "5"
+  }
+}

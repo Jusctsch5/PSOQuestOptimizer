@@ -1,0 +1,26 @@
+{
+  "unsealing": {
+    "Lame d'Argent": "10",
+    "Limiter": "8-9",
+    "Sealed J-Sword": "23",
+    "Swordsman Lore": "10"
+  },
+  "instant_unsealing": {
+    "Lame d'Argent": {
+      "per_kill": "1 per 1000",
+      "total": "10"
+    },
+    "Limiter": {
+      "per_kill": "1 per 2500",
+      "total": "8-9"
+    },
+    "Sealed J-Sword": {
+      "per_kill": "1 per 1150",
+      "total": "20-30"
+    },
+    "Swordsman Lore": {
+      "per_kill": "1 per 2000",
+      "total": "10"
+    }
+  }
+}

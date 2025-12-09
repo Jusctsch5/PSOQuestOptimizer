@@ -1,0 +1,1109 @@
+[
+  {
+    "quest_name": "MU1",
+    "long_name": "Mop-up Operation 1",
+    "areas": ["Forest 1"],
+    "episode": 1,
+    "enemies": {
+      "Bartle": 14,
+      "Barble": 23,
+      "Tollaw": 36,
+      "Gulgus": 10,
+      "Gulgus-Gue": 5,
+      "Monest": 2
+    }
+  },
+  {
+    "quest_name": "MU2",
+    "long_name": "Mop-up Operation 2",
+    "areas": ["Cave 1"],
+    "episode": 1,
+    "enemies": {
+      "Vulmer": 72,
+      "Govulmer": 21,
+      "Melqueek": 24,
+      "Ob Lily": 9,
+      "Crimson Assassin": 10,
+      "Nano Dragon": 18
+    }
+  },
+  {
+    "quest_name": "MU3",
+    "long_name": "Mop-up Operation 3",
+    "areas": ["Mine 1"],
+    "episode": 1,
+    "enemies": {
+      "Gillchich": 59,
+      "Dubchich": 9,
+      "Canabin": 55,
+      "Canune": 2,
+      "Sinow Blue": 17,
+      "Sinow Red": 7,
+      "Baranz": 6
+    }
+  },
+  {
+    "quest_name": "MU4",
+    "long_name": "Mop-up Operation 4",
+    "areas": ["Ruins 1"],
+    "episode": 1,
+    "enemies": {
+      "Arlan": 35,
+      "Merlan": 27,
+      "Del-D": 33,
+      "Claw": 50,
+      "Delsaber": 13,
+      "Indi Belra": 12,
+      "Gran Sorcerer": 5
+    }
+  },
+  {
+    "quest_name": "SU1",
+    "long_name": "Sweep Up Operation 1",
+    "areas": ["Forest 2"],
+    "episode": 1,
+    "enemies": {
+      "Bartle": 26,
+      "Barble": 23,
+      "Tollaw": 19,
+      "Gulgus": 21,
+      "Gulgus-Gue": 8,
+      "El Rappy": 24,
+      "Hildelt": 12
+    }
+  },
+  {
+    "quest_name": "SU2",
+    "long_name": "Sweep Up Operation 2",
+    "areas": ["Cave 2"],
+    "episode": 1,
+    "enemies": {
+      "Vulmer": 46,
+      "Govulmer": 24,
+      "Melqueek": 29,
+      "Ob Lily": 33,
+      "Pofuilly Slime": 12,
+      "Nano Dragon": 23,
+      "Pan Arms": 8
+    }
+  },
+  {
+    "quest_name": "SU3",
+    "long_name": "Sweep Up Operation 3",
+    "areas": ["Mine 2"],
+    "episode": 1,
+    "enemies": {
+      "Gillchich": 57,
+      "Dubchich": 22,
+      "Canabin": 79,
+      "Canune": 4,
+      "Sinow Blue": 19,
+      "Sinow Red": 18,
+      "Baranz": 9
+    }
+  },
+  {
+    "quest_name": "SU4",
+    "long_name": "Sweep Up Operation 4",
+    "episode": 1,
+    "areas": ["Ruins 2"],
+    "enemies": {
+      "Arlan": 45,
+      "Merlan": 24,
+      "Del-D": 29,
+      "Claw": 43,
+      "Bulclaw": 8,
+      "Delsaber": 22,
+      "Dark Gunner": 16,
+      "Dark Bringer": 11
+    }
+  },
+  {
+    "quest_name": "EN1",
+    "long_name": "Endless Nightmare 1",
+    "areas": ["Forest 1, Forest 2"],
+    "episode": 1,
+    "enemies": {
+      "Bartle": 57,
+      "Barble": 32,
+      "Tollaw": 23,
+      "Gulgus": 29,
+      "Gulgus-Gue": 4,
+      "Monest": 4,
+      "El Rappy": 19,
+      "Hildelt": 8
+    }
+  },
+  {
+    "quest_name": "EN2",
+    "long_name": "Endless Nightmare 2",
+    "areas": ["Cave 1, Cave 2"],
+    "episode": 1,
+    "enemies": {
+      "Vulmer": 152,
+      "Govulmer": 44,
+      "Melqueek": 28,
+      "Ob Lily": 32,
+      "Pofuilly Slime": 5,
+      "Crimson Assassin": 20,
+      "Nano Dragon": 6
+    }
+  },
+  {
+    "quest_name": "EN3",
+    "long_name": "Endless Nightmare 3",
+    "areas": ["Mine 1, Mine 2"],
+    "episode": 1,
+    "enemies": {
+      "Gillchich": 104,
+      "Dubchich": 37,
+      "Canabin": 84,
+      "Canune": 2,
+      "Sinow Blue": 48,
+      "Sinow Red": 14,
+      "Baranz": 10
+    }
+  },
+  {
+    "quest_name": "EN4",
+    "long_name": "Endless Nightmare 4",
+    "areas": ["Ruins 1, Ruins 2"],
+    "episode": 1,
+    "enemies": {
+      "Arlan": 49,
+      "Merlan": 59,
+      "Del-D": 49,
+      "Claw": 90,
+      "Bulclaw": 6,
+      "Delsaber": 44,
+      "Indi Belra": 28,
+      "Dark Gunner": 21,
+      "Gran Sorcerer": 3,
+      "Dark Bringer": 13
+    }
+  },
+  {
+    "quest_name": "SR1",
+    "long_name": "Scarlet Realm 1",
+    "areas": ["Forest 1, Forest 2"],
+    "episode": 1,
+    "enemies": {
+      "Bartle": 62,
+      "Barble": 38,
+      "Tollaw": 25,
+      "Gulgus": 35,
+      "Gulgus-Gue": 17,
+      "Monest": 7,
+      "El Rappy": 21,
+      "Hildelt": 15
+    }
+  },
+  {
+    "quest_name": "SR2",
+    "long_name": "Scarlet Realm 2",
+    "areas": ["Cave 2, Cave 3"],
+    "episode": 1,
+    "enemies": {
+      "Vulmer": 128,
+      "Govulmer": 61,
+      "Melqueek": 36,
+      "Ob Lily": 44,
+      "Pofuilly Slime": 13,
+      "Crimson Assassin": 17,
+      "Nano Dragon": 24,
+      "Pan Arms": 23
+    }
+  },
+  {
+    "quest_name": "SR3",
+    "long_name": "Scarlet Realm 3",
+    "areas": ["Mine 1, Mine 2"],
+    "episode": 1,
+    "enemies": {
+      "Gillchich": 123,
+      "Dubchich": 33,
+      "Canabin": 142,
+      "Canune": 7,
+      "Sinow Blue": 68,
+      "Sinow Red": 72,
+      "Baranz": 30
+    }
+  },
+  {
+    "quest_name": "SR4",
+    "long_name": "Scarlet Realm 4",
+    "areas": ["Ruins 2, Ruins 3"],
+    "episode": 1,
+    "enemies": {
+      "Arlan": 82,
+      "Merlan": 71,
+      "Del-D": 51,
+      "Claw": 94,
+      "Bulclaw": 20,
+      "Delsaber": 36,
+      "Indi Belra": 33,
+      "Dark Gunner": 25,
+      "Gran Sorcerer": 19,
+      "Dark Bringer": 30
+    }
+  },
+  {
+    "quest_name": "SA1",
+    "long_name": "Silent Afterimage 1",
+    "areas": ["Forest 1, Ruins 1"],
+    "episode": 1,
+    "enemies": {
+      "Bartle": 34,
+      "Barble": 13,
+      "Tollaw": 17,
+      "Gulgus": 20,
+      "Gulgus-Gue": 11,
+      "Monest": 3,
+      "El Rappy": 21,
+      "Arlan": 42,
+      "Merlan": 24,
+      "Del-D": 24,
+      "Bulclaw": 13,
+      "Claw": 59,
+      "Delsaber": 25,
+      "Indi Belra": 17,
+      "Gran Sorcerer": 13
+    }
+  },
+  {
+    "quest_name": "SA2",
+    "long_name": "Silent Afterimage 2",
+    "areas": ["Cave 3, Mine 1"],
+    "episode": 1,
+    "enemies": {
+      "Vulmer": 68,
+      "Govulmer": 30,
+      "Melqueek": 27,
+      "Ob Lily": 39,
+      "Pofuilly Slime": 16,
+      "Nano Dragon": 20,
+      "Pan Arms": 9,
+      "Gillchich": 83,
+      "Dubchich": 39,
+      "Canabin": 83,
+      "Canune": 4,
+      "Sinow Blue": 34,
+      "Sinow Red": 39,
+      "Baranz": 34
+    }
+  },
+  {
+    "quest_name": "LIS",
+    "long_name": "Lost ICE SPINNER",
+    "episode": 1,
+    "enemies": {
+      "Vulmer": 129,
+      "Govulmer": 65,
+      "Melqueek": 125,
+      "Ob Lily": 56,
+      "Pofuilly Slime": 7,
+      "Crimson Assassin": 37,
+      "Nano Dragon": 26,
+      "Pan Arms": 5,
+      "Dal Ra Lie": 1
+    }
+  },
+  {
+    "quest_name": "PW1",
+    "long_name": "Phantasmal World #1",
+    "episode": 2,
+    "enemies": {
+      "Merillia": 83,
+      "Meriltas": 41,
+      "Ul Gibbon": 45,
+      "Zol Gibbon": 20,
+      "Gee": 122,
+      "Sinow Berill": 25,
+      "Sinow Spigell": 7,
+      "Mericarol": 6,
+      "Gi Gue": 12
+    }
+  },
+  {
+    "quest_name": "LHP",
+    "long_name": "Lost HELL PALLASCH",
+    "episode": 1,
+    "enemies": {
+      "Arlan": 54,
+      "Merlan": 20,
+      "Del-D": 26,
+      "Claw": 87,
+      "Bulclaw": 55,
+      "Delsaber": 62,
+      "Indi Belra": 40,
+      "Dark Gunner": 45,
+      "Gran Sorcerer": 61,
+      "Dark Bringer": 15,
+      "Dark Falz": 1
+    }
+  },
+  {
+    "quest_name": "PW3",
+    "long_name": "Phantasmal World #3",
+    "episode": 2,
+    "enemies": {
+      "Dolmolm": 103,
+      "Dolmdarl": 57,
+      "Recobox": 27,
+      "Recon": 232,
+      "Morfos": 47,
+      "Deldepth": 31,
+      "Sinow Zoa": 33,
+      "Sinow Zele": 22,
+      "Delbiter": 27
+    }
+  },
+  {
+    "quest_name": "SU5",
+    "long_name": "Sweep Up Operation 5",
+    "episode": 1,
+    "enemies": {
+      "Arlan": 36,
+      "Merlan": 25,
+      "Del-D": 27,
+      "El Rappy": 30,
+      "Ob Lily": 29,
+      "Hildelt": 14,
+      "Monest": 5,
+      "Crimson Assassin": 13,
+      "Indi Belra": 19
+    }
+  },
+  {
+    "quest_name": "SU6",
+    "long_name": "Sweep Up Operation 6",
+    "episode": 1,
+    "enemies": {
+      "Gillchich": 63,
+      "Dubchich": 37,
+      "Gulgus": 37,
+      "Gulgus-Gue": 18,
+      "Delsaber": 22,
+      "Pan Arms": 8,
+      "Baranz": 11
+    }
+  },
+  {
+    "quest_name": "SU7",
+    "long_name": "Sweep Up Operation 7",
+    "episode": 2,
+    "enemies": {
+      "Merillia": 33,
+      "Meriltas": 23,
+      "Ul Gibbon": 28,
+      "Zol Gibbon": 26,
+      "Gee": 43,
+      "Sinow Berill": 17,
+      "Sinow Spigell": 19,
+      "Mericarol": 3,
+      "Merikle": 1,
+      "Mericus": 1,
+      "Gibbles": 5,
+      "Gi Gue": 3
+    }
+  },
+  {
+    "quest_name": "SU8",
+    "long_name": "Sweep Up Operation 8",
+    "episode": 2,
+    "enemies": {
+      "Dolmolm": 69,
+      "Dolmdarl": 39,
+      "Recobox": 23,
+      "Recon": 186,
+      "Morfos": 16,
+      "Deldepth": 15,
+      "Sinow Zoa": 19,
+      "Sinow Zele": 10,
+      "Delbiter": 9
+    }
+  },
+  {
+    "quest_name": "PS1",
+    "long_name": "Penumbral Surge #1",
+    "episode": 2,
+    "enemies": {
+      "Arlan": 68,
+      "Merlan": 54,
+      "Del-D": 45,
+      "El Rappy": 32,
+      "Ob Lily": 41,
+      "Hildelt": 39,
+      "Monest": 1,
+      "Crimson Assassin": 34,
+      "Indi Belra": 37
+    }
+  },
+  {
+    "quest_name": "PS2",
+    "long_name": "Penumbral Surge #2",
+    "episode": 2,
+    "enemies": {
+      "Gillchich": 200,
+      "Dubchich": 110,
+      "Gulgus": 100,
+      "Gulgus-Gue": 55,
+      "Delsaber": 67,
+      "Pan Arms": 35,
+      "Baranz": 8,
+      "Gran Sorcerer": 61
+    }
+  },
+  {
+    "quest_name": "PS3",
+    "long_name": "Penumbral Surge #3",
+    "episode": 2,
+    "enemies": {
+      "Merillia": 68,
+      "Meriltas": 44,
+      "Ul Gibbon": 76,
+      "Zol Gibbon": 45,
+      "Gee": 102,
+      "Sinow Berill": 33,
+      "Sinow Spigell": 23,
+      "Mericarol": 9,
+      "Merikle": 4,
+      "Mericus": 2,
+      "Gibbles": 9,
+      "Gi Gue": 16
+    }
+  },
+  {
+    "quest_name": "PS4",
+    "long_name": "Penumbral Surge #4",
+    "episode": 2,
+    "enemies": {
+      "Merillia": 63,
+      "Meriltas": 49,
+      "Ul Gibbon": 83,
+      "Zol Gibbon": 16,
+      "Gee": 66,
+      "Sinow Berill": 29,
+      "Sinow Spigell": 26,
+      "Mericarol": 12,
+      "Merikle": 7,
+      "Mericus": 6,
+      "Gibbles": 9,
+      "Gi Gue": 8
+    }
+  },
+  {
+    "quest_name": "PS5",
+    "long_name": "Penumbral Surge #5",
+    "episode": 2,
+    "enemies": {
+      "Dolmolm": 116,
+      "Dolmdarl": 85,
+      "Recobox": 57,
+      "Morfos": 44,
+      "Deldepth": 25,
+      "Sinow Zoa": 39,
+      "Sinow Zele": 22,
+      "Delbiter": 21
+    }
+  },
+  {
+    "quest_name": "PS6",
+    "long_name": "Penumbral Surge #6",
+    "episode": 2,
+    "enemies": {
+      "Recobox": 42,
+      "Mericarol": 16,
+      "Merikle": 10,
+      "Mericus": 8,
+      "Gibbles": 22,
+      "Gi Gue": 29,
+      "Del Lily": 61,
+      "Ill Gill": 57,
+      "Delbiter": 18,
+      "Epsilon": 14
+    }
+  },
+  {
+    "quest_name": "LSR",
+    "long_name": "Lost SHOCK RIFLE",
+    "episode": 1,
+    "enemies": {
+      "Arlan": 73,
+      "Merlan": 62,
+      "Del-D": 75,
+      "El Rappy": 55,
+      "Ob Lily": 63,
+      "Hildelt": 41,
+      "Monest": 10,
+      "Crimson Assassin": 36,
+      "Indi Belra": 28,
+      "Barba Ray": 1
+    }
+  },
+  {
+    "quest_name": "LBA",
+    "long_name": "Lost BIND ASSAULT",
+    "episode": 2,
+    "enemies": {
+      "Gillchich": 107,
+      "Dubchich": 56,
+      "Dubwitch": 14,
+      "Gulgus": 61,
+      "Gulgus-Gue": 39,
+      "Delsaber": 69,
+      "Pan Arms": 14,
+      "Baranz": 25,
+      "Gran Sorcerer": 31,
+      "Gol Dragon": 1
+    }
+  },
+  {
+    "quest_name": "LDR",
+    "long_name": "Lost DEMON'S RAILGUN",
+    "episode": 2,
+    "enemies": {
+      "Dolmolm": 83,
+      "Dolmdarl": 68,
+      "Recobox": 35,
+      "Morfos": 42,
+      "Deldepth": 37,
+      "Sinow Zoa": 44,
+      "Sinow Zele": 32,
+      "Delbiter": 25,
+      "Olga Flow": 1
+    }
+  },
+  {
+    "quest_name": "LCV",
+    "long_name": "Lost CHARGE VULCAN",
+    "episode": 2,
+    "enemies": {
+      "Recobox": 31,
+      "Recon": 155,
+      "Mericarol": 22,
+      "Merikle": 9,
+      "Mericus": 8,
+      "Gibbles": 22,
+      "Gi Gue": 22,
+      "Delbiter": 29,
+      "Ill Gill": 55,
+      "Del Lily": 51,
+      "Epsilon": 10
+    }
+  },
+  {
+    "quest_name": "TET",
+    "long_name": "The East Tower",
+    "episode": 2,
+    "enemies": {
+      "Meriltas": 16,
+      "Ul Gibbon": 6,
+      "Zol Gibbon": 9,
+      "Gee": 8,
+      "Sinow Berill": 2,
+      "Sinow Spigell": 2,
+      "Recobox": 14,
+      "Recon": 110,
+      "Mericarol": 5,
+      "Merikle": 3,
+      "Mericus": 1,
+      "Gibbles": 6,
+      "Gi Gue": 8,
+      "Delbiter": 3,
+      "Ill Gill": 7,
+      "Del Lily": 4,
+      "Epsilon": 1
+    }
+  },
+  {
+    "quest_name": "TWT",
+    "long_name": "The West Tower",
+    "episode": 2,
+    "enemies": {
+      "Dolmolm": 10,
+      "Dolmdarl": 10,
+      "Recobox": 18,
+      "Recon": 88,
+      "Sinow Zoa": 7,
+      "Sinow Zele": 6,
+      "Delbiter": 10,
+      "Mericarol": 3,
+      "Merikle": 1,
+      "Mericus": 1,
+      "Gibbles": 5,
+      "Gi Gue": 7,
+      "Del Lily": 9,
+      "Ill Gill": 8,
+      "Epsilon": 1
+    }
+  },
+  {
+    "quest_name": "WOL1",
+    "long_name": "War of Limits #1",
+    "episode": 4,
+    "enemies": {
+      "Boota": 47,
+      "Ze Boota": 12,
+      "Ba Boota": 10,
+      "Satellite Lizard": 51,
+      "Yowie": 25,
+      "Sand Rappy": 42,
+      "Zu": 12,
+      "Astark": 42,
+      "Dorphon": 5
+    }
+  },
+  {
+    "quest_name": "WOL2",
+    "long_name": "War of Limits #2",
+    "episode": 4,
+    "enemies": {
+      "Boota": 39,
+      "Ze Boota": 74,
+      "Ba Boota": 25,
+      "Satellite Lizard": 92,
+      "Yowie": 37,
+      "Sand Rappy": 37,
+      "Zu": 5,
+      "Astark": 11,
+      "Dorphon": 3
+    }
+  },
+  {
+    "quest_name": "WOL3",
+    "long_name": "War of Limits #3",
+    "episode": 4,
+    "enemies": {
+      "Goran": 87,
+      "Pyro Goran": 26,
+      "Goran Detonator": 4,
+      "Satellite Lizard": 37,
+      "Yowie": 66,
+      "Sand Rappy": 47,
+      "Zu": 6
+    }
+  },
+  {
+    "quest_name": "WOL4",
+    "long_name": "War of Limits #4",
+    "episode": 4,
+    "enemies": {
+      "Goran": 37,
+      "Pyro Goran": 36,
+      "Goran Detonator": 16,
+      "Satellite Lizard": 30,
+      "Yowie": 26,
+      "Sand Rappy": 26,
+      "Zu": 1,
+      "Merissa A": 28,
+      "Girtablulu": 3
+    }
+  },
+  {
+    "quest_name": "WOL5",
+    "long_name": "War of Limits #5",
+    "episode": 4,
+    "enemies": {
+      "Goran": 49,
+      "Pyro Goran": 19,
+      "Goran Detonator": 7,
+      "Satellite Lizard": 48,
+      "Yowie": 41,
+      "Sand Rappy": 44,
+      "Zu": 15,
+      "Merissa A": 11,
+      "Girtablulu": 4
+    }
+  },
+  {
+    "quest_name": "NMU1",
+    "long_name": "New Mop-up Operation #1",
+    "episode": 4,
+    "enemies": {
+      "Boota": 20,
+      "Ze Boota": 5,
+      "Ba Boota": 5,
+      "Satellite Lizard": 32,
+      "Yowie": 20,
+      "Sand Rappy": 37,
+      "Zu": 8,
+      "Astark": 22,
+      "Dorphon": 2
+    }
+  },
+  {
+    "quest_name": "NMU2",
+    "long_name": "New Mop-up Operation #2",
+    "episode": 4,
+    "enemies": {
+      "Boota": 31,
+      "Ze Boota": 34,
+      "Ba Boota": 14,
+      "Satellite Lizard": 41,
+      "Yowie": 23,
+      "Sand Rappy": 20,
+      "Zu": 5,
+      "Astark": 11,
+      "Dorphon": 5
+    }
+  },
+  {
+    "quest_name": "NMU4",
+    "long_name": "New Mop-up Operation #4",
+    "episode": 4,
+    "enemies": {
+      "Goran": 46,
+      "Pyro Goran": 40,
+      "Goran Detonator": 3,
+      "Satellite Lizard": 25,
+      "Yowie": 38,
+      "Sand Rappy": 29,
+      "Merissa A": 24,
+      "Girtablulu": 1
+    }
+  },
+  {
+    "quest_name": "NMU5",
+    "long_name": "New Mop-up Operation #5",
+    "episode": 4,
+    "enemies": {
+      "Goran": 37,
+      "Pyro Goran": 30,
+      "Goran Detonator": 7,
+      "Satellite Lizard": 38,
+      "Yowie": 40,
+      "Sand Rappy": 11,
+      "Zu": 19,
+      "Merissa A": 25,
+      "Girtablulu": 4
+    }
+  },
+  {
+    "quest_name": "SU10",
+    "long_name": "Sweep Up Operation #10",
+    "episode": 4,
+    "enemies": {
+      "Boota": 39,
+      "Ze Boota": 25,
+      "Ba Boota": 15,
+      "Satellite Lizard": 35,
+      "Yowie": 21,
+      "Sand Rappy": 24,
+      "Zu": 13,
+      "Astark": 21,
+      "Dorphon": 5
+    }
+  },
+  {
+    "quest_name": "SU11",
+    "long_name": "Sweep Up Operation #11",
+    "episode": 4,
+    "enemies": {
+      "Boota": 25,
+      "Ze Boota": 22,
+      "Ba Boota": 19,
+      "Satellite Lizard": 34,
+      "Yowie": 31,
+      "Sand Rappy": 23,
+      "Zu": 13,
+      "Astark": 16,
+      "Dorphon": 12
+    }
+  },
+  {
+    "quest_name": "SU12",
+    "long_name": "Sweep Up Operation #12",
+    "episode": 4,
+    "enemies": {
+      "Goran": 90,
+      "Pyro Goran": 43,
+      "Goran Detonator": 16,
+      "Satellite Lizard": 50,
+      "Yowie": 29,
+      "Sand Rappy": 31,
+      "Zu": 11,
+      "Merissa A": 32,
+      "Girtablulu": 3
+    }
+  },
+  {
+    "quest_name": "SU13",
+    "long_name": "Sweep Up Operation #13",
+    "episode": 4,
+    "enemies": {
+      "Goran": 50,
+      "Pyro Goran": 26,
+      "Goran Detonator": 18,
+      "Satellite Lizard": 39,
+      "Yowie": 20,
+      "Sand Rappy": 30,
+      "Zu": 10,
+      "Merissa A": 43,
+      "Girtablulu": 6
+    }
+  },
+  {
+    "quest_name": "SU14",
+    "long_name": "Sweep Up Operation #14",
+    "episode": 4,
+    "enemies": {
+      "Goran": 70,
+      "Pyro Goran": 32,
+      "Goran Detonator": 19,
+      "Satellite Lizard": 40,
+      "Yowie": 32,
+      "Sand Rappy": 30,
+      "Zu": 20,
+      "Merissa A": 33,
+      "Girtablulu": 7
+    }
+  },
+  {
+    "quest_name": "TTF_short",
+    "long_name": "Toward the Future (short)",
+    "episode": 1,
+    "enemies": {
+      "Hildebear": 1,
+      "Bartle": 1,
+      "Vulmer": 2,
+      "Ob Lily": 2,
+      "Sinow Gold": 2,
+      "Canabin": 1,
+      "Dubchich": 1,
+      "Dark Bringer": 1,
+      "Gran Sorcerer": 1,
+      "Arlan": 1
+    }
+  },
+  {
+    "quest_name": "TTF",
+    "long_name": "Toward the Future",
+    "episode": 1,
+    "enemies": {
+      "Bartle": 12,
+      "Barble": 6,
+      "Tollaw": 7,
+      "Gulgus": 2,
+      "Gulgus-Gue": 1,
+      "El Rappy": 1,
+      "Hildebear": 4,
+      "Vulmer": 13,
+      "Govulmer": 5,
+      "Melqueek": 7,
+      "Ob Lily": 13,
+      "Pofuilly Slime": 5,
+      "Nano Dragon": 5,
+      "Pan Arms": 4,
+      "Gillchich": 26,
+      "Dubchich": 1,
+      "Dubwitch": 1,
+      "Canabin": 24,
+      "Canune": 1,
+      "Sinow Blue": 12,
+      "Sinow Gold": 2,
+      "Baranz": 3,
+      "Arlan": 17,
+      "Del-D": 4,
+      "Claw": 14,
+      "Indi Belra": 4,
+      "Gran Sorcerer": 2,
+      "Dark Bringer": 4,
+      "Sil Dragon": 1,
+      "Dal Ra Lie": 1,
+      "Vol Opt": 1,
+      "Dark Falz": 1
+    }
+  },
+  {
+    "quest_name": "POD",
+    "long_name": "Point of Disaster",
+    "episode": 4,
+    "enemies": {
+      "Boota": 24,
+      "Ze Boota": 8,
+      "Ba Boota": 6,
+      "Astark": 31,
+      "Dorphon": 9,
+      "Sand Rappy": 50,
+      "Satellite Lizard": 50,
+      "Yowie": 31,
+      "Zu": 20,
+      "Goran": 12,
+      "Pyro Goran": 2,
+      "Goran Detonator": 3,
+      "Merissa A": 4,
+      "Girtablulu": 1,
+      "Shambertin": 1
+    }
+  },
+  {
+    "quest_name": "VL1",
+    "long_name": "Virtual Limits 1",
+    "episode": 1,
+    "enemies": {
+      "Dimenian": 55,
+      "La Dimenian": 42,
+      "So Dimenian": 48,
+      "Poison Lily": 43,
+      "Grass Assassin": 31,
+      "Rag Rappy": 28,
+      "Dark Belra": 24,
+      "Hildebear": 22,
+      "Monest": 8
+    }
+  },
+  {
+    "quest_name": "VL2",
+    "long_name": "Virtual Limits 2",
+    "episode": 1,
+    "enemies": {
+      "Gillchic": 100,
+      "Dubchic": 29,
+      "Savage Wolf": 75,
+      "Barbarous Wolf": 39,
+      "Delsaber": 49,
+      "Pan Arms": 9,
+      "Garanz": 19,
+      "Chaos Sorcerer": 25
+    }
+  },
+  {
+    "quest_name": "CF1",
+    "long_name": "Christmas Fiasco E1",
+    "episode": 1,
+    "quest_completion_items": {
+      "Coal": 6
+    },
+    "enemies": {
+      "Evil Shark": 28,
+      "Gillchic": 31,
+      "Dimenian": 29,
+      "Pal Shark": 28,
+      "Dubchic": 20,
+      "La Dimenian": 24,
+      "Guil Shark": 32,
+      "Dubwitch": 5,
+      "So Dimenian": 34,
+      "Poison Lily": 56,
+      "Canadine": 102,
+      "Claw": 27,
+      "Nano Dragon": 31,
+      "Canane": 8,
+      "Bulclaw": 20,
+      "Grass Assassin": 31,
+      "Sinow Beat": 17,
+      "Chaos Sorcerer": 23,
+      "Pofuilly Slime": 25,
+      "Sinow Gold": 14,
+      "Dark Belra": 22,
+      "Garanz": 37,
+      "Dark Gunner": 15,
+      "Chaos Bringer": 27
+    }
+  },
+  {
+    "quest_name": "CF2",
+    "long_name": "Christmas Fiasco E2",
+    "episode": 2,
+    "quest_completion_items": {
+      "Coal": 6
+    },
+    "enemies": {
+      "Savage Wolf": 18,
+      "Merillia": 19,
+      "Dolmolm": 23,
+      "Barbarous Wolf": 28,
+      "Meriltas": 13,
+      "Dolmdarl": 23,
+      "Pan Arms": 16,
+      "Gee": 33,
+      "Sinow Zoa": 12,
+      "Gillchic": 35,
+      "Ul Gibbon": 15,
+      "Sinow Zele": 19,
+      "Dubchic": 11,
+      "Zol Gibbon": 25,
+      "Morfos": 23,
+      "Dubwitch": 2,
+      "Sinow Berill": 10,
+      "Deldepth": 26,
+      "Delsaber": 36,
+      "Sinow Spigell": 9,
+      "Recobox": 26,
+      "Chaos Sorcerer": 20,
+      "Gi Gue": 20,
+      "Recon": 260,
+      "Gibbles": 19,
+      "Delbiter": 30,
+      "Mericarol": 6,
+      "Merikle": 7,
+      "Mericus": 7
+    }
+  },
+  {
+    "quest_name": "CF4",
+    "long_name": "Christmas Fiasco E4",
+    "episode": 4,
+    "quest_completion_items": {
+      "Coal": 6
+    },
+    "enemies": {
+      "Boota": 11,
+      "Goran": 48,
+      "Ze Boota": 15,
+      "Pyro Goran": 53,
+      "Ba Boota": 18,
+      "Goran Detonator": 33,
+      "Astark": 19,
+      "Merissa A": 80,
+      "Dorphon": 27,
+      "Girtablulu": 18,
+      "Sand Rappy": 81,
+      "Satellite Lizard": 59,
+      "Yowie": 51,
+      "Zu": 74
+    }
+  },
+  {
+    "quest_name": "MAE4C",
+    "long_name": "Maxiumum Attack 4th Stage 4C",
+    "episode": 4,
+    "quest_completion_items": {
+      "MAE Ticket": 12
+    },
+    "enemies": {
+      "Boota": 20,
+      "Goran": 37,
+      "Ze Boota": 22,
+      "Pyro Goran": 26,
+      "Ba Boota": 16,
+      "Goran Detonator": 18,
+      "Astark": 16,
+      "Merissa A": 37,
+      "Dorphon": 13,
+      "Girtablulu": 6,
+      "Sand Rappy": 73,
+      "Satellite Lizard": 69,
+      "Yowie": 74,
+      "Zu": 33,
+      "Kondrieu": 1
+    }
+  },
+  {
+    "quest_name": "TE_FOREST",
+    "long_name": "Tyrell's Ego Forest",
+    "episode": 1,
+    "enemies": {
+      "Booma": 17,
+      "Gobooma": 41,
+      "Gigobooma": 17,
+      "Savage Wolf": 21,
+      "Barbarous Wolf": 9,
+      "Monest": 16,
+      "Rag Rappy": 28,
+      "Hildebear": 52,
+      "Dragon": 1
+    }
+  }
+]

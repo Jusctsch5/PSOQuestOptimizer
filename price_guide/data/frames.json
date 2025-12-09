@@ -1,0 +1,130 @@
+{
+  "Brightness Circle": {
+    "base": "10-15"
+  },
+  "Chu Chu Fever": {
+    "base": "1"
+  },
+  "Dress Plate": {
+    "base": "15-20"
+  },
+  "Electro Frame": {
+    "base": "2-3"
+  },
+  "Love Heart": {
+    "base": "30-50"
+  },
+  "Stealth Suit": {
+    "base": "10-12"
+  },
+  "Wedding Dress": {
+    "base": "2"
+  },
+  "Blue Odoshi Violet Nimaidou": {
+    "base": "3",
+    "Min Stat": "1",
+    "Med Stat": "2-3",
+    "High Stat": "5",
+    "Max DFP": "15-30"
+  },
+  "Samurai Armor": {
+    "base": "1",
+    "Min Stat": "1"
+  },
+  "Thirteen": {
+    "base": "2-3",
+    "Min Stat": "1-3",
+    "Med Stat": "5-10",
+    "High Stat": "20-50"
+  },
+  "Ignition Cloak": {
+    "base": "15-20",
+    "Min Stat": "15-20",
+    "Med Stat": "20",
+    "High Stat": "70-100"
+  },
+  "Mother Garb": {
+    "base": "3",
+    "Min Stat": "3"
+  },
+  "Mother Garb+": {
+    "base": "10-15",
+    "Min Stat": "10-15",
+    "Med Stat": "20"
+  },
+  "Select Cloak": {
+    "base": "10",
+    "Min Stat": "15-18",
+    "Med Stat": "25-30"
+  },
+  "Common frames": {},
+  "Common armors": {},
+  "Black Odoshi Domaru": {
+    "Min Stat": "1",
+    "Med Stat": "1-10",
+    "base": "1"
+  },
+  "Black Odoshi Red Nimaidou": {
+    "Min Stat": "0",
+    "base": "0"
+  },
+  "Crimson Coat": {
+    "Min Stat": "1",
+    "Med Stat": "2",
+    "High Stat": "5-10",
+    "Max DFP": "20-30",
+    "base": "1"
+  },
+  "D-Parts ver1.01": {
+    "Min Stat": "1-4",
+    "Med Stat": "6-8",
+    "High Stat": "10",
+    "Max DFP": "35-85",
+    "base": "1-4"
+  },
+  "D-Parts ver2.10": {
+    "Min Stat": "0",
+    "base": "0"
+  },
+  "Morning Prayer": {
+    "Min Stat": "0",
+    "Med Stat": "1-10",
+    "base": "0"
+  },
+  "Red Coat": {
+    "Min Stat": "0",
+    "Med Stat": "1",
+    "High Stat": "10-12",
+    "base": "0"
+  },
+  "Red Odoshi Domaru": {
+    "Min Stat": "1",
+    "base": "1"
+  },
+  "Sweetheart": {
+    "Min Stat": "See Rare frames (Love Heart)& Combination items (Magic Rock \"Heart Key\")",
+    "base": "See Rare frames (Love Heart)& Combination items (Magic Rock \"Heart Key\")"
+  },
+  "Congeal Cloak": {
+    "Min Stat": "2-3",
+    "Med Stat": "5-10",
+    "High Stat": "10-50",
+    "base": "2-3"
+  },
+  "Cursed Cloak": {
+    "Min Stat": "1",
+    "Med Stat": "5-10",
+    "High Stat": "10-30",
+    "base": "1"
+  },
+  "Dirty Lifejacket": {
+    "Min Stat": "1",
+    "base": "1"
+  },
+  "Tempest Cloak": {
+    "Min Stat": "2-3",
+    "Med Stat": "5-10",
+    "High Stat": "10-30",
+    "base": "2-3"
+  }
+}

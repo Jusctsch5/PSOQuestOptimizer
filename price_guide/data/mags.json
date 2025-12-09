@@ -1,0 +1,131 @@
+{
+  "Amitie's Memo": {
+    "base": "8-12"
+  },
+  "Cell of Mag 213": {
+    "base": "2"
+  },
+  "Cell of Mag 502": {
+    "base": "1"
+  },
+  "D-Photon Core": {
+    "base": "17-20"
+  },
+  "Dragon Scale": {
+    "base": "6-8"
+  },
+  "Heart of Angel": {
+    "base": "2"
+  },
+  "Heart of Chao": {
+    "base": "2"
+  },
+  "Heart of Chu Chu": {
+    "base": "1"
+  },
+  "Heart of Devil": {
+    "base": "1"
+  },
+  "Heart of Kapu Kapu": {
+    "base": "1"
+  },
+  "Heart of Morolian": {
+    "base": "3-4"
+  },
+  "Heart of Opa Opa": {
+    "base": "1"
+  },
+  "Heart of Pian": {
+    "base": "1"
+  },
+  "Heart of YN-0117": {
+    "base": "2-5"
+  },
+  "Heaven Striker Coat": {
+    "base": "5"
+  },
+  "Kalki Kit": {
+    "base": "15-20"
+  },
+  "Kit of Dreamcast": {
+    "base": "2"
+  },
+  "Kit of Genesis": {
+    "base": "2"
+  },
+  "Kit of Hamburger": {
+    "base": "1"
+  },
+  "Kit of Mark III": {
+    "base": "2"
+  },
+  "Kit of Master System": {
+    "base": "2"
+  },
+  "Kit of Sega Saturn": {
+    "base": "1"
+  },
+  "Liberta Kit": {
+    "base": "16-18"
+  },
+  "Mag Kit": {
+    "base": "18-20"
+  },
+  "Panther's Spirit": {
+    "base": "1"
+  },
+  "Parts of RoboChao": {
+    "base": "1"
+  },
+  "Pioneer Parts": {
+    "base": "3-5"
+  },
+  "Rappy's Beak": {
+    "base": "0-0.5"
+  },
+  "Stealth Kit": {
+    "base": "5-7"
+  },
+  "Tablet": {
+    "base": "0-0.5"
+  },
+  "Varuna Kit": {
+    "base": "20-25"
+  },
+  "Vritra Kit": {
+    "base": "15-20"
+  },
+  "Yahoo!'s engine": {
+    "base": "5-10"
+  },
+  "Basic": {
+    "base": "50"
+  },
+  "100": {
+    "base": "5"
+  },
+  "200": {
+    "base": "6-8"
+  },
+  "Min/Max": {
+    "base": "200"
+  },
+  "Pure": {
+    "base": "8-10"
+  },
+  "Console": {
+    "base": "6-8"
+  },
+  "Custom": {
+    "base": "Varies"
+  },
+  "Kama": {
+    "base": "50-100"
+  },
+  "Garuda": {
+    "base": "50-100"
+  },
+  "Basic Mag": {
+    "base": "5"
+  }
+}

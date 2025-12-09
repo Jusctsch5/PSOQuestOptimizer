@@ -1,0 +1,6227 @@
+{
+  "5TH ANNIV. BLADE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "AKIKO'S WOK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "ANCIENT SABER": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "0",
+      "80": "0",
+      "85": "0",
+      "90": "0",
+      "95": "0",
+      "100": "0"
+    }
+  },
+  "BATTLEDORE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "COMMANDER BLADE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "DB'S SABER": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3062)": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3064)": {
+    "base": null,
+    "modifiers": {
+      "N": "10",
+      "AB": "10",
+      "M": "10",
+      "D": "10"
+    },
+    "hit_values": {
+      "0": "10",
+      "15": "10",
+      "20": "10",
+      "25": "10",
+      "30": "10",
+      "35": "10",
+      "40": "10",
+      "45": "10",
+      "50": "10",
+      "55": "10",
+      "60": "10",
+      "65": "10",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3067)": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3069 CHRIS)": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3069 TORATO)": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3070)": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3073)": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3075)": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DB'S SABER (3077)": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DELSABER'S BUSTER": {
+    "base": null,
+    "modifiers": {
+      "N": "2",
+      "AB": "2",
+      "M": "2",
+      "D": "2"
+    },
+    "hit_values": {
+      "0": "2",
+      "15": "2",
+      "20": "2",
+      "25": "2",
+      "30": "2",
+      "35": "2",
+      "40": "2",
+      "45": "2",
+      "50": "2",
+      "55": "2",
+      "60": "2",
+      "65": "2",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DURANDAL": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "100": "1-50"
+    }
+  },
+  "ELYSION": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0-5",
+      "100": "50"
+    }
+  },
+  "EVIL CURST": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "0",
+      "80": "0",
+      "85": "0",
+      "90": "0",
+      "95": "0",
+      "100": "0"
+    }
+  },
+  "EXCALIBUR": {
+    "base": null,
+    "modifiers": {
+      "N": "30+",
+      "AB": "50-80",
+      "M": "15-100",
+      "D": "20"
+    },
+    "hit_values": {
+      "0": "7-20",
+      "15": "40-50",
+      "20": "60-100",
+      "25": "100-300",
+      "30": "400-650",
+      "35": "650-800",
+      "40": "800-1000",
+      "45": "1100-1500",
+      "65": "4800",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLAMBERGE": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "2-4",
+      "45": "5-12",
+      "50": "15-35",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLOWER BOUQUET": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "GALATINE": {
+    "base": null,
+    "modifiers": {
+      "M": "5-30"
+    },
+    "hit_values": {
+      "0": "1-5",
+      "15": "20",
+      "20": "30-100",
+      "25": "100-200",
+      "30": "200-400",
+      "35": "400-600",
+      "40": "700-950",
+      "45": "700-950",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "GREAT BOUQUET": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "JITTE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "KALADBOLG": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0-2",
+      "70": "0-10",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "KUSANAGI": {
+    "base": null,
+    "hit_values": {
+      "0": "0.5",
+      "15": "0.5",
+      "20": "1",
+      "25": "2",
+      "30": "2",
+      "35": "2",
+      "40": "2",
+      "45": "5",
+      "50": "20",
+      "60": "80-100",
+      "65": "80-100",
+      "70": "80-100",
+      "75": "80-100",
+      "80": "80-100",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "LAME D'ARGENT": {
+    "base": null,
+    "modifiers": {
+      "N": "30+",
+      "AB": "50-80",
+      "M": "15-100",
+      "D": "20"
+    },
+    "hit_values": {
+      "0": "1-3",
+      "15": "33-43",
+      "20": "53-93",
+      "25": "93-293",
+      "30": "393-643",
+      "35": "643-793",
+      "40": "793-993",
+      "45": "1093-1493",
+      "50": "1493-1893",
+      "55": "2400",
+      "60": "3600",
+      "65": "4800",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "LAVIS CANNON": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "8-15",
+      "15": "25-35",
+      "20": "50",
+      "25": "50-180",
+      "30": "150-400",
+      "35": "Inestimable",
+      "40": "Inestimable",
+      "45": "Inestimable",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RACKET": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "RED SABER": {
+    "base": null,
+    "modifiers": {
+      "M": "40"
+    },
+    "hit_values": {
+      "0": "1-2",
+      "15": "1-2",
+      "20": "1-2",
+      "25": "1-2",
+      "30": "1-2",
+      "35": "1-2",
+      "40": "1-5",
+      "50": "10-12",
+      "55": "5-30",
+      "60": "35",
+      "70": "55",
+      "80": "200",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "STING TIP": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "0",
+      "80": "0-50",
+      "85": "0-50",
+      "90": "0-50",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "AKIKO'S CLEAVER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "CHAIN SAWD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1-2",
+      "20": "2-3",
+      "25": "3",
+      "30": "3-4",
+      "35": "5-10",
+      "40": "5-10",
+      "50": "65",
+      "60": "100",
+      "65": "220",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "CRAZY TUNE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "Inestimable"
+    }
+  },
+  "DAISY CHAIN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "DARK FLOW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "50-60",
+      "60": "0 (see \"RL\" note)",
+      "65": "40-50",
+      "70": "50-120",
+      "75": "130-350",
+      "80": "300-500",
+      "85": "600-1500",
+      "90": "1000-2000",
+      "95": "2500",
+      "100": "Inestimable"
+    }
+  },
+  "DRAGON SLAYER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "1-5",
+      "70": "1-5",
+      "75": "1-5",
+      "80": "1-5",
+      "90": "5",
+      "95": "35-40",
+      "100": "Inestimable"
+    }
+  },
+  "FLOWEN'S SWORD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "FLOWEN'S SWORD (3060)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "FLOWEN'S SWORD (3064)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "FLOWEN'S SWORD (3067)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLOWEN'S SWORD (3073)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0-20",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLOWEN'S SWORD (3077)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0-5",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLOWEN'S SWORD (3079)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLOWEN'S SWORD (3082)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLOWEN'S SWORD (3083)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLOWEN'S SWORD (3084)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1-2",
+      "15": "1-2",
+      "20": "1-2",
+      "25": "2-10",
+      "30": "2-10",
+      "35": "15",
+      "40": "15-60",
+      "45": "60-110",
+      "50": "90-160",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "HAMMER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "HUGE BATTLE FAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "LACONIUM AXE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "60": "0",
+      "65": "1-4",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "LAST SURVIVOR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "60": "0-6",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RED SWORD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "2",
+      "25": "3",
+      "30": "4",
+      "35": "15-20",
+      "40": "30-50",
+      "45": "50-110",
+      "50": "50-110",
+      "60": "150-170",
+      "65": "180-235",
+      "75": "400 -500",
+      "85": "600-800",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SEALED J-SWORD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "200-250",
+      "25": "300-500",
+      "30": "Inestimable",
+      "35": "Inestimable",
+      "40": "Inestimable",
+      "45": "Inestimable",
+      "50": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "TSUMIKIRI J-SWORD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "200-300",
+      "20": "350",
+      "30": "Inestimable",
+      "35": "Inestimable",
+      "40": "Inestimable",
+      "45": "Inestimable",
+      "50": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "VICTOR AXE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "80": "1-6",
+      "100": "1-55"
+    }
+  },
+  "ZANBA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "3-5",
+      "25": "3-5",
+      "30": "5-15",
+      "35": "20-35",
+      "40": "45-200",
+      "45": "45-200",
+      "50": "400",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BLADE DANCE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BLOODY ART": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "CROSS SCAR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0-5",
+      "60": "0-5",
+      "65": "0-5",
+      "70": "0-5",
+      "75": "0-5",
+      "80": "0-5",
+      "85": "0-5",
+      "90": "0-20",
+      "95": "0-20",
+      "100": "0-90"
+    }
+  },
+  "DAYLIGHT SCAR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2-3",
+      "20": "5",
+      "25": "10-20",
+      "30": "25-40",
+      "35": "40-100",
+      "40": "200-300",
+      "45": "500-700",
+      "50": "1300-1500",
+      "55": "2000-2300",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLAPJACK FLAPPER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2",
+      "25": "15",
+      "40": "25",
+      "45": "35",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "LAVIS BLADE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "45",
+      "20": "100",
+      "25": "150-250",
+      "30": "150-250",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "P-ARMS' BLADE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2"
+    }
+  },
+  "RED DAGGER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0-25",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "S-BEAT'S BLADE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "40": "10-20",
+      "50": "35-50"
+    }
+  },
+  "S-BERILL'S HANDS #0": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2"
+    }
+  },
+  "S-BERILL'S HANDS #1": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "15": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "20": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "25": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "30": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "35": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "40": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "45": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "50": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "55": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "60": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "65": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "70": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "75": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "80": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "85": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "90": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "95": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)",
+      "100": "See Daggers (S-Berill's Hands #0) & Combination items (Berill Photon)"
+    }
+  },
+  "S-RED'S BLADE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "TWIN CHAKRAM": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "TWO KAMUI": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See CD5",
+      "25": "Inestimable"
+    }
+  },
+  "WOK OF AKIKO'S SHOP": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "ZERO DIVIDE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "ASTERON BELT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "50": "50-100",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BAMBOO SPEAR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "BERDYSH": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": ".5",
+      "15": ".5",
+      "20": ".5",
+      "25": ".5",
+      "30": ".5",
+      "35": "1-5",
+      "40": "1-5",
+      "50": "1-50",
+      "55": "1-50",
+      "60": "1-50",
+      "65": "1-50",
+      "70": "1-50",
+      "75": "1-50",
+      "80": "1-50",
+      "85": "1-50",
+      "90": "1-50",
+      "95": "1-50",
+      "100": "Inestimable"
+    }
+  },
+  "BRIONAC": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BUTTERFLY NET": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "CHAMELEON SCYTHE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "GAE BOLG": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0-3",
+      "75": "0-5",
+      "80": "0-5",
+      "85": "0-5",
+      "90": "0-5",
+      "95": "0-25",
+      "100": "0-25"
+    }
+  },
+  "GETSUGASAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "IMPERIAL PICK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "1-10",
+      "50": "20-30",
+      "55": "20-30",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "MADAM'S UMBRELLA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "40": "5-15",
+      "45": "5-15",
+      "50": "25-80",
+      "55": "25-80",
+      "60": "100-200",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "MADAM'S PARASOL": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "35": "35",
+      "40": "60-170",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "MAGUWA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "NICE SHOT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "PLANTAIN HUGE FAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "15": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "20": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "25": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "30": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "35": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "40": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "45": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "50": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "55": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "60": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "65": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "70": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "75": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "80": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "85": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "90": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "95": "See Rods (Fatsia) & Combination items (Magic Water)",
+      "100": "See Rods (Fatsia) & Combination items (Magic Water)"
+    }
+  },
+  "RED PARTISAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0-5",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SNAKE SPIRE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "1-3",
+      "55": "1-3",
+      "60": "1-3",
+      "65": "1-3",
+      "70": "10-45",
+      "75": "10-45",
+      "80": "10-45",
+      "85": "10-45",
+      "90": "10-45",
+      "95": "70-100",
+      "100": "Inestimable"
+    }
+  },
+  "SOUL EATER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "4-5"
+    }
+  },
+  "SOUL BANISH": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1-2",
+      "15": "1-2",
+      "20": "1-2",
+      "25": "1-2",
+      "30": "1-2",
+      "35": "1-2",
+      "40": "2-5",
+      "45": "5-15",
+      "50": "20-25",
+      "70": "100-150",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SYNTHESIZER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "TREE CLIPPERS": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "TYRELL'S PARASOL": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "30": "5-10",
+      "35": "10-25",
+      "40": "40-60",
+      "45": "60-70",
+      "55": "200-250",
+      "60": "350-450",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "VJAYA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "1",
+      "40": "2-8",
+      "45": "10-45",
+      "50": "50-100",
+      "55": "100-200",
+      "60": "200-450",
+      "65": "400-670",
+      "70": "900-1300",
+      "75": "1500-3500",
+      "80": "1500-3500",
+      "85": "1500-3500",
+      "90": "1500-3500",
+      "95": "9500",
+      "100": "9500"
+    }
+  },
+  "YUNCHANG": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "3-5",
+      "25": "3-5",
+      "30": "10-20",
+      "35": "10-20",
+      "40": "50-150",
+      "45": "150-300",
+      "50": "400-450",
+      "55": "550-620",
+      "60": "550-620",
+      "85": "4250",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DISKA OF BRAVEMAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "1",
+      "40": "2-5",
+      "45": "5-10",
+      "50": "40-60",
+      "55": "65-140",
+      "60": "300-450",
+      "65": "600-800",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DISKA OF LIBERATOR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0-15",
+      "75": "0-15",
+      "80": "0-15",
+      "85": "0-15",
+      "90": "0-15",
+      "95": "0-40",
+      "100": "0-40"
+    }
+  },
+  "FLIGHT CUTTER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLIGHT FAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "IZMAELA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "15-20"
+    }
+  },
+  "RAPPY'S FAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "RAINBOW BATON": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "15": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "20": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "25": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "30": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "35": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "40": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "45": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "50": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "55": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "60": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "65": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "70": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "75": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "80": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "85": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "90": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "95": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")",
+      "100": "See Combination commons (Slicers) & Combination items (Magic Stone \"Iritista\")"
+    }
+  },
+  "RED SLICER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "1-30",
+      "55": "1-30",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SLICER OF ASSASSIN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SLICER OF FANATIC": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2-3",
+      "20": "2-3",
+      "25": "5",
+      "30": "10-20",
+      "35": "50-100",
+      "40": "100-200",
+      "45": "200-300",
+      "55": "600-700",
+      "60": "600-700",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BLACK KING BAR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "30": "60",
+      "40": "65-120",
+      "45": "65-120",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DEMOLITION COMET": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "2-3",
+      "25": "2-3",
+      "30": "2-3",
+      "35": "5-10",
+      "40": "5-10",
+      "45": "5-10",
+      "50": "80",
+      "70": "100",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DOUBLE CANNON": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "100",
+      "30": "150-300",
+      "35": "250-350",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DOUBLE SABER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "1",
+      "55": "1-5",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "GIRASOLE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2",
+      "20": "2",
+      "25": "3-5",
+      "30": "5-25",
+      "35": "5-25",
+      "40": "25-40",
+      "45": "50",
+      "50": "70-200",
+      "55": "70-200",
+      "65": "215-450",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "METEOR CUDGEL": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2-5",
+      "20": "2-5",
+      "25": "2-5",
+      "30": "5-35",
+      "35": "5-35",
+      "40": "5-35",
+      "45": "5-35",
+      "60": "60-100",
+      "80": "300-350",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "MONKEY KING BAR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2-3",
+      "20": "2-3",
+      "25": "5-10",
+      "30": "5-10",
+      "35": "10-20",
+      "40": "30-50",
+      "45": "30-50",
+      "55": "250",
+      "65": "350-450",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "1550",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "PARTISAN OF LIGHTNING": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "2-3",
+      "45": "2-3",
+      "50": "35",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "STAG CUTLERY": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "1-2",
+      "60": "1-2",
+      "65": "1-2",
+      "70": "1-2",
+      "75": "1-2",
+      "80": "1-20",
+      "85": "1-30",
+      "95": "1-120",
+      "100": "1-120"
+    }
+  },
+  "TWIN BLAZE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "5",
+      "15": "5-10",
+      "20": "5-10",
+      "25": "10-20",
+      "30": "10-20",
+      "35": "20-30",
+      "40": "45-70",
+      "50": "250-300",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "TWIN BRAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "VIVIENNE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "3-5",
+      "20": "3-5",
+      "25": "8",
+      "30": "10-15",
+      "35": "20-50",
+      "40": "150-250",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BOOMA'S CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "DRAGON'S CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "GOBOOMA'S CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1-2"
+    }
+  },
+  "GIGOBOOMA'S CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1-2"
+    }
+  },
+  "HEART OF POUMN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0-2",
+      "40": "3-8",
+      "45": "10-20",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "MORNING GLORY": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0-2",
+      "55": "0-35",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "NEI'S CLAW (REPLICA)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {}
+  },
+  "NEI'S CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "200-250",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "PANTHER'S CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "PHOENIX CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "PHOTON CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RIKA'S CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "50": "5-65",
+      "55": "5-65",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SILENCE CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "1",
+      "70": "1",
+      "75": "1-5",
+      "100": "60-350"
+    }
+  },
+  "AGITO (1975)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "5",
+      "15": "5",
+      "20": "5",
+      "25": "5",
+      "30": "5",
+      "35": "5",
+      "40": "5",
+      "45": "5",
+      "50": "5",
+      "55": "5",
+      "60": "5",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "AGITO (1977)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "AGITO (1980)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "AGITO (1983)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "AGITO (1991)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "AGITO (2001)": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "AKIKO'S FRYING PAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "GUREN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1-2",
+      "20": "2-3",
+      "25": "5-10",
+      "30": "20",
+      "35": "40-80",
+      "40": "80-150",
+      "45": "250-350",
+      "70": "1200-1500",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "HARISEN BATTLE FAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "KAMUI": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2",
+      "15": "2",
+      "20": "2",
+      "25": "2",
+      "30": "2",
+      "35": "2",
+      "40": "2",
+      "45": "2",
+      "50": "2",
+      "55": "2",
+      "60": "2",
+      "65": "2",
+      "70": "2",
+      "75": "2",
+      "80": "2",
+      "85": "2",
+      "90": "2",
+      "95": "2",
+      "100": "2"
+    }
+  },
+  "MURASAME": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "OROTIAGITO": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "5"
+    }
+  },
+  "SHICHISHITO": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "1",
+      "70": "1",
+      "75": "1",
+      "80": "1",
+      "85": "1",
+      "90": "1",
+      "95": "1",
+      "100": "1"
+    }
+  },
+  "RAIKIRI": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "5-10"
+    }
+  },
+  "SANGE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1-2",
+      "25": "3-5",
+      "30": "5-8",
+      "35": "10-20",
+      "45": "20-30",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SHOUREN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1-2",
+      "20": "2-3",
+      "25": "5-10",
+      "30": "20",
+      "35": "50-80",
+      "40": "80-150",
+      "45": "250-350",
+      "70": "1200-1500",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "TOY HAMMER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "YAMIGARASU": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "40": "5-10",
+      "45": "10",
+      "50": "50",
+      "55": "70-80",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "YASHA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2-3",
+      "15": "3",
+      "20": "3-5",
+      "25": "5-8",
+      "30": "10",
+      "35": "15-20",
+      "40": "40",
+      "45": "Inestimable",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "ASUKA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "40": "5",
+      "70": "60-80",
+      "75": "60-80",
+      "80": "100-120",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "G-ASSASSIN'S SABERS": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2"
+    }
+  },
+  "JIZAI": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "25": "8-15",
+      "30": "20-30",
+      "35": "40-60",
+      "40": "100-180",
+      "45": "200-300",
+      "70": "1200-1500",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "MUSASHI": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "2",
+      "30": "2",
+      "35": "2",
+      "40": "3-6",
+      "50": "10",
+      "55": "60-100",
+      "60": "60-100",
+      "65": "100-150",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SANGE & YASHA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "25": "5-10",
+      "30": "10",
+      "35": "20",
+      "40": "30-40",
+      "50": "100-150",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "YAMATO": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": ".5",
+      "15": ".5",
+      "20": ".5",
+      "25": ".5",
+      "30": ".5",
+      "35": ".5",
+      "50": "1-5",
+      "55": "1-8",
+      "60": "1-10",
+      "75": "15-35",
+      "100": "175-225"
+    }
+  },
+  "ANGRY FIST": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0-2",
+      "70": "0-15",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BRAVE KNUCKLE": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "GOD HAND": {
+    "base": null,
+    "modifiers": {
+      "N": "0",
+      "AB": "0",
+      "M": "0",
+      "D": "0"
+    },
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SACRED DUSTER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "40": "20",
+      "50": "40",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SONIC KNUCKLE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "BRAVACE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "CUSTOM RAY VER.00": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "HANDGUN: GULD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "200-300",
+      "15": "200-300",
+      "25": "300-700",
+      "30": "300-700",
+      "35": "800",
+      "40": "2000",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "HANDGUN: MILLA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "15": "30-150",
+      "20": "200-300",
+      "25": "200-300",
+      "30": "600",
+      "35": "600",
+      "40": "800",
+      "45": "2500",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "HEAVEN PUNISHER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "350-400",
+      "20": "400",
+      "30": "400-500",
+      "40": "Inestimable",
+      "45": "Inestimable",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "HEAVEN STRIKER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2-3",
+      "15": "5-15",
+      "20": "20-40",
+      "25": "50-60",
+      "30": "140-250",
+      "35": "500-650",
+      "40": "1600-1800",
+      "45": "2700-3200",
+      "50": "4700",
+      "55": "6000",
+      "60": "7500",
+      "65": "9500",
+      "70": "12000",
+      "75": "15000",
+      "80": "18500",
+      "85": "22500",
+      "90": "27000",
+      "95": "32000",
+      "100": "37500"
+    }
+  },
+  "LAST SWAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "6-8"
+    }
+  },
+  "MASTER RAVEN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "6-8"
+    }
+  },
+  "OPHELIE SEIZE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1-2",
+      "15": "1-2",
+      "20": "3-5",
+      "25": "3-5",
+      "30": "10-30",
+      "35": "10-30",
+      "40": "80-100",
+      "45": "200-300",
+      "50": "500-800",
+      "55": "1300",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RED HANDGUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "50": "20",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RUBY BULLET": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0-20",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SUPPRESSED GUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "TENSION BLASTER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "30-35"
+    }
+  },
+  "VARISTA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "1-5",
+      "55": "1-5",
+      "60": "1-5",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "YASMINKOV 2000H": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "ANGEL HARP": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0-95",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "ANO RIFLE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2",
+      "15": "2",
+      "20": "2",
+      "25": "2",
+      "30": "2",
+      "35": "2",
+      "40": "2",
+      "45": "2",
+      "50": "2",
+      "55": "2",
+      "60": "2",
+      "65": "2",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "ANTI ANDROID RIFLE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2",
+      "15": "2",
+      "20": "2",
+      "25": "2",
+      "30": "2",
+      "35": "2",
+      "40": "2",
+      "45": "2",
+      "50": "2",
+      "55": "2-5",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BRINGER'S RIFLE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "20": "4",
+      "30": "10",
+      "40": "20-25",
+      "50": "40-60"
+    }
+  },
+  "DRILL LAUNCHER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "EGG BLASTER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "15": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "20": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "25": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "30": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "35": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "40": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "45": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "50": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "55": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "60": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "65": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "70": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "75": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "80": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "85": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "90": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "95": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)",
+      "100": "See Combination commons (Handguns) & Combination items (Parts of Egg Blaster)"
+    }
+  },
+  "FROZEN SHOOTER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2-3",
+      "20": "5-8",
+      "25": "8-12",
+      "30": "15-20",
+      "35": "20-50",
+      "40": "200-300",
+      "45": "400-600",
+      "50": "1000-1100",
+      "55": "1400-1600",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "HOLY RAY": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "2-3",
+      "25": "5-25",
+      "30": "5-25",
+      "35": "25-40",
+      "40": "25-40",
+      "45": "45-70",
+      "50": "100-200",
+      "60": "400",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "JUSTY-23ST": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "LE COGNEUR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "Inestimable"
+    }
+  },
+  "RIANOV 303SNR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RIANOV 303SNR-1": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RIANOV 303SNR-2": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RIANOV 303SNR-3": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RIANOV 303SNR-4": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RIANOV 303SNR-5": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "16",
+      "45": "18",
+      "55": "20-30",
+      "65": "150",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SNOW QUEEN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "30": "50-60",
+      "35": "90",
+      "40": "200-300",
+      "45": "550",
+      "50": "1050-1250",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SPREAD NEEDLE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2-5",
+      "20": "8-15",
+      "25": "8-15",
+      "30": "20-30",
+      "35": "20-50",
+      "40": "40-100",
+      "45": "100-200",
+      "55": "450",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "TANEGASHIMA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "VISK-235W": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "WALS-MK2": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "YASMINKOV 3000R": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "YASMINKOV 7000V": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "1-3",
+      "35": "1-3",
+      "40": "5-20",
+      "45": "5-20",
+      "50": "30-200",
+      "55": "30-200",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DUAL BIRD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "12-16"
+    }
+  },
+  "GULD MILLA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "15": "250-350",
+      "20": "250-350",
+      "25": "450",
+      "40": "Inestimable",
+      "45": "Inestimable",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "H&S25 JUSTICE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "1-5",
+      "85": "40",
+      "95": "50",
+      "100": "300"
+    }
+  },
+  "L&K14 COMBAT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "5",
+      "70": "3-10",
+      "75": "25",
+      "90": "105",
+      "100": "150-200"
+    }
+  },
+  "M&A60 VISE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "1-4",
+      "50": "15-35",
+      "55": "40-85",
+      "60": "200-300",
+      "65": "600-750",
+      "70": "800",
+      "75": "Imestimable",
+      "80": "Imestimable",
+      "85": "Imestimable",
+      "90": "Imestimable",
+      "95": "Imestimable",
+      "100": "Imestimable"
+    }
+  },
+  "MILLE MARTEAUX": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "25": "150-200",
+      "30": "260-330",
+      "35": "260-330",
+      "40": "350-400",
+      "45": "420-1000",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RAGE D'AME": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "45": "10-30",
+      "55": "100",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RAGE DE FEU": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "35": "5",
+      "40": "5",
+      "45": "5",
+      "50": "20",
+      "55": "25-40",
+      "60": "25-40",
+      "65": "25-40",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RAGE DE FOUDRE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RAGE DE GLACE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "55": "30-35",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RED MECHGUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "2-3",
+      "55": "20-35",
+      "60": "20-35",
+      "65": "20-35",
+      "70": "20-35",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "ROCKET PUNCH": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "Inestimable"
+    }
+  },
+  "SAMBA MARACAS": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "Inestimable"
+    }
+  },
+  "TWIN PSYCHOGUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "10-20",
+      "100": "500"
+    }
+  },
+  "YASMINKOV 9000M": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2-5",
+      "20": "5-20",
+      "25": "5-20",
+      "30": "35-60",
+      "35": "60-115",
+      "40": "60-115",
+      "45": "240",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BARANZ LAUNCHER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "20": "4",
+      "30": "10",
+      "40": "20-25",
+      "50": "40-60"
+    }
+  },
+  "BELRA CANNON": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2"
+    }
+  },
+  "BURNING VISIT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "15": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "20": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "25": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "30": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "35": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "40": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "45": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "50": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "55": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "60": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "65": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "70": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "75": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "80": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "85": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "90": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "95": "See Shots (Flame Visit) & Combination items (Photon Booster)",
+      "100": "See Shots (Flame Visit) & Combination items (Photon Booster)"
+    }
+  },
+  "CRUSH BULLET": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DARK METEOR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "25-60",
+      "65": "25-60",
+      "70": "25-60",
+      "75": "25-60",
+      "80": "75-100",
+      "85": "75-100",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FINAL IMPACT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "0",
+      "80": "0",
+      "85": "0-10",
+      "90": "0-10",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FLAME VISIT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1-2",
+      "35": "1-2",
+      "40": "1-2",
+      "45": "1-2",
+      "50": "1-2",
+      "55": "1-10",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "INFERNO BAZOOKA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0-2",
+      "45": "0-2",
+      "50": "0-5",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "IRON FAUST": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "15": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "20": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "25": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "30": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "35": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "40": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "45": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "50": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "55": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "60": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "65": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "70": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "75": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "80": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "85": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "90": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "95": "See Shots (Panzer Faust) & Combination items (Photon Booster)",
+      "100": "See Shots (Panzer Faust) & Combination items (Photon Booster)"
+    }
+  },
+  "L&K38 COMBAT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "1-4",
+      "25": "5-10",
+      "30": "15-20",
+      "35": "20-35",
+      "40": "40-70",
+      "45": "100-200",
+      "50": "1400-1500",
+      "55": "1700-2500",
+      "60": "3000-3500",
+      "90": "6050",
+      "95": "Inestimable"
+    }
+  },
+  "MASER BEAM": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "30-65",
+      "30": "30-65",
+      "35": "30-65",
+      "40": "30-65",
+      "45": "30-65",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "METEOR SMASH": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "PANZER FAUST": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2",
+      "15": "2",
+      "20": "2",
+      "25": "2",
+      "30": "2",
+      "35": "2",
+      "40": "5",
+      "45": "5",
+      "50": "100",
+      "55": "160",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable"
+    }
+  },
+  "POWER MASER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "15": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "20": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "25": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "30": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "35": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "40": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "45": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "50": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "55": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "60": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "65": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "70": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "75": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "80": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "85": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "90": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "95": "See Shots (Maser Beam) & Combination items (Photon Booster)",
+      "100": "See Shots (Maser Beam) & Combination items (Photon Booster)"
+    }
+  },
+  "RAMBLING MAY": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "2-4",
+      "20": "2-4",
+      "25": "5-15",
+      "30": "20-40",
+      "35": "40-70",
+      "40": "100-200",
+      "45": "300-400",
+      "50": "500-700",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "ANO BAZOOKA": {
+    "base": null,
+    "modifiers": {
+      "N": "1",
+      "AB": "1",
+      "M": "1",
+      "D": "1"
+    },
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "1",
+      "85": "10-12",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "CANNON ROUGE": {
+    "base": null,
+    "modifiers": {
+      "AB": "5-20"
+    },
+    "hit_values": {
+      "0": "2-3",
+      "15": "10",
+      "20": "20-100",
+      "25": "20-100",
+      "30": "150-200",
+      "35": "150-200",
+      "40": "250-300",
+      "45": "250-300",
+      "50": "500-900",
+      "70": "1600",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "GI GUE BAZOOKA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2"
+    }
+  },
+  "METEOR ROUGE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "NUG2000-BAZOOKA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "25": "25",
+      "35": "50",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "CLIO": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "10-15",
+      "20": "20",
+      "45": "45",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "CLUB OF LACONIUM": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": ".5",
+      "15": ".5",
+      "20": ".5",
+      "25": ".5",
+      "30": ".5",
+      "35": ".5",
+      "40": ".5",
+      "45": ".5",
+      "50": ".5",
+      "55": ".5",
+      "60": ".5",
+      "65": ".5",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "CLUB OF ZUMIURAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": ".5",
+      "15": ".5",
+      "20": ".5",
+      "25": ".5",
+      "30": ".5",
+      "35": ".5",
+      "40": ".5",
+      "45": ".5",
+      "50": ".5",
+      "55": ".5",
+      "60": ".5",
+      "65": ".5",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DECALOG": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "FLOWER CANE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "Inestimable"
+    }
+  },
+  "LOLLIPOP": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "Inestimable"
+    }
+  },
+  "MACE OF ADAMAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "0-70"
+    }
+  },
+  "SUMMIT MOON": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "15": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "20": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "25": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "30": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "35": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "40": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "45": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "50": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "55": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "60": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "65": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "70": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "75": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "80": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "85": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "90": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "95": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")",
+      "100": "See Combination commons (Canes) & Combination items (Magic Rock \"Moola\")"
+    }
+  },
+  "WINDMILL": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0-2",
+      "30": "0-2",
+      "35": "0-2",
+      "40": "0-2",
+      "45": "0-2",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "ALIVE AQHU": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "0",
+      "75": "0",
+      "80": "0",
+      "85": "0",
+      "90": "0",
+      "95": "0-80",
+      "100": "Inestimable"
+    }
+  },
+  "BATTLE VERGE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BRANCH OF PAKUPAKU": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1-20",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "BRAVE HAMMER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "1",
+      "70": "1",
+      "75": "1",
+      "80": "1",
+      "85": "1",
+      "90": "1",
+      "95": "1",
+      "100": "1"
+    }
+  },
+  "CADUCEUS": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1-3",
+      "15": "1-3",
+      "20": "1-3",
+      "25": "1-3",
+      "30": "1-3",
+      "35": "1-3",
+      "40": "1-3",
+      "45": "1-3",
+      "50": "1-3",
+      "55": "1-3",
+      "60": "1-3",
+      "65": "1-3",
+      "70": "1-3",
+      "75": "1-3",
+      "80": "1-3",
+      "85": "1-3",
+      "90": "1-3",
+      "95": "1-3",
+      "100": "1-3"
+    }
+  },
+  "DARK BRIDGE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "20-40",
+      "15": "20-40",
+      "20": "20-40",
+      "25": "20-40",
+      "30": "20-40",
+      "35": "20-40",
+      "40": "20-40",
+      "45": "20-40",
+      "50": "20-40",
+      "55": "20-40",
+      "60": "20-40",
+      "65": "20-40",
+      "70": "20-40",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DEMONIC FORK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1-5",
+      "15": "1-5",
+      "20": "1-5",
+      "25": "1-5",
+      "30": "1-5",
+      "35": "1-5",
+      "40": "1-5",
+      "45": "1-5",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FATSIA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "1-5",
+      "55": "10-20",
+      "60": "10-20",
+      "70": "40",
+      "95": "150-200",
+      "100": "Inestimable"
+    }
+  },
+  "GLIDE DIVINE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1-2",
+      "15": "1-2",
+      "20": "1-2",
+      "25": "1-2",
+      "30": "1-2",
+      "35": "1-2",
+      "40": "1-10",
+      "50": "1-30",
+      "65": "40",
+      "100": "300"
+    }
+  },
+  "HILDEBEAR'S CANE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "HILDEBLUE'S CANE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "MERCURIUS ROD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See CD5"
+    }
+  },
+  "PLANTAIN LEAF": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2",
+      "15": "2",
+      "20": "2",
+      "25": "2",
+      "30": "2",
+      "35": "2",
+      "40": "2",
+      "45": "2",
+      "50": "2-10",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "PSYCHO WAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "230-250",
+      "25": "250-350",
+      "30": "250-350",
+      "35": "250-350",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "RABBIT WAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SIREN GLASS HAMMER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "20-25",
+      "15": "20-25",
+      "20": "20-25",
+      "25": "100",
+      "50": "Inestimable",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SORCERER'S CANE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "2"
+    }
+  },
+  "STRIKER OF CHAO": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Rods (Branch of Pakupaku)",
+      "15": "See Rods (Branch of Pakupaku)",
+      "20": "See Rods (Branch of Pakupaku)",
+      "25": "See Rods (Branch of Pakupaku)",
+      "30": "See Rods (Branch of Pakupaku)",
+      "35": "See Rods (Branch of Pakupaku)",
+      "40": "See Rods (Branch of Pakupaku)",
+      "45": "See Rods (Branch of Pakupaku)",
+      "50": "See Rods (Branch of Pakupaku)",
+      "55": "See Rods (Branch of Pakupaku)",
+      "60": "See Rods (Branch of Pakupaku)",
+      "65": "See Rods (Branch of Pakupaku)",
+      "70": "See Rods (Branch of Pakupaku)",
+      "75": "See Rods (Branch of Pakupaku)",
+      "80": "See Rods (Branch of Pakupaku)",
+      "85": "See Rods (Branch of Pakupaku)",
+      "90": "See Rods (Branch of Pakupaku)",
+      "95": "See Rods (Branch of Pakupaku)",
+      "100": "See Rods (Branch of Pakupaku)"
+    }
+  },
+  "VALKYRIE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1-125",
+      "55": "Inestimable",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "EARTH WAND: BROWNIE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "FIRE SCEPTER: AGNI": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": ".5",
+      "15": ".5",
+      "20": ".5",
+      "25": ".5",
+      "30": ".5",
+      "35": ".5",
+      "40": ".5",
+      "45": ".5",
+      "50": ".5",
+      "55": ".5",
+      "60": ".5",
+      "65": ".5",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "GAME MAGAZINE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "Inestimable"
+    }
+  },
+  "ICE STAFF: DAGON": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": ".5",
+      "15": ".5",
+      "20": ".5",
+      "25": ".5",
+      "30": ".5",
+      "35": ".5",
+      "40": ".5",
+      "45": ".5",
+      "50": ".5",
+      "55": ".5",
+      "60": ".5",
+      "65": ".5",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "LOGIN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "MAGICAL PIECE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "15": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "20": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "25": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "30": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "35": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "40": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "45": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "50": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "55": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "60": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "65": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "70": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "75": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "80": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "85": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "90": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "95": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")",
+      "100": "See Combination commons (Wands) & Combination items (Magic Rock \"Heart Key\")"
+    }
+  },
+  "MARINA'S BAG": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "PLANTAIN FAN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "15": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "20": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "25": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "30": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "35": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "40": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "45": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "50": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "55": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "60": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "65": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "70": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "75": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "80": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "85": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "90": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "95": "See Combination commons (Wands) & Combination items (Magic Water)",
+      "100": "See Combination commons (Wands) & Combination items (Magic Water)"
+    }
+  },
+  "PROPHETS OF MOTAV": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "200",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SOLFERINO": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1-5",
+      "35": "1-5",
+      "40": "1-5",
+      "45": "1-5",
+      "50": "1-5",
+      "55": "1-5",
+      "60": "1-5",
+      "65": "1-5",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "STORM WAND: INDRA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": ".5",
+      "15": ".5",
+      "20": ".5",
+      "25": ".5",
+      "30": ".5",
+      "35": ".5",
+      "40": ".5",
+      "45": ".5",
+      "50": ".5",
+      "55": ".5",
+      "60": ".5",
+      "65": ".5",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "TECHNICAL CROZIER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "THE SIGH OF A GOD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "TWINKLE STAR": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "15": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "20": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "25": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "30": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "35": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "40": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "45": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "50": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "55": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "60": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "65": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "70": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "75": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "80": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "85": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "90": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "95": "See Combination commons (Wands) & Combination items (Star Amplifier)",
+      "100": "See Combination commons (Wands) & Combination items (Star Amplifier)"
+    }
+  },
+  "AMORE ROSE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "BLUEFULL CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "20-35",
+      "15": "20-35",
+      "20": "20-35",
+      "25": "20-35",
+      "30": "20-35",
+      "35": "20-35",
+      "40": "20-35",
+      "45": "20-35",
+      "50": "20-35",
+      "55": "20-35",
+      "60": "20-35",
+      "65": "20-35",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "DANCING HITOGATA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "15": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "20": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "25": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "30": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "35": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "40": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "45": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "50": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "55": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "60": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "65": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "70": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "75": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "80": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "85": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "90": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "95": "See Cards (Hitogata) & Combination items (Book of Hitogata)",
+      "100": "See Cards (Hitogata) & Combination items (Book of Hitogata)"
+    }
+  },
+  "GAL WIND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "GREENILL CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "1",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "GUARDIANNA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "1-3",
+      "35": "1-3",
+      "40": "1-3",
+      "45": "5-10",
+      "50": "20-40",
+      "55": "75",
+      "70": "350-400",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "HITOGATA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "3-20",
+      "45": "25-40",
+      "50": "25-40",
+      "55": "25-40",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "KAN'EI TSUHO": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0"
+    }
+  },
+  "KUNAI": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "1-3",
+      "25": "1-3",
+      "30": "5-10",
+      "35": "10-20",
+      "40": "25-35",
+      "50": "50-100",
+      "55": "160-200",
+      "60": "Inestimable",
+      "65": "Inestimable",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "MAHU": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "1-5",
+      "70": "1-5",
+      "75": "1-5",
+      "80": "1-5",
+      "85": "1-15",
+      "90": "1-15",
+      "95": "1-15",
+      "100": "1-30"
+    }
+  },
+  "ORAN CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "PINKAL CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "15-20",
+      "15": "15-20",
+      "20": "15-20",
+      "25": "15-20",
+      "30": "15-20",
+      "35": "15-20",
+      "40": "1-100",
+      "45": "1-100",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "PURPLENUM CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1-10",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "REDRIA CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "1",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SKYLY CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "1",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SYRINGE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1"
+    }
+  },
+  "TALIS": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "0",
+      "15": "0",
+      "20": "0",
+      "25": "0",
+      "30": "0",
+      "35": "0",
+      "40": "0",
+      "45": "0",
+      "50": "0",
+      "55": "0",
+      "60": "0",
+      "65": "0",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "VIRIDIA CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1-40",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "WHITILL CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "15-20",
+      "15": "15-20",
+      "20": "15-20",
+      "25": "15-20",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "YELLOWBOZE CARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1",
+      "50": "1",
+      "55": "1",
+      "60": "1",
+      "65": "1",
+      "70": "Inestimable",
+      "75": "Inestimable",
+      "80": "Inestimable",
+      "85": "Inestimable",
+      "90": "Inestimable",
+      "95": "Inestimable",
+      "100": "Inestimable"
+    }
+  },
+  "SPECIAL RANK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {}
+  },
+  "D-RANK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {}
+  },
+  "C-RANK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {}
+  },
+  "B-RANK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {}
+  },
+  "A-RANK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {}
+  },
+  "S-RANK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {}
+  },
+  "TYPESA/SABER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPESW/J-SWORD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "SPIRIT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "30": "5-10",
+      "40": "2",
+      "35": "1"
+    }
+  },
+  "TYPESW/SLICER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "BLIZZARD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "30": "0"
+    }
+  },
+  "TYPESW/SWORD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEBL/BLADE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEHA/ROD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPESL/SLICER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "CHARGE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "25": "0",
+      "40": "2-5",
+      "35": "2-5"
+    }
+  },
+  "TYPESL/SABER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPESL/CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPESL/KATANA": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEDS/D.SABER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "ARREST": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "30": "1-5"
+    }
+  },
+  "TYPEDS/ROD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "DEVIL'S": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "30": "1-5"
+    }
+  },
+  "TYPEDS/WAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPECL/CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEJS/J-SWORD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEJS/SABER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEJS/SLICER": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPESS/SWORDS": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEKN/BLADE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEKN/CLAW": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "BERSERK": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "50": "1",
+      "40": "2-5",
+      "35": "2-5"
+    }
+  },
+  "TYPEGU/HAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "HELL": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "40": "5-10",
+      "35": "5-10"
+    }
+  },
+  "TYPEGU/MECHGUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPERI/RIFLE": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEME/MECHGUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPESH/SHOT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPERO/ROD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPERO/HALBERT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPERO/SWORD": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "TYPEWA/WAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  }
+}
