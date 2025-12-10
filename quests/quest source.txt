@@ -1,598 +1,140 @@
-MU1
-Bartle	14
-Barble	23
-Tollaw	36
-Gulgus	10
-Gulgus-Gue	5
-Monest	2
-
-MU2
-Vulmer	72
-Govulmer	21
-Melqueek	24
-Ob Lily	9
-Crimson Assassin	10
-Nano Dragon	18
-
-MU3
-Gillchich	59
-Dubchich	9
-Canabin	55
-Canune	2
-Sinow Blue	17
-Sinow Red	7
-Baranz	6
-
-MU4
-Arlan	35
-Merlan	27
-Del-D	33
-Claw	50
-Delsaber	13
-Indi Belra	12
-Gran Sorcerer	5
-
-SU1
-Bartle	26
-Barble	23
-Tollaw	19
-Gulgus	21
-Gulgus-Gue	8
-El Rappy	24
-Hildelt	12
-
-SU2
-Vulmer	46
-Govulmer	24
-Melqueek	29
-Ob Lily	33
-Pofuilly Slime	12
-Nano Dragon	23
-Pan Arms	8
-
-SU3
-Gillchich	57
-Dubchich	22
-Canabin	79
-Canune	4
-Sinow Blue	19
-Sinow Red	18
-Baranz	9
-
-SU4
-Arlan	45
-Merlan	24
-Del-D	29
-Claw	43
-Bulclaw	8
-Delsaber	22
-Dark Gunner	16
-Dark Bringer	11
-
-EN1
-Bartle	57
-Barble	32
-Tollaw	23
-Gulgus	29
-Gulgus-Gue	4
-Monest	4
-El Rappy	19
-Hildelt	8
-
-EN2
-Vulmer	152
-Govulmer	44
-Melqueek	28
-Ob Lily	32
-Pofuilly Slime	5
-Crimson Assassin	20
-Nano Dragon	6
-
-EN3
-Gillchich	104
-Dubchich	37
-Canabin	84
-Canune	2
-Sinow Blue	48
-Sinow Red	14
-Baranz	10
-
-EN4
-Arlan	49
-Merlan	59
-Del-D	49
-Claw	90
-Bulclaw	6
-Delsaber	44
-Indi Belra	28
-Dark Gunner	21
-Gran Sorcerer	3
-Dark Bringer	13
-
-SR1
-Bartle	62
-Barble	38
-Tollaw	25
-Gulgus	35
-Gulgus-Gue	17
-Monest	7
+HBF
+Hallow Battlefield: Forest
+episode 1
 El Rappy	21
-Hildelt	15
-
-
-SR2
-Vulmer	128
-Govulmer	61
-Melqueek	36
-Ob Lily	44
-Pofuilly Slime	13
-Crimson Assassin	17
-Nano Dragon	24
-Pan Arms	23
-
-SR3
-Gillchich	123
-Dubchich	33
-Canabin	142
-Canune	7
-Sinow Blue	68
-Sinow Red	72
-Baranz	30
-
-SR4
-Arlan	82
-Merlan	71
-Del-D	51
-Claw	94
-Bulclaw	20
-Delsaber	36
-Indi Belra	33
-Dark Gunner	25
-Gran Sorcerer	19
-Dark Bringer	30
-
-SA1
-Bartle	34
-Barble	13
-Tollaw	17
-Gulgus	20
-Gulgus-Gue	11
-Monest	3
-El Rappy	21
-Arlan	42
-Merlan	24
-Del-D	24
-Bulclaw	13
-Claw	59
-Delsaber	25
-Indi Belra	17
-Gran Sorcerer	13
-
-SA2
-Vulmer	68
-Govulmer	30
-Melqueek	27
-Ob Lily	39
-Pofuilly Slime	16
-Nano Dragon	20
-Pan Arms	9
-Gillchich	83
-Dubchich	39
-Canabin	83
-Canune	4
-Sinow Blue	34
-Sinow Red	39
-Baranz	34
-
-Lost HS
-Bartle	29
-Barble	38
-Tollaw	58
-Gulgus	26
-Gulgus-Gue	7
-Monest	7
-El Rappy	10
-Hildelt	12
-Sil Dragon	1
-
-LIS
-Vulmer	129
-Govulmer	65
-Melqueek	125
-Ob Lily	56
-Pofuilly Slime	7
-Crimson Assassin	37
-Nano Dragon	26
-Pan Arms	5
-Dal Ra Lie	1
-
-PW1
-Merillia	83
-Meriltas	41
-Ul Gibbon	45
-Zol Gibbon	20
-Gee	122
-Sinow Berill	25
-Sinow Spigell	7
-Mericarol	6
-Gi Gue	12
-
-LHP
-Arlan	54
-Merlan	20
-Del-D	26
-Claw	87
-Bulclaw	55
-Delsaber	62
-Indi Belra	40
-Dark Gunner	45
-Gran Sorcerer	61
-Dark Bringer	15
-Dark Falz	1
-
-PW3
-Dolmolm	103
-Dolmdarl	57
-Recobox	27
-Recon	232
-Morfos	47
-Deldepth	31
-Sinow Zoa	33
-Sinow Zele	22
-Delbiter	27
-
-SU5
-Arlan	36
-Merlan	25
-Del-D	27
-El Rappy	30
-Ob Lily	29
-Hildelt	14
-Monest	5
-Crimson Assassin	13
-Indi Belra	19
-
-
-SU6
-Gillchich	63
-Dubchich	37
-Gulgus	37
-Gulgus-Gue	18
-Delsaber	22
-Pan Arms	8
-Baranz	11
-
-SU7
-Merillia	33
-Meriltas	23
-Ul Gibbon	28
-Zol Gibbon	26
-Gee	43
-Sinow Berill	17
-Sinow Spigell	19
-Mericarol	3
-Merikle	1
-Mericus	1
-Gibbles	5
-Gi Gue	3
-
-SU8
-Dolmolm	69
-Dolmdarl	39
-Recobox	23
-Recon	186
-Morfos	16
-Deldepth	15
-Sinow Zoa	19
-Sinow Zele	10
-Delbiter	9
-
-PS1
-Arlan	68 (103)
-Merlan	54 (79)
-Del-D	45 (61)
-El Rappy	32 (53)
-Ob Lily	41 (55)
-Hildelt	39 (45)
-Monest	1 (7)
-Crimson Assassin	34 (45)
-Indi Belra	37 (47)
-
-PS2
-Gillchich	200
-Dubchich	110
-Gulgus	100
-Gulgus-Gue	55
-Delsaber	67
-Pan Arms	35
-Baranz	8
-Gran Sorcerer	61
-
-PS3
-Merillia	68
-Meriltas	44
-Ul Gibbon	76
-Zol Gibbon	45
-Gee	102
-Sinow Berill	33
-Sinow Spigell	23
-Mericarol	9
-Merikle	4
-Mericus	2
-Gibbles	9
-Gi Gue	16
-
-PS4
-Merillia	63
-Meriltas	49
-Ul Gibbon	83
-Zol Gibbon	16
-Gee	66
-Sinow Berill	29
-Sinow Spigell	26
-Mericarol	12
-Merikle	7
-Mericus	6
-Gibbles	9
-Gi Gue	8
-
-PS5
-Dolmolm	116
-Dolmdarl	85
-Recobox	57
-Morfos	44
-Deldepth	25
-Sinow Zoa	39
-Sinow Zele	22
-Delbiter	21
-
-PS6
-Recobox	42
-Mericarol	16
-Merikle	10
-Mericus	8
-Gibbles	22
-Gi Gue	29
-Del Lily	61
-Ill Gill	57
-Delbiter	18
-Epsilon	14
-
-LSR
-Arlan	73
-Merlan	62
-Del-D	75
-El Rappy	55
-Ob Lily	63
+Gulgus	17
+Gulgus-Gue	12
+Bartle	33
+Barble	23
+Tollaw	29
+Mothvist	4
 Hildelt	41
-Monest	10
-Crimson Assassin	36
-Indi Belra	28
-Barba Ray	1
 
-LBA
-Gillchich	107
-Dubchich	56
-Dubwitch	14
-Gulgus	61
-Gulgus-Gue	39
-Delsaber	69
-Pan Arms	14
-Baranz	25
-Gran Sorcerer	31
-Gol Dragon	1
 
-LDR
-Dolmolm	83
-Dolmdarl	68
-Recobox	35
-Morfos	42
-Deldepth	37
-Sinow Zoa	44
-Sinow Zele	32
-Delbiter	25
-Olga Flow	1
+HBC
+Hallow Battlefield: Caves
+episode 1
+Vulmer	33
+Govulmer	35
+Melqueek	12
+Ob Lily	70
+Nano Dragon	14
+Crimson Assassin	13
+Pofuilly Slime	15
 
-LCV
-Recobox	31
-Recon	155
-Mericarol	22
-Merikle	9
-Mericus	8
-Gibbles	22
-Gi Gue	22
-Delbiter	29
-Ill Gill	55
-Del Lily	51
-Epsilon	10
+HBM
+Hallow Battlefield: Mines
+episode 1
+Gillchich	36
+Dubchich	22
+Canabin	22
+Canune	4
+Sinow Blue	36
+Sinow Red	23
+Baranz	16
 
-TET
-Meriltas	16
-Ul Gibbon	6
-Zol Gibbon	9
-Gee	8
-Sinow Berill	2
-Sinow Spigell	2
-Recobox	14
-Recon	110
+HBR
+Hallow Battlefield: Ruins
+episode 1
+Arlan	38
+Merlan	37
+Del-D	32
+Claw	9
+Bulclaw	7
+Gran Sorcerer	27
+Indi Belra	14
+Dark Bringer	20
+
+HRT
+Hallow Reality: Temple
+episode 2
+Arlan	29
+Merlan	23
+Del-D	16
+El Rappy	24
+Ob Lily	38
+Hildelt	21
+Crimson Assassin	9
+Indi Belra	21
+
+
+HRS
+Hallow Reality: Spaceship
+episode 2
+Gillchich	51
+Dubchich	28
+Gulgus	34
+Gulgus-Gue	19
+Delsaber	24
+Pan Arms	7
+Baranz	18
+
+HBC
+Hallow Battlefield: CCA
+episode 2
+Merillia	28
+Meriltas	21
+Ul Gibbon	30
+Zol Gibbon	21
+Gee	31
+Sinow Berill	17
+Sinow Spigell	15
 Mericarol	5
-Merikle	3
-Mericus	1
-Gibbles	6
+Merikle	2
+Mericus	2
+Gibbles	8
 Gi Gue	8
-Delbiter	3
-Ill Gill	7
-Del Lily	4
-Epsilon	1
 
-TWT
-Dolmolm	10
-Dolmdarl	10
-Recobox	18
-Recon	110
-Sinow Zoa	7
-Sinow Zele	6
-Delbiter	4
-Recobox	18
-Recon	88
-Mericarol	3
-Merikle	1
-Mericus	1
-Gibbles	5
-Gi Gue	7
-Delbiter	10
-Del Lily	9
-Ill Gill	8
-Epsilon	1
+HBS
+Hallow Battlefield: Seabed
+episode 2
+Dolmolm	39
+Dolmdarl	38
+Recon	0
+Morfos	14
+Deldepth	7
+Sinow Zoa	21
+Sinow Zele	17
+Delbiter	14
 
-WOL1
-Boota	47
-Ze Boota	12
-Ba Boota	10
-Satellite Lizard	51
-Yowie	25
-Sand Rappy	42
-Zu	12
-Astark	42
-Dorphon	5
 
-WOL2
-Boota	39
-Ze Boota	74
-Ba Boota	25
-Satellite Lizard	92
-Yowie	37
-Sand Rappy	37
-Zu	5
-Astark	11
-Dorphon	3
+HBTO
+Hallow Battlefield: Tower
+episode 2
+Recon	14
+Mericarol	15
+Merikle	3
+Mericus	3
+Gibbles	18
+Gi Gue	19
+Delbiter	11
+Del Lily	16
+Ill Gill	25
+Epsilon	7
 
-WOL3
-Goran	87
-Pyro Goran	26
-Goran Detonator	4
-Satellite Lizard	37
-Yowie	66
-Sand Rappy	47
-Zu	6
-
-WOL4
-Goran	37
-Pyro Goran	36
-Goran Detonator	16
-Satellite Lizard	30
-Yowie	26
-Sand Rappy	26
-Zu	1
-Merissa A	28
-Girtablulu	3
-
-WOL5
-Goran	49
-Pyro Goran	19
-Goran Detonator	7
-Satellite Lizard	48
-Yowie	41
-Sand Rappy	44
-Zu	15
-Merissa A	11
-Girtablulu	4
-
-NMU1
-Boota	20
-Ze Boota	5
-Ba Boota	5
-Satellite Lizard	32
+HBW
+Hallow Battlefield: Wilderness
+episode 4
+Boota	11
+Ze Boota	11
+Ba Boota	23
+Satellite Lizard	24
 Yowie	20
-Sand Rappy	37
-Zu	8
-Astark	22
-Dorphon	2
-
-NMU2
-Boota	31
-Ze Boota	34
-Ba Boota	14
-Satellite Lizard	41
-Yowie	23
-Sand Rappy	20
-Zu	5
-Astark	11
-Dorphon	5
-
-NMU4
-Goran	46
-Pyro Goran	40
-Goran Detonator	3
-Satellite Lizard	25
-Yowie	38
-Sand Rappy	29
-Merissa A	24
-Girtablulu	1
-
-NMU5
-Goran	37
-Pyro Goran	30
-Goran Detonator	7
-Satellite Lizard	38
-Yowie	40
-Sand Rappy	11
-Zu	19
-Merissa A	25
-Girtablulu	4
-
-SU10
-Boota	39
-Ze Boota	25
-Ba Boota	15
-Satellite Lizard	35
-Yowie	21
-Sand Rappy	24
-Zu	13
-Astark	21
-Dorphon	5
-
-SU11
-Boota	25
-Ze Boota	22
-Ba Boota	19
-Satellite Lizard	34
-Yowie	31
-Sand Rappy	23
-Zu	13
-Astark	16
-Dorphon	12
-
-SU12
-Goran	90
-Pyro Goran	43
-Goran Detonator	16
-Satellite Lizard	50
-Yowie	29
-Sand Rappy	31
-Zu	11
-Merissa A	32
-Girtablulu	3
-
-SU13
-Goran	50
-Pyro Goran	26
-Goran Detonator	18
-Satellite Lizard	39
-Yowie	20
-Sand Rappy	30
-Zu	10
-Merissa A	43
-Girtablulu	6
-
-SU14
-Goran	70
-Pyro Goran	32
-Goran Detonator	19
-Satellite Lizard	40
-Yowie	32
-Sand Rappy	30
+Sand Rappy	4
 Zu	20
-Merissa A	33
-Girtablulu	7
+Astark	19
+Dorphon	15
+
+HBD
+Hallow Battlefield: Desert
+episode 4
+Goran	33
+Pyro Goran	22
+Goran Detonator	15
+Satellite Lizard	28
+Yowie	17
+Sand Rappy	15
+Zu	18
+Merissa A	30
+Girtablulu	6
 

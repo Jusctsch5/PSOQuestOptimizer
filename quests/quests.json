@@ -2,7 +2,9 @@
   {
     "quest_name": "MU1",
     "long_name": "Mop-up Operation 1",
-    "areas": ["Forest 1"],
+    "areas": [
+      "Forest 1"
+    ],
     "episode": 1,
     "enemies": {
       "Bartle": 14,
@@ -16,7 +18,9 @@
   {
     "quest_name": "MU2",
     "long_name": "Mop-up Operation 2",
-    "areas": ["Cave 1"],
+    "areas": [
+      "Cave 1"
+    ],
     "episode": 1,
     "enemies": {
       "Vulmer": 72,
@@ -30,7 +34,9 @@
   {
     "quest_name": "MU3",
     "long_name": "Mop-up Operation 3",
-    "areas": ["Mine 1"],
+    "areas": [
+      "Mine 1"
+    ],
     "episode": 1,
     "enemies": {
       "Gillchich": 59,
@@ -45,7 +51,9 @@
   {
     "quest_name": "MU4",
     "long_name": "Mop-up Operation 4",
-    "areas": ["Ruins 1"],
+    "areas": [
+      "Ruins 1"
+    ],
     "episode": 1,
     "enemies": {
       "Arlan": 35,
@@ -60,7 +68,9 @@
   {
     "quest_name": "SU1",
     "long_name": "Sweep Up Operation 1",
-    "areas": ["Forest 2"],
+    "areas": [
+      "Forest 2"
+    ],
     "episode": 1,
     "enemies": {
       "Bartle": 26,
@@ -75,7 +85,9 @@
   {
     "quest_name": "SU2",
     "long_name": "Sweep Up Operation 2",
-    "areas": ["Cave 2"],
+    "areas": [
+      "Cave 2"
+    ],
     "episode": 1,
     "enemies": {
       "Vulmer": 46,
@@ -90,7 +102,9 @@
   {
     "quest_name": "SU3",
     "long_name": "Sweep Up Operation 3",
-    "areas": ["Mine 2"],
+    "areas": [
+      "Mine 2"
+    ],
     "episode": 1,
     "enemies": {
       "Gillchich": 57,
@@ -106,7 +120,9 @@
     "quest_name": "SU4",
     "long_name": "Sweep Up Operation 4",
     "episode": 1,
-    "areas": ["Ruins 2"],
+    "areas": [
+      "Ruins 2"
+    ],
     "enemies": {
       "Arlan": 45,
       "Merlan": 24,
@@ -121,7 +137,9 @@
   {
     "quest_name": "EN1",
     "long_name": "Endless Nightmare 1",
-    "areas": ["Forest 1, Forest 2"],
+    "areas": [
+      "Forest 1, Forest 2"
+    ],
     "episode": 1,
     "enemies": {
       "Bartle": 57,
@@ -137,7 +155,9 @@
   {
     "quest_name": "EN2",
     "long_name": "Endless Nightmare 2",
-    "areas": ["Cave 1, Cave 2"],
+    "areas": [
+      "Cave 1, Cave 2"
+    ],
     "episode": 1,
     "enemies": {
       "Vulmer": 152,
@@ -152,7 +172,9 @@
   {
     "quest_name": "EN3",
     "long_name": "Endless Nightmare 3",
-    "areas": ["Mine 1, Mine 2"],
+    "areas": [
+      "Mine 1, Mine 2"
+    ],
     "episode": 1,
     "enemies": {
       "Gillchich": 104,
@@ -167,7 +189,9 @@
   {
     "quest_name": "EN4",
     "long_name": "Endless Nightmare 4",
-    "areas": ["Ruins 1, Ruins 2"],
+    "areas": [
+      "Ruins 1, Ruins 2"
+    ],
     "episode": 1,
     "enemies": {
       "Arlan": 49,
@@ -185,7 +209,9 @@
   {
     "quest_name": "SR1",
     "long_name": "Scarlet Realm 1",
-    "areas": ["Forest 1, Forest 2"],
+    "areas": [
+      "Forest 1, Forest 2"
+    ],
     "episode": 1,
     "enemies": {
       "Bartle": 62,
@@ -201,7 +227,9 @@
   {
     "quest_name": "SR2",
     "long_name": "Scarlet Realm 2",
-    "areas": ["Cave 2, Cave 3"],
+    "areas": [
+      "Cave 2, Cave 3"
+    ],
     "episode": 1,
     "enemies": {
       "Vulmer": 128,
@@ -217,7 +245,9 @@
   {
     "quest_name": "SR3",
     "long_name": "Scarlet Realm 3",
-    "areas": ["Mine 1, Mine 2"],
+    "areas": [
+      "Mine 1, Mine 2"
+    ],
     "episode": 1,
     "enemies": {
       "Gillchich": 123,
@@ -232,7 +262,9 @@
   {
     "quest_name": "SR4",
     "long_name": "Scarlet Realm 4",
-    "areas": ["Ruins 2, Ruins 3"],
+    "areas": [
+      "Ruins 2, Ruins 3"
+    ],
     "episode": 1,
     "enemies": {
       "Arlan": 82,
@@ -250,7 +282,9 @@
   {
     "quest_name": "SA1",
     "long_name": "Silent Afterimage 1",
-    "areas": ["Forest 1, Ruins 1"],
+    "areas": [
+      "Forest 1, Ruins 1"
+    ],
     "episode": 1,
     "enemies": {
       "Bartle": 34,
@@ -273,7 +307,9 @@
   {
     "quest_name": "SA2",
     "long_name": "Silent Afterimage 2",
-    "areas": ["Cave 3, Mine 1"],
+    "areas": [
+      "Cave 3, Mine 1"
+    ],
     "episode": 1,
     "enemies": {
       "Vulmer": 68,
@@ -1104,6 +1140,188 @@
       "Rag Rappy": 28,
       "Hildebear": 52,
       "Dragon": 1
+    }
+  },
+  {
+    "quest_name": "HBF",
+    "long_name": "Hallow Battlefield: Forest",
+    "areas": [
+      "Forest 1"
+    ],
+    "episode": 1,
+    "enemies": {
+      "El Rappy": 21,
+      "Gulgus": 17,
+      "Gulgus-Gue": 12,
+      "Bartle": 33,
+      "Barble": 23,
+      "Tollaw": 29,
+      "Mothvist": 4,
+      "Hildelt": 41
+    }
+  },
+  {
+    "quest_name": "HBC",
+    "long_name": "Hallow Battlefield: Caves",
+    "areas": [
+      "Cave 1"
+    ],
+    "episode": 1,
+    "enemies": {
+      "Vulmer": 33,
+      "Govulmer": 35,
+      "Melqueek": 12,
+      "Ob Lily": 70,
+      "Nano Dragon": 14,
+      "Crimson Assassin": 13,
+      "Pofuilly Slime": 15
+    }
+  },
+  {
+    "quest_name": "HBM",
+    "long_name": "Hallow Battlefield: Mines",
+    "areas": [
+      "Mine 1"
+    ],
+    "episode": 1,
+    "enemies": {
+      "Gillchich": 36,
+      "Dubchich": 22,
+      "Canabin": 22,
+      "Canune": 4,
+      "Sinow Blue": 36,
+      "Sinow Red": 23,
+      "Baranz": 16
+    }
+  },
+  {
+    "quest_name": "HBR",
+    "long_name": "Hallow Battlefield: Ruins",
+    "areas": [
+      "Ruins 1"
+    ],
+    "episode": 1,
+    "enemies": {
+      "Arlan": 38,
+      "Merlan": 37,
+      "Del-D": 32,
+      "Claw": 9,
+      "Bulclaw": 7,
+      "Gran Sorcerer": 27,
+      "Indi Belra": 14,
+      "Dark Bringer": 20
+    }
+  },
+  {
+    "quest_name": "HRT",
+    "long_name": "Hallow Reality: Temple",
+    "episode": 2,
+    "enemies": {
+      "Arlan": 29,
+      "Merlan": 23,
+      "Del-D": 16,
+      "El Rappy": 24,
+      "Ob Lily": 38,
+      "Hildelt": 21,
+      "Crimson Assassin": 9,
+      "Indi Belra": 21
+    }
+  },
+  {
+    "quest_name": "HRS",
+    "long_name": "Hallow Reality: Spaceship",
+    "episode": 2,
+    "enemies": {
+      "Gillchich": 51,
+      "Dubchich": 28,
+      "Gulgus": 34,
+      "Gulgus-Gue": 19,
+      "Delsaber": 24,
+      "Pan Arms": 7,
+      "Baranz": 18
+    }
+  },
+  {
+    "quest_name": "HBCCA",
+    "long_name": "Hallow Battlefield: CCA",
+    "episode": 2,
+    "enemies": {
+      "Merillia": 28,
+      "Meriltas": 21,
+      "Ul Gibbon": 30,
+      "Zol Gibbon": 21,
+      "Gee": 31,
+      "Sinow Berill": 17,
+      "Sinow Spigell": 15,
+      "Mericarol": 5,
+      "Merikle": 2,
+      "Mericus": 2,
+      "Gibbles": 8,
+      "Gi Gue": 8
+    }
+  },
+  {
+    "quest_name": "HBS",
+    "long_name": "Hallow Battlefield: Seabed",
+    "episode": 2,
+    "enemies": {
+      "Dolmolm": 39,
+      "Dolmdarl": 38,
+      "Recon": 0,
+      "Morfos": 14,
+      "Deldepth": 7,
+      "Sinow Zoa": 21,
+      "Sinow Zele": 17,
+      "Delbiter": 14
+    }
+  },
+  {
+    "quest_name": "HBTO",
+    "long_name": "Hallow Battlefield: Tower",
+    "episode": 2,
+    "enemies": {
+      "Recon": 14,
+      "Mericarol": 15,
+      "Merikle": 3,
+      "Mericus": 3,
+      "Gibbles": 18,
+      "Gi Gue": 19,
+      "Delbiter": 11,
+      "Del Lily": 16,
+      "Ill Gill": 25,
+      "Epsilon": 7
+    }
+  },
+  {
+    "quest_name": "HBW",
+    "long_name": "Hallow Battlefield: Wilderness",
+    "episode": 4,
+    "enemies": {
+      "Boota": 11,
+      "Ze Boota": 11,
+      "Ba Boota": 23,
+      "Satellite Lizard": 24,
+      "Yowie": 20,
+      "Sand Rappy": 4,
+      "Zu": 20,
+      "Astark": 19,
+      "Dorphon": 15
+    }
+  },
+  {
+    "quest_name": "HBD",
+    "long_name": "Hallow Battlefield: Desert",
+    "episode": 4,
+    "enemies": {
+      "Goran": 33,
+      "Pyro Goran": 22,
+      "Goran Detonator": 15,
+      "Satellite Lizard": 28,
+      "Yowie": 17,
+      "Sand Rappy": 15,
+      "Zu": 18,
+      "Merissa A": 30,
+      "Girtablulu": 6
     }
   }
 ]
