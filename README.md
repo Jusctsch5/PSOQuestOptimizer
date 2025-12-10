@@ -9,7 +9,7 @@ The purpose of this project is to provide some guidance on how to be efficient w
 ## Usage
 This repository currently includes scripts to make use of the surrounding logic to parse quests, drop tables, and price guide data.
 - `calculate_weapon_value.py` - Calculates the average value of a weapon based on drop location and pattern 5 hit probabilities.
-- `quest_optimizer.py` - Ranks quests by PD efficiency (PD per quest) with filtering options:
+- `optimize_quests.py` - Ranks quests by PD efficiency (PD per quest) with filtering options:
   - Filter by quest name
   - Filter by section ID
 
@@ -20,7 +20,7 @@ The following components are used for these scripts. These components take the f
 ### Drop Tables
 Python library containing enemy and box drop tables. These tables were parsed from the drop tables seen in the #references section below. Additionally, the logic around weapon attribute patterns have been lifted from the wiki's documentation
 
-### Quest Listing
+### Quests
 Python library acting as a wrapper containing quest listings. These listings were parsed from the quest found in the ephinea wiki, as well as the RBR spreadsheet seen in the #references section below.
 
 ### Price Guide
@@ -29,17 +29,33 @@ These modifications are summarized as the following:
 - filling out "Indescribable" PD values for high-hit weapons, based on linear interpolation of known values
 - Adjusting unsensible PD values for trash rares (e.g. Braniac going from .5PD to 0PD)
 - Making sensible value adjustments for items with shifting market values (e.g. Limiters/Adepts/Cookies)
+- Desensitizing the price guide to high hit rares as purely "collector's items"
 
 As an aside, these adjustments are required for the project to function properly. Without adjusting common trash rares down to 0PD, the expected value of a quest would be artificially inflated, soley based on the value of that trash rare. Additionally, while an abnormally high PD value for an incredibly rare item is unlikely, frankly it has a pronounced effect on the average value of the rare.
+
+### Quest Optimizer
+Provides the connective tissue between the other libraries.
+
+## Coding Stuff
+- uses python 3.x
+- uses ruff for linting and formatting (recommend the ruff extension for vscode, uses the pyproject.toml file for configuration+)
+- mypy for type checking
+- uses pytest for testing+
+
+### Running unit tests
+All of the tests use relative path strategies to find test files, so running the tests from the root directory is recommended.
+```bash
+python -m pytest ./
+```
 
 ## References:
 
 In addition to the following reference, the Ephinea
-| Reference | Description |
-| --------- | ----------- |
-| [Price Guide](https://wiki.pioneer2.net/w/Price_guide) | The basis of the price guide used in this repository |
-| [Drop Tables](https://ephinea.pioneer2.net/drop-charts/ultimate/) | Listing of drop tables  |
-| [RBR Spreadsheet](https://docs.google.com/spreadsheets/d/1sEiKgmFA1aC4XXfZ23lz3VBodYZEhF39XxOSKgULiWg/edit?gid=0#gid=0) | Excellent spreadsheet containing macros to calculate drop chances given quests and boosts|
+| Reference                                                                                                               | Description                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [Price Guide](https://wiki.pioneer2.net/w/Price_guide)                                                                  | The basis of the price guide used in this repository                                      |
+| [Drop Tables](https://ephinea.pioneer2.net/drop-charts/ultimate/)                                                       | Listing of drop tables                                                                    |
+| [RBR Spreadsheet](https://docs.google.com/spreadsheets/d/1sEiKgmFA1aC4XXfZ23lz3VBodYZEhF39XxOSKgULiWg/edit?gid=0#gid=0) | Excellent spreadsheet containing macros to calculate drop chances given quests and boosts |
 
 
 ## Thanks

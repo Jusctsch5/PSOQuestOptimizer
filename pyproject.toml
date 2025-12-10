@@ -1,0 +1,9 @@
+[tool.ruff]
+select = ["E", "F", "I"]  # pycodestyle, flake8, isort
+line-length = 128
+ignore = [
+    "F541",  # <- ignore f-string-without-placeholders
+]
+
+[tool.mypy]
+check_untyped_defs = true  # Check for types within untype-hinted functions (like init...)

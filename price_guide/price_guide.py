@@ -1,24 +1,27 @@
-from abc import ABC, abstractmethod
-from bisect import bisect
-from typing import Dict, Any, Optional, List
-from pathlib import Path
+"""
+Front-end wrapper for the price guide data.
+"""
+
 import asyncio
 import json
 import logging
+from abc import ABC, abstractmethod
+from bisect import bisect
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-class BasePriceStrategy(ABC):
-    MINIMUM = 0
-    AVERAGE = 1
-    MAXIMUM = 2
+class BasePriceStrategy(Enum):
+    MINIMUM = "MINIMUM"
+    AVERAGE = "AVERAGE"
+    MAXIMUM = "MAXIMUM"
 
 
-MESESTA_PER_PD = 500000
 HIGH_ATTRIBUTE_THRESHOLD = 50
-ASSUME_MISSING_PRICE_MEANS_ZERO = True
 
 
 class PriceGuideException(Exception):
@@ -37,15 +40,21 @@ class PriceGuideParseException(PriceGuideException):
     pass
 
 
+class CannotInferBasePriceException(PriceGuideException):
+    pass
+
+
 class PriceGuideAbstract(ABC):
-    def __init__(self):
-        self.bps = BasePriceStrategy.MINIMUM
+    def __init__(self, base_price_strategy: BasePriceStrategy = BasePriceStrategy.MINIMUM) -> None:
+        self.bps = base_price_strategy
         self.srank_weapon_prices: Dict[str, Any] = {}
         self.weapon_prices: Dict[str, Any] = {}
+        self.common_weapon_prices: Dict[str, Any] = {}
         self.frame_prices: Dict[str, Any] = {}
         self.barrier_prices: Dict[str, Any] = {}
         self.unit_prices: Dict[str, Any] = {}
         self.mag_prices: Dict[str, Any] = {}
+        self.cell_prices: Dict[str, Any] = {}
         self.disk_prices: Dict[str, Any] = {}
         self.tool_prices: Dict[str, Any] = {}
 
@@ -55,13 +64,13 @@ class PriceGuideAbstract(ABC):
         # Handle None or empty string
         if not price_range or price_range.strip() == "":
             return 0.0
-        
+
         price_range = price_range.strip()
-        
+
         # Handle special values first
         if price_range.upper() in ["N/A", "NA", "INESTIMABLE", "INEST"]:
             return 0.0
-        
+
         # Handle "4800+" format - use the base value
         if price_range.endswith("+"):
             try:
@@ -69,7 +78,7 @@ class PriceGuideAbstract(ABC):
                 return price_value
             except ValueError:
                 return 0.0
-        
+
         # Handle range format "min-max"
         if "-" in price_range:
             parts = price_range.split("-")
@@ -95,7 +104,7 @@ class PriceGuideAbstract(ABC):
             else:
                 # Malformed range (multiple dashes or empty parts)
                 return 0.0
-        
+
         # Try to parse as a single number
         try:
             price_value = float(price_range)
@@ -105,15 +114,24 @@ class PriceGuideAbstract(ABC):
             return 0.0
 
     @staticmethod
-    def get_price_for_item_range(
-        price_range: str, number: int, bps: BasePriceStrategy
-    ) -> float:
+    def get_price_for_item_range(price_range: str, number: int, bps: BasePriceStrategy) -> float:
         return PriceGuideAbstract.get_price_from_range(price_range, bps) * number
 
     @abstractmethod
     async def build_prices(self) -> None:
         """Build the price database from the source"""
         pass
+
+    @staticmethod
+    def _ci_key(mapping: Dict[str, Any], name: str) -> Optional[str]:
+        """Case-insensitive lookup returning the actual key from the mapping."""
+        if name in mapping:
+            return name
+        target = name.upper()
+        for key in mapping.keys():
+            if key.upper() == target:
+                return key
+        return None
 
     def get_price_srank_weapon(
         self,
@@ -124,44 +142,21 @@ class PriceGuideAbstract(ABC):
     ) -> float:
         """Get price for S-rank weapon"""
 
-        actual_key = next(
-            (
-                key
-                for key in self.srank_weapon_prices["weapons"].keys()
-                if key.lower() == name.lower()
-            ),
-            None,
-        )
+        actual_key = self._ci_key(self.srank_weapon_prices["weapons"], name)
 
         if actual_key is None:
-            if ASSUME_MISSING_PRICE_MEANS_ZERO:
-                return 0
-            else:
-                raise PriceGuideExceptionItemNameNotFound(
-                    f"Item name {name} not found in srank_weapon_prices"
-                )
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in srank_weapon_prices")
 
         base_price = self.srank_weapon_prices["weapons"][actual_key]["base"]
 
         ability_price = 0
         if ability:
-            actual_ability = next(
-                (
-                    key
-                    for key in self.srank_weapon_prices["modifiers"].keys()
-                    if key.lower() == ability.lower()
-                ),
-                None,
-            )
+            actual_ability = self._ci_key(self.srank_weapon_prices["modifiers"], ability)
 
             if actual_ability is None:
-                raise PriceGuideExceptionAbilityNameNotFound(
-                    f"Ability {ability} not found in srank_weapon_prices"
-                )
+                raise PriceGuideExceptionAbilityNameNotFound(f"Ability {ability} not found in srank_weapon_prices")
 
-            ability_price = self.srank_weapon_prices["modifiers"][actual_ability][
-                "base"
-            ]
+            ability_price = self.srank_weapon_prices["modifiers"][actual_ability]["base"]
 
         total_price = float(base_price) + float(ability_price)
 
@@ -178,26 +173,24 @@ class PriceGuideAbstract(ABC):
     ) -> float:
         """Get price for normal weapon"""
 
-        actual_key = next(
-            (key for key in self.weapon_prices.keys() if key.lower() == name.lower()),
-            None,
-        )
+        actual_key = self._ci_key(self.weapon_prices, name)
 
         if actual_key is None:
-            if ASSUME_MISSING_PRICE_MEANS_ZERO:
-                return 0
-            else:
-                raise PriceGuideExceptionItemNameNotFound(
-                    f"Item name {name} not found in weapon_prices"
-                )
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in weapon_prices")
 
         base_price_str = self.weapon_prices[actual_key].get("base")
+        hit_values = self.weapon_prices[actual_key].get("hit_values", {})
+
         if base_price_str is None:
-            base_price = 0.0
+            # If no base price, use 0-hit price as base
+            if hit_values and "0" in hit_values:
+                base_price = self.get_price_from_range(hit_values["0"], self.bps)
+            else:
+                raise CannotInferBasePriceException(
+                    f"Cannot infer base price for weapon '{name}': base is null and no 0-hit value found"
+                )
         else:
-            base_price = self.get_price_from_range(
-                base_price_str, self.bps
-            )
+            base_price = self.get_price_from_range(base_price_str, self.bps)
 
         if weapon_attributes:
             modifiers = self.weapon_prices[actual_key].get("modifiers", {})
@@ -205,12 +198,8 @@ class PriceGuideAbstract(ABC):
                 if value > HIGH_ATTRIBUTE_THRESHOLD and attribute in modifiers:
                     ability_price_str = modifiers[attribute]
                     if ability_price_str and ability_price_str.upper() != "N/A":
-                        ability_price = self.get_price_from_range(
-                            ability_price_str, self.bps
-                        )
+                        ability_price = self.get_price_from_range(ability_price_str, self.bps)
                         base_price += ability_price
-
-        hit_values = self.weapon_prices[actual_key].get("hit_values", {})
 
         if hit_values and hit > 0:
             # Convert string keys to integers and sort
@@ -237,33 +226,23 @@ class PriceGuideAbstract(ABC):
     ) -> float:
         """Get price for frame"""
         logger.info(f"get_price_frame: {name} {addition} {max_addition} {slot}")
-        if name not in self.frame_prices:
-            if ASSUME_MISSING_PRICE_MEANS_ZERO:
-                return 0
-            else:
-                raise PriceGuideExceptionItemNameNotFound(
-                    f"Item name {name} not found in frame_prices"
-                )
-        price_range = self.frame_prices[name]["base"]
+        actual_key = self._ci_key(self.frame_prices, name)
+        if actual_key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in frame_prices")
+        price_range = self.frame_prices[actual_key]["base"]
         base_price = self.get_price_from_range(price_range, self.bps)
         if slot > 0:
             base_price += self.get_price_tool("AddSlot", slot)
 
         return base_price
 
-    def get_price_barrier(
-        self, name: str, addition: Dict[str, int], max_addition: Dict[str, int]
-    ) -> float:
+    def get_price_barrier(self, name: str, addition: Dict[str, int], max_addition: Dict[str, int]) -> float:
         """Get price for barrier"""
         logger.info(f"get_price_barrier: {name} {addition} {max_addition}")
-        if name not in self.barrier_prices:
-            if ASSUME_MISSING_PRICE_MEANS_ZERO:
-                return 0
-            else:
-                raise PriceGuideExceptionItemNameNotFound(
-                    f"Item name {name} not found in barrier_prices"
-                )
-        price_range = self.barrier_prices[name]["base"]
+        actual_key = self._ci_key(self.barrier_prices, name)
+        if actual_key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in barrier_prices")
+        price_range = self.barrier_prices[actual_key]["base"]
         base_price = self.get_price_from_range(price_range, self.bps)
 
         return base_price
@@ -271,39 +250,27 @@ class PriceGuideAbstract(ABC):
     def get_price_unit(self, name: str) -> float:
         """Get price for unit"""
         logger.info(f"get_price_unit: {name}")
-        if name not in self.unit_prices:
-            if ASSUME_MISSING_PRICE_MEANS_ZERO:
-                return 0
-            else:
-                raise PriceGuideExceptionItemNameNotFound(
-                    f"Item name {name} not found in unit_prices"
-                )
-        price_range = self.unit_prices[name]["base"]
+        actual_key = self._ci_key(self.unit_prices, name)
+        if actual_key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in unit_prices")
+        price_range = self.unit_prices[actual_key]["base"]
         return self.get_price_for_item_range(price_range, 1, self.bps)
 
     def get_price_mag(self, name: str, level: int) -> float:
         """Get price for mag"""
         logger.info(f"get_price_mag: {name} {level}")
-        if name not in self.mag_prices:
-            if ASSUME_MISSING_PRICE_MEANS_ZERO:
-                return 0
-            else:
-                raise PriceGuideExceptionItemNameNotFound(
-                    f"Item name {name} not found in mag_prices"
-                )
-        price_range = self.mag_prices[name]["base"]
+        actual_key = self._ci_key(self.mag_prices, name)
+        if actual_key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in mag_prices")
+        price_range = self.mag_prices[actual_key]["base"]
         return self.get_price_for_item_range(price_range, 1, self.bps)
 
     def get_price_disk(self, name: str, level: int) -> float:
         logger.info(f"get_price_disk: {name} {level}")
-        if name not in self.disk_prices:
-            if ASSUME_MISSING_PRICE_MEANS_ZERO:
-                return 0
-            else:
-                raise PriceGuideExceptionItemNameNotFound(
-                    f"Item name {name} not found in disk_prices"
-                )
-        levels = self.disk_prices[name]
+        actual_key = self._ci_key(self.disk_prices, name)
+        if actual_key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in disk_prices")
+        levels = self.disk_prices[actual_key]
         # Convert string keys to integers and sort
         sorted_thresholds = sorted(map(int, levels.keys()))
 
@@ -319,83 +286,50 @@ class PriceGuideAbstract(ABC):
         # If not found, it's not worth anything.
         return 0
 
+    def get_price_cell(self, name: str) -> float:
+        """Get price for mag cells / cells.json items."""
+        logger.info(f"get_price_cell: {name}")
+        actual_key = self._ci_key(self.cell_prices, name)
+        if actual_key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in cell_prices")
+        price_range = self.cell_prices[actual_key]["base"]
+        return self.get_price_from_range(price_range, self.bps)
+
     def get_price_tool(self, name: str, number: int) -> float:
         """Get price for tool"""
         logger.info(f"get_price_tool: {name} {number}")
         # Check if the tool exists in the price database
-        if name not in self.tool_prices:
-            if ASSUME_MISSING_PRICE_MEANS_ZERO:
-                return 0
-            else:
-                raise PriceGuideExceptionItemNameNotFound(
-                    f"Item name {name} not found in tool_prices"
-                )
+        actual_key = self._ci_key(self.tool_prices, name)
+        if actual_key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in tool_prices")
 
         # Get the price range string
-        price_range = self.tool_prices[name]["base"]
+        price_range = self.tool_prices[actual_key]["base"]
         return self.get_price_for_item_range(price_range, number, self.bps)
 
     def get_price_other(self, name: str, number: int) -> float:
         """Get price for other items"""
         logger.info(f"get_price_other: {name} {number}")
         return 0
-    
-    def get_weapon_expected_value(
-        self,
-        weapon_name: str,
-        drop_area: Optional[str] = None,
-    ) -> float:
-        """
-        Calculate expected weapon value based on pattern probabilities.
-        
-        For rare weapons: Always uses Pattern 5 for all attributes.
-        For common weapons: Uses area-specific patterns.
-        
-        Args:
-            weapon_name: Name of the weapon
-            drop_area: Area where weapon drops (for hit probability calculation)
-        
-        Returns:
-            Expected PD value
-        """
-        from .weapon_value_calculator import WeaponValueCalculator
-        
-        calculator = WeaponValueCalculator(self)
-        return calculator.calculate_weapon_expected_value(weapon_name, drop_area)
-    
-    def get_weapon_value_breakdown(
-        self,
-        weapon_name: str,
-        drop_area: Optional[str] = None,
-    ) -> Dict[str, Any]:
-        """
-        Get detailed breakdown of weapon value calculation.
-        
-        Args:
-            weapon_name: Name of the weapon
-            drop_area: Area where weapon drops
-        
-        Returns:
-            Dictionary with breakdown:
-            {
-                "base_price": float,
-                "attribute_contribution": float,
-                "hit_contribution": float,
-                "total": float,
-                "weapon_data": Dict,
-                "attr_results": Dict,
-                "hit_breakdown": List[Dict],
-            }
-        """
-        from .weapon_value_calculator import WeaponValueCalculator
-        
-        calculator = WeaponValueCalculator(self)
-        return calculator.get_weapon_value_breakdown(weapon_name, drop_area)
+
+    def get_weapon_data(self, name: str) -> Dict[str, Any]:
+        """Fetch for weapon price entry."""
+        key = self._ci_key(self.weapon_prices, name)
+        if key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in weapon_prices")
+        return self.weapon_prices[key]
+
+    def get_common_weapon_data(self, name: str) -> Dict[str, Any]:
+        """Fetch for common weapon price entry."""
+        key = self._ci_key(self.common_weapon_prices, name)
+        if key is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in common_weapon_prices")
+        return self.common_weapon_prices[key]
 
 
 class PriceGuideFixed(PriceGuideAbstract):
-    def __init__(self, directory: str):
-        super().__init__()
+    def __init__(self, directory: str, base_price_strategy: BasePriceStrategy = BasePriceStrategy.MINIMUM):
+        super().__init__(base_price_strategy)
         self.directory = Path(directory)
         asyncio.run(self.build_prices())
 
@@ -404,10 +338,12 @@ class PriceGuideFixed(PriceGuideAbstract):
         logger.info(f"Building price database from {self.directory}")
         self.srank_weapon_prices = self._load_json_file("srankweapons.json")
         self.weapon_prices = self._load_json_file("weapons.json")
+        self.common_weapon_prices = self._load_json_file("common_weapons.json")
         self.frame_prices = self._load_json_file("frames.json")
         self.barrier_prices = self._load_json_file("barriers.json")
         self.unit_prices = self._load_json_file("units.json")
         self.mag_prices = self._load_json_file("mags.json")
+        self.cell_prices = self._load_json_file("cells.json")
         self.disk_prices = self._load_json_file("disks.json")
         self.tool_prices = self._load_json_file("tools.json")
         logger.info(f"Price database built from {self.directory}")
@@ -424,8 +360,8 @@ class PriceGuideFixed(PriceGuideAbstract):
 
 
 class PriceGuideDynamic(PriceGuideAbstract):
-    def __init__(self, api_url: str):
-        super().__init__()
+    def __init__(self, api_url: str, base_price_strategy: BasePriceStrategy = BasePriceStrategy.MINIMUM):
+        super().__init__(base_price_strategy)
         self.api_url = api_url
         asyncio.run(self.build_prices())
 
@@ -451,6 +387,7 @@ class PriceGuideDynamic(PriceGuideAbstract):
 # Example usage:
 if __name__ == "__main__":
     from pathlib import Path
+
     # Using fixed prices from JSON files
     data_dir = Path(__file__).parent / "data"
     fixed_guide = PriceGuideFixed(str(data_dir))

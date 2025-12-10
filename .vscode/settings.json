@@ -1,0 +1,8 @@
+{
+    "editor.formatOnSave": true,
+    "scm.diffDecorations": "none",
+    "[json]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+    },
+}

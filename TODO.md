@@ -1,0 +1,27 @@
+# TODO
+List of high level TODOS
+
+- [X] Add ruff/mypy integration
+- [X] Add optimize_weapon_hunting.py to help direct to most efficient quests for hunting a specific weapon
+- [ ] Add holloween quests to quests.json
+- [ ] Add "evergreen" quests to quests.json, i.e. TE and MaxAttack quests
+- [ ] Add mats/grinders/meseta(?) to price guide/drop tables
+- [ ] Add Box Drops to Drop Tables
+- [ ] Add general item value calculation for all items (barriers, frames, etc) (i.e. calulate_weapon_value.py -> item_value_calculator.py)
+- [ ] Add disk drops to drop tables and item value calculation for quests
+- [ ] Add common weapon value calculation to weapon_value_calculator.py, price guide, and drop tables (note only certain enemies drop common weapons)
+- [ ] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
+- [ ] Investigate modeling**
+
+**From Chump-GPT
+Places where more modeling could add value:
+- Run-level variance/risk: compute per-quest variance/StdDev and percentiles (or CVaR) using Bernoulli rare drops + PD drops. That lets you rank by risk-adjusted PD/hour (e.g., mean – k·std) instead of pure expectation. Could be analytic (sum of p(1–p)·value²) or Monte Carlo.
+- Time uncertainty: treat quest_time as a distribution (lognormal/gamma from player samples) and propagate to PD/hour distribution; report median and 95% CI instead of a single PD/min.
+- Price uncertainty/sensitivity: the price guide is a range; sample or model prices with priors (e.g., triangular from min/median/max) to get PD value bands and show which items drive volatility.
+- Scenario/what-if sweeps: grid or bootstrap over RBR/weekly boosts, slime split on/off, rare-enemy caps, and present tornado plots of sensitivity. This would surface which quests are most responsive to boosts.
+- Portfolio/planning optimization: given a time budget and acceptable risk, choose a mix of quests that maximizes expected PD while keeping variance below a threshold; classic knapSack/mean-variance framing on the per-quest stats.
+- Tail-heavy drops: explicitly report probability of “jackpot” events (e.g., ≥X PD in one run) to guide whether to chase high-variance quests vs. steady grinders.
+If you want one concrete next step: add optional --simulate n to quest_optimizer.py that Monte Carlo samples drops + quest_time + price ranges, then report mean/median/95th, std, and jackpot probability per quest; sort by risk-adjusted PD/hour.
+
+
+From the above, Run-level variance is probably reasonable to model. Folks are going to have different feelings on how much variance they want to tolerate.
