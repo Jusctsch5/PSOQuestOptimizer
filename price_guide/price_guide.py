@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from bisect import bisect
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Callable, Dict, Optional
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -20,6 +20,8 @@ class BasePriceStrategy(Enum):
     AVERAGE = "AVERAGE"
     MAXIMUM = "MAXIMUM"
 
+
+FIT_INESTIMABLE_PRICE = True
 
 HIGH_ATTRIBUTE_THRESHOLD = 50
 
@@ -333,11 +335,152 @@ class PriceGuideFixed(PriceGuideAbstract):
         self.directory = Path(directory)
         asyncio.run(self.build_prices())
 
+    def _extract_price_value(self, price_str: str) -> Optional[float]:
+        """Extract a numeric price value from a price string for curve fitting."""
+        if not price_str or price_str.strip() == "":
+            return None
+
+        price_str = price_str.strip()
+
+        # Handle special values
+        if price_str.upper() in ["N/A", "NA", "INESTIMABLE", "INEST"]:
+            return None
+
+        # Handle "4800+" format - use the base value
+        if price_str.endswith("+"):
+            try:
+                return float(price_str.rstrip("+").strip())
+            except ValueError:
+                return None
+
+        # Handle range format "min-max" - use average for curve fitting
+        if "-" in price_str:
+            parts = price_str.split("-")
+            if len(parts) == 2:
+                min_str, max_str = parts[0].strip(), parts[1].strip()
+                if not min_str or not max_str:
+                    return None
+                try:
+                    min_price = float(min_str)
+                    max_price = float(max_str)
+                    return (min_price + max_price) / 2
+                except ValueError:
+                    return None
+
+        # Try to parse as a single number
+        try:
+            return float(price_str)
+        except ValueError:
+            return None
+
+    def _fit_price_curve(self, x_values: list[int], y_values: list[float]) -> Optional[Callable[[int], float]]:
+        """Fit a linear curve to the given data points. Returns a function f(x) = a*x + b."""
+        if len(x_values) < 2 or len(y_values) < 2:
+            return None
+
+        # Simple linear regression: y = a*x + b
+        n = len(x_values)
+        sum_x = sum(x_values)
+        sum_y = sum(y_values)
+        sum_xy = sum(x * y for x, y in zip(x_values, y_values))
+        sum_x2 = sum(x * x for x in x_values)
+
+        denominator = n * sum_x2 - sum_x * sum_x
+        if abs(denominator) < 1e-10:  # Avoid division by zero
+            return None
+
+        a = (n * sum_xy - sum_x * sum_y) / denominator
+        b = (sum_y - a * sum_x) / n
+
+        # Return a function that computes the price for a given x
+        def price_func(x: int) -> float:
+            return a * x + b
+
+        return price_func
+
+    def _fit_inestimable_hit_values(self, hit_values: Dict[str, str]) -> None:
+        """Fit inestimable prices in hit_values dictionary."""
+        if not hit_values:
+            return
+
+        # Convert keys to integers and sort
+        sorted_keys = sorted(map(int, hit_values.keys()))
+
+        # Find the first inestimable index
+        first_inestimable_idx = None
+        for i, key in enumerate(sorted_keys):
+            price_str = hit_values[str(key)]
+            if price_str and price_str.strip().upper() in ["INESTIMABLE", "INEST"]:
+                first_inestimable_idx = i
+                break
+
+        if first_inestimable_idx is None:
+            return  # No inestimable values found
+
+        # Collect prior fixed values
+        prior_x = []
+        prior_y = []
+        for i in range(first_inestimable_idx):
+            key = sorted_keys[i]
+            price_str = hit_values[str(key)]
+            price_value = self._extract_price_value(price_str)
+            if price_value is not None:
+                prior_x.append(key)
+                prior_y.append(price_value)
+
+        if not prior_x:
+            return  # No prior fixed values to work with
+
+        # Check if values are increasing
+        is_increasing = len(prior_y) > 1 and all(prior_y[i] <= prior_y[i + 1] for i in range(len(prior_y) - 1))
+
+        # Fit prices for inestimable values
+        for i in range(first_inestimable_idx, len(sorted_keys)):
+            key = sorted_keys[i]
+            price_str = hit_values[str(key)]
+
+            if price_str and price_str.strip().upper() in ["INESTIMABLE", "INEST"]:
+                if is_increasing and len(prior_x) >= 2:
+                    # Fit a curve
+                    price_func = self._fit_price_curve(prior_x, prior_y)
+                    if price_func:
+                        estimated_price = price_func(key)
+                        # Ensure price doesn't go negative
+                        estimated_price = max(0, estimated_price)
+                        # Round to reasonable precision
+                        estimated_price = round(estimated_price, 2)
+                        if estimated_price == int(estimated_price):
+                            hit_values[str(key)] = str(int(estimated_price))
+                        else:
+                            hit_values[str(key)] = str(estimated_price)
+                    else:
+                        # Fallback to last fixed price
+                        last_price = prior_y[-1]
+                        if last_price == int(last_price):
+                            hit_values[str(key)] = str(int(last_price))
+                        else:
+                            hit_values[str(key)] = str(last_price)
+                else:
+                    # Use last fixed price
+                    last_price = prior_y[-1]
+                    if last_price == int(last_price):
+                        hit_values[str(key)] = str(int(last_price))
+                    else:
+                        hit_values[str(key)] = str(last_price)
+
+    def _fit_inestimable_weapon_prices(self) -> None:
+        """Process weapon prices to fit inestimable values."""
+        for weapon_name, weapon_data in self.weapon_prices.items():
+            if "hit_values" in weapon_data and weapon_data["hit_values"]:
+                self._fit_inestimable_hit_values(weapon_data["hit_values"])
+
     async def build_prices(self) -> None:
         """Build price database from local JSON files"""
         logger.info(f"Building price database from {self.directory}")
         self.srank_weapon_prices = self._load_json_file("srankweapons.json")
         self.weapon_prices = self._load_json_file("weapons.json")
+        if FIT_INESTIMABLE_PRICE:
+            self._fit_inestimable_weapon_prices()
         self.common_weapon_prices = self._load_json_file("common_weapons.json")
         self.frame_prices = self._load_json_file("frames.json")
         self.barrier_prices = self._load_json_file("barriers.json")

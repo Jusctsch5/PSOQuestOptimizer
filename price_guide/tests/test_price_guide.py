@@ -220,4 +220,6 @@ def test_rare_weapons_no_inestimable_hit_values(fixed_price_guide: PriceGuideFix
         error_msg = "Found weapons with 'Inestimable' hit values:\n"
         for weapon_name, hit_key, hit_value in weapons_with_inestimable:
             error_msg += f"  {weapon_name}: hit {hit_key} = {hit_value}\n"
+
+        print(weapons_with_inestimable)
         assert False, error_msg

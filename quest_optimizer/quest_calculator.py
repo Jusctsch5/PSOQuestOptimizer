@@ -31,6 +31,12 @@ WEEKLY_DAR_BOOST = 0.25  # +25% Drop Anything Rate
 WEEKLY_RDR_BOOST = 0.25  # +25% Rare Drop Rate
 WEEKLY_ENEMY_RATE_BOOST = 0.50  # +50% to rare enemy drop rate
 
+HOLLOWEEN_QUEST_DAR_BOOST = 0.50  # +50% Drop Anything Rate
+HOLLOWEEN_QUEST_EXPERIENCE_BOOST = 2.00  # +200% Experience Rate
+HOLLOWEEN_QUEST_RDR_BOOST = 0.50  # +50% Rare Drop Rate
+HOLLOWEEN_QUEST_RARE_ENEMY_BOOST = 1.00  # +100% Rare Enemy Appearance Rate
+HOLLOWEEN_QUEST_COOKIE_BOOST = 0.20  # +20% Halloween Cookie drop rate
+
 RBR_DAR_BOOST = 0.25  # +25% Drop Anything Rate
 RBR_RDR_BOOST = 0.25  # +25% Rare Drop Rate
 RBR_ENEMY_RATE_BOOST = 0.50  # +50% to rare enemy drop rate
@@ -80,10 +86,37 @@ class QuestCalculator:
         with open(drop_table_path, "r", encoding="utf-8") as f:
             return json.load(f)
 
-    def _load_quest_data(self, quest_data_path: Path) -> Dict:
+    def _load_quest_data(self, quest_data_path: Path) -> List[Dict]:
         """Load quests.json file."""
         with open(quest_data_path, "r", encoding="utf-8") as f:
             return json.load(f)
+
+    def _is_hallow_quest(self, quest_data: Dict) -> bool:
+        """
+        Check if a quest is a Hallow quest (uses Halloween boosts instead of weekly boosts).
+
+        Args:
+            quest_data: Quest data dictionary with quest_name and/or long_name
+
+        Returns:
+            True if quest is a Hallow quest
+        """
+        quest_name = quest_data.get("quest_name", "").upper()
+        long_name = quest_data.get("long_name", "").upper()
+        return "HALLOW" in quest_name or "HALLOW" in long_name
+
+    def _is_in_rbr_rotation(self, quest_data: Dict) -> bool:
+        """
+        Check if a quest is in the RBR rotation (RBR boosts apply).
+
+        Args:
+            quest_data: Quest data dictionary with optional in_rbr_rotation field
+
+        Returns:
+            True if quest is in RBR rotation (defaults to False if field not present)
+        """
+        # Default to False - quests must be explicitly marked as in rotation
+        return quest_data.get("in_rbr_rotation", False)
 
     def _get_weapon_expected_value(
         self,
@@ -571,17 +604,35 @@ class QuestCalculator:
         rdr_multiplier = 1.0
         enemy_rate_multiplier = 1.0
 
-        if rbr_active:
-            dar_multiplier *= 1.0 + RBR_DAR_BOOST
-            rdr_multiplier *= 1.0 + RBR_RDR_BOOST
-            enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
+        # Check if this is a Hallow quest (uses Halloween boosts instead of weekly boosts)
+        is_hallow = self._is_hallow_quest(quest_data)
+        # Check if quest is in RBR rotation (RBR boosts only apply if in rotation)
+        in_rbr_rotation = self._is_in_rbr_rotation(quest_data)
 
-        if weekly_boost == WeeklyBoost.DAR:
-            dar_multiplier *= 1.0 + WEEKLY_DAR_BOOST
-        elif weekly_boost == WeeklyBoost.RDR:
-            rdr_multiplier *= 1.0 + WEEKLY_RDR_BOOST
-        elif weekly_boost == WeeklyBoost.RareEnemy:
-            enemy_rate_multiplier *= 1.0 + WEEKLY_ENEMY_RATE_BOOST
+        if is_hallow:
+            # Hallow quests use Halloween boosts (ignore weekly_boost parameter)
+            dar_multiplier = 1.0 + HOLLOWEEN_QUEST_DAR_BOOST
+            rdr_multiplier = 1.0 + HOLLOWEEN_QUEST_RDR_BOOST
+            enemy_rate_multiplier = 1.0 + HOLLOWEEN_QUEST_RARE_ENEMY_BOOST
+
+            # RBR boosts only apply if quest is in RBR rotation
+            if in_rbr_rotation and rbr_active:
+                dar_multiplier *= 1.0 + RBR_DAR_BOOST
+                rdr_multiplier *= 1.0 + RBR_RDR_BOOST
+                enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
+        else:
+            # Regular quests use RBR and weekly boosts
+            if in_rbr_rotation and rbr_active:
+                dar_multiplier *= 1.0 + RBR_DAR_BOOST
+                rdr_multiplier *= 1.0 + RBR_RDR_BOOST
+                enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
+
+            if weekly_boost == WeeklyBoost.DAR:
+                dar_multiplier *= 1.0 + WEEKLY_DAR_BOOST
+            elif weekly_boost == WeeklyBoost.RDR:
+                rdr_multiplier *= 1.0 + WEEKLY_RDR_BOOST
+            elif weekly_boost == WeeklyBoost.RareEnemy:
+                enemy_rate_multiplier *= 1.0 + WEEKLY_ENEMY_RATE_BOOST
 
         # Let's sub rare enemies in here.
 
@@ -854,30 +905,7 @@ class QuestCalculator:
             - percentage: Drop probability as percentage
             - contributions: List of enemy contributions
         """
-        # Calculate boost multipliers
-        dar_multiplier = 1.0
-        rdr_multiplier = 1.0
-
-        if rbr_active:
-            dar_multiplier *= 1.0 + RBR_DAR_BOOST
-            rdr_multiplier *= 1.0 + RBR_RDR_BOOST
-
-        if weekly_boost == WeeklyBoost.DAR:
-            dar_multiplier *= 1.0 + WEEKLY_DAR_BOOST
-        elif weekly_boost == WeeklyBoost.RDR:
-            rdr_multiplier *= 1.0 + WEEKLY_RDR_BOOST
-
-        # Calculate rare enemy spawn rate
-        enemy_rate_multiplier = 1.0
-        if rbr_active:
-            enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
-        if weekly_boost == WeeklyBoost.RareEnemy:
-            enemy_rate_multiplier *= 1.0 + WEEKLY_ENEMY_RATE_BOOST
-
-        rare_enemy_rate = BASE_RARE_ENEMY_RATE * enemy_rate_multiplier
-        kondrieu_rate = RARE_ENEMY_RATE_KONDRIEU * enemy_rate_multiplier
-        rare_enemy_rate = min(rare_enemy_rate, 1.0 / 256.0)
-        kondrieu_rate = min(kondrieu_rate, 1.0)
+        # Base multipliers (will be adjusted per quest based on in_rbr_rotation field)
 
         results = []
         section_ids = [
@@ -894,6 +922,7 @@ class QuestCalculator:
         ]
 
         # Filter quests if requested
+        quests_to_search: List[Dict]
         if quest_filter:
             quest_filter_lower = [q.lower() for q in quest_filter]
             quests_to_search = [quest for quest in self.quest_data if quest.get("quest_name", "").lower() in quest_filter_lower]
@@ -905,6 +934,46 @@ class QuestCalculator:
             long_name = quest.get("long_name", quest_name)
             episode = quest.get("episode", 1)
             enemies = quest.get("enemies", {})
+
+            # Calculate quest-specific boost multipliers
+            is_hallow = self._is_hallow_quest(quest)
+            in_rbr_rotation = self._is_in_rbr_rotation(quest)
+
+            if is_hallow:
+                # Hallow quests use Halloween boosts (ignore weekly_boost parameter)
+                dar_multiplier = 1.0 + HOLLOWEEN_QUEST_DAR_BOOST
+                rdr_multiplier = 1.0 + HOLLOWEEN_QUEST_RDR_BOOST
+                enemy_rate_multiplier = 1.0 + HOLLOWEEN_QUEST_RARE_ENEMY_BOOST
+
+                # RBR boosts only apply if quest is in RBR rotation
+                if in_rbr_rotation and rbr_active:
+                    dar_multiplier *= 1.0 + RBR_DAR_BOOST
+                    rdr_multiplier *= 1.0 + RBR_RDR_BOOST
+                    enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
+            else:
+                # Regular quests use RBR and weekly boosts
+                dar_multiplier = 1.0
+                rdr_multiplier = 1.0
+                enemy_rate_multiplier = 1.0
+
+                # RBR boosts only apply if quest is in RBR rotation
+                if in_rbr_rotation and rbr_active:
+                    dar_multiplier *= 1.0 + RBR_DAR_BOOST
+                    rdr_multiplier *= 1.0 + RBR_RDR_BOOST
+                    enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
+
+                if weekly_boost == WeeklyBoost.DAR:
+                    dar_multiplier *= 1.0 + WEEKLY_DAR_BOOST
+                elif weekly_boost == WeeklyBoost.RDR:
+                    rdr_multiplier *= 1.0 + WEEKLY_RDR_BOOST
+                if weekly_boost == WeeklyBoost.RareEnemy:
+                    enemy_rate_multiplier *= 1.0 + WEEKLY_ENEMY_RATE_BOOST
+
+            # Calculate rare enemy spawn rate for this quest
+            rare_enemy_rate = BASE_RARE_ENEMY_RATE * enemy_rate_multiplier
+            kondrieu_rate = RARE_ENEMY_RATE_KONDRIEU * enemy_rate_multiplier
+            rare_enemy_rate = min(rare_enemy_rate, 1.0 / 256.0)
+            kondrieu_rate = min(kondrieu_rate, 1.0)
 
             for section_id in section_ids:
                 total_prob = 0.0
