@@ -4,8 +4,13 @@ List of high level TODOS
 - [X] Add ruff/mypy integration
 - [X] Add optimize_weapon_hunting.py to help direct to most efficient quests for hunting a specific weapon
 - [X] Add behavior to fit inestimable price values for weapons
+- [X] Treat item not found in price guide as error, fix all omitted items in price guide
+- [ ] Add tests for test_weapon_expected_value.py
 - [ ] Add holloween quests to quests.json
 - [ ] Add holloween quest boosts to quest_calculator.py
+- [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
+- [ ] Add "is_in_rbr_rotation" field to quests.json
+- [ ] Add "is_event_quest" field to quests.json
 - [ ] Add "evergreen" quests to quests.json, i.e. TE and MaxAttack quests
 - [ ] Add mats/grinders/meseta(?) to price guide/drop tables
 - [ ] Add Box Drops to Drop Tables

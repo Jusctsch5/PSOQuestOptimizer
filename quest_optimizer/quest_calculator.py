@@ -15,9 +15,12 @@ from typing import Dict, List, Optional, Tuple
 
 from drop_tables.weapon_patterns import (
     PATTERN_ATTRIBUTE_PROBABILITIES,
-    calculate_rare_weapon_attributes,
+    _calculate_weapon_attributes,
 )
-from price_guide import PriceGuideFixed
+from price_guide import (
+    PriceGuideExceptionItemNameNotFound,
+    PriceGuideFixed,
+)
 
 
 class WeeklyBoost(Enum):
@@ -122,6 +125,7 @@ class QuestCalculator:
         self,
         item_name: str,
         drop_area: Optional[str] = None,
+        weapon_data: Optional[Dict] = None,
     ) -> float:
         """
         Calculate expected weapon value based on pattern probabilities.
@@ -132,16 +136,16 @@ class QuestCalculator:
         Args:
             item_name: Name of the weapon
             drop_area: Area where weapon drops (for common weapons)
+            weapon_data: Optional weapon data (if not provided, will fetch it)
 
         Returns:
             Expected PD value
         """
-        # Fetch weapon data (case-insensitive) and rarity flag
-        weapon_data = self.price_guide.get_weapon_data(item_name)
-        is_rare = weapon_data is not None
+        # Fetch weapon data if not provided
+        if weapon_data is None:
+            weapon_data = self.price_guide.get_weapon_data(item_name)
 
-        if not weapon_data:
-            return 0.0
+        is_rare = True  # TODO: support common items
 
         # Get base price
         base_price_str = weapon_data.get("base")
@@ -165,7 +169,9 @@ class QuestCalculator:
         total_value = base_price
 
         # Get Pattern 5 contributions (probabilities, not prices)
-        attr_results = calculate_rare_weapon_attributes(weapon_data)
+        # Note: calculate_rare_weapon_attributes doesn't take drop_area, but _calculate_weapon_attributes needs it
+        # So we need to call the internal function directly with drop_area for hit probability
+        attr_results = _calculate_weapon_attributes(weapon_data, drop_area=drop_area)
 
         # Multiply by prices to get actual PD values
         modifiers = weapon_data.get("modifiers", {})
@@ -219,51 +225,63 @@ class QuestCalculator:
         Get price for an item by searching all price categories.
         For weapons, calculates expected value based on patterns.
         Returns price in PD (price guide already returns PD values).
+
+        Raises:
+            PriceGuideExceptionItemNameNotFound: If item is not found in any price category
         """
-        # Weapons - use pattern-based calculation (case-insensitive lookup)
-        weapon_data = self.price_guide.get_weapon_data(item_name)
-        if weapon_data:
+        # Weapons - use pattern-based calculation
+        try:
             return self._get_weapon_expected_value(item_name, drop_area)
+        except PriceGuideExceptionItemNameNotFound:
+            pass  # Not a weapon, continue to check other item types
 
         # Units
-        if item_name in self.price_guide.unit_prices:
-            price_range = self.price_guide.unit_prices[item_name]["base"]
-            return PriceGuideFixed.get_price_for_item_range(price_range, 1, self.price_guide.bps)
+        try:
+            return self.price_guide.get_price_unit(item_name)
+        except PriceGuideExceptionItemNameNotFound:
+            pass
 
         # Cells (mag cells / special items)
-        if hasattr(self.price_guide, "cell_prices") and item_name in self.price_guide.cell_prices:
-            price_range = self.price_guide.cell_prices[item_name]["base"]
-            return PriceGuideFixed.get_price_from_range(price_range, self.price_guide.bps)
+        try:
+            return self.price_guide.get_price_cell(item_name)
+        except PriceGuideExceptionItemNameNotFound:
+            pass
 
         # Tools
-        if item_name in self.price_guide.tool_prices:
-            price_range = self.price_guide.tool_prices[item_name]["base"]
-            return PriceGuideFixed.get_price_for_item_range(price_range, 1, self.price_guide.bps)
+        try:
+            return self.price_guide.get_price_tool(item_name, 1)
+        except PriceGuideExceptionItemNameNotFound:
+            pass
 
-        # Frames
-        if item_name in self.price_guide.frame_prices:
-            price_range = self.price_guide.frame_prices[item_name]["base"]
-            return PriceGuideFixed.get_price_from_range(price_range, self.price_guide.bps)
+        # Frames (need addition, max_addition, slot - use defaults)
+        try:
+            return self.price_guide.get_price_frame(item_name, {}, {}, 0)
+        except PriceGuideExceptionItemNameNotFound:
+            pass
 
-        # Barriers
-        if item_name in self.price_guide.barrier_prices:
-            price_range = self.price_guide.barrier_prices[item_name]["base"]
-            return PriceGuideFixed.get_price_from_range(price_range, self.price_guide.bps)
+        # Barriers (need addition, max_addition - use defaults)
+        try:
+            return self.price_guide.get_price_barrier(item_name, {}, {})
+        except PriceGuideExceptionItemNameNotFound:
+            pass
 
         # Mags (need level, default to 0)
-        if item_name in self.price_guide.mag_prices:
-            # Mags need level, but for drop tables we don't have that info
-            # Use a default or skip
-            return 0.0
+        try:
+            return self.price_guide.get_price_mag(item_name, 0)
+        except PriceGuideExceptionItemNameNotFound:
+            pass
 
         # Disks (default to level 30)
-        if item_name in self.price_guide.disk_prices:
+        try:
             return self.price_guide.get_price_disk(item_name, 30)
+        except PriceGuideExceptionItemNameNotFound:
+            pass
 
         # S-Rank weapons (need more info)
         # Skip for now as they require ability, grinder, element
 
-        return 0.0
+        # Item not found in any category
+        raise PriceGuideExceptionItemNameNotFound(f"Item name {item_name} not found in any price category")
 
     # Mapping from names used in Ultimate to base names
     ENEMY_NAME_MAPPING = {

@@ -337,5 +337,38 @@
   },
   "Present": {
     "base": "5"
+  },
+  "Parts of Baranz": {
+    "base": "1"
+  },
+  "Belra's Right Arm": {
+    "base": "2"
+  },
+  "Sorcerer's Right Arm": {
+    "base": "2"
+  },
+  "P-arm's Arms": {
+    "base": "2"
+  },
+  "S-red's Arms": {
+    "base": "1"
+  },
+  "S-Beat's Blade": {
+    "base": "1"
+  },
+  "Sinow Berill's Arms": {
+    "base": "1"
+  },
+  "Gi Gue's Body": {
+    "base": "2"
+  },
+  "Bringer's Right Arm": {
+    "base": "1"
+  },
+  "Delsaber's Left Arm": {
+    "base": "1"
+  },
+  "Delsaber's Right Arm": {
+    "base": "2"
   }
 }

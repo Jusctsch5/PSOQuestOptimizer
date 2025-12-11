@@ -126,5 +126,92 @@
     "Med Stat": "5-10",
     "High Stat": "10-30",
     "base": "2-3"
+  },
+  "Stink Frame": {
+    "base": "0",
+    "Min Stat": "0",
+    "Med Stat": "3-5",
+    "High Stat": "10"
+  },
+  "Aura Field": {
+    "base": "2",
+    "Min Stat": "2",
+    "Med Stat": "5",
+    "High Stat": "10-20",
+    "Max Stat": "600-1000"
+  },
+  "Spirit Garment": {
+    "base": "1",
+    "Min Stat": "1",
+    "Med Stat": "1",
+    "High Stat": "1",
+    "Max Stat": "2-10"
+  },
+  "Custom Frame ver.OO": {
+    "base": "0"
+  },
+  "Sacred Cloth": {
+    "base": "1-3",
+    "Min Stat": "1-3",
+    "Med Stat": "1-3",
+    "High Stat": "5",
+    "Max Stat": "75-150"
+  },
+  "Luminous Field": {
+    "base": "1",
+    "Min Stat": "1",
+    "Med Stat": "3",
+    "High Stat": "5-30",
+    "Max Stat": "50"
+  },
+  "Lieutenant Gear": {
+    "base": "0"
+  },
+  "Lieutenant Mantle": {
+    "base": "1",
+    "Min Stat": "1",
+    "Med Stat": "1",
+    "High Stat": "2",
+    "Max Stat": "20-30"
+  },
+  "DF Field": {
+    "base": "1",
+    "Min Stat": "1",
+    "Med Stat": "2",
+    "High Stat": "5",
+    "Max Stat": "110"
+  },
+  "Guard Wave": {
+    "base": "1",
+    "Min Stat": "1",
+    "Med Stat": "3",
+    "High Stat": "5",
+    "Max Stat": "40"
+  },
+  "Flame Garment": {
+    "base": "1",
+    "Min Stat": "1",
+    "Med Stat": "3",
+    "High Stat": "5",
+    "Max Stat": "30"
+  },
+  "Star Cuirass": {
+    "base": "0"
+  },
+  "Black Hound Cuirass": {
+    "base": "1"
+  },
+  "Smoking Plate": {
+    "base": "1",
+    "Min Stat": "1",
+    "Med Stat": "1",
+    "High Stat": "2",
+    "Max Stat": "20"
+  },
+  "Flowen's Frame": {
+    "base": "0"
+  },
+  "Celestial Armor": {
+    "base": "0"
   }
 }

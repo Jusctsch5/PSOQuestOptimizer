@@ -482,7 +482,8 @@ Examples:
 
     parser.add_argument(
         "--weekly-boost",
-        type=WeeklyBoost.parse,
+        type=str,
+        choices=[boost.value for boost in WeeklyBoost],
         default=None,
         help="Weekly boost type: DAR, RDR, RareEnemy, XP, or None (default: None)",
     )
@@ -522,6 +523,7 @@ Examples:
     )
 
     args = parser.parse_args()
+    weekly_boost = WeeklyBoost(args.weekly_boost) if args.weekly_boost else None
 
     # Set up paths
     base_path = Path(__file__).parent
@@ -567,7 +569,7 @@ Examples:
     else:
         print(f"  Section ID: {args.section_id}")
     print(f"  RBR Active: {args.rbr}")
-    print(f"  Weekly Boost: {args.weekly_boost.value if args.weekly_boost else 'None'}")
+    print(f"  Weekly Boost: {weekly_boost if weekly_boost else 'None'}")
     if args.episode:
         print(f"  Episode Filter: {args.episode}")
     if args.quest:
@@ -596,7 +598,7 @@ Examples:
                 quests_data,
                 section_id=section_id,
                 rbr_active=args.rbr,
-                weekly_boost=args.weekly_boost,
+                weekly_boost=weekly_boost,
                 quest_times=quest_times,
                 episode_filter=args.episode,
             )

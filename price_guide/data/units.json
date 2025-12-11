@@ -154,5 +154,8 @@
   },
   "Cure/\" \" set": {
     "base": "3"
+  },
+  "Hero/Ability": {
+    "base": "0"
   }
 }
