@@ -72,6 +72,7 @@ class QuestOptimizer:
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_times: Optional[Dict[str, float]] = None,
         episode_filter: Optional[int] = None,
+        christmas_boost: bool = False,
     ) -> List[Dict]:
         """
         Rank quests by PD efficiency.
@@ -83,6 +84,7 @@ class QuestOptimizer:
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             quest_times: Dictionary mapping quest names to time in minutes
             episode_filter: Filter by episode (1, 2, or 4), or None for all
+            christmas_boost: Whether Christmas boost is active (doubles weekly boosts)
 
         Returns:
             List of quest results sorted by PD per minute (descending)
@@ -96,7 +98,9 @@ class QuestOptimizer:
                     continue
 
             # Calculate quest value
-            value_result = self.calculator.calculate_quest_value(quest_data, section_id, rbr_active, weekly_boost)
+            value_result = self.calculator.calculate_quest_value(
+                quest_data, section_id, rbr_active, weekly_boost, christmas_boost
+            )
 
             # Get quest time
             quest_name = quest_data.get("quest_name", "Unknown")
@@ -144,6 +148,7 @@ class QuestOptimizer:
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_times: Optional[Dict[str, float]] = None,
         episode_filter: Optional[int] = None,
+        christmas_boost: bool = False,
     ) -> Dict[str, List[Dict]]:
         """
         Rank quests for all Section IDs.
@@ -167,7 +172,7 @@ class QuestOptimizer:
         results = {}
         for section_id in section_ids:
             results[section_id] = self.rank_quests(
-                quests_data, section_id, rbr_active, weekly_boost, quest_times, episode_filter
+                quests_data, section_id, rbr_active, weekly_boost, quest_times, episode_filter, christmas_boost
             )
 
         return results
@@ -489,6 +494,12 @@ Examples:
     )
 
     parser.add_argument(
+        "--christmas-boost",
+        action="store_true",
+        help="Enable Christmas boost (doubles weekly boost values)",
+    )
+
+    parser.add_argument(
         "--episode", type=int, choices=[1, 2, 4], default=None, help="Filter by episode (1, 2, or 4). Omit for all episodes"
     )
 
@@ -570,6 +581,7 @@ Examples:
         print(f"  Section ID: {args.section_id}")
     print(f"  RBR Active: {args.rbr}")
     print(f"  Weekly Boost: {weekly_boost if weekly_boost else 'None'}")
+    print(f"  Christmas Boost: {args.christmas_boost}")
     if args.episode:
         print(f"  Episode Filter: {args.episode}")
     if args.quest:
@@ -601,6 +613,7 @@ Examples:
                 weekly_boost=weekly_boost,
                 quest_times=quest_times,
                 episode_filter=args.episode,
+                christmas_boost=args.christmas_boost,
             )
             all_rankings.extend(section_rankings)
 
@@ -613,8 +626,9 @@ Examples:
             quests_data,
             section_id=args.section_id,
             rbr_active=args.rbr,
-            weekly_boost=args.weekly_boost,
+            weekly_boost=weekly_boost,
             quest_times=quest_times,
+            christmas_boost=args.christmas_boost,
             episode_filter=args.episode,
         )
 

@@ -40,6 +40,8 @@ HOLLOWEEN_QUEST_RDR_BOOST = 0.50  # +50% Rare Drop Rate
 HOLLOWEEN_QUEST_RARE_ENEMY_BOOST = 1.00  # +100% Rare Enemy Appearance Rate
 HOLLOWEEN_QUEST_COOKIE_BOOST = 0.20  # +20% Halloween Cookie drop rate
 
+CHRISTMAS_EVENT_WEEKLY_BOOST_RATE = 2.00  # +200% Weekly Boost Rate during Christmas event
+
 RBR_DAR_BOOST = 0.25  # +25% Drop Anything Rate
 RBR_RDR_BOOST = 0.25  # +25% Rare Drop Rate
 RBR_ENEMY_RATE_BOOST = 0.50  # +50% to rare enemy drop rate
@@ -589,7 +591,12 @@ class QuestCalculator:
         return total_pd, total_pd_drops, enemy_breakdown, pd_drop_breakdown
 
     def calculate_quest_value(
-        self, quest_data: Dict, section_id: str, rbr_active: bool = False, weekly_boost: Optional[WeeklyBoost] = None
+        self,
+        quest_data: Dict,
+        section_id: str,
+        rbr_active: bool = False,
+        weekly_boost: Optional[WeeklyBoost] = None,
+        christmas_boost: bool = False,
     ) -> Dict:
         """
         Calculate expected PD value for a quest.
@@ -599,6 +606,7 @@ class QuestCalculator:
             section_id: Section ID to use for drops
             rbr_active: Whether RBR boost is active
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
+            christmas_boost: Whether Christmas boost is active (doubles weekly boosts)
 
         Returns:
             Dictionary with calculated values:
@@ -645,12 +653,15 @@ class QuestCalculator:
                 rdr_multiplier *= 1.0 + RBR_RDR_BOOST
                 enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
 
+            # Apply weekly boosts (doubled if Christmas boost is active)
+            weekly_boost_multiplier = CHRISTMAS_EVENT_WEEKLY_BOOST_RATE if christmas_boost else 1.0
+
             if weekly_boost == WeeklyBoost.DAR:
-                dar_multiplier *= 1.0 + WEEKLY_DAR_BOOST
+                dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * weekly_boost_multiplier)
             elif weekly_boost == WeeklyBoost.RDR:
-                rdr_multiplier *= 1.0 + WEEKLY_RDR_BOOST
+                rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * weekly_boost_multiplier)
             elif weekly_boost == WeeklyBoost.RareEnemy:
-                enemy_rate_multiplier *= 1.0 + WEEKLY_ENEMY_RATE_BOOST
+                enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * weekly_boost_multiplier)
 
         # Let's sub rare enemies in here.
 
@@ -779,7 +790,11 @@ class QuestCalculator:
         }
 
     def calculate_all_section_ids(
-        self, quest_data: Dict, rbr_active: bool = False, weekly_boost: Optional[WeeklyBoost] = None
+        self,
+        quest_data: Dict,
+        rbr_active: bool = False,
+        weekly_boost: Optional[WeeklyBoost] = None,
+        christmas_boost: bool = False,
     ) -> Dict[str, Dict]:
         """
         Calculate quest value for all Section IDs.
@@ -802,7 +817,7 @@ class QuestCalculator:
 
         results = {}
         for section_id in section_ids:
-            results[section_id] = self.calculate_quest_value(quest_data, section_id, rbr_active, weekly_boost)
+            results[section_id] = self.calculate_quest_value(quest_data, section_id, rbr_active, weekly_boost, christmas_boost)
 
         return results
 
@@ -904,6 +919,7 @@ class QuestCalculator:
         rbr_active: bool = False,
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_filter: Optional[List[str]] = None,
+        christmas_boost: bool = False,
     ) -> List[Dict]:
         """
         Find all quest/Section ID combinations that drop the weapon, sorted by probability.
@@ -980,12 +996,15 @@ class QuestCalculator:
                     rdr_multiplier *= 1.0 + RBR_RDR_BOOST
                     enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
 
+                # Apply weekly boosts (doubled if Christmas boost is active)
+                weekly_boost_multiplier = CHRISTMAS_EVENT_WEEKLY_BOOST_RATE if christmas_boost else 1.0
+
                 if weekly_boost == WeeklyBoost.DAR:
-                    dar_multiplier *= 1.0 + WEEKLY_DAR_BOOST
+                    dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * weekly_boost_multiplier)
                 elif weekly_boost == WeeklyBoost.RDR:
-                    rdr_multiplier *= 1.0 + WEEKLY_RDR_BOOST
+                    rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * weekly_boost_multiplier)
                 if weekly_boost == WeeklyBoost.RareEnemy:
-                    enemy_rate_multiplier *= 1.0 + WEEKLY_ENEMY_RATE_BOOST
+                    enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * weekly_boost_multiplier)
 
             # Calculate rare enemy spawn rate for this quest
             rare_enemy_rate = BASE_RARE_ENEMY_RATE * enemy_rate_multiplier
@@ -1053,7 +1072,11 @@ class QuestCalculator:
         return results
 
     def find_enemies_that_drop_weapon(
-        self, weapon_name: str, rbr_active: bool = False, weekly_boost: Optional[WeeklyBoost] = None
+        self,
+        weapon_name: str,
+        rbr_active: bool = False,
+        weekly_boost: Optional[WeeklyBoost] = None,
+        christmas_boost: bool = False,
     ) -> List[Dict]:
         """
         Find all enemies that drop the weapon and their drop rates.
@@ -1083,10 +1106,13 @@ class QuestCalculator:
             dar_multiplier *= 1.0 + RBR_DAR_BOOST
             rdr_multiplier *= 1.0 + RBR_RDR_BOOST
 
+        # Apply weekly boosts (doubled if Christmas boost is active)
+        weekly_boost_multiplier = CHRISTMAS_EVENT_WEEKLY_BOOST_RATE if christmas_boost else 1.0
+
         if weekly_boost == WeeklyBoost.DAR:
-            dar_multiplier *= 1.0 + WEEKLY_DAR_BOOST
+            dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * weekly_boost_multiplier)
         elif weekly_boost == WeeklyBoost.RDR:
-            rdr_multiplier *= 1.0 + WEEKLY_RDR_BOOST
+            rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * weekly_boost_multiplier)
 
         results = []
         section_ids = [

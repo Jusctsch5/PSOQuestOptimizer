@@ -108,6 +108,11 @@ def main():
         default=None,
         help="Filter to specific quests by name (e.g., 'MU1 SU2 EN3')",
     )
+    parser.add_argument(
+        "--christmas-boost",
+        action="store_true",
+        help="Enable Christmas boost (doubles weekly boost values)",
+    )
     args = parser.parse_args()
     if args.weekly_boost:
         weekly_boost = WeeklyBoost(args.weekly_boost)
@@ -142,19 +147,22 @@ def main():
         print(f"  RBR Active: Yes")
     if weekly_boost:
         print(f"  Weekly Boost: {weekly_boost}")
+    print(f"  Christmas Boost: {args.christmas_boost}")
     if args.quests:
         print(f"  Quest Filter: {', '.join(args.quests)}")
     print()
 
     # Find enemies that drop the weapon
-    enemy_drops = calculator.find_enemies_that_drop_weapon(weapon, rbr_active=args.rbr, weekly_boost=weekly_boost)
+    enemy_drops = calculator.find_enemies_that_drop_weapon(
+        weapon, rbr_active=args.rbr, weekly_boost=weekly_boost, christmas_boost=args.christmas_boost
+    )
 
     # Display enemy drops first
     display_enemy_drops(enemy_drops, weapon, args.rbr, weekly_boost)
 
     # Find best quests
     results = calculator.find_best_quests_for_weapon(
-        weapon, rbr_active=args.rbr, weekly_boost=weekly_boost, quest_filter=args.quests
+        weapon, rbr_active=args.rbr, weekly_boost=weekly_boost, quest_filter=args.quests, christmas_boost=args.christmas_boost
     )
 
     # Display quest results
