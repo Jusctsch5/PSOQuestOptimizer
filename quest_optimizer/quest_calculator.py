@@ -30,6 +30,19 @@ class WeeklyBoost(Enum):
     XP = "XP"  # Experience Rate
 
 
+class SectionIds(Enum):
+    Viridia = "Viridia"
+    Greenill = "Greenill"
+    Skyly = "Skyly"
+    Bluefull = "Bluefull"
+    Purplenum = "Purplenum"
+    Pinkal = "Pinkal"
+    Redria = "Redria"
+    Oran = "Oran"
+    Yellowboze = "Yellowboze"
+    Whitill = "Whitill"
+
+
 WEEKLY_DAR_BOOST = 0.25  # +25% Drop Anything Rate
 WEEKLY_RDR_BOOST = 0.25  # +25% Rare Drop Rate
 WEEKLY_ENEMY_RATE_BOOST = 0.50  # +50% to rare enemy drop rate
@@ -802,21 +815,9 @@ class QuestCalculator:
         Returns:
             Dictionary mapping Section ID to calculated values
         """
-        section_ids = [
-            "Viridia",
-            "Greenill",
-            "Skyly",
-            "Bluefull",
-            "Purplenum",
-            "Pinkal",
-            "Redria",
-            "Oran",
-            "Yellowboze",
-            "Whitill",
-        ]
-
         results = {}
-        for section_id in section_ids:
+        for section_id_enum in SectionIds:
+            section_id: str = section_id_enum.value
             results[section_id] = self.calculate_quest_value(quest_data, section_id, rbr_active, weekly_boost, christmas_boost)
 
         return results
@@ -942,18 +943,6 @@ class QuestCalculator:
         # Base multipliers (will be adjusted per quest based on in_rbr_rotation field)
 
         results = []
-        section_ids = [
-            "Viridia",
-            "Greenill",
-            "Skyly",
-            "Bluefull",
-            "Purplenum",
-            "Pinkal",
-            "Redria",
-            "Oran",
-            "Yellowboze",
-            "Whitill",
-        ]
 
         # Filter quests if requested
         quests_to_search: List[Dict]
@@ -1012,7 +1001,8 @@ class QuestCalculator:
             rare_enemy_rate = min(rare_enemy_rate, 1.0 / 256.0)
             kondrieu_rate = min(kondrieu_rate, 1.0)
 
-            for section_id in section_ids:
+            for section_id_enum in SectionIds:
+                section_id: str = section_id_enum.value
                 total_prob = 0.0
                 contributions = []
 
@@ -1115,18 +1105,6 @@ class QuestCalculator:
             rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * weekly_boost_multiplier)
 
         results = []
-        section_ids = [
-            "Viridia",
-            "Greenill",
-            "Skyly",
-            "Bluefull",
-            "Purplenum",
-            "Pinkal",
-            "Redria",
-            "Oran",
-            "Yellowboze",
-            "Whitill",
-        ]
 
         # Track unique enemy/section_id combinations
         seen = set()
@@ -1142,7 +1120,8 @@ class QuestCalculator:
                 dar = enemy_data.get("dar", 0.0)
                 section_ids_data = enemy_data.get("section_ids", {})
 
-                for section_id in section_ids:
+                for section_id_enum in SectionIds:
+                    section_id: str = section_id_enum.value
                     section_drops = section_ids_data.get(section_id)
                     if not section_drops:
                         continue

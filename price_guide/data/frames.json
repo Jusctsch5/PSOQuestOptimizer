@@ -182,8 +182,8 @@
     "Max Stat": "110"
   },
   "Guard Wave": {
-    "base": "1",
-    "Min Stat": "1",
+    "base": ".5",
+    "Min Stat": ".5",
     "Med Stat": "3",
     "High Stat": "5",
     "Max Stat": "40"

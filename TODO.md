@@ -9,6 +9,7 @@ List of high level TODOS
 - [X] Add tests for test_weapon_expected_value.py
 - [X] Add holloween quests to quests.json
 - [X] Add holloween quest boosts to quest_calculator.py
+- [X] Update README with proper usage instructions, reasoning for some of the choices made w/ user-facing scripts
 - [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
 - [ ] Add "is_in_rbr_rotation" field to quests.json, make sure RBR boost is only applied to quests in rotation
 - [ ] Add "is_event_quest" field to quests.json, allow filtering out event quests
