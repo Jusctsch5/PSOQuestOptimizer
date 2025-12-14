@@ -1043,7 +1043,7 @@
     "long_name": "Christmas Fiasco E2",
     "episode": 2,
     "quest_completion_items": {
-      "Coal": 6
+      "Coal": 11
     },
     "enemies": {
       "Savage Wolf": 18,
@@ -1082,7 +1082,7 @@
     "long_name": "Christmas Fiasco E4",
     "episode": 4,
     "quest_completion_items": {
-      "Coal": 6
+      "Coal": 4
     },
     "enemies": {
       "Boota": 11,
