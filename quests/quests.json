@@ -6,6 +6,7 @@
       "Forest 1"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Bartle": 14,
       "Barble": 23,
@@ -22,6 +23,7 @@
       "Cave 1"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Vulmer": 72,
       "Govulmer": 21,
@@ -38,6 +40,7 @@
       "Mine 1"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 59,
       "Dubchich": 9,
@@ -55,6 +58,7 @@
       "Ruins 1"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 35,
       "Merlan": 27,
@@ -72,6 +76,7 @@
       "Forest 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Bartle": 26,
       "Barble": 23,
@@ -89,6 +94,7 @@
       "Cave 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Vulmer": 46,
       "Govulmer": 24,
@@ -106,6 +112,7 @@
       "Mine 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 57,
       "Dubchich": 22,
@@ -123,6 +130,7 @@
     "areas": [
       "Ruins 2"
     ],
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 45,
       "Merlan": 24,
@@ -141,6 +149,7 @@
       "Forest 1, Forest 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Bartle": 57,
       "Barble": 32,
@@ -159,6 +168,7 @@
       "Cave 1, Cave 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Vulmer": 152,
       "Govulmer": 44,
@@ -176,6 +186,7 @@
       "Mine 1, Mine 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 104,
       "Dubchich": 37,
@@ -193,6 +204,7 @@
       "Ruins 1, Ruins 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 49,
       "Merlan": 59,
@@ -213,6 +225,7 @@
       "Forest 1, Forest 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Bartle": 62,
       "Barble": 38,
@@ -231,6 +244,7 @@
       "Cave 2, Cave 3"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Vulmer": 128,
       "Govulmer": 61,
@@ -249,6 +263,7 @@
       "Mine 1, Mine 2"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 123,
       "Dubchich": 33,
@@ -266,6 +281,7 @@
       "Ruins 2, Ruins 3"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 82,
       "Merlan": 71,
@@ -286,6 +302,7 @@
       "Forest 1, Ruins 1"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Bartle": 34,
       "Barble": 13,
@@ -311,6 +328,7 @@
       "Cave 3, Mine 1"
     ],
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Vulmer": 68,
       "Govulmer": 30,
@@ -332,6 +350,7 @@
     "quest_name": "LIS",
     "long_name": "Lost ICE SPINNER",
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Vulmer": 129,
       "Govulmer": 65,
@@ -348,6 +367,7 @@
     "quest_name": "PW1",
     "long_name": "Phantasmal World #1",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Merillia": 83,
       "Meriltas": 41,
@@ -364,6 +384,7 @@
     "quest_name": "LHP",
     "long_name": "Lost HELL PALLASCH",
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 54,
       "Merlan": 20,
@@ -382,6 +403,7 @@
     "quest_name": "PW3",
     "long_name": "Phantasmal World #3",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 103,
       "Dolmdarl": 57,
@@ -398,6 +420,7 @@
     "quest_name": "SU5",
     "long_name": "Sweep Up Operation 5",
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 36,
       "Merlan": 25,
@@ -414,6 +437,7 @@
     "quest_name": "SU6",
     "long_name": "Sweep Up Operation 6",
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 63,
       "Dubchich": 37,
@@ -428,6 +452,7 @@
     "quest_name": "SU7",
     "long_name": "Sweep Up Operation 7",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Merillia": 33,
       "Meriltas": 23,
@@ -447,6 +472,7 @@
     "quest_name": "SU8",
     "long_name": "Sweep Up Operation 8",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 69,
       "Dolmdarl": 39,
@@ -463,6 +489,7 @@
     "quest_name": "PS1",
     "long_name": "Penumbral Surge #1",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 68,
       "Merlan": 54,
@@ -479,6 +506,7 @@
     "quest_name": "PS2",
     "long_name": "Penumbral Surge #2",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 200,
       "Dubchich": 110,
@@ -494,6 +522,7 @@
     "quest_name": "PS3",
     "long_name": "Penumbral Surge #3",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Merillia": 68,
       "Meriltas": 44,
@@ -513,6 +542,7 @@
     "quest_name": "PS4",
     "long_name": "Penumbral Surge #4",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Merillia": 63,
       "Meriltas": 49,
@@ -532,6 +562,7 @@
     "quest_name": "PS5",
     "long_name": "Penumbral Surge #5",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 116,
       "Dolmdarl": 85,
@@ -547,6 +578,7 @@
     "quest_name": "PS6",
     "long_name": "Penumbral Surge #6",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Recobox": 42,
       "Mericarol": 16,
@@ -564,6 +596,7 @@
     "quest_name": "LSR",
     "long_name": "Lost SHOCK RIFLE",
     "episode": 1,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 73,
       "Merlan": 62,
@@ -581,6 +614,7 @@
     "quest_name": "LBA",
     "long_name": "Lost BIND ASSAULT",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 107,
       "Dubchich": 56,
@@ -598,6 +632,7 @@
     "quest_name": "LDR",
     "long_name": "Lost DEMON'S RAILGUN",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 83,
       "Dolmdarl": 68,
@@ -614,6 +649,7 @@
     "quest_name": "LCV",
     "long_name": "Lost CHARGE VULCAN",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Recobox": 31,
       "Recon": 155,
@@ -632,6 +668,7 @@
     "quest_name": "TET",
     "long_name": "The East Tower",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Meriltas": 16,
       "Ul Gibbon": 6,
@@ -656,6 +693,7 @@
     "quest_name": "TWT",
     "long_name": "The West Tower",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 10,
       "Dolmdarl": 10,
@@ -678,6 +716,7 @@
     "quest_name": "WOL1",
     "long_name": "War of Limits #1",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 47,
       "Ze Boota": 12,
@@ -694,6 +733,7 @@
     "quest_name": "WOL2",
     "long_name": "War of Limits #2",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 39,
       "Ze Boota": 74,
@@ -710,6 +750,7 @@
     "quest_name": "WOL3",
     "long_name": "War of Limits #3",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 87,
       "Pyro Goran": 26,
@@ -724,6 +765,7 @@
     "quest_name": "WOL4",
     "long_name": "War of Limits #4",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 37,
       "Pyro Goran": 36,
@@ -740,6 +782,7 @@
     "quest_name": "WOL5",
     "long_name": "War of Limits #5",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 49,
       "Pyro Goran": 19,
@@ -756,6 +799,7 @@
     "quest_name": "NMU1",
     "long_name": "New Mop-up Operation #1",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 20,
       "Ze Boota": 5,
@@ -772,6 +816,7 @@
     "quest_name": "NMU2",
     "long_name": "New Mop-up Operation #2",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 31,
       "Ze Boota": 34,
@@ -788,6 +833,7 @@
     "quest_name": "NMU4",
     "long_name": "New Mop-up Operation #4",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 46,
       "Pyro Goran": 40,
@@ -803,6 +849,7 @@
     "quest_name": "NMU5",
     "long_name": "New Mop-up Operation #5",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 37,
       "Pyro Goran": 30,
@@ -819,6 +866,7 @@
     "quest_name": "SU10",
     "long_name": "Sweep Up Operation #10",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 39,
       "Ze Boota": 25,
@@ -835,6 +883,7 @@
     "quest_name": "SU11",
     "long_name": "Sweep Up Operation #11",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 25,
       "Ze Boota": 22,
@@ -851,6 +900,7 @@
     "quest_name": "SU12",
     "long_name": "Sweep Up Operation #12",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 90,
       "Pyro Goran": 43,
@@ -867,6 +917,7 @@
     "quest_name": "SU13",
     "long_name": "Sweep Up Operation #13",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 50,
       "Pyro Goran": 26,
@@ -883,6 +934,7 @@
     "quest_name": "SU14",
     "long_name": "Sweep Up Operation #14",
     "episode": 4,
+    "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 70,
       "Pyro Goran": 32,
@@ -1011,6 +1063,7 @@
     "quest_completion_items": {
       "Coal": 6
     },
+    "is_event_quest": true,
     "enemies": {
       "Evil Shark": 28,
       "Gillchic": 31,
@@ -1045,6 +1098,7 @@
     "quest_completion_items": {
       "Coal": 11
     },
+    "is_event_quest": true,
     "enemies": {
       "Savage Wolf": 18,
       "Merillia": 19,
@@ -1084,6 +1138,7 @@
     "quest_completion_items": {
       "Coal": 4
     },
+    "is_event_quest": true,
     "enemies": {
       "Boota": 11,
       "Goran": 48,
@@ -1108,6 +1163,7 @@
     "quest_completion_items": {
       "MAE Ticket": 12
     },
+    "is_event_quest": true,
     "enemies": {
       "Boota": 20,
       "Goran": 37,
@@ -1129,6 +1185,7 @@
     "quest_name": "TE_FOREST",
     "long_name": "Tyrell's Ego Forest",
     "episode": 1,
+    "is_event_quest": true,
     "enemies": {
       "Booma": 17,
       "Gobooma": 41,
@@ -1148,6 +1205,7 @@
       "Forest 1"
     ],
     "episode": 1,
+    "is_event_quest": true,
     "enemies": {
       "El Rappy": 21,
       "Gulgus": 17,
@@ -1166,6 +1224,7 @@
       "Cave 1"
     ],
     "episode": 1,
+    "is_event_quest": true,
     "enemies": {
       "Vulmer": 33,
       "Govulmer": 35,
@@ -1183,6 +1242,7 @@
       "Mine 1"
     ],
     "episode": 1,
+    "is_event_quest": true,
     "enemies": {
       "Gillchich": 36,
       "Dubchich": 22,
@@ -1200,6 +1260,7 @@
       "Ruins 1"
     ],
     "episode": 1,
+    "is_event_quest": true,
     "enemies": {
       "Arlan": 38,
       "Merlan": 37,
@@ -1215,6 +1276,7 @@
     "quest_name": "HRT",
     "long_name": "Hallow Reality: Temple",
     "episode": 2,
+    "is_event_quest": true,
     "enemies": {
       "Arlan": 29,
       "Merlan": 23,
@@ -1230,6 +1292,7 @@
     "quest_name": "HRS",
     "long_name": "Hallow Reality: Spaceship",
     "episode": 2,
+    "is_event_quest": true,
     "enemies": {
       "Gillchich": 51,
       "Dubchich": 28,
@@ -1244,6 +1307,7 @@
     "quest_name": "HBCCA",
     "long_name": "Hallow Battlefield: CCA",
     "episode": 2,
+    "is_event_quest": true,
     "enemies": {
       "Merillia": 28,
       "Meriltas": 21,
@@ -1263,6 +1327,7 @@
     "quest_name": "HBS",
     "long_name": "Hallow Battlefield: Seabed",
     "episode": 2,
+    "is_event_quest": true,
     "enemies": {
       "Dolmolm": 39,
       "Dolmdarl": 38,
@@ -1278,6 +1343,7 @@
     "quest_name": "HBTO",
     "long_name": "Hallow Battlefield: Tower",
     "episode": 2,
+    "is_event_quest": true,
     "enemies": {
       "Recon": 14,
       "Mericarol": 15,
@@ -1295,6 +1361,7 @@
     "quest_name": "HBW",
     "long_name": "Hallow Battlefield: Wilderness",
     "episode": 4,
+    "is_event_quest": true,
     "enemies": {
       "Boota": 11,
       "Ze Boota": 11,
@@ -1311,6 +1378,7 @@
     "quest_name": "HBD",
     "long_name": "Hallow Battlefield: Desert",
     "episode": 4,
+    "is_event_quest": true,
     "enemies": {
       "Goran": 33,
       "Pyro Goran": 22,

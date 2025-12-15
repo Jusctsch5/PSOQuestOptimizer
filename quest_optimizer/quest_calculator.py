@@ -136,6 +136,19 @@ class QuestCalculator:
         # Default to False - quests must be explicitly marked as in rotation
         return quest_data.get("in_rbr_rotation", False)
 
+    def _is_event_quest(self, quest_data: Dict) -> bool:
+        """
+        Check if a quest is an event quest. Callers may want to filter out event quests.
+
+        Args:
+            quest_data: Quest data dictionary with optional is_event_quest field
+
+        Returns:
+            True if quest is an event quest (defaults to False if field not present)
+        """
+        # Default to False - quests must be explicitly marked as event quests
+        return quest_data.get("is_event_quest", False)
+
     def _get_weapon_expected_value(
         self,
         item_name: str,

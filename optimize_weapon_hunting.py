@@ -113,6 +113,11 @@ def main():
         action="store_true",
         help="Enable Christmas boost (doubles weekly boost values)",
     )
+    parser.add_argument(
+        "--exclude-event-quests",
+        action="store_true",
+        help="Exclude event quests from the search (quests marked with is_event_quest: true)",
+    )
     args = parser.parse_args()
     if args.weekly_boost:
         weekly_boost = WeeklyBoost(args.weekly_boost)
@@ -139,7 +144,17 @@ def main():
     # Initialize calculator
     print("Loading quest and drop table data...")
     calculator = QuestCalculator(drop_table_path, price_guide_path, quest_data_path)
-    print(f"Loaded {len(calculator.quest_data)} quests.\n")
+    print(f"Loaded {len(calculator.quest_data)} quests.")
+
+    # Filter out event quests if requested
+    if args.exclude_event_quests:
+        original_count = len(calculator.quest_data)
+        calculator.quest_data = [quest for quest in calculator.quest_data if not calculator._is_event_quest(quest)]
+        filtered_count = original_count - len(calculator.quest_data)
+        if filtered_count > 0:
+            print(f"Excluded {filtered_count} event quest(s)")
+            print(f"Processing {len(calculator.quest_data)} quest(s)")
+    print()
 
     # Find best quests
     print(f"Searching for '{weapon}' across all quests and Section IDs...")
@@ -150,6 +165,8 @@ def main():
     print(f"  Christmas Boost: {args.christmas_boost}")
     if args.quests:
         print(f"  Quest Filter: {', '.join(args.quests)}")
+    if args.exclude_event_quests:
+        print(f"  Exclude Event Quests: Yes")
     print()
 
     # Find enemies that drop the weapon

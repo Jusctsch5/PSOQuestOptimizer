@@ -73,6 +73,7 @@ class QuestOptimizer:
         quest_times: Optional[Dict[str, float]] = None,
         episode_filter: Optional[int] = None,
         christmas_boost: bool = False,
+        exclude_event_quests: bool = False,
     ) -> List[Dict]:
         """
         Rank quests by PD efficiency.
@@ -96,6 +97,10 @@ class QuestOptimizer:
             if episode_filter is not None:
                 if quest_data.get("episode") != episode_filter:
                     continue
+
+            # Filter out event quests if requested (note: can also be filtered before calling this method)
+            if exclude_event_quests and self.calculator._is_event_quest(quest_data):
+                continue
 
             # Calculate quest value
             value_result = self.calculator.calculate_quest_value(
@@ -149,6 +154,7 @@ class QuestOptimizer:
         quest_times: Optional[Dict[str, float]] = None,
         episode_filter: Optional[int] = None,
         christmas_boost: bool = False,
+        exclude_event_quests: bool = False,
     ) -> Dict[str, List[Dict]]:
         """
         Rank quests for all Section IDs.
@@ -172,7 +178,7 @@ class QuestOptimizer:
         results = {}
         for section_id in section_ids:
             results[section_id] = self.rank_quests(
-                quests_data, section_id, rbr_active, weekly_boost, quest_times, episode_filter, christmas_boost
+                quests_data, section_id, rbr_active, weekly_boost, quest_times, episode_filter, christmas_boost, exclude_event_quests
             )
 
         return results
@@ -533,6 +539,12 @@ Examples:
         "--quest", type=str, default=None, help="Filter to a specific quest by exact match on quest_name (shortname)"
     )
 
+    parser.add_argument(
+        "--exclude-event-quests",
+        action="store_true",
+        help="Exclude event quests from the rankings (quests marked with is_event_quest: true)",
+    )
+
     args = parser.parse_args()
     weekly_boost = WeeklyBoost(args.weekly_boost) if args.weekly_boost else None
 
@@ -570,6 +582,15 @@ Examples:
         quests_data = calculator.quest_data
         print(f"Loaded {len(quests_data)} quests")
 
+    # Filter out event quests if requested
+    if args.exclude_event_quests:
+        original_count = len(quests_data)
+        quests_data = [quest for quest in quests_data if not calculator._is_event_quest(quest)]
+        filtered_count = original_count - len(quests_data)
+        if filtered_count > 0:
+            print(f"Excluded {filtered_count} event quest(s)")
+            print(f"Processing {len(quests_data)} quest(s)")
+
     # Load quest times (optional)
     quest_times = load_quest_times(times_path)
 
@@ -586,6 +607,8 @@ Examples:
         print(f"  Episode Filter: {args.episode}")
     if args.quest:
         print(f"  Quest Filter: {args.quest}")
+    if args.exclude_event_quests:
+        print(f"  Exclude Event Quests: Yes")
     print()
 
     # Check if we should rank across all Section IDs
@@ -614,6 +637,7 @@ Examples:
                 quest_times=quest_times,
                 episode_filter=args.episode,
                 christmas_boost=args.christmas_boost,
+                exclude_event_quests=args.exclude_event_quests,
             )
             all_rankings.extend(section_rankings)
 
@@ -630,6 +654,7 @@ Examples:
             quest_times=quest_times,
             christmas_boost=args.christmas_boost,
             episode_filter=args.episode,
+            exclude_event_quests=args.exclude_event_quests,
         )
 
     # Print results
