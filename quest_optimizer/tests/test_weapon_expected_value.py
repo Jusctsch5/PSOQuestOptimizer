@@ -36,7 +36,9 @@ def test_weapon_expected_value_basic(quest_calculator: QuestCalculator):
     expected_value = 5
     actual_value = quest_calculator._get_weapon_expected_value(item_name, drop_area)
 
-    assert actual_value == pytest.approx(expected_value, rel=1e-9), f"Expected value for {item_name} should be {expected_value}, got {actual_value}"
+    assert actual_value == pytest.approx(expected_value, rel=1e-9), (
+        f"Expected value for {item_name} should be {expected_value}, got {actual_value}"
+    )
     logger.info(f"{item_name} ({drop_area}): {expected_value} PD")
 
 

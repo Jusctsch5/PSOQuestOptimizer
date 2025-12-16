@@ -1055,6 +1055,72 @@ class QuestCalculator:
 
         return total_prob, contributions
 
+    def _get_box_weapon_drop_prob(
+        self,
+        area_name: str,
+        box_counts: Dict[str, int],
+        episode: int,
+        section_id: str,
+        weapon_name: str,
+    ) -> Tuple[float, List[Dict]]:
+        """
+        Get drop probability for a weapon from boxes in a specific area.
+
+        Returns:
+            Tuple of (total_probability, list of contributions)
+        """
+        contributions = []
+        total_prob = 0.0
+
+        # Only process regular boxes (box_armor, box_weapon, box_rareless cannot drop rare items)
+        regular_box_count = box_counts.get("box", 0)
+        if regular_box_count == 0:
+            return 0.0, []
+
+        # Map quest area name to drop table area name
+        mapped_area = self.quest_listing.map_quest_area_to_drop_table_area(area_name)
+
+        # Get box drop data from drop table
+        episode_key = f"episode{episode}"
+        if episode_key not in self.drop_data:
+            return 0.0, []
+
+        boxes_data = self.drop_data[episode_key].get("boxes", {})
+        if mapped_area not in boxes_data:
+            return 0.0, []
+
+        section_ids_data = boxes_data[mapped_area].get("section_ids", {})
+        if section_id not in section_ids_data:
+            return 0.0, []
+
+        # Get list of items that can drop from boxes in this area/section
+        box_items = section_ids_data[section_id]
+
+        # Process each item that can drop from boxes
+        for item_data in box_items:
+            item_name = item_data.get("item", "")
+            drop_rate = item_data.get("rate", 0.0)
+
+            # Check if this item matches our target weapon
+            if self._weapon_matches(item_name, weapon_name):
+                # Box drops are NOT affected by DAR, RDR, or any other drop rate bonuses
+                # Calculate drop probability: box_count * drop_rate
+                box_prob = regular_box_count * drop_rate
+                total_prob += box_prob
+
+                contributions.append(
+                    {
+                        "source": "Box",
+                        "area": area_name,
+                        "box_count": regular_box_count,
+                        "drop_rate": drop_rate,
+                        "probability": box_prob,
+                        "item": item_name,
+                    }
+                )
+
+        return total_prob, contributions
+
     def find_best_quests_for_weapon(
         self,
         weapon_name: str,
@@ -1072,14 +1138,14 @@ class QuestCalculator:
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             quest_filter: Optional list of quest names to filter to (case-insensitive)
 
-        Returns:
+            Returns:
             List of results, each containing:
             - quest_name: Quest ID
             - long_name: Quest full name
             - section_id: Section ID
             - probability: Total drop probability per quest run
             - percentage: Drop probability as percentage
-            - contributions: List of enemy contributions
+            - contributions: List of enemy and box contributions
         """
         # Base multipliers (will be adjusted per quest based on in_rbr_rotation field)
 
@@ -1184,6 +1250,19 @@ class QuestCalculator:
                         if enemy_prob > 0:
                             total_prob += enemy_prob
                             contributions.extend(enemy_contrib)
+
+                # Check box drops
+                quest_areas = quest.get("areas", [])
+                for area in quest_areas:
+                    area_name = area.get("name", "")
+                    boxes = area.get("boxes", {})
+                    if boxes:
+                        box_prob, box_contrib = self._get_box_weapon_drop_prob(
+                            area_name, boxes, episode, section_id, weapon_name
+                        )
+                        if box_prob > 0:
+                            total_prob += box_prob
+                            contributions.extend(box_contrib)
 
                 if total_prob > 0:
                     results.append(
@@ -1294,6 +1373,72 @@ class QuestCalculator:
                                     "item": item_name,
                                 }
                             )
+
+        # Sort by drop rate (highest first)
+        results.sort(key=lambda x: x["drop_rate"], reverse=True)
+
+        return results
+
+    def find_boxes_that_drop_weapon(
+        self,
+        weapon_name: str,
+    ) -> List[Dict]:
+        """
+        Find all boxes that drop the weapon and their drop rates.
+
+        Note: Box drops are NOT affected by DAR, RDR, or any other drop rate bonuses.
+        They use the base drop rate directly from the drop table.
+
+        Args:
+            weapon_name: Name of the weapon to search for
+
+        Returns:
+            List of box drop information, each containing:
+            - area: Area name
+            - episode: Episode number
+            - section_id: Section ID that drops the weapon
+            - drop_rate: Base drop rate per box
+            - drop_rate_percent: Drop rate as percentage
+            - item: Item name from drop table
+        """
+        results = []
+
+        # Track unique area/episode/section_id combinations
+        seen = set()
+
+        for episode_key in ["episode1", "episode2", "episode4"]:
+            if episode_key not in self.drop_data:
+                continue
+
+            episode_num = int(episode_key.replace("episode", ""))
+            boxes_data = self.drop_data[episode_key].get("boxes", {})
+
+            for area_name, area_data in boxes_data.items():
+                section_ids_data = area_data.get("section_ids", {})
+
+                for section_id_enum in SectionIds:
+                    section_id: str = section_id_enum.value
+                    box_items = section_ids_data.get(section_id, [])
+
+                    for item_data in box_items:
+                        item_name = item_data.get("item", "")
+                        drop_rate = item_data.get("rate", 0.0)
+
+                        if self._weapon_matches(item_name, weapon_name):
+                            # Use a key to avoid duplicates
+                            key = (area_name, episode_num, section_id)
+                            if key not in seen:
+                                seen.add(key)
+                                results.append(
+                                    {
+                                        "area": area_name,
+                                        "episode": episode_num,
+                                        "section_id": section_id,
+                                        "drop_rate": drop_rate,
+                                        "drop_rate_percent": drop_rate * 100,
+                                        "item": item_name,
+                                    }
+                                )
 
         # Sort by drop rate (highest first)
         results.sort(key=lambda x: x["drop_rate"], reverse=True)

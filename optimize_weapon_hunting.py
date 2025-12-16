@@ -39,6 +39,25 @@ def display_enemy_drops(enemy_drops, weapon_name, rbr_active: bool, weekly_boost
         print()
 
 
+def display_box_drops(box_drops, weapon_name):
+    """Display boxes that drop the weapon."""
+    if not box_drops:
+        print(f"\nNo boxes found that drop '{weapon_name}'.")
+        return
+
+    print(f"\n{'=' * 80}")
+    print(f"Boxes that drop: {weapon_name}")
+    print(f"  (Note: Box drops are NOT affected by DAR, RDR, or any drop rate bonuses)")
+    print(f"{'=' * 80}\n")
+
+    for i, box_info in enumerate(box_drops, 1):
+        print(f"{i}. {box_info['area']} (Episode {box_info['episode']})")
+        print(f"   Section ID: {box_info['section_id']}")
+        print(f"   Drop Rate: {box_info['drop_rate_percent']:.6f}% per box")
+        print(f"   (1 in {1 / box_info['drop_rate']:.1f} boxes)")
+        print()
+
+
 def display_results(results, weapon_name, top_n: Optional[int] = 10):
     """Display the search results in a formatted way."""
     if not results:
@@ -60,18 +79,25 @@ def display_results(results, weapon_name, top_n: Optional[int] = 10):
         print(f"   Section ID: {result['section_id']}")
         print(f"   Drop Probability: {result['percentage']:.6f}% per quest run")
         print(f"   (1 in {1 / result['probability']:.1f} quest runs)")
-        print(f"   Enemy contributions:")
+        print(f"   Contributions:")
 
         for contrib in result["contributions"]:
-            print(f"     - {contrib['enemy']}: {contrib['count']} kills")
-            dar_str = f"{contrib['dar']:.4f}"
-            rdr_str = f"{contrib['rdr']:.6f}"
-            if "adjusted_dar" in contrib and contrib["adjusted_dar"] != contrib["dar"]:
-                dar_str += f" -> {contrib['adjusted_dar']:.4f}"
-            if "adjusted_rdr" in contrib and contrib["adjusted_rdr"] != contrib["rdr"]:
-                rdr_str += f" -> {contrib['adjusted_rdr']:.6f}"
-            print(f"       DAR: {dar_str}, RDR: {rdr_str}")
-            print(f"       Contribution: {contrib['probability'] * 100:.6f}%")
+            if contrib.get("source") == "Box":
+                # Box contribution
+                print(f"     - Box ({contrib['area']}): {contrib['box_count']} boxes")
+                print(f"       Drop Rate: {contrib['drop_rate']:.6f}")
+                print(f"       Contribution: {contrib['probability'] * 100:.6f}%")
+            else:
+                # Enemy contribution
+                print(f"     - {contrib['enemy']}: {contrib['count']} kills")
+                dar_str = f"{contrib['dar']:.4f}"
+                rdr_str = f"{contrib['rdr']:.6f}"
+                if "adjusted_dar" in contrib and contrib["adjusted_dar"] != contrib["dar"]:
+                    dar_str += f" -> {contrib['adjusted_dar']:.4f}"
+                if "adjusted_rdr" in contrib and contrib["adjusted_rdr"] != contrib["rdr"]:
+                    rdr_str += f" -> {contrib['adjusted_rdr']:.6f}"
+                print(f"       DAR: {dar_str}, RDR: {rdr_str}")
+                print(f"       Contribution: {contrib['probability'] * 100:.6f}%")
 
         print()
 
@@ -176,6 +202,12 @@ def main():
 
     # Display enemy drops first
     display_enemy_drops(enemy_drops, weapon, args.rbr, weekly_boost)
+
+    # Find boxes that drop the weapon
+    box_drops = calculator.find_boxes_that_drop_weapon(weapon)
+
+    # Display box drops
+    display_box_drops(box_drops, weapon)
 
     # Find best quests
     results = calculator.find_best_quests_for_weapon(
