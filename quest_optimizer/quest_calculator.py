@@ -9,18 +9,21 @@ Calculates expected PD value per quest by:
 """
 
 import json
+from bisect import bisect
 from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 from drop_tables.weapon_patterns import (
     PATTERN_ATTRIBUTE_PROBABILITIES,
-    _calculate_weapon_attributes,
+    calculate_rare_weapon_attributes,
+    get_three_roll_hit_probability,
 )
 from price_guide import (
     PriceGuideExceptionItemNameNotFound,
     PriceGuideFixed,
 )
+from quests.quest_listing import QuestListing
 
 
 class WeeklyBoost(Enum):
@@ -97,16 +100,12 @@ class QuestCalculator:
         """
         self.price_guide = PriceGuideFixed(str(price_guide_path))
         self.drop_data = self._load_drop_table(drop_table_path)
-        self.quest_data = self._load_quest_data(quest_data_path)
+        self.quest_listing = QuestListing(quest_data_path)
+        self.quest_data = self.quest_listing.get_all_quests()
 
     def _load_drop_table(self, drop_table_path: Path) -> Dict:
         """Load drop table JSON file."""
         with open(drop_table_path, "r", encoding="utf-8") as f:
-            return json.load(f)
-
-    def _load_quest_data(self, quest_data_path: Path) -> List[Dict]:
-        """Load quests.json file."""
-        with open(quest_data_path, "r", encoding="utf-8") as f:
             return json.load(f)
 
     def _is_hallow_quest(self, quest_data: Dict) -> bool:
@@ -197,9 +196,9 @@ class QuestCalculator:
         total_value = base_price
 
         # Get Pattern 5 contributions (probabilities, not prices)
-        # Note: calculate_rare_weapon_attributes doesn't take drop_area, but _calculate_weapon_attributes needs it
-        # So we need to call the internal function directly with drop_area for hit probability
-        attr_results = _calculate_weapon_attributes(weapon_data, drop_area=drop_area)
+        # Note: For rare weapons, we use calculate_rare_weapon_attributes which doesn't need drop_area
+        # But we still need drop_area for hit probability calculation
+        attr_results = calculate_rare_weapon_attributes(weapon_data)
 
         # Multiply by prices to get actual PD values
         modifiers = weapon_data.get("modifiers", {})
@@ -219,24 +218,39 @@ class QuestCalculator:
                 except Exception:
                     pass
 
-        # Calculate hit contribution (multiply Pattern 5 prob by hit prices)
+        # Calculate hit contribution (matching WeaponValueCalculator approach)
         hit_values = weapon_data.get("hit_values", {})
         if hit_values and "hit" in attr_results:
-            sorted_hits = sorted(map(int, hit_values.keys()))
-            from bisect import bisect
+            # Get three-roll hit probability
+            three_roll_hit_prob = get_three_roll_hit_probability(drop_area)
+            no_hit_prob = 1.0 - three_roll_hit_prob
 
+            sorted_hits = sorted(map(int, hit_values.keys()))
+
+            # No-hit contribution (if a 0-hit price exists)
+            if "0" in hit_values:
+                try:
+                    no_hit_price = PriceGuideFixed.get_price_from_range(hit_values["0"], self.price_guide.bps)
+                    total_value += no_hit_price * no_hit_prob
+                except Exception:
+                    pass
+
+            # Hit contribution: iterate through Pattern 5 hit values
             for hit_val, pattern5_prob in PATTERN_ATTRIBUTE_PROBABILITIES[5].items():
-                index = bisect(sorted_hits, hit_val) - 1
+                # Combined probability = (three-roll hit prob) * (Pattern 5 prob for this hit value)
+                combined_prob = three_roll_hit_prob * pattern5_prob
+
+                # Tech the hit value: add 10 to the original hit value
+                teched_hit = hit_val + 10
+
+                # Find the price threshold for the teched hit value
+                index = bisect(sorted_hits, teched_hit) - 1
                 if index >= 0:
                     threshold = sorted_hits[index]
                     price_range = hit_values[str(threshold)]
                     try:
                         hit_price = PriceGuideFixed.get_price_from_range(price_range, self.price_guide.bps)
-                        # The attr_results["hit"] already includes the probability that hit is assigned
-                        # We need to multiply by Pattern 5 prob for this specific hit value
-                        # Actually, attr_results["hit"] is the probability hit is assigned * 1.0
-                        # So we need to multiply by pattern5_prob and hit_price
-                        total_value += attr_results["hit"] * pattern5_prob * hit_price
+                        total_value += hit_price * combined_prob
                     except Exception:
                         pass
 
@@ -616,6 +630,94 @@ class QuestCalculator:
 
         return total_pd, total_pd_drops, enemy_breakdown, pd_drop_breakdown
 
+    def _process_box_drops(
+        self,
+        area_name: str,
+        box_counts: Dict[str, int],
+        episode: int,
+        section_id: str,
+    ) -> Tuple[float, Dict]:
+        """
+        Process box drops for an area.
+
+        Only processes "box" type (regular boxes that can drop rare items).
+        Skips box_armor, box_weapon, and box_rareless.
+
+        Note: Box drops are NOT affected by any drop rate bonuses (DAR, RDR, etc.).
+        They use the base drop rate directly from the drop table.
+
+        Args:
+            area_name: Quest area name (will be mapped to drop table area)
+            box_counts: Dictionary mapping box types to counts
+            episode: Episode number (1, 2, or 4)
+            section_id: Section ID to use for drops
+
+        Returns:
+            Tuple of (total_pd, box_breakdown)
+        """
+        total_pd = 0.0
+        box_breakdown = {}
+
+        # Only process regular boxes (box_armor, box_weapon, box_rareless cannot drop rare items)
+        regular_box_count = box_counts.get("box", 0)
+        if regular_box_count == 0:
+            return 0.0, {}
+
+        # Map quest area name to drop table area name
+        mapped_area = self.quest_listing.map_quest_area_to_drop_table_area(area_name)
+
+        # Get box drop data from drop table
+        episode_key = f"episode{episode}"
+        if episode_key not in self.drop_data:
+            return 0.0, {}
+
+        boxes_data = self.drop_data[episode_key].get("boxes", {})
+        if mapped_area not in boxes_data:
+            return 0.0, {}
+
+        section_ids_data = boxes_data[mapped_area].get("section_ids", {})
+        if section_id not in section_ids_data:
+            return 0.0, {}
+
+        # Get list of items that can drop from boxes in this area/section
+        box_items = section_ids_data[section_id]
+
+        # Process each item that can drop from boxes
+        for item_data in box_items:
+            item_name = item_data.get("item", "")
+            drop_rate = item_data.get("rate", 0.0)
+
+            # Calculate expected drops: box_count * drop_rate
+            # Note: Box drops are NOT affected by DAR, RDR, or any other drop rate bonuses
+            expected_drops = regular_box_count * drop_rate
+
+            # Get item price
+            # For rare weapons, area doesn't affect hit probability (always uses Pattern 5)
+            # Area is only used for common weapons, so pass None for box drops (rare weapons)
+            try:
+                item_price_pd = self._get_item_price_pd(item_name)
+            except PriceGuideExceptionItemNameNotFound:
+                # Item not found in price guide, skip it
+                continue
+            # Expected PD value
+            expected_pd = expected_drops * item_price_pd
+            total_pd += expected_pd
+
+            # Add to breakdown
+            if item_name not in box_breakdown:
+                box_breakdown[item_name] = {
+                    "box_count": regular_box_count,
+                    "drop_rate": drop_rate,
+                    "expected_drops": 0.0,
+                    "item_price_pd": item_price_pd,
+                    "pd_value": 0.0,
+                }
+
+            box_breakdown[item_name]["expected_drops"] += expected_drops
+            box_breakdown[item_name]["pd_value"] += expected_pd
+
+        return total_pd, box_breakdown
+
     def calculate_quest_value(
         self,
         quest_data: Dict,
@@ -779,6 +881,30 @@ class QuestCalculator:
                 if normal_pd_breakdown:
                     pd_drop_breakdown.update(normal_pd_breakdown)
 
+        # Process box drops
+        # Note: Box drops are NOT affected by any drop rate bonuses (DAR, RDR, etc.)
+        box_pd = 0.0
+        box_breakdown = {}
+        quest_areas = quest_data.get("areas", [])
+        for area in quest_areas:
+            area_name = area.get("name", "")
+            boxes = area.get("boxes", {})
+            if boxes:
+                area_box_pd, area_box_breakdown = self._process_box_drops(area_name, boxes, episode, section_id)
+                box_pd += area_box_pd
+                # Merge area box breakdown into overall box breakdown
+                for item_name, item_data in area_box_breakdown.items():
+                    if item_name not in box_breakdown:
+                        box_breakdown[item_name] = item_data
+                    else:
+                        # Combine data from multiple areas
+                        box_breakdown[item_name]["box_count"] += item_data["box_count"]
+                        box_breakdown[item_name]["expected_drops"] += item_data["expected_drops"]
+                        box_breakdown[item_name]["pd_value"] += item_data["pd_value"]
+
+        # Add box PD to total
+        total_pd += box_pd
+
         # Process quest completion items
         completion_items_pd = 0.0
         completion_items_breakdown = {}
@@ -807,6 +933,8 @@ class QuestCalculator:
             "total_pd_drops": total_pd_drops,  # Expected PD drops (not item value)
             "enemy_breakdown": enemy_breakdown,
             "pd_drop_breakdown": pd_drop_breakdown,
+            "box_breakdown": box_breakdown,
+            "box_pd": box_pd,
             "completion_items_breakdown": completion_items_breakdown,
             "completion_items_pd": completion_items_pd,
             "total_enemies": total_enemies,

@@ -26,20 +26,22 @@ class QuestOptimizer:
         """
         self.calculator = calculator
 
-    def _get_top_items(self, enemy_breakdown: Dict, top_n: int = 3) -> List[Dict]:
+    def _get_top_items(self, enemy_breakdown: Dict, box_breakdown: Optional[Dict] = None, top_n: int = 3) -> List[Dict]:
         """
-        Calculate the top N items by PD value contribution.
+        Calculate the top N items by PD value contribution from both enemies and boxes.
 
         Args:
             enemy_breakdown: Dictionary of enemy breakdown data
+            box_breakdown: Optional dictionary of box breakdown data
             top_n: Number of top items to return
 
         Returns:
-            List of dictionaries with item_name, enemy, pd_value, and pd_per_quest
+            List of dictionaries with item_name, source (enemy/box), pd_value
             sorted by PD value (descending)
         """
-        item_data = {}  # item_name -> {pd_value, enemies: [list of enemies]}
+        item_data: Dict[str, Dict] = {}  # item_name -> {pd_value, sources: [list of sources]}
 
+        # Process enemy drops
         for enemy, data in enemy_breakdown.items():
             if "error" in data:
                 continue
@@ -48,17 +50,33 @@ class QuestOptimizer:
             pd_value = data.get("pd_value", 0.0)
 
             if item not in item_data:
-                item_data[item] = {"pd_value": 0.0, "enemies": []}
+                item_data[item] = {"pd_value": 0.0, "sources": []}
 
             item_data[item]["pd_value"] += pd_value
             # Track which enemy drops this item (for display)
-            if enemy not in item_data[item]["enemies"]:
-                item_data[item]["enemies"].append(enemy)
+            sources_list: List[str] = item_data[item].get("sources", [])
+            if enemy not in sources_list:
+                sources_list.append(enemy)
+
+        # Process box drops
+        if box_breakdown:
+            for item_name, data in box_breakdown.items():
+                pd_value = data.get("pd_value", 0.0)
+                if pd_value > 0:
+                    if item_name not in item_data:
+                        item_data[item_name] = {"pd_value": 0.0, "sources": []}
+
+                    item_data[item_name]["pd_value"] += pd_value
+                    # Mark as box drop
+                    box_sources_list: List[str] = item_data[item_name].get("sources", [])
+                    if "Box" not in box_sources_list:
+                        box_sources_list.append("Box")
 
         # Convert to list of dicts and sort by PD value (descending)
         result = []
         for item_name, data in item_data.items():
-            result.append({"item": item_name, "pd_value": data["pd_value"], "enemies": data["enemies"]})
+            # For backward compatibility, use "enemies" key but include both enemies and boxes
+            result.append({"item": item_name, "pd_value": data["pd_value"], "enemies": data["sources"]})
 
         # Sort by PD value (descending) and return top N
         result.sort(key=lambda x: x["pd_value"], reverse=True)
@@ -117,7 +135,10 @@ class QuestOptimizer:
                 pd_per_minute = value_result["total_pd"] / quest_time
 
             # Calculate top items by PD value (get up to 10 to have enough for display)
-            top_items = self._get_top_items(value_result["enemy_breakdown"], top_n=10)
+            # Include both enemy drops and box drops
+            top_items = self._get_top_items(
+                value_result["enemy_breakdown"], box_breakdown=value_result.get("box_breakdown", {}), top_n=10
+            )
 
             result = {
                 "quest_name": quest_name,
@@ -134,6 +155,8 @@ class QuestOptimizer:
                 "weekly_boost": weekly_boost,
                 "enemy_breakdown": value_result["enemy_breakdown"],
                 "pd_drop_breakdown": value_result.get("pd_drop_breakdown", {}),
+                "box_breakdown": value_result.get("box_breakdown", {}),
+                "box_pd": value_result.get("box_pd", 0.0),
                 "completion_items_breakdown": value_result.get("completion_items_breakdown", {}),
                 "completion_items_pd": value_result.get("completion_items_pd", 0.0),
                 "top_items": top_items,
@@ -178,7 +201,14 @@ class QuestOptimizer:
         results = {}
         for section_id in section_ids:
             results[section_id] = self.rank_quests(
-                quests_data, section_id, rbr_active, weekly_boost, quest_times, episode_filter, christmas_boost, exclude_event_quests
+                quests_data,
+                section_id,
+                rbr_active,
+                weekly_boost,
+                quest_times,
+                episode_filter,
+                christmas_boost,
+                exclude_event_quests,
             )
 
         return results
@@ -205,10 +235,11 @@ class QuestOptimizer:
             for item_data in top_items[:notable_items_count]:
                 if isinstance(item_data, dict):
                     item_name = item_data.get("item", "Unknown")
-                    enemy = item_data.get("enemies", ["Unknown"])[0] if item_data.get("enemies") else "Unknown"
+                    sources = item_data.get("enemies", [])  # "enemies" key contains both enemies and "Box"
+                    source = sources[0] if sources else "Unknown"
                     pd_value = item_data.get("pd_value", 0.0)
-                    # Format: "Item (Enemy: PD)"
-                    item_str = f"{item_name} ({enemy}: {pd_value:.4f})"
+                    # Format: "Item (Source: PD)" where Source can be enemy name or "Box"
+                    item_str = f"{item_name} ({source}: {pd_value:.4f})"
                     max_item_width = max(max_item_width, len(item_str), len("Notable Item X"))
                 else:
                     # Legacy format support
@@ -222,6 +253,17 @@ class QuestOptimizer:
             result.get("section_id") != rankings[0].get("section_id") for result in rankings
         )
 
+        # Calculate maximum width needed for quest name column
+        max_quest_name_width = len("Quest Name")  # At least as wide as header
+        for result in rankings:
+            short_name = result.get("quest_name", "Unknown")
+            long_name = result.get("long_name")
+            if long_name:
+                quest_name = f"{long_name} ({short_name})"
+            else:
+                quest_name = short_name
+            max_quest_name_width = max(max_quest_name_width, len(quest_name))
+
         # Check if any quests have areas defined
         has_areas = any(result.get("areas") for result in rankings)
 
@@ -231,7 +273,9 @@ class QuestOptimizer:
             for result in rankings:
                 areas = result.get("areas", [])
                 if areas:
-                    areas_str = ", ".join(areas)
+                    # Extract area names from area dictionaries (areas are now dicts with 'name' and 'boxes')
+                    area_names = [area.get("name", "") if isinstance(area, dict) else str(area) for area in areas]
+                    areas_str = ", ".join(area_names)
                     max_areas_width = max(max_areas_width, len(areas_str))
                 else:
                     max_areas_width = max(max_areas_width, len("N/A"))
@@ -262,25 +306,35 @@ class QuestOptimizer:
         if show_section_id:
             if has_areas:
                 fixed_width = (
-                    6 + 30 + 12 + max_areas_width + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
+                    6
+                    + max_quest_name_width
+                    + 12
+                    + max_areas_width
+                    + 8
+                    + 12
+                    + 12
+                    + 10
+                    + 15
+                    + reward_column_width
+                    + divider_width
                 )  # Rank + Quest Name + Section ID + Areas + Episode + PD + PD/min + Enemies + Raw PD/Quest + Quest Reward + Divider
             else:
                 fixed_width = (
-                    6 + 30 + 12 + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
+                    6 + max_quest_name_width + 12 + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
                 )  # Rank + Quest Name + Section ID + Episode + PD + PD/min + Enemies + Raw PD/Quest + Quest Reward + Divider
         else:
             if has_areas:
                 fixed_width = (
-                    6 + 30 + max_areas_width + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
+                    6 + max_quest_name_width + max_areas_width + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
                 )  # Rank + Quest Name + Areas + Episode + PD + PD/min + Enemies + Raw PD/Quest + Quest Reward + Divider
             else:
                 fixed_width = (
-                    6 + 30 + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
+                    6 + max_quest_name_width + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
                 )  # Rank + Quest Name + Episode + PD + PD/min + Enemies + Raw PD/Quest + Quest Reward + Divider
         total_width = fixed_width + (max_item_width * notable_items_count)
 
         # Print header
-        header_parts = [f"{'Rank':<6}", f"{'Quest Name':<30}"]
+        header_parts = [f"{'Rank':<6}", f"{'Quest Name':<{max_quest_name_width}}"]
         if show_section_id:
             header_parts.append(f"{'Section ID':<12}")
         if has_areas:
@@ -308,7 +362,7 @@ class QuestOptimizer:
                 quest_name = f"{long_name} ({short_name})"
             else:
                 quest_name = short_name
-            quest_name = quest_name[:28]  # Truncate if too long
+            # Don't truncate - use full name since we calculated the width dynamically
 
             episode = result["episode"]
             section_id = result.get("section_id", "Unknown")
@@ -325,12 +379,14 @@ class QuestOptimizer:
 
             # Format areas: "Area1, Area2" or "N/A" if not present
             if areas:
-                areas_str = ", ".join(areas)
+                # Extract area names from area dictionaries (areas are now dicts with 'name' and 'boxes')
+                area_names = [area.get("name", "") if isinstance(area, dict) else str(area) for area in areas]
+                areas_str = ", ".join(area_names)
             else:
                 areas_str = "N/A"
 
             # Build row parts
-            row_parts = [f"{idx:<6}", f"{quest_name:<30}"]
+            row_parts = [f"{idx:<6}", f"{quest_name:<{max_quest_name_width}}"]
             if show_section_id:
                 row_parts.append(f"{section_id:<12}")
             if has_areas:
@@ -359,10 +415,11 @@ class QuestOptimizer:
                     item_data = top_items[i]
                     if isinstance(item_data, dict):
                         item_name = item_data.get("item", "Unknown")
-                        enemy = item_data.get("enemies", ["Unknown"])[0] if item_data.get("enemies") else "Unknown"
+                        sources = item_data.get("enemies", [])  # "enemies" key contains both enemies and "Box"
+                        source = sources[0] if sources else "Unknown"
                         pd_value = item_data.get("pd_value", 0.0)
-                        # Format: "Item (Enemy: PD)"
-                        item_str = f"{item_name} ({enemy}: {pd_value:.4f})"
+                        # Format: "Item (Source: PD)" where Source can be enemy name or "Box"
+                        item_str = f"{item_name} ({source}: {pd_value:.4f})"
                     else:
                         # Legacy format support
                         item_str = str(item_data)
@@ -428,6 +485,32 @@ class QuestOptimizer:
                         )
 
                     print(f"  {'Total':<20} {'':<10} {'':<12} {'':<8} {total_pd_drops:<15.8f}")
+                    print()
+
+                # Box Drop Breakdown table
+                if result.get("box_breakdown"):
+                    print("  Box Drop Breakdown:")
+                    print(
+                        f"  {'Item':<30} {'Box Count':<12} {'Drop Rate':<12} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
+                    )
+                    print("  " + "-" * 102)
+
+                    total_box_pd = result.get("box_pd", 0.0)
+                    for item_name, data in result["box_breakdown"].items():
+                        box_count = data.get("box_count", 0)
+                        drop_rate = data.get("drop_rate", 0.0)
+                        expected_drops = data.get("expected_drops", 0.0)
+                        item_price_pd = data.get("item_price_pd", 0.0)  # PD value per item
+                        exp_value = data.get("pd_value", 0.0)  # Expected PD value (expected_drops * item_price_pd)
+
+                        # Truncate long item names
+                        item_display = item_name[:28] if len(item_name) <= 28 else item_name[:25] + "..."
+
+                        print(
+                            f"  {item_display:<30} {box_count:<12} {drop_rate:<12.8f} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
+                        )
+
+                    print(f"  {'Total':<30} {'':<12} {'':<12} {'':<12} {'':<12} {'':<12} {total_box_pd:<12.8f}")
                     print()
 
 

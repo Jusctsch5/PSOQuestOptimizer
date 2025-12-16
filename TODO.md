@@ -10,7 +10,7 @@ List of high level TODOS
 - [X] Add holloween quests to quests.json
 - [X] Add holloween quest boosts to quest_calculator.py
 - [X] Update README with proper usage instructions, reasoning for some of the choices made w/ user-facing scripts
-- [ ] Add Box Drops to Drop Tables
+- [X] Add Box Drops to Drop Tables
 - [X] Add "is_in_rbr_rotation" field to quests.json, make sure RBR boost is only applied to quests in rotation
 - [X] Add "is_event_quest" field to quests.json, allow filtering out event quests
 - [ ] Add "evergreen" quests to quests.json, i.e. TE and MaxAttack quests

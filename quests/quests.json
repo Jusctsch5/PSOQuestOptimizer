@@ -3,7 +3,13 @@
     "quest_name": "MU1",
     "long_name": "Mop-up Operation 1",
     "areas": [
-      "Forest 1"
+      {
+        "name": "Forest 1",
+        "boxes": {
+          "box": 44,
+          "box_rareless": 5
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -20,7 +26,12 @@
     "quest_name": "MU2",
     "long_name": "Mop-up Operation 2",
     "areas": [
-      "Cave 1"
+      {
+        "name": "Cave 1",
+        "boxes": {
+          "box": 47
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -37,7 +48,14 @@
     "quest_name": "MU3",
     "long_name": "Mop-up Operation 3",
     "areas": [
-      "Mine 1"
+      {
+        "name": "Mine 1",
+        "boxes": {
+          "box": 39,
+          "box_armor": 6,
+          "box_weapon": 7
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -55,7 +73,14 @@
     "quest_name": "MU4",
     "long_name": "Mop-up Operation 4",
     "areas": [
-      "Ruins 1"
+      {
+        "name": "Ruins 1",
+        "boxes": {
+          "box": 16,
+          "box_armor": 1,
+          "box_weapon": 2
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -73,7 +98,14 @@
     "quest_name": "SU1",
     "long_name": "Sweep Up Operation 1",
     "areas": [
-      "Forest 2"
+      {
+        "name": "Forest 2",
+        "boxes": {
+          "box": 35,
+          "box_armor": 2,
+          "box_weapon": 3
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -91,7 +123,14 @@
     "quest_name": "SU2",
     "long_name": "Sweep Up Operation 2",
     "areas": [
-      "Cave 2"
+      {
+        "name": "Cave 2",
+        "boxes": {
+          "box": 34,
+          "box_armor": 1,
+          "box_weapon": 1
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -109,7 +148,12 @@
     "quest_name": "SU3",
     "long_name": "Sweep Up Operation 3",
     "areas": [
-      "Mine 2"
+      {
+        "name": "Mine 2",
+        "boxes": {
+          "box": 32
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -128,7 +172,13 @@
     "long_name": "Sweep Up Operation 4",
     "episode": 1,
     "areas": [
-      "Ruins 2"
+      {
+        "name": "Ruins 2",
+        "boxes": {
+          "box": 35,
+          "box_weapon": 1
+        }
+      }
     ],
     "is_in_rbr_rotation": true,
     "enemies": {
@@ -146,7 +196,22 @@
     "quest_name": "EN1",
     "long_name": "Endless Nightmare 1",
     "areas": [
-      "Forest 1, Forest 2"
+      {
+        "name": "Forest 1",
+        "boxes": {
+          "box": 40,
+          "box_armor": 1,
+          "box_rareless": 4
+        }
+      },
+      {
+        "name": "Forest 2",
+        "boxes": {
+          "box": 58,
+          "box_armor": 3,
+          "box_weapon": 3
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -165,7 +230,23 @@
     "quest_name": "EN2",
     "long_name": "Endless Nightmare 2",
     "areas": [
-      "Cave 1, Cave 2"
+      {
+        "name": "Cave 1",
+        "boxes": {
+          "box": 48,
+          "box_armor": 3,
+          "box_weapon": 2
+        }
+      },
+      {
+        "name": "Cave 2",
+        "boxes": {
+          "box": 20,
+          "box_armor": 3,
+          "box_weapon": 5,
+          "box_tool": 5
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -183,7 +264,22 @@
     "quest_name": "EN3",
     "long_name": "Endless Nightmare 3",
     "areas": [
-      "Mine 1, Mine 2"
+      {
+        "name": "Mine 1",
+        "boxes": {
+          "box": 27,
+          "box_armor": 3,
+          "box_tool": 1,
+          "box_weapon": 6
+        }
+      },
+      {
+        "name": "Mine 2",
+        "boxes": {
+          "box": 26,
+          "box_rareless": 6
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -201,7 +297,22 @@
     "quest_name": "EN4",
     "long_name": "Endless Nightmare 4",
     "areas": [
-      "Ruins 1, Ruins 2"
+      {
+        "name": "Ruins 1",
+        "boxes": {
+          "box": 49,
+          "box_armor": 7,
+          "box_weapon": 8
+        }
+      },
+      {
+        "name": "Ruins 2",
+        "boxes": {
+          "box": 34,
+          "box_armor": 2,
+          "box_weapon": 5
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -222,7 +333,20 @@
     "quest_name": "SR1",
     "long_name": "Scarlet Realm 1",
     "areas": [
-      "Forest 1, Forest 2"
+      {
+        "name": "Forest 1",
+        "boxes": {
+          "box": 32
+        }
+      },
+      {
+        "name": "Forest 2",
+        "boxes": {
+          "box": 41,
+          "box_armor": 1,
+          "box_weapon": 1
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -241,7 +365,19 @@
     "quest_name": "SR2",
     "long_name": "Scarlet Realm 2",
     "areas": [
-      "Cave 2, Cave 3"
+      {
+        "name": "Cave 2",
+        "boxes": {
+          "box": 34,
+          "box_weapon": 2
+        }
+      },
+      {
+        "name": "Cave 3",
+        "boxes": {
+          "box": 32
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -260,7 +396,18 @@
     "quest_name": "SR3",
     "long_name": "Scarlet Realm 3",
     "areas": [
-      "Mine 1, Mine 2"
+      {
+        "name": "Mine 1",
+        "boxes": {
+          "box": 81
+        }
+      },
+      {
+        "name": "Mine 2",
+        "boxes": {
+          "box": 36
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -278,7 +425,20 @@
     "quest_name": "SR4",
     "long_name": "Scarlet Realm 4",
     "areas": [
-      "Ruins 2, Ruins 3"
+      {
+        "name": "Ruins 2",
+        "boxes": {
+          "box": 63,
+          "box_tool": 1,
+          "box_weapon": 1
+        }
+      },
+      {
+        "name": "Ruins 3",
+        "boxes": {
+          "box": 6
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -299,7 +459,21 @@
     "quest_name": "SA1",
     "long_name": "Silent Afterimage 1",
     "areas": [
-      "Forest 1, Ruins 1"
+      {
+        "name": "Forest 1",
+        "boxes": {
+          "box": 18,
+          "box_armor": 2,
+          "box_weapon": 1
+        }
+      },
+      {
+        "name": "Ruins 1",
+        "boxes": {
+          "box": 23,
+          "box_weapon": 3
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -325,7 +499,19 @@
     "quest_name": "SA2",
     "long_name": "Silent Afterimage 2",
     "areas": [
-      "Cave 3, Mine 1"
+      {
+        "name": "Cave 3",
+        "boxes": {
+          "box": 25
+        }
+      },
+      {
+        "name": "Mine 1",
+        "boxes": {
+          "box": 19,
+          "box_weapon": 8
+        }
+      }
     ],
     "episode": 1,
     "is_in_rbr_rotation": true,
@@ -347,8 +533,81 @@
     }
   },
   {
+    "quest_name": "LHS",
+    "long_name": "Lost HEAT SWORD",
+    "areas": [
+      {
+        "name": "Forest 1",
+        "boxes": {
+          "box": 40,
+          "box_armor": 2,
+          "box_weapon": 1,
+          "box_rareless": 5
+        }
+      },
+      {
+        "name": "Forest 2",
+        "boxes": {
+          "box": 50,
+          "box_weapon": 2
+        }
+      },
+      {
+        "name": "Under the Dome",
+        "boxes": {
+          "box_armor": 2,
+          "box_weapon": 2,
+          "box_tool": 5
+        }
+      }
+    ],
+    "episode": 1,
+    "is_in_rbr_rotation": true,
+    "enemies": {
+      "Booma": 29,
+      "Gobooma": 38,
+      "Gigobooma": 58,
+      "Savage Wolf": 26,
+      "Barbarous Wolf": 7,
+      "Monest": 7,
+      "Rag Rappy": 10,
+      "Hildebear": 12,
+      "Dragon": 1
+    }
+  },
+  {
     "quest_name": "LIS",
     "long_name": "Lost ICE SPINNER",
+    "areas": [
+      {
+        "name": "Cave 1",
+        "boxes": {
+          "box": 4
+        }
+      },
+      {
+        "name": "Cave 2",
+        "boxes": {
+          "box": 17,
+          "box_armor": 1,
+          "box_weapon": 4
+        }
+      },
+      {
+        "name": "Cave 3",
+        "boxes": {
+          "box": 10
+        }
+      },
+      {
+        "name": "Underground Channel",
+        "boxes": {
+          "box": 4,
+          "box_armor": 2,
+          "box_weapon": 2
+        }
+      }
+    ],
     "episode": 1,
     "is_in_rbr_rotation": true,
     "enemies": {
@@ -364,25 +623,35 @@
     }
   },
   {
-    "quest_name": "PW1",
-    "long_name": "Phantasmal World #1",
-    "episode": 2,
-    "is_in_rbr_rotation": true,
-    "enemies": {
-      "Merillia": 83,
-      "Meriltas": 41,
-      "Ul Gibbon": 45,
-      "Zol Gibbon": 20,
-      "Gee": 122,
-      "Sinow Berill": 25,
-      "Sinow Spigell": 7,
-      "Mericarol": 6,
-      "Gi Gue": 12
-    }
-  },
-  {
     "quest_name": "LHP",
     "long_name": "Lost HELL PALLASCH",
+    "areas": [
+      {
+        "name": "Ruins 1",
+        "boxes": {
+          "box": 11
+        }
+      },
+      {
+        "name": "Ruins 2",
+        "boxes": {
+          "box": 13
+        }
+      },
+      {
+        "name": "Ruins 3",
+        "boxes": {
+          "box": 4
+        }
+      },
+      {
+        "name": "????",
+        "boxes": {
+          "box_armor": 5,
+          "box_weapon": 12
+        }
+      }
+    ],
     "episode": 1,
     "is_in_rbr_rotation": true,
     "enemies": {
@@ -400,8 +669,53 @@
     }
   },
   {
+    "quest_name": "PW1",
+    "long_name": "Phantasmal World #1",
+    "areas": [
+      {
+        "name": "Jungle North",
+        "boxes": {
+          "box": 4
+        }
+      },
+      {
+        "name": "Seaside",
+        "boxes": {
+          "box": 24
+        }
+      }
+    ],
+    "episode": 2,
+    "is_in_rbr_rotation": true,
+    "enemies": {
+      "Merillia": 83,
+      "Meriltas": 41,
+      "Ul Gibbon": 45,
+      "Zol Gibbon": 20,
+      "Gee": 122,
+      "Sinow Berill": 25,
+      "Sinow Spigell": 7,
+      "Mericarol": 6,
+      "Gi Gue": 12
+    }
+  },
+  {
     "quest_name": "PW3",
     "long_name": "Phantasmal World #3",
+    "areas": [
+      {
+        "name": "Seabed Upper",
+        "boxes": {
+          "box": 89
+        }
+      },
+      {
+        "name": "Seabed Lower",
+        "boxes": {
+          "box": 37
+        }
+      }
+    ],
     "episode": 2,
     "is_in_rbr_rotation": true,
     "enemies": {
@@ -419,7 +733,17 @@
   {
     "quest_name": "SU5",
     "long_name": "Sweep Up Operation 5",
-    "episode": 1,
+    "areas": [
+      {
+        "name": "VR Temple Alpha",
+        "boxes": {
+          "box": 19,
+          "box_armor": 2,
+          "box_weapon": 2
+        }
+      }
+    ],
+    "episode": 2,
     "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 36,
@@ -436,7 +760,17 @@
   {
     "quest_name": "SU6",
     "long_name": "Sweep Up Operation 6",
-    "episode": 1,
+    "areas": [
+      {
+        "name": "VR Spaceship Alpha",
+        "boxes": {
+          "box": 28,
+          "box_armor": 3,
+          "box_weapon": 3
+        }
+      }
+    ],
+    "episode": 2,
     "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 63,
@@ -451,6 +785,15 @@
   {
     "quest_name": "SU7",
     "long_name": "Sweep Up Operation 7",
+    "areas": [
+      {
+        "name": "Jungle North",
+        "boxes": {
+          "box": 15,
+          "box_weapon": 2
+        }
+      }
+    ],
     "episode": 2,
     "is_in_rbr_rotation": true,
     "enemies": {
@@ -471,6 +814,14 @@
   {
     "quest_name": "SU8",
     "long_name": "Sweep Up Operation 8",
+    "areas": [
+      {
+        "name": "Seabed Upper",
+        "boxes": {
+          "box": 19
+        }
+      }
+    ],
     "episode": 2,
     "is_in_rbr_rotation": true,
     "enemies": {
@@ -486,9 +837,23 @@
     }
   },
   {
-    "quest_name": "PS1",
-    "long_name": "Penumbral Surge #1",
+    "quest_name": "PS1_2P",
+    "long_name": "Penumbral Surge #1 (2P)",
     "episode": 2,
+    "areas": [
+      {
+        "name": "VR Temple Alpha",
+        "boxes": {
+          "box": 10
+        }
+      },
+      {
+        "name": "VR Temple Beta",
+        "boxes": {
+          "box": 20
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 68,
@@ -506,6 +871,20 @@
     "quest_name": "PS2",
     "long_name": "Penumbral Surge #2",
     "episode": 2,
+    "areas": [
+      {
+        "name": "VR Spaceship Alpha",
+        "boxes": {
+          "box": 38
+        }
+      },
+      {
+        "name": "VR Spaceship Beta",
+        "boxes": {
+          "box": 20
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 200,
@@ -522,6 +901,26 @@
     "quest_name": "PS3",
     "long_name": "Penumbral Surge #3",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Jungle North",
+        "boxes": {
+          "box": 10
+        }
+      },
+      {
+        "name": "Mountain",
+        "boxes": {
+          "box": 13
+        }
+      },
+      {
+        "name": "Seaside",
+        "boxes": {
+          "box": 21
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Merillia": 68,
@@ -542,6 +941,14 @@
     "quest_name": "PS4",
     "long_name": "Penumbral Surge #4",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Central Control Area",
+        "boxes": {
+          "box": 38
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Merillia": 63,
@@ -562,6 +969,20 @@
     "quest_name": "PS5",
     "long_name": "Penumbral Surge #5",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Seabed Upper",
+        "boxes": {
+          "box": 0
+        }
+      },
+      {
+        "name": "Seabed Lower",
+        "boxes": {
+          "box": 0
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 116,
@@ -578,6 +999,14 @@
     "quest_name": "PS6",
     "long_name": "Penumbral Surge #6",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Control Tower",
+        "boxes": {
+          "box": 24
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Recobox": 42,
@@ -595,7 +1024,27 @@
   {
     "quest_name": "LSR",
     "long_name": "Lost SHOCK RIFLE",
-    "episode": 1,
+    "episode": 2,
+    "areas": [
+      {
+        "name": "VR Temple Alpha",
+        "boxes": {
+          "box": 27
+        }
+      },
+      {
+        "name": "VR Temple Beta",
+        "boxes": {
+          "box": 33
+        }
+      },
+      {
+        "name": "VR Temple Final",
+        "boxes": {
+          "box": 0
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Arlan": 73,
@@ -614,6 +1063,26 @@
     "quest_name": "LBA",
     "long_name": "Lost BIND ASSAULT",
     "episode": 2,
+    "areas": [
+      {
+        "name": "VR Spaceship Alpha",
+        "boxes": {
+          "box": 40
+        }
+      },
+      {
+        "name": "VR Spaceship Beta",
+        "boxes": {
+          "box": 32
+        }
+      },
+      {
+        "name": "VR Spaceship Final",
+        "boxes": {
+          "box": 0
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Gillchich": 107,
@@ -632,6 +1101,26 @@
     "quest_name": "LDR",
     "long_name": "Lost DEMON'S RAILGUN",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Seabed Upper",
+        "boxes": {
+          "box": 39
+        }
+      },
+      {
+        "name": "Seabed Lower",
+        "boxes": {
+          "box": 16
+        }
+      },
+      {
+        "name": "Test Subject Disposal Area",
+        "boxes": {
+          "box": 0
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 83,
@@ -649,6 +1138,14 @@
     "quest_name": "LCV",
     "long_name": "Lost CHARGE VULCAN",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Control Tower",
+        "boxes": {
+          "box": 28
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Recobox": 31,
@@ -668,6 +1165,20 @@
     "quest_name": "TET",
     "long_name": "The East Tower",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Central Control Area",
+        "boxes": {
+          "box": 11
+        }
+      },
+      {
+        "name": "Control Tower",
+        "boxes": {
+          "box": 12
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Meriltas": 16,
@@ -693,6 +1204,20 @@
     "quest_name": "TWT",
     "long_name": "The West Tower",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Seabed Upper",
+        "boxes": {
+          "box": 12
+        }
+      },
+      {
+        "name": "Control Tower",
+        "boxes": {
+          "box": 12
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 10,
@@ -716,6 +1241,14 @@
     "quest_name": "WOL1",
     "long_name": "War of Limits #1",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Crater East",
+        "boxes": {
+          "box": 71
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 47,
@@ -733,6 +1266,14 @@
     "quest_name": "WOL2",
     "long_name": "War of Limits #2",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Crater Interior",
+        "boxes": {
+          "box": 57
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 39,
@@ -750,6 +1291,14 @@
     "quest_name": "WOL3",
     "long_name": "War of Limits #3",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 1",
+        "boxes": {
+          "box": 16
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 87,
@@ -765,6 +1314,14 @@
     "quest_name": "WOL4",
     "long_name": "War of Limits #4",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 2",
+        "boxes": {
+          "box": 94
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 37,
@@ -782,6 +1339,14 @@
     "quest_name": "WOL5",
     "long_name": "War of Limits #5",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 3",
+        "boxes": {
+          "box": 48
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 49,
@@ -799,6 +1364,14 @@
     "quest_name": "NMU1",
     "long_name": "New Mop-up Operation #1",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Crater East",
+        "boxes": {
+          "box": 42
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 20,
@@ -816,6 +1389,14 @@
     "quest_name": "NMU2",
     "long_name": "New Mop-up Operation #2",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Crater Interior",
+        "boxes": {
+          "box": 0
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 31,
@@ -833,6 +1414,14 @@
     "quest_name": "NMU4",
     "long_name": "New Mop-up Operation #4",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 2",
+        "boxes": {
+          "box": 27
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 46,
@@ -849,6 +1438,14 @@
     "quest_name": "NMU5",
     "long_name": "New Mop-up Operation #5",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 3",
+        "boxes": {
+          "box": 51
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 37,
@@ -866,6 +1463,14 @@
     "quest_name": "SU10",
     "long_name": "Sweep Up Operation #10",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Crater East",
+        "boxes": {
+          "box": 80
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 39,
@@ -883,6 +1488,14 @@
     "quest_name": "SU11",
     "long_name": "Sweep Up Operation #11",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Crater Interior",
+        "boxes": {
+          "box": 0
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Boota": 25,
@@ -900,6 +1513,14 @@
     "quest_name": "SU12",
     "long_name": "Sweep Up Operation #12",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 1",
+        "boxes": {
+          "box": 61
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 90,
@@ -917,6 +1538,14 @@
     "quest_name": "SU13",
     "long_name": "Sweep Up Operation #13",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 2",
+        "boxes": {
+          "box": 34
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 50,
@@ -934,6 +1563,14 @@
     "quest_name": "SU14",
     "long_name": "Sweep Up Operation #14",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 3",
+        "boxes": {
+          "box": 44
+        }
+      }
+    ],
     "is_in_rbr_rotation": true,
     "enemies": {
       "Goran": 70,
@@ -1060,6 +1697,14 @@
     "quest_name": "CF1",
     "long_name": "Christmas Fiasco E1",
     "episode": 1,
+    "areas": [
+      {
+        "name": "Cave 2",
+        "boxes": {
+          "box": 16
+        }
+      }
+    ],
     "quest_completion_items": {
       "Coal": 6
     },
@@ -1095,6 +1740,14 @@
     "quest_name": "CF2",
     "long_name": "Christmas Fiasco E2",
     "episode": 2,
+    "areas": [
+      {
+        "name": "Central Control Area",
+        "boxes": {
+          "box": 11
+        }
+      }
+    ],
     "quest_completion_items": {
       "Coal": 11
     },
@@ -1135,6 +1788,14 @@
     "quest_name": "CF4",
     "long_name": "Christmas Fiasco E4",
     "episode": 4,
+    "areas": [
+      {
+        "name": "Desert 3",
+        "boxes": {
+          "box": 14
+        }
+      }
+    ],
     "quest_completion_items": {
       "Coal": 4
     },
@@ -1185,6 +1846,14 @@
     "quest_name": "TE_FOREST",
     "long_name": "Tyrell's Ego Forest",
     "episode": 1,
+    "areas": [
+      {
+        "name": "Forest 1",
+        "boxes": {
+          "box": 51
+        }
+      }
+    ],
     "is_event_quest": true,
     "enemies": {
       "Booma": 17,
@@ -1202,7 +1871,12 @@
     "quest_name": "HBF",
     "long_name": "Hallow Battlefield: Forest",
     "areas": [
-      "Forest 1"
+      {
+        "name": "Forest 1",
+        "boxes": {
+          "box": 0
+        }
+      }
     ],
     "episode": 1,
     "is_event_quest": true,
@@ -1221,7 +1895,12 @@
     "quest_name": "HBC",
     "long_name": "Hallow Battlefield: Caves",
     "areas": [
-      "Cave 1"
+      {
+        "name": "Cave 1",
+        "boxes": {
+          "box": 0
+        }
+      }
     ],
     "episode": 1,
     "is_event_quest": true,
@@ -1239,7 +1918,12 @@
     "quest_name": "HBM",
     "long_name": "Hallow Battlefield: Mines",
     "areas": [
-      "Mine 1"
+      {
+        "name": "Mine 1",
+        "boxes": {
+          "box": 0
+        }
+      }
     ],
     "episode": 1,
     "is_event_quest": true,
@@ -1257,7 +1941,12 @@
     "quest_name": "HBR",
     "long_name": "Hallow Battlefield: Ruins",
     "areas": [
-      "Ruins 1"
+      {
+        "name": "Ruins 1",
+        "boxes": {
+          "box": 0
+        }
+      }
     ],
     "episode": 1,
     "is_event_quest": true,
@@ -1276,6 +1965,14 @@
     "quest_name": "HRT",
     "long_name": "Hallow Reality: Temple",
     "episode": 2,
+    "areas": [
+      {
+        "name": "VR Temple Final",
+        "boxes": {
+          "box": 0
+        }
+      }
+    ],
     "is_event_quest": true,
     "enemies": {
       "Arlan": 29,

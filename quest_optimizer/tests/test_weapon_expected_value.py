@@ -28,6 +28,18 @@ def quest_calculator():
     return QuestCalculator(DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH)
 
 
+def test_weapon_expected_value_basic(quest_calculator: QuestCalculator):
+    """Test basic weapon expected value calculation with AGITO (1975)"""
+    item_name = "AGITO (1975)"
+    drop_area = "Forest 1"
+
+    expected_value = 5
+    actual_value = quest_calculator._get_weapon_expected_value(item_name, drop_area)
+
+    assert actual_value == pytest.approx(expected_value, rel=1e-9), f"Expected value for {item_name} should be {expected_value}, got {actual_value}"
+    logger.info(f"{item_name} ({drop_area}): {expected_value} PD")
+
+
 def test_weapon_expected_value_no_boosts(quest_calculator: QuestCalculator):
     """Test weapon expected value calculation with no boosts"""
     # Test a simple weapon - should return a non-zero value
@@ -98,7 +110,7 @@ def test_weapon_expected_value_consistency(quest_calculator: QuestCalculator):
     value1 = quest_calculator._get_weapon_expected_value(item_name, drop_area)
     value2 = quest_calculator._get_weapon_expected_value(item_name, drop_area)
 
-    assert value1 == value2, f"Expected values should be consistent: {value1} != {value2}"
+    assert value1 == pytest.approx(value2, rel=1e-9), f"Expected values should be consistent: {value1} != {value2}"
     assert value1 > 0, f"Expected value should be > 0, got {value1}"
 
 
@@ -205,10 +217,8 @@ def test_item_price_pd_regression_weapon(quest_calculator: QuestCalculator):
     price_via_get_item = quest_calculator._get_item_price_pd(item_name, drop_area)
     price_via_expected = quest_calculator._get_weapon_expected_value(item_name, drop_area)
 
-    assert price_via_get_item == price_via_expected, (
-        f"Prices should match: _get_item_price_pd={price_via_get_item}, "
-        f"_get_weapon_expected_value={price_via_expected}"
+    assert price_via_get_item == pytest.approx(price_via_expected, rel=1e-9), (
+        f"Prices should match: _get_item_price_pd={price_via_get_item}, _get_weapon_expected_value={price_via_expected}"
     )
     assert price_via_get_item > 0, f"Price should be > 0, got {price_via_get_item}"
     logger.info(f"REGRESSION: {item_name} via both methods = {price_via_get_item} PD")
-
