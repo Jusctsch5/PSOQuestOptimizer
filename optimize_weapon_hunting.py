@@ -58,7 +58,7 @@ def display_box_drops(box_drops, weapon_name):
         print()
 
 
-def display_results(results, weapon_name, top_n: Optional[int] = 10):
+def display_results(results, weapon_name, top_n: Optional[int] = 0):
     """Display the search results in a formatted way."""
     if not results:
         print(f"\nNo quests found that drop '{weapon_name}'.")

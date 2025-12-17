@@ -20,6 +20,9 @@
   "Wedding Dress": {
     "base": "2"
   },
+  "Sense Plate": {
+    "base": "0"
+  },
   "Blue Odoshi Violet Nimaidou": {
     "base": "3",
     "Min Stat": "1",

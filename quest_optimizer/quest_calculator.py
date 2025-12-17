@@ -71,14 +71,22 @@ SLIME_SPLIT = True  # Enable slime splitting (each slime counts as 8)
 SLIME_SPLIT_MULTIPLIER = 8  # Each slime can be split into 8 slimes
 
 # Map of normal enemies to their rare variants (Ultimate only)
-RARE_ENEMY_MAPPING = {
+EP1_RARE_ENEMY_MAPPING = {
     "El Rappy": "Pal Rappy",
     "Hildelt": "Hildetorr",
     "Ob Lily": "Mil Lily",
     "Pofuilly Slime": "Pouilly Slime",
-    "Rag Rappy": "Love Rappy",
-    "Dorphon": "Dorphon Eclair",
+}
+
+EP2_RARE_ENEMY_MAPPING = {
+    "El Rappy": "Love Rappy",
+    "Ob Lily": "Mil Lily",
+    "Hildelt": "Hildetorr",
+}
+
+EP4_RARE_ENEMY_MAPPING = {
     "Sand Rappy": "Del Rappy",
+    "Dorphon": "Dorphon Eclair",
     "Zu": "Pazuzu",
     "Merissa A": "Merissa AA",
     "Saint-Milion": "Kondrieu",
@@ -102,6 +110,16 @@ class QuestCalculator:
         self.drop_data = self._load_drop_table(drop_table_path)
         self.quest_listing = QuestListing(quest_data_path)
         self.quest_data = self.quest_listing.get_all_quests()
+
+    def _get_rare_enemy_mapping(self, episode: int) -> Dict[str, str]:
+        """Return episode-specific rare enemy mapping."""
+        if episode == 1:
+            return EP1_RARE_ENEMY_MAPPING
+        if episode == 2:
+            return EP2_RARE_ENEMY_MAPPING
+        if episode == 4:
+            return EP4_RARE_ENEMY_MAPPING
+        return {}
 
     def _load_drop_table(self, drop_table_path: Path) -> Dict:
         """Load drop table JSON file."""
@@ -344,7 +362,7 @@ class QuestCalculator:
         "Govulmer": "Pal Shark",
         "Melqueek": "Guil Shark",
         "Ob Lily": "Poison Lily",
-        "Mil Lily": "Nar  Lily",
+        "Mil Lily": "Nar Lily",
         "Pofuilly Slime": "Pofuilly Slime",
         "Pouilly Slime": "Pouilly Slime",
         "Nano Dragon": "Nano Dragon",
@@ -352,10 +370,13 @@ class QuestCalculator:
         "Crimson Assassin": "Grass Assassin",
         "Dal Ra Lie": "De Rol Le",
         # Episode 1 - Mines
-        "Dubchich": "Gillchich",
+        "Dubchich": "Dubchic",
+        "Gillchich": "Gillchic",
+        "Duvuik": "Dubwitch",
         "Canabin": "Canadine",
         "Canune": "Canane",
-        "Sinow Red": "Sinow Blue",
+        "Sinow Red": "Sinow Gold",
+        "Sinow Blue": "Sinow Beat",
         "Baranz": "Garanz",
         # Episode 1 - Ruins
         "Arlan": "Dimenian",
@@ -396,6 +417,14 @@ class QuestCalculator:
         "Merissa A": "Merissa A",
         "Girtablulu": "Girtablulu",
     }
+
+    ENEMIES_WITHOUT_DROPS = [
+        "Dubwitch",
+        "Duvuik",
+        "Monest",
+        "Mothvist",
+        "Recobox"
+    ]
 
     def _determine_drop_area(self, enemy_name: str, episode: int) -> str:
         """
@@ -551,35 +580,38 @@ class QuestCalculator:
         # Find enemy in drop table
         enemy_data = self._find_enemy_in_drop_table(enemy_name, episode)
         section_drops = None
+        if enemy_name in self.ENEMIES_WITHOUT_DROPS:
+            return 0.0, 0.0, {}, {}
 
         if not enemy_data:
-            enemy_breakdown[enemy_name] = {"count": count, "pd_value": 0.0, "error": "Enemy not found in drop table"}
-            dar = 0.0
-            adjusted_dar = 0.0
+            # Fail fast: surface missing enemies instead of silently skipping
+            raise ValueError(
+                f"Enemy not found in drop table for episode {episode} and enemy name: '{enemy_name}'"
+            )
+
+        # Get DAR and drop data for this Section ID
+        dar = enemy_data.get("dar", 0.0)
+        section_ids_data = enemy_data.get("section_ids", {})
+
+        # Apply DAR multiplier, but cap at 1.0
+        adjusted_dar = min(dar * dar_multiplier, 1.0)
+
+        # Check if enemy has any item drops at all
+        if not section_ids_data:
+            enemy_breakdown[enemy_name] = {
+                "count": count,
+                "pd_value": 0.0,
+                "error": "Enemy has no item drops in Ultimate difficulty",
+            }
         else:
-            # Get DAR and drop data for this Section ID
-            dar = enemy_data.get("dar", 0.0)
-            section_ids_data = enemy_data.get("section_ids", {})
+            section_drops = section_ids_data.get(section_id)
 
-            # Apply DAR multiplier, but cap at 1.0
-            adjusted_dar = min(dar * dar_multiplier, 1.0)
-
-            # Check if enemy has any item drops at all
-            if not section_ids_data:
+            if not section_drops:
                 enemy_breakdown[enemy_name] = {
                     "count": count,
                     "pd_value": 0.0,
-                    "error": "Enemy has no item drops in Ultimate difficulty",
+                    "error": f"No item drops for Section ID {section_id}",
                 }
-            else:
-                section_drops = section_ids_data.get(section_id)
-
-                if not section_drops:
-                    enemy_breakdown[enemy_name] = {
-                        "count": count,
-                        "pd_value": 0.0,
-                        "error": f"No item drops for Section ID {section_id}",
-                    }
 
         # Calculate PD drops for ALL enemies (DAR affects, but RDR is fixed at 1/375)
         expected_pd_drops = count * adjusted_dar * BASE_PD_DROP_RATE
@@ -805,6 +837,9 @@ class QuestCalculator:
         # Slime enemies that can be split
         SLIME_ENEMIES = ["Pofuilly Slime", "Pouilly Slime"]
 
+        # Episode-specific rare enemy mapping
+        rare_mapping = self._get_rare_enemy_mapping(episode)
+
         # Process each enemy
         for enemy_name, count in enemies.items():
             # Apply slime splitting if enabled
@@ -814,7 +849,7 @@ class QuestCalculator:
             total_enemies += count
 
             # Check if this enemy can spawn as a rare variant
-            rare_variant = RARE_ENEMY_MAPPING.get(enemy_name)
+            rare_variant = rare_mapping.get(enemy_name)
 
             if rare_variant:
                 # Special case: Kondrieu uses 1/10 base rate but can be boosted by RareEnemy boost
@@ -1208,6 +1243,8 @@ class QuestCalculator:
             rare_enemy_rate = min(rare_enemy_rate, 1.0 / 256.0)
             kondrieu_rate = min(kondrieu_rate, 1.0)
 
+            rare_mapping = self._get_rare_enemy_mapping(episode)
+
             for section_id_enum in SectionIds:
                 section_id: str = section_id_enum.value
                 total_prob = 0.0
@@ -1215,7 +1252,7 @@ class QuestCalculator:
 
                 for enemy_name, count in enemies.items():
                     # Check if this enemy can spawn as a rare variant
-                    rare_variant = RARE_ENEMY_MAPPING.get(enemy_name)
+                    rare_variant = rare_mapping.get(enemy_name)
 
                     if rare_variant:
                         # Special case: Kondrieu uses 1/10 base rate

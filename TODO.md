@@ -13,15 +13,19 @@ List of high level TODOS
 - [X] Add Box Drops to Drop Tables
 - [X] Add "is_in_rbr_rotation" field to quests.json, make sure RBR boost is only applied to quests in rotation
 - [X] Add "is_event_quest" field to quests.json, allow filtering out event quests
+- [X] Correct rare enemy mappings
 - [ ] Add "evergreen" quests to quests.json, i.e. TE and MaxAttack quests
 - [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
-- [ ] Add mats/grinders/meseta(?) to price guide/drop tables
 - [ ] Add event items (presents, cookies, eggs, etc) to price guide/drop tables
 - [ ] Add general item value calculation for all items (barriers, frames, etc) (i.e. calulate_weapon_value.py -> item_value_calculator.py)
 - [ ] Add disk drops to drop tables and item value calculation for quests
 - [ ] Add common weapon value calculation to weapon_value_calculator.py, price guide, and drop tables (note only certain enemies drop common weapons)
 - [ ] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
 - [ ] Investigate modeling**
+
+
+Not doing:
+- Add mats/grinders/meseta(?) to price guide/drop tables (too infrequent to be worth the effort)
 
 **From Chump-GPT
 Places where more modeling could add value:
