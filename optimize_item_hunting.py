@@ -1,8 +1,8 @@
 """
-Script to find the best quest and Section ID for hunting a specific weapon.
+Script to find the best quest and Section ID for hunting a specific item.
 
 Searches through all quests and Section IDs to find which combination
-has the highest drop probability for the specified weapon.
+has the highest drop probability for the specified item (enemy drops + box drops).
 """
 
 import argparse
@@ -12,14 +12,14 @@ from typing import Optional
 from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost
 
 
-def display_enemy_drops(enemy_drops, weapon_name, rbr_active: bool, weekly_boost):
-    """Display enemies that drop the weapon."""
+def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
+    """Display enemies that drop the item."""
     if not enemy_drops:
-        print(f"\nNo enemies found that drop '{weapon_name}'.")
+        print(f"\nNo enemies found that drop '{item_name}'.")
         return
 
     print(f"\n{'=' * 80}")
-    print(f"Enemies that drop: {weapon_name}")
+    print(f"Enemies that drop: {item_name}")
     if rbr_active or weekly_boost:
         print(f"  (RBR: {'Yes' if rbr_active else 'No'}, Weekly Boost: {weekly_boost.value if weekly_boost else 'None'})")
     print(f"{'=' * 80}\n")
@@ -39,14 +39,14 @@ def display_enemy_drops(enemy_drops, weapon_name, rbr_active: bool, weekly_boost
         print()
 
 
-def display_box_drops(box_drops, weapon_name):
-    """Display boxes that drop the weapon."""
+def display_box_drops(box_drops, item_name):
+    """Display boxes that drop the item."""
     if not box_drops:
-        print(f"\nNo boxes found that drop '{weapon_name}'.")
+        print(f"\nNo boxes found that drop '{item_name}'.")
         return
 
     print(f"\n{'=' * 80}")
-    print(f"Boxes that drop: {weapon_name}")
+    print(f"Boxes that drop: {item_name}")
     print(f"  (Note: Box drops are NOT affected by DAR, RDR, or any drop rate bonuses)")
     print(f"{'=' * 80}\n")
 
@@ -58,21 +58,18 @@ def display_box_drops(box_drops, weapon_name):
         print()
 
 
-def display_results(results, weapon_name, top_n: Optional[int] = 0):
+def display_results(results, item_name, top_n: Optional[int] = 10):
     """Display the search results in a formatted way."""
     if not results:
-        print(f"\nNo quests found that drop '{weapon_name}'.")
+        print(f"\nNo quests found that drop '{item_name}'.")
         return
 
     print(f"\n{'=' * 80}")
-    print(f"Best quests for hunting: {weapon_name}")
+    print(f"Best quests for hunting: {item_name}")
     print(f"{'=' * 80}\n")
 
-    # Show top 10 results
-    if top_n:
-        top_results = results[:top_n]
-    else:
-        top_results = results
+    # Show top N results
+    top_results = results[:top_n] if top_n else results
 
     for i, result in enumerate(top_results, 1):
         print(f"{i}. Quest: {result['quest_name']} ({result['long_name']})")
@@ -102,7 +99,7 @@ def display_results(results, weapon_name, top_n: Optional[int] = 0):
         print()
 
     if top_n and len(results) > top_n:
-        print(f"... and {len(results) - 10} more results.\n")
+        print(f"... and {len(results) - top_n} more results.\n")
 
     # Show best overall
     best = results[0]
@@ -116,9 +113,9 @@ def display_results(results, weapon_name, top_n: Optional[int] = 0):
 
 
 def main():
-    """Main function to run the weapon hunting optimizer."""
-    parser = argparse.ArgumentParser(description="Find the best quest and Section ID for hunting a specific weapon")
-    parser.add_argument("weapon", help="Name of the weapon to search for")
+    """Main function to run the item hunting optimizer."""
+    parser = argparse.ArgumentParser(description="Find the best quest and Section ID for hunting a specific item")
+    parser.add_argument("item", help="Name of the item to search for")
     parser.add_argument("--rbr", action="store_true", help="Enable RBR boost (+25%% DAR, +25%% RDR)")
     parser.add_argument(
         "--weekly-boost",
@@ -144,13 +141,16 @@ def main():
         action="store_true",
         help="Exclude event quests from the search (quests marked with is_event_quest: true)",
     )
+    parser.add_argument(
+        "--top-n",
+        type=int,
+        default=10,
+        help="Show only top N results (default: 10, 0 for all)",
+    )
     args = parser.parse_args()
-    if args.weekly_boost:
-        weekly_boost = WeeklyBoost(args.weekly_boost)
-    else:
-        weekly_boost = None
+    weekly_boost = WeeklyBoost(args.weekly_boost) if args.weekly_boost else None
 
-    weapon = args.weapon
+    item = args.item
 
     # Set up paths
     script_dir = Path(__file__).parent
@@ -183,7 +183,7 @@ def main():
     print()
 
     # Find best quests
-    print(f"Searching for '{weapon}' across all quests and Section IDs...")
+    print(f"Searching for '{item}' across all quests and Section IDs...")
     if args.rbr:
         print(f"  RBR Active: Yes")
     if weekly_boost:
@@ -195,27 +195,27 @@ def main():
         print(f"  Exclude Event Quests: Yes")
     print()
 
-    # Find enemies that drop the weapon
+    # Find enemies that drop the item
     enemy_drops = calculator.find_enemies_that_drop_weapon(
-        weapon, rbr_active=args.rbr, weekly_boost=weekly_boost, christmas_boost=args.christmas_boost
+        item, rbr_active=args.rbr, weekly_boost=weekly_boost, christmas_boost=args.christmas_boost
     )
 
     # Display enemy drops first
-    display_enemy_drops(enemy_drops, weapon, args.rbr, weekly_boost)
+    display_enemy_drops(enemy_drops, item, args.rbr, weekly_boost)
 
-    # Find boxes that drop the weapon
-    box_drops = calculator.find_boxes_that_drop_weapon(weapon)
+    # Find boxes that drop the item
+    box_drops = calculator.find_boxes_that_drop_weapon(item)
 
     # Display box drops
-    display_box_drops(box_drops, weapon)
+    display_box_drops(box_drops, item)
 
     # Find best quests
     results = calculator.find_best_quests_for_weapon(
-        weapon, rbr_active=args.rbr, weekly_boost=weekly_boost, quest_filter=args.quests, christmas_boost=args.christmas_boost
+        item, rbr_active=args.rbr, weekly_boost=weekly_boost, quest_filter=args.quests, christmas_boost=args.christmas_boost
     )
 
     # Display quest results
-    display_results(results, weapon)
+    display_results(results, item, top_n=args.top_n)
 
 
 if __name__ == "__main__":

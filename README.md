@@ -219,15 +219,15 @@ Wow, so the average expected value of a HEAVEN STRIKER is 39.5 PD. That's incred
 However, if you are strictly looking at PD/quest value, somewhat surprisingly, these weapons are often lesser contributers to a quest's value than items that have a more reliable price.
 
 
-### Optimize Weapon Hunting Example
+### Optimize Item Hunting Example
 
 This is a simple script to allow people to approach hunting from the 'use-case' perspective of "hey, I want this item, what's the best way to get it?"
 Let's look at hunting the "M&A60 Vise" weapon.
 
 ```bash
-PS C:\Users\JSchumac\source\repos\PSOQuestOptimizer> python .\optimize_weapon_hunting.py "M&A60 Vise"
+PS C:\Users\JSchumac\source\repos\PSOQuestOptimizer> python .\optimize_item_hunting.py "M&A60 Vise"
 Loading quest and drop table data...
-Loaded 73 quests.
+Loaded 76 quests.
 
 Searching for 'M&A60 Vise' across all quests and Section IDs...
   Christmas Boost: False
@@ -268,6 +268,8 @@ Enemies that drop: M&A60 Vise
    (1 in 211.2 kills)
 
 
+No boxes found that drop 'M&A60 Vise'.
+
 ================================================================================
 Best quests for hunting: M&A60 Vise
 ================================================================================
@@ -276,7 +278,7 @@ Best quests for hunting: M&A60 Vise
    Section ID: Purplenum
    Drop Probability: 76.916797% per quest run
    (1 in 1.3 quest runs)
-   Enemy contributions:
+   Contributions:
      - Vulmer: 68 kills
        DAR: 0.3030, RDR: 0.015625
        Contribution: 32.196970%
@@ -288,7 +290,7 @@ Best quests for hunting: M&A60 Vise
    Section ID: Purplenum
    Drop Probability: 76.508621% per quest run
    (1 in 1.3 quest runs)
-   Enemy contributions:
+   Contributions:
      - Canabin: 142 kills
        DAR: 0.3448, RDR: 0.015625
        Contribution: 76.508621%
@@ -297,7 +299,7 @@ Best quests for hunting: M&A60 Vise
    Section ID: Purplenum
    Drop Probability: 71.969697% per quest run
    (1 in 1.4 quest runs)
-   Enemy contributions:
+   Contributions:
      - Vulmer: 152 kills
        DAR: 0.3030, RDR: 0.015625
        Contribution: 71.969697%
@@ -306,7 +308,7 @@ Best quests for hunting: M&A60 Vise
    Section ID: Purplenum
    Drop Probability: 68.214472% per quest run
    (1 in 1.5 quest runs)
-   Enemy contributions:
+   Contributions:
      - Evil Shark: 28 kills
        DAR: 0.3030, RDR: 0.015625
        Contribution: 13.257576%
@@ -318,10 +320,68 @@ Best quests for hunting: M&A60 Vise
    Section ID: Purplenum
    Drop Probability: 61.079545% per quest run
    (1 in 1.6 quest runs)
-   Enemy contributions:
+   Contributions:
      - Vulmer: 129 kills
        DAR: 0.3030, RDR: 0.015625
        Contribution: 61.079545%
+
+6. Quest: SR2 (Scarlet Realm 2)
+   Section ID: Purplenum
+   Drop Probability: 60.606061% per quest run
+   (1 in 1.6 quest runs)
+   Contributions:
+     - Vulmer: 128 kills
+       DAR: 0.3030, RDR: 0.015625
+       Contribution: 60.606061%
+
+7. Quest: CF4 (Christmas Fiasco E4)
+   Section ID: Purplenum
+   Drop Probability: 46.939541% per quest run
+   (1 in 2.1 quest runs)
+   Contributions:
+     - Ze Boota: 15 kills
+       DAR: 0.3846, RDR: 0.015625
+       Contribution: 9.014423%
+     - Merissa A: 79.84375 kills
+       DAR: 0.2703, RDR: 0.017575
+       Contribution: 37.925118%
+
+8. Quest: EN3 (Endless Nightmare 3)
+   Section ID: Purplenum
+   Drop Probability: 45.258621% per quest run
+   (1 in 2.2 quest runs)
+   Contributions:
+     - Canabin: 84 kills
+       DAR: 0.3448, RDR: 0.015625
+       Contribution: 45.258621%
+
+9. Quest: WOL2 (War of Limits #2)
+   Section ID: Purplenum
+   Drop Probability: 44.471154% per quest run
+   (1 in 2.2 quest runs)
+   Contributions:
+     - Ze Boota: 74 kills
+       DAR: 0.3846, RDR: 0.015625
+       Contribution: 44.471154%
+
+10. Quest: SU3 (Sweep Up Operation 3)
+   Section ID: Purplenum
+   Drop Probability: 42.564655% per quest run
+   (1 in 2.3 quest runs)
+   Contributions:
+     - Canabin: 79 kills
+       DAR: 0.3448, RDR: 0.015625
+       Contribution: 42.564655%
+
+... and 32 more results.
+
+================================================================================
+BEST OPTION:
+  Quest: SA2 (Silent Afterimage 2)
+  Section ID: Purplenum
+  Drop Chance: 76.916797% per quest run
+  Expected runs: 1.3
+================================================================================``
 ```
 
 
