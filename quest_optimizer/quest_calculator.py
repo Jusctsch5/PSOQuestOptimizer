@@ -23,6 +23,7 @@ from price_guide import (
     PriceGuideExceptionItemNameNotFound,
     PriceGuideFixed,
 )
+from price_guide.armor_value_calculator import ArmorValueCalculator
 from quests.quest_listing import QuestListing
 
 
@@ -110,6 +111,7 @@ class QuestCalculator:
         self.drop_data = self._load_drop_table(drop_table_path)
         self.quest_listing = QuestListing(quest_data_path)
         self.quest_data = self.quest_listing.get_all_quests()
+        self.armor_calculator = ArmorValueCalculator(self.price_guide)
 
     def _get_rare_enemy_mapping(self, episode: int) -> Dict[str, str]:
         """Return episode-specific rare enemy mapping."""
@@ -280,6 +282,30 @@ class QuestCalculator:
         # For now, return base price
         return base_price
 
+    def _get_armor_expected_value(self, item_name: str) -> float:
+        """
+        Calculate expected armor (frame) value based on DEF stat probabilities.
+
+        Args:
+            item_name: Name of the frame
+
+        Returns:
+            Expected PD value
+        """
+        return self.armor_calculator.calculate_frame_expected_value(item_name)
+
+    def _get_shield_expected_value(self, item_name: str) -> float:
+        """
+        Calculate expected shield (barrier) value based on EVP stat probabilities.
+
+        Args:
+            item_name: Name of the barrier
+
+        Returns:
+            Expected PD value
+        """
+        return self.armor_calculator.calculate_barrier_expected_value(item_name)
+
     def _get_item_price_pd(self, item_name: str, drop_area: Optional[str] = None) -> float:
         """
         Get price for an item by searching all price categories.
@@ -313,15 +339,15 @@ class QuestCalculator:
         except PriceGuideExceptionItemNameNotFound:
             pass
 
-        # Frames (need addition, max_addition, slot - use defaults)
+        # Frames (armor) - use expected value calculation
         try:
-            return self.price_guide.get_price_frame(item_name, {}, {}, 0)
+            return self._get_armor_expected_value(item_name)
         except PriceGuideExceptionItemNameNotFound:
             pass
 
-        # Barriers (need addition, max_addition - use defaults)
+        # Barriers (shields) - use expected value calculation
         try:
-            return self.price_guide.get_price_barrier(item_name, {}, {})
+            return self._get_shield_expected_value(item_name)
         except PriceGuideExceptionItemNameNotFound:
             pass
 
@@ -418,13 +444,7 @@ class QuestCalculator:
         "Girtablulu": "Girtablulu",
     }
 
-    ENEMIES_WITHOUT_DROPS = [
-        "Dubwitch",
-        "Duvuik",
-        "Monest",
-        "Mothvist",
-        "Recobox"
-    ]
+    ENEMIES_WITHOUT_DROPS = ["Dubwitch", "Duvuik", "Monest", "Mothvist", "Recobox"]
 
     def _determine_drop_area(self, enemy_name: str, episode: int) -> str:
         """
@@ -585,9 +605,7 @@ class QuestCalculator:
 
         if not enemy_data:
             # Fail fast: surface missing enemies instead of silently skipping
-            raise ValueError(
-                f"Enemy not found in drop table for episode {episode} and enemy name: '{enemy_name}'"
-            )
+            raise ValueError(f"Enemy not found in drop table for episode {episode} and enemy name: '{enemy_name}'")
 
         # Get DAR and drop data for this Section ID
         dar = enemy_data.get("dar", 0.0)
