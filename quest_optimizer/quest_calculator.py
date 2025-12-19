@@ -416,17 +416,33 @@ class QuestCalculator:
         "Indi Belra": "Dark Belra",
         "Dark Bringer": "Chaos Bringer",
         "Dark Falz": "Dark Falz",
-        # Episode 2
-        "Meriltas": "Merillia",
-        "Zol Gibbon": "Ul Gibbon",
-        "Sinow Spigell": "Sinow Berill",
-        "Merikle": "Mericarol",
-        "Mericus": "Mericarol",
-        "Dolmdarl": "Dolmolm",
-        "Recon": "Recobox",
-        "Sinow Zele": "Sinow Zoa",
-        "Del Lily": "Ill Gill",
-        # Episode 4
+        # Episode 2 - All of the names are the same.
+        # Some EP1 enemies are present in EP2.
+        # We use the names above.
+        "Meriltas": "Meriltas",
+        "Merillia": "Merillia",
+        "Zol Gibbon": "Zol Gibbon",
+        "Ul Gibbon": "Ul Gibbon",
+        "Sinow Spigell": "Sinow Spigell",
+        "Sinow Berill": "Sinow Berill",
+        "Merikle": "Merikle",
+        "Mericus": "Mericus",
+        "Mericarol": "Mericarol",
+        "Dolmdarl": "Dolmdarl",
+        "Dolmolm": "Dolmolm",
+        "Recon": "Recon",
+        "Recobox": "Recobox",
+        "Sinow Zele": "Sinow Zele",
+        "Sinow Zoa": "Sinow Zoa",
+        "Delbiter": "Delbiter",
+        "Del Lily": "Del Lily",
+        "Ill Gill": "Ill Gill",
+        "Epsilon": "Epsilon",
+        "Barba Ray": "Barba Ray",
+        "Gol Dragon": "Gol Dragon",
+        "Gal Gryphon": "Gal Gryphon",
+        "Olga Flow": "Olga Flow",
+        # Episode 4 - All of the names are the same.
         "Boota": "Boota",
         "Ze Boota": "Ze Boota",
         "Ba Boota": "Ba Boota",
@@ -540,6 +556,29 @@ class QuestCalculator:
                 return parts[0].strip()
 
         return enemy_name.strip()
+
+    def _normalize_quest_enemy_to_ultimate(self, enemy_name: str) -> str:
+        """
+        Normalize quest enemy name from non-Ultimate to Ultimate name.
+        Maps base names (like "Rag Rappy", "Hildebear") to Ultimate names (like "El Rappy", "Hildelt").
+        
+        If the name is already in Ultimate form (exists as a key in ENEMY_NAME_MAPPING), return as-is.
+        If the name is a base name (exists as a value in ENEMY_NAME_MAPPING), map it to Ultimate.
+        """
+        # First check if it's already an Ultimate name (key in mapping)
+        if enemy_name in self.ENEMY_NAME_MAPPING:
+            return enemy_name
+        
+        # Create reverse mapping: base -> Ultimate
+        # ENEMY_NAME_MAPPING is Ultimate -> base, so reverse it
+        base_to_ultimate = {base: ultimate for ultimate, base in self.ENEMY_NAME_MAPPING.items()}
+        
+        # Check if this is a base name that maps to an Ultimate name
+        if enemy_name in base_to_ultimate:
+            return base_to_ultimate[enemy_name]
+        
+        # If not found in either, return as-is (might be a name not in mapping)
+        return enemy_name
 
     def _find_enemy_in_drop_table(self, enemy_name: str, episode: int) -> Optional[Dict]:
         """
@@ -855,11 +894,20 @@ class QuestCalculator:
         # Slime enemies that can be split
         SLIME_ENEMIES = ["Pofuilly Slime", "Pouilly Slime"]
 
+        # Normalize quest enemy names from non-Ultimate to Ultimate names
+        # (e.g., "Rag Rappy" -> "El Rappy", "Hildebear" -> "Hildelt", "Poison Lily" -> "Ob Lily")
+        normalized_enemies = {}
+        for enemy_name, count in enemies.items():
+            ultimate_name = self._normalize_quest_enemy_to_ultimate(enemy_name)
+            if ultimate_name not in normalized_enemies:
+                normalized_enemies[ultimate_name] = 0
+            normalized_enemies[ultimate_name] += count
+
         # Episode-specific rare enemy mapping
         rare_mapping = self._get_rare_enemy_mapping(episode)
 
-        # Process each enemy
-        for enemy_name, count in enemies.items():
+        # Process each enemy (now normalized to Ultimate names)
+        for enemy_name, count in normalized_enemies.items():
             # Apply slime splitting if enabled
             if SLIME_SPLIT and enemy_name in SLIME_ENEMIES:
                 count = count * SLIME_SPLIT_MULTIPLIER
@@ -1261,6 +1309,14 @@ class QuestCalculator:
             rare_enemy_rate = min(rare_enemy_rate, 1.0 / 256.0)
             kondrieu_rate = min(kondrieu_rate, 1.0)
 
+            # Normalize quest enemy names from non-Ultimate to Ultimate names
+            normalized_enemies = {}
+            for enemy_name, count in enemies.items():
+                ultimate_name = self._normalize_quest_enemy_to_ultimate(enemy_name)
+                if ultimate_name not in normalized_enemies:
+                    normalized_enemies[ultimate_name] = 0
+                normalized_enemies[ultimate_name] += count
+
             rare_mapping = self._get_rare_enemy_mapping(episode)
 
             for section_id_enum in SectionIds:
@@ -1268,7 +1324,7 @@ class QuestCalculator:
                 total_prob = 0.0
                 contributions = []
 
-                for enemy_name, count in enemies.items():
+                for enemy_name, count in normalized_enemies.items():
                     # Check if this enemy can spawn as a rare variant
                     rare_variant = rare_mapping.get(enemy_name)
 

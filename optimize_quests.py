@@ -264,22 +264,6 @@ class QuestOptimizer:
                 quest_name = short_name
             max_quest_name_width = max(max_quest_name_width, len(quest_name))
 
-        # Check if any quests have areas defined
-        has_areas = any(result.get("areas") for result in rankings)
-
-        # Calculate maximum width needed for areas column
-        max_areas_width = len("Areas")  # At least as wide as header
-        if has_areas:
-            for result in rankings:
-                areas = result.get("areas", [])
-                if areas:
-                    # Extract area names from area dictionaries (areas are now dicts with 'name' and 'boxes')
-                    area_names = [area.get("name", "") if isinstance(area, dict) else str(area) for area in areas]
-                    areas_str = ", ".join(area_names)
-                    max_areas_width = max(max_areas_width, len(areas_str))
-                else:
-                    max_areas_width = max(max_areas_width, len("N/A"))
-
         # Check if any quests have completion items
         has_completion_items = any(result.get("completion_items_pd", 0.0) > 0 for result in rankings)
 
@@ -304,43 +288,21 @@ class QuestOptimizer:
         reward_column_width = max_reward_width if has_completion_items else 0
         divider_width = 1 if has_completion_items else 0  # Space for divider "|"
         if show_section_id:
-            if has_areas:
-                fixed_width = (
-                    6
-                    + max_quest_name_width
-                    + 12
-                    + max_areas_width
-                    + 8
-                    + 12
-                    + 12
-                    + 10
-                    + 15
-                    + reward_column_width
-                    + divider_width
-                )  # Rank + Quest Name + Section ID + Areas + Episode + PD + PD/min + Enemies + Raw PD/Quest + Quest Reward + Divider
-            else:
-                fixed_width = (
-                    6 + max_quest_name_width + 12 + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
-                )  # Rank + Quest Name + Section ID + Episode + PD + PD/min + Enemies + Raw PD/Quest + Quest Reward + Divider
+            fixed_width = (
+                6 + max_quest_name_width + 12 + 8 + 12 + 10 + 15 + reward_column_width + divider_width
+            )  # Rank + Quest Name + Section ID + Episode + PD + Enemies + Raw PD/Quest + Quest Reward + Divider
         else:
-            if has_areas:
-                fixed_width = (
-                    6 + max_quest_name_width + max_areas_width + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
-                )  # Rank + Quest Name + Areas + Episode + PD + PD/min + Enemies + Raw PD/Quest + Quest Reward + Divider
-            else:
-                fixed_width = (
-                    6 + max_quest_name_width + 8 + 12 + 12 + 10 + 15 + reward_column_width + divider_width
-                )  # Rank + Quest Name + Episode + PD + PD/min + Enemies + Raw PD/Quest + Quest Reward + Divider
+            fixed_width = (
+                6 + max_quest_name_width + 8 + 12 + 10 + 15 + reward_column_width + divider_width
+            )  # Rank + Quest Name + Episode + PD + Enemies + Raw PD/Quest + Quest Reward + Divider
         total_width = fixed_width + (max_item_width * notable_items_count)
 
         # Print header
         header_parts = [f"{'Rank':<6}", f"{'Quest Name':<{max_quest_name_width}}"]
         if show_section_id:
             header_parts.append(f"{'Section ID':<12}")
-        if has_areas:
-            header_parts.append(f"{'Areas':<{max_areas_width}}")
         header_parts.extend(
-            [f"{'Episode':<8}", f"{'PD/Quest':<12}", f"{'PD/min':<12}", f"{'Enemies':<10}", f"{'Raw PD/Quest':<15}"]
+            [f"{'Episode':<8}", f"{'PD/Quest':<12}", f"{'Enemies':<10}", f"{'Raw PD/Quest':<15}"]
         )
         # Add Quest Reward column if any quest has completion items
         if has_completion_items:
@@ -366,32 +328,19 @@ class QuestOptimizer:
 
             episode = result["episode"]
             section_id = result.get("section_id", "Unknown")
-            areas = result.get("areas", [])
             total_pd = result["total_pd"]
-            pd_per_min = result["pd_per_minute"]
             enemies = result["total_enemies"]
             raw_pd_drops = result.get("total_pd_drops", 0.0)
             top_items = result.get("top_items", [])
 
             pd_str = f"{total_pd:.4f}"
-            pd_per_min_str = f"{pd_per_min:.4f}" if pd_per_min else "N/A"
             raw_pd_str = f"{raw_pd_drops:.4f}"
-
-            # Format areas: "Area1, Area2" or "N/A" if not present
-            if areas:
-                # Extract area names from area dictionaries (areas are now dicts with 'name' and 'boxes')
-                area_names = [area.get("name", "") if isinstance(area, dict) else str(area) for area in areas]
-                areas_str = ", ".join(area_names)
-            else:
-                areas_str = "N/A"
 
             # Build row parts
             row_parts = [f"{idx:<6}", f"{quest_name:<{max_quest_name_width}}"]
             if show_section_id:
                 row_parts.append(f"{section_id:<12}")
-            if has_areas:
-                row_parts.append(f"{areas_str:<{max_areas_width}}")
-            row_parts.extend([f"{episode:<8}", f"{pd_str:<12}", f"{pd_per_min_str:<12}", f"{enemies:<10}", f"{raw_pd_str:<15}"])
+            row_parts.extend([f"{episode:<8}", f"{pd_str:<12}", f"{enemies:<10}", f"{raw_pd_str:<15}"])
 
             # Add Quest Reward column if any quest has completion items
             if has_completion_items:
