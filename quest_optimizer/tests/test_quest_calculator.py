@@ -221,9 +221,7 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
     logger.info(f"Enemy breakdown (with RBR): {result_with_rbr.get('enemy_breakdown', {})}")
 
     # RBR boost should increase the PD value
-    assert pd_with_rbr > pd_no_rbr, (
-        f"RBR boost should increase PD value: {pd_with_rbr} should be > {pd_no_rbr}"
-    )
+    assert pd_with_rbr > pd_no_rbr, f"RBR boost should increase PD value: {pd_with_rbr} should be > {pd_no_rbr}"
 
     # Both should be positive
     assert pd_no_rbr > 0, f"PD value without RBR boost should be > 0, got {pd_no_rbr}"
@@ -237,5 +235,3 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
         f"Expected ratio >= 1.15, got {increase_ratio:.4f} "
         f"({pd_with_rbr} / {pd_no_rbr})"
     )
-
-    

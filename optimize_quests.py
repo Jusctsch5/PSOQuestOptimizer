@@ -1,7 +1,7 @@
 """
 Quest optimizer for ranking RBR quests by PD efficiency.
 
-Ranks quests by PD per minute/hour, with filtering options.
+Ranks quests by PD per quest, with filtering options.
 """
 
 import argparse
@@ -10,7 +10,6 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional
 
-# Import from same directory
 from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost
 
 
@@ -301,9 +300,7 @@ class QuestOptimizer:
         header_parts = [f"{'Rank':<6}", f"{'Quest Name':<{max_quest_name_width}}"]
         if show_section_id:
             header_parts.append(f"{'Section ID':<12}")
-        header_parts.extend(
-            [f"{'Episode':<8}", f"{'PD/Quest':<12}", f"{'Enemies':<10}", f"{'Raw PD/Quest':<15}"]
-        )
+        header_parts.extend([f"{'Episode':<8}", f"{'PD/Quest':<12}", f"{'Enemies':<10}", f"{'Raw PD/Quest':<15}"])
         # Add Quest Reward column if any quest has completion items
         if has_completion_items:
             header_parts.append(f"{'Quest Reward':<{max_reward_width}}")

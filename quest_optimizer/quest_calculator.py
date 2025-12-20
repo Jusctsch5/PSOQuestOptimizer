@@ -562,22 +562,22 @@ class QuestCalculator:
         """
         Normalize quest enemy name from non-Ultimate to Ultimate name.
         Maps base names (like "Rag Rappy", "Hildebear") to Ultimate names (like "El Rappy", "Hildelt").
-        
+
         If the name is already in Ultimate form (exists as a key in ENEMY_NAME_MAPPING), return as-is.
         If the name is a base name (exists as a value in ENEMY_NAME_MAPPING), map it to Ultimate.
         """
         # First check if it's already an Ultimate name (key in mapping)
         if enemy_name in self.ENEMY_NAME_MAPPING:
             return enemy_name
-        
+
         # Create reverse mapping: base -> Ultimate
         # ENEMY_NAME_MAPPING is Ultimate -> base, so reverse it
         base_to_ultimate = {base: ultimate for ultimate, base in self.ENEMY_NAME_MAPPING.items()}
-        
+
         # Check if this is a base name that maps to an Ultimate name
         if enemy_name in base_to_ultimate:
             return base_to_ultimate[enemy_name]
-        
+
         # If not found in either, return as-is (might be a name not in mapping)
         return enemy_name
 
@@ -852,7 +852,6 @@ class QuestCalculator:
         is_hallow = self._is_hallow_quest(quest_data)
         # Check if quest is in RBR rotation (RBR boosts only apply if in rotation)
         in_rbr_rotation = self._is_in_rbr_rotation(quest_data)
-        
 
         if is_hallow:
             # Hallow quests use Halloween boosts (ignore weekly_boost parameter)
