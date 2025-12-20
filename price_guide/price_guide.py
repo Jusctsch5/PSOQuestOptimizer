@@ -435,6 +435,7 @@ class PriceGuideFixed(PriceGuideAbstract):
         is_increasing = len(prior_y) > 1 and all(prior_y[i] <= prior_y[i + 1] for i in range(len(prior_y) - 1))
 
         # Fit prices for inestimable values
+        last_fitted_price = prior_y[-1] if prior_y else 0.0
         for i in range(first_inestimable_idx, len(sorted_keys)):
             key = sorted_keys[i]
             price_str = hit_values[str(key)]
@@ -447,26 +448,27 @@ class PriceGuideFixed(PriceGuideAbstract):
                         estimated_price = price_func(key)
                         # Ensure price doesn't go negative
                         estimated_price = max(0, estimated_price)
+                        # CRITICAL: Ensure monotonicity - price must be >= last fitted price
+                        estimated_price = max(estimated_price, last_fitted_price)
                         # Round to reasonable precision
                         estimated_price = round(estimated_price, 2)
                         if estimated_price == int(estimated_price):
                             hit_values[str(key)] = str(int(estimated_price))
                         else:
                             hit_values[str(key)] = str(estimated_price)
+                        last_fitted_price = estimated_price
                     else:
-                        # Fallback to last fixed price
-                        last_price = prior_y[-1]
-                        if last_price == int(last_price):
-                            hit_values[str(key)] = str(int(last_price))
+                        # Fallback to last fixed price (or last fitted price if we've fitted some)
+                        if last_fitted_price == int(last_fitted_price):
+                            hit_values[str(key)] = str(int(last_fitted_price))
                         else:
-                            hit_values[str(key)] = str(last_price)
+                            hit_values[str(key)] = str(last_fitted_price)
                 else:
-                    # Use last fixed price
-                    last_price = prior_y[-1]
-                    if last_price == int(last_price):
-                        hit_values[str(key)] = str(int(last_price))
+                    # Use last fixed price (or last fitted price if we've fitted some)
+                    if last_fitted_price == int(last_fitted_price):
+                        hit_values[str(key)] = str(int(last_fitted_price))
                     else:
-                        hit_values[str(key)] = str(last_price)
+                        hit_values[str(key)] = str(last_fitted_price)
 
     def _fit_inestimable_weapon_prices(self) -> None:
         """Process weapon prices to fit inestimable values."""

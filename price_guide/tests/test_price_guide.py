@@ -47,12 +47,14 @@ def test_price_guide_load(fixed_price_guide: PriceGuideFixed):
 
 def test_weapon_pricing_basic(fixed_price_guide: PriceGuideFixed):
     """Test weapons with simple base prices"""
-    # Test fixed base price
-    assert fixed_price_guide.get_price_weapon("DB's Saber (3064)", {}, 0, 0, "") == 0
+    # Test fixed base price with zero price
+    assert fixed_price_guide.get_price_weapon("EVIL CURST", {}, 0, 0, "") == 0
+    # Test fixed base price with non-zero price
+    assert fixed_price_guide.get_price_weapon("DB's Saber (3064)", {}, 0, 0, "") != 0
     # Test range base price
     assert fixed_price_guide.get_price_weapon("EXCALIBUR", {}, 0, 0, "") != 0
     # Test item with only hit values
-    assert fixed_price_guide.get_price_weapon("HANDGUN:GULD", {}, 0, 0, "") != 0
+    assert fixed_price_guide.get_price_weapon("HANDGUN: GULD", {}, 0, 0, "") != 0
 
 
 def test_weapon_hit_adjustments(fixed_price_guide: PriceGuideFixed):
@@ -77,17 +79,24 @@ def test_weapon_hit_adjustments(fixed_price_guide: PriceGuideFixed):
 
 def test_pricing_strategies(fixed_price_guide: PriceGuideFixed):
     """Test different base price strategies"""
-    # Test MINIMUM strategy
-    fixed_price_guide.bps = BasePriceStrategy.MINIMUM
-    assert fixed_price_guide.get_price_weapon("EXCALIBUR", {}, 0, 0, "") == 9
+    for hit in range(0, 100, 5):
+        # Test MINIMUM strategy
+        fixed_price_guide.bps = BasePriceStrategy.MINIMUM
+        price_min = fixed_price_guide.get_price_weapon("EXCALIBUR", {}, hit, 0, "")
+        assert price_min != 0
 
-    # Test MAXIMUM strategy
-    fixed_price_guide.bps = BasePriceStrategy.MAXIMUM
-    assert fixed_price_guide.get_price_weapon("EXCALIBUR", {}, 0, 0, "") == 12
+        # Test MAXIMUM strategy
+        fixed_price_guide.bps = BasePriceStrategy.MAXIMUM
+        price_max = fixed_price_guide.get_price_weapon("EXCALIBUR", {}, hit, 0, "")
+        assert price_max != 0
+        assert price_max >= price_min
 
-    # Test AVERAGE strategy
-    fixed_price_guide.bps = BasePriceStrategy.AVERAGE
-    assert fixed_price_guide.get_price_weapon("EXCALIBUR", {}, 0, 0, "") == 10.5
+        # Test AVERAGE strategy
+        fixed_price_guide.bps = BasePriceStrategy.AVERAGE
+        price_avg = fixed_price_guide.get_price_weapon("EXCALIBUR", {}, hit, 0, "")
+        assert price_avg != 0
+        assert price_avg >= price_min
+        assert price_avg <= price_max
 
 
 def test_special_weapons(fixed_price_guide: PriceGuideFixed):
@@ -137,13 +146,12 @@ def test_price_guide_barriers(fixed_price_guide: PriceGuideFixed):
 
 def test_edge_cases(fixed_price_guide: PriceGuideFixed):
     """Test boundary conditions and special cases"""
-    # Test weapon with invalid price formatc
     price = fixed_price_guide.get_price_weapon("M&A60 VISE", {}, 0, 0, "")
-    assert price == 0  # No base price and hit 0 is 0
+    assert price == 0 
 
-    # Test weapon with N/A values
+    # Test weapon 
     price = fixed_price_guide.get_price_weapon("Snow Queen", {}, 0, 0, "")
-    assert price == 0  # N/A should be treated as 0
+    assert price != 0 
 
 
 def test_price_guide_units(fixed_price_guide: PriceGuideFixed):

@@ -3772,7 +3772,7 @@
     }
   },
   "SNOW QUEEN": {
-    "base": 45,
+    "base": "45",
     "modifiers": {},
     "hit_values": {
       "30": "50-60",

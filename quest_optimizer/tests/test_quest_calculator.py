@@ -54,8 +54,8 @@ def test_qcalc_christmas_boost_doubles_weekly_boost(quest_calculator: QuestCalcu
     pd_no_christmas = result_no_christmas["total_pd"]
     pd_with_christmas = result_with_christmas["total_pd"]
 
-    print(f"MU1 Skyly DAR boost (no Christmas): {pd_no_christmas} PD")
-    print(f"MU1 Skyly DAR boost (with Christmas): {pd_with_christmas} PD")
+    logger.info(f"MU1 Skyly DAR boost (no Christmas): {pd_no_christmas} PD")
+    logger.info(f"MU1 Skyly DAR boost (with Christmas): {pd_with_christmas} PD")
 
     # Christmas boost should increase the PD value
     assert pd_with_christmas > pd_no_christmas, (
@@ -215,10 +215,10 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
     pd_no_rbr = result_no_rbr["total_pd"]
     pd_with_rbr = result_with_rbr["total_pd"]
 
-    print(f"MU1 Skyly (no RBR): {pd_no_rbr} PD")
-    print(f"MU1 Skyly (with RBR): {pd_with_rbr} PD")
-    print(f"Enemy breakdown (no RBR): {result_no_rbr.get('enemy_breakdown', {})}")
-    print(f"Enemy breakdown (with RBR): {result_with_rbr.get('enemy_breakdown', {})}")
+    logger.info(f"MU1 Skyly (no RBR): {pd_no_rbr} PD")
+    logger.info(f"MU1 Skyly (with RBR): {pd_with_rbr} PD")
+    logger.info(f"Enemy breakdown (no RBR): {result_no_rbr.get('enemy_breakdown', {})}")
+    logger.info(f"Enemy breakdown (with RBR): {result_with_rbr.get('enemy_breakdown', {})}")
 
     # RBR boost should increase the PD value
     assert pd_with_rbr > pd_no_rbr, (
@@ -237,3 +237,5 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
         f"Expected ratio >= 1.15, got {increase_ratio:.4f} "
         f"({pd_with_rbr} / {pd_no_rbr})"
     )
+
+    
