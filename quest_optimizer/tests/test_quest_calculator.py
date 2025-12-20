@@ -186,3 +186,54 @@ def test_box_drops_not_affected_by_dar(quest_calculator: QuestCalculator):
         for item_name, item_data in box_breakdown_base.items():
             assert "adjusted_dar" not in item_data, "Box drops should not have adjusted_dar"
             assert "drop_rate" in item_data, "Box drops should have drop_rate"
+
+
+def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
+    """Test that RBR boost increases PD/Quest value for quests in RBR rotation"""
+    # Find MU1 quest (has is_in_rbr_rotation: true)
+    mu1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+            break
+
+    assert mu1_quest is not None, "MU1 quest not found in quest data"
+    assert mu1_quest.get("is_in_rbr_rotation") is True, "MU1 should be in RBR rotation"
+
+    section_id = "Skyly"
+
+    # Calculate without RBR boost
+    result_no_rbr = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+    )
+
+    # Calculate with RBR boost
+    result_with_rbr = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=True, weekly_boost=None, christmas_boost=False
+    )
+
+    pd_no_rbr = result_no_rbr["total_pd"]
+    pd_with_rbr = result_with_rbr["total_pd"]
+
+    print(f"MU1 Skyly (no RBR): {pd_no_rbr} PD")
+    print(f"MU1 Skyly (with RBR): {pd_with_rbr} PD")
+    print(f"Enemy breakdown (no RBR): {result_no_rbr.get('enemy_breakdown', {})}")
+    print(f"Enemy breakdown (with RBR): {result_with_rbr.get('enemy_breakdown', {})}")
+
+    # RBR boost should increase the PD value
+    assert pd_with_rbr > pd_no_rbr, (
+        f"RBR boost should increase PD value: {pd_with_rbr} should be > {pd_no_rbr}"
+    )
+
+    # Both should be positive
+    assert pd_no_rbr > 0, f"PD value without RBR boost should be > 0, got {pd_no_rbr}"
+    assert pd_with_rbr > 0, f"PD value with RBR boost should be > 0, got {pd_with_rbr}"
+
+    # RBR provides +25% DAR and +25% RDR, so the increase should be significant
+    # We expect at least a 20% increase (conservative estimate)
+    increase_ratio = pd_with_rbr / pd_no_rbr
+    assert increase_ratio >= 1.15, (
+        f"RBR boost should provide significant increase. "
+        f"Expected ratio >= 1.15, got {increase_ratio:.4f} "
+        f"({pd_with_rbr} / {pd_no_rbr})"
+    )

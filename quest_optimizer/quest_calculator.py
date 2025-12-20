@@ -153,7 +153,8 @@ class QuestCalculator:
             True if quest is in RBR rotation (defaults to False if field not present)
         """
         # Default to False - quests must be explicitly marked as in rotation
-        return quest_data.get("in_rbr_rotation", False)
+        # Note: The field name in quests.json is "is_in_rbr_rotation", not "in_rbr_rotation"
+        return quest_data.get("is_in_rbr_rotation", False)
 
     def _is_event_quest(self, quest_data: Dict) -> bool:
         """
@@ -851,6 +852,7 @@ class QuestCalculator:
         is_hallow = self._is_hallow_quest(quest_data)
         # Check if quest is in RBR rotation (RBR boosts only apply if in rotation)
         in_rbr_rotation = self._is_in_rbr_rotation(quest_data)
+        
 
         if is_hallow:
             # Hallow quests use Halloween boosts (ignore weekly_boost parameter)
