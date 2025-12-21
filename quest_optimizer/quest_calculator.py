@@ -868,16 +868,10 @@ class QuestCalculator:
         in_rbr_rotation = self._is_in_rbr_rotation(quest_data)
 
         if is_hallow:
-            # Hallow quests use Halloween boosts (ignore weekly_boost parameter)
+            # Hallow quests use Halloween boosts (ignore weekly_boost parameter, RBR boosts, and event boosts)
             dar_multiplier = 1.0 + HOLLOWEEN_QUEST_DAR_BOOST
             rdr_multiplier = 1.0 + HOLLOWEEN_QUEST_RDR_BOOST
             enemy_rate_multiplier = 1.0 + HOLLOWEEN_QUEST_RARE_ENEMY_BOOST
-
-            # RBR boosts only apply if quest is in RBR rotation
-            if in_rbr_rotation and rbr_active:
-                dar_multiplier *= 1.0 + RBR_DAR_BOOST
-                rdr_multiplier *= 1.0 + RBR_RDR_BOOST
-                enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
         else:
             # Regular quests use RBR and weekly boosts
             if in_rbr_rotation and rbr_active:
@@ -1286,16 +1280,10 @@ class QuestCalculator:
             in_rbr_rotation = self._is_in_rbr_rotation(quest)
 
             if is_hallow:
-                # Hallow quests use Halloween boosts (ignore weekly_boost parameter)
+                # Hallow quests use Halloween boosts (ignore weekly_boost parameter, RBR boosts, and event boosts)
                 dar_multiplier = 1.0 + HOLLOWEEN_QUEST_DAR_BOOST
                 rdr_multiplier = 1.0 + HOLLOWEEN_QUEST_RDR_BOOST
                 enemy_rate_multiplier = 1.0 + HOLLOWEEN_QUEST_RARE_ENEMY_BOOST
-
-                # RBR boosts only apply if quest is in RBR rotation
-                if in_rbr_rotation and rbr_active:
-                    dar_multiplier *= 1.0 + RBR_DAR_BOOST
-                    rdr_multiplier *= 1.0 + RBR_RDR_BOOST
-                    enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
             else:
                 # Regular quests use RBR and weekly boosts
                 dar_multiplier = 1.0
