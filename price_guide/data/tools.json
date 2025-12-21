@@ -272,6 +272,9 @@
   "Coal": {
     "base": "0.125"
   },
+  "Lucky Coin": {
+    "base": "0.1"
+  },
   "MESETA": {
     "base": "0.000002"
   },

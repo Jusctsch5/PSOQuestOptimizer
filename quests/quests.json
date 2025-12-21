@@ -685,6 +685,9 @@
         }
       }
     ],
+    "quest_completion_items": {
+      "Lucky Coin": 4
+    },
     "episode": 2,
     "is_in_rbr_rotation": true,
     "enemies": {
@@ -697,6 +700,56 @@
       "Sinow Spigell": 7,
       "Mericarol": 6,
       "Gi Gue": 12
+    }
+  },
+  {
+    "quest_name": "PW2",
+    "long_name": "Phantasmal World #2",
+    "episode": 2,
+    "areas": [
+      {
+        "name": "Mountain",
+        "boxes": {
+          "box": 18
+        }
+      },
+      {
+        "name": "Central Control Area",
+        "boxes": {
+          "box": 28
+        }
+      }
+    ],
+    "quest_completion_items": {
+      "Lucky Coin": 4
+    },
+    "enemies": {
+      "Merillia": 54,
+      "Meriltas": 42,
+      "Ul Gibbon": 114,
+      "Zol Gibbon": 26,
+      "Gee": 80,
+      "Sinow Berill": 24,
+      "Sinow Spigell": 9,
+      "Gibbles": 9
+    }
+  },
+  {
+    "quest_name": "PW3_BOX",
+    "long_name": "Phantasmal World #3 Box",
+    "episode": 2,
+    "areas": [
+      {
+        "name": "Seabed Upper",
+        "boxes": {
+          "box": 44
+        }
+      }
+    ],
+    "enemies": {
+      "Dolmolm": 9,
+      "Dolmdarl": 2,
+      "Morfos": 2
     }
   },
   {
@@ -717,6 +770,9 @@
       }
     ],
     "episode": 2,
+    "quest_completion_items": {
+      "Lucky Coin": 4
+    },
     "is_in_rbr_rotation": true,
     "enemies": {
       "Dolmolm": 103,
@@ -2054,53 +2110,6 @@
       "Chaos Sorcerer": 24,
       "Chaos Bringer": 21,
       "Dark Falz": 1
-    }
-  },
-  {
-    "quest_name": "PW2",
-    "long_name": "Phantasmal World #2",
-    "episode": 2,
-    "areas": [
-      {
-        "name": "Mountain",
-        "boxes": {
-          "box": 18
-        }
-      },
-      {
-        "name": "Central Control Area",
-        "boxes": {
-          "box": 28
-        }
-      }
-    ],
-    "enemies": {
-      "Merillia": 54,
-      "Meriltas": 42,
-      "Ul Gibbon": 114,
-      "Zol Gibbon": 26,
-      "Gee": 80,
-      "Sinow Berill": 24,
-      "Sinow Spigell": 9,
-      "Gibbles": 9
-    }
-  },
-  {
-    "quest_name": "PW3_BOX",
-    "long_name": "Phantasmal World #3 Box",
-    "episode": 2,
-    "areas": [
-      {
-        "name": "Seabed Upper",
-        "boxes": {
-          "box": 44
-        }
-      }
-    ],
-    "enemies": {
-      "Dolmolm": 9,
-      "Dolmdarl": 2,
-      "Morfos": 2
     }
   },
   {
