@@ -10,7 +10,7 @@ import math
 from pathlib import Path
 from typing import Optional
 
-from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost
+from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost, EventType
 
 
 def calculate_runs_for_probability(drop_rate: float, target_probability: float = 0.95) -> float:
@@ -201,9 +201,11 @@ def main():
         help="Filter to specific quests by name (e.g., 'MU1 SU2 EN3')",
     )
     parser.add_argument(
-        "--christmas-boost",
-        action="store_true",
-        help="Enable Christmas boost (doubles weekly boost values)",
+        "--event-active",
+        type=str,
+        choices=[event.value for event in EventType],
+        default=None,
+        help="Active event type: Easter, Halloween, Christmas, ValentinesDay, or Anniversary (default: None)",
     )
     parser.add_argument(
         "--exclude-event-quests",
@@ -218,6 +220,7 @@ def main():
     )
     args = parser.parse_args()
     weekly_boost = WeeklyBoost(args.weekly_boost) if args.weekly_boost else None
+    event_type = EventType(args.event_active) if args.event_active else None
 
     item = args.item
 
@@ -257,7 +260,7 @@ def main():
         print(f"  RBR Active: Yes")
     if weekly_boost:
         print(f"  Weekly Boost: {weekly_boost}")
-    print(f"  Christmas Boost: {args.christmas_boost}")
+    print(f"  Event Active: {event_type.value if event_type else 'None'}")
     if args.quests:
         print(f"  Quest Filter: {', '.join(args.quests)}")
     if args.exclude_event_quests:
@@ -266,7 +269,7 @@ def main():
 
     # Find enemies that drop the item
     enemy_drops = calculator.find_enemies_that_drop_weapon(
-        item, rbr_active=args.rbr, weekly_boost=weekly_boost, christmas_boost=args.christmas_boost
+        item, rbr_active=args.rbr, weekly_boost=weekly_boost, event_type=event_type
     )
 
     # Display enemy drops first
@@ -280,7 +283,7 @@ def main():
 
     # Find best quests
     results = calculator.find_best_quests_for_weapon(
-        item, rbr_active=args.rbr, weekly_boost=weekly_boost, quest_filter=args.quests, christmas_boost=args.christmas_boost
+        item, rbr_active=args.rbr, weekly_boost=weekly_boost, quest_filter=args.quests, event_type=event_type
     )
 
     # Display quest results

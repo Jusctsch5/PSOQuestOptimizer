@@ -34,6 +34,16 @@ class WeeklyBoost(Enum):
     XP = "XP"  # Experience Rate
 
 
+class EventType(Enum):
+    """Event types in Ephinea PSO server."""
+
+    Easter = "Easter"
+    Halloween = "Halloween"
+    Christmas = "Christmas"
+    ValentinesDay = "ValentinesDay"
+    Anniversary = "Anniversary"
+
+
 class SectionIds(Enum):
     Viridia = "Viridia"
     Greenill = "Greenill"
@@ -57,7 +67,6 @@ HOLLOWEEN_QUEST_RDR_BOOST = 0.50  # +50% Rare Drop Rate
 HOLLOWEEN_QUEST_RARE_ENEMY_BOOST = 1.00  # +100% Rare Enemy Appearance Rate
 HOLLOWEEN_QUEST_COOKIE_BOOST = 0.20  # +20% Halloween Cookie drop rate
 
-CHRISTMAS_EVENT_WEEKLY_BOOST_RATE = 2.00  # +200% Weekly Boost Rate during Christmas event
 
 RBR_DAR_BOOST = 0.25  # +25% Drop Anything Rate
 RBR_RDR_BOOST = 0.25  # +25% Rare Drop Rate
@@ -66,6 +75,12 @@ RBR_ENEMY_RATE_BOOST = 0.50  # +50% to rare enemy drop rate
 BASE_PD_DROP_RATE = 1.0 / 375.0  # 1/375 chance for PD drop
 BASE_RARE_ENEMY_RATE = 1.0 / 512  # 1/512 base chance for rare enemy spawn
 RARE_ENEMY_RATE_KONDRIEU = 1.0 / 10  # 1/10 chance for rare enemy spawn as Kondrieu
+
+# Event drop rates
+CHRISTMAS_PRESENT_DROP_RATE = 1.0 / 2250.0  # 1/2250 chance for Christmas Present
+HALLOWEEN_COOKIE_DROP_RATE = 1.0 / 1500.0  # 1/1500 base chance for Halloween Cookie
+HALLOWEEN_QUEST_COOKIE_MULTIPLIER = 1.2  # +20% cookie drop rate in Halloween quests during Halloween event
+EASTER_EGG_DROP_RATE = 1.0 / 500.0  # 1/500 chance for Easter Egg
 
 # Slime splitting technique
 SLIME_SPLIT = True  # Enable slime splitting (each slime counts as 8)
@@ -828,7 +843,7 @@ class QuestCalculator:
         section_id: str,
         rbr_active: bool = False,
         weekly_boost: Optional[WeeklyBoost] = None,
-        christmas_boost: bool = False,
+        event_type: Optional[EventType] = None,
     ) -> Dict:
         """
         Calculate expected PD value for a quest.
@@ -838,7 +853,7 @@ class QuestCalculator:
             section_id: Section ID to use for drops
             rbr_active: Whether RBR boost is active
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
-            christmas_boost: Whether Christmas boost is active (doubles weekly boosts)
+            event_type: Type of active event (EventType enum or None)
 
         Returns:
             Dictionary with calculated values:
@@ -879,15 +894,15 @@ class QuestCalculator:
                 rdr_multiplier *= 1.0 + RBR_RDR_BOOST
                 enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
 
-            # Apply weekly boosts (doubled if Christmas boost is active)
-            weekly_boost_multiplier = CHRISTMAS_EVENT_WEEKLY_BOOST_RATE if christmas_boost else 1.0
+            # Apply weekly boosts (doubled if Christmas event is active)
+            christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
 
             if weekly_boost == WeeklyBoost.DAR:
-                dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * weekly_boost_multiplier)
+                dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
             elif weekly_boost == WeeklyBoost.RDR:
-                rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * weekly_boost_multiplier)
+                rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
             elif weekly_boost == WeeklyBoost.RareEnemy:
-                enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * weekly_boost_multiplier)
+                enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * christmas_multiplier)
 
         # Let's sub rare enemies in here.
 
@@ -1038,6 +1053,86 @@ class QuestCalculator:
         # Add random PD drops to total (PD/Quest should include everything)
         total_pd += total_pd_drops
 
+        # Process event drops (Christmas Presents, Halloween Cookies, and Easter Eggs)
+        event_drops_pd = 0.0
+        event_drops_breakdown = {}
+        
+        # Christmas Presents: only during Christmas event
+        if event_type == EventType.Christmas:
+            # Calculate expected presents from all enemies
+            # Present drop rate: 1/2250, affected by DAR
+            present_drop_rate = CHRISTMAS_PRESENT_DROP_RATE
+            expected_presents = total_enemies * dar_multiplier * present_drop_rate
+            
+            # Get present price
+            try:
+                present_price = self._get_item_price_pd("Present")
+                present_pd_value = expected_presents * present_price
+                event_drops_pd += present_pd_value
+                
+                event_drops_breakdown["Present"] = {
+                    "drop_rate": present_drop_rate,
+                    "expected_drops": expected_presents,
+                    "item_price_pd": present_price,
+                    "pd_value": present_pd_value,
+                }
+            except Exception:
+                pass  # Present not found in price guide
+        
+        # Halloween Cookies: only during Halloween event
+        if event_type == EventType.Halloween:
+            # Base cookie drop rate: 1/1500
+            cookie_drop_rate = HALLOWEEN_COOKIE_DROP_RATE
+            
+            # If this is a Halloween quest, apply 20% boost
+            if is_hallow:
+                cookie_drop_rate *= HALLOWEEN_QUEST_COOKIE_MULTIPLIER
+            
+            # Calculate expected cookies from all enemies
+            # Cookie drop rate affected by DAR
+            expected_cookies = total_enemies * dar_multiplier * cookie_drop_rate
+            
+            # Get cookie price
+            try:
+                cookie_price = self._get_item_price_pd("Halloween Cookie")
+                cookie_pd_value = expected_cookies * cookie_price
+                event_drops_pd += cookie_pd_value
+                
+                event_drops_breakdown["Halloween Cookie"] = {
+                    "drop_rate": cookie_drop_rate,
+                    "expected_drops": expected_cookies,
+                    "item_price_pd": cookie_price,
+                    "pd_value": cookie_pd_value,
+                    "is_halloween_quest": is_hallow,
+                }
+            except Exception:
+                pass  # Cookie not found in price guide
+        
+        # Easter Eggs: only during Easter event
+        if event_type == EventType.Easter:
+            # Calculate expected eggs from all enemies
+            # Egg drop rate: 1/500, affected by DAR
+            egg_drop_rate = EASTER_EGG_DROP_RATE
+            expected_eggs = total_enemies * dar_multiplier * egg_drop_rate
+            
+            # Get egg price
+            try:
+                egg_price = self._get_item_price_pd("Event Egg")
+                egg_pd_value = expected_eggs * egg_price
+                event_drops_pd += egg_pd_value
+                
+                event_drops_breakdown["Event Egg"] = {
+                    "drop_rate": egg_drop_rate,
+                    "expected_drops": expected_eggs,
+                    "item_price_pd": egg_price,
+                    "pd_value": egg_pd_value,
+                }
+            except Exception:
+                pass  # Event Egg not found in price guide
+        
+        # Add event drops PD to total
+        total_pd += event_drops_pd
+
         return {
             "total_pd": total_pd,
             "total_pd_drops": total_pd_drops,  # Expected PD drops (not item value)
@@ -1047,6 +1142,8 @@ class QuestCalculator:
             "box_pd": box_pd,
             "completion_items_breakdown": completion_items_breakdown,
             "completion_items_pd": completion_items_pd,
+            "event_drops_breakdown": event_drops_breakdown,
+            "event_drops_pd": event_drops_pd,
             "total_enemies": total_enemies,
             "section_id": section_id,
             "rbr_active": rbr_active,
@@ -1058,7 +1155,7 @@ class QuestCalculator:
         quest_data: Dict,
         rbr_active: bool = False,
         weekly_boost: Optional[WeeklyBoost] = None,
-        christmas_boost: bool = False,
+        event_type: Optional[EventType] = None,
     ) -> Dict[str, Dict]:
         """
         Calculate quest value for all Section IDs.
@@ -1069,7 +1166,7 @@ class QuestCalculator:
         results = {}
         for section_id_enum in SectionIds:
             section_id: str = section_id_enum.value
-            results[section_id] = self.calculate_quest_value(quest_data, section_id, rbr_active, weekly_boost, christmas_boost)
+            results[section_id] = self.calculate_quest_value(quest_data, section_id, rbr_active, weekly_boost, event_type)
 
         return results
 
@@ -1237,7 +1334,7 @@ class QuestCalculator:
         rbr_active: bool = False,
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_filter: Optional[List[str]] = None,
-        christmas_boost: bool = False,
+        event_type: Optional[EventType] = None,
     ) -> List[Dict]:
         """
         Find all quest/Section ID combinations that drop the weapon, sorted by probability.
@@ -1296,15 +1393,15 @@ class QuestCalculator:
                     rdr_multiplier *= 1.0 + RBR_RDR_BOOST
                     enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
 
-                # Apply weekly boosts (doubled if Christmas boost is active)
-                weekly_boost_multiplier = CHRISTMAS_EVENT_WEEKLY_BOOST_RATE if christmas_boost else 1.0
+                # Apply weekly boosts (doubled if Christmas event is active)
+                christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
 
                 if weekly_boost == WeeklyBoost.DAR:
-                    dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * weekly_boost_multiplier)
+                    dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
                 elif weekly_boost == WeeklyBoost.RDR:
-                    rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * weekly_boost_multiplier)
+                    rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
                 if weekly_boost == WeeklyBoost.RareEnemy:
-                    enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * weekly_boost_multiplier)
+                    enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * christmas_multiplier)
 
             # Calculate rare enemy spawn rate for this quest
             rare_enemy_rate = BASE_RARE_ENEMY_RATE * enemy_rate_multiplier
@@ -1400,7 +1497,7 @@ class QuestCalculator:
         weapon_name: str,
         rbr_active: bool = False,
         weekly_boost: Optional[WeeklyBoost] = None,
-        christmas_boost: bool = False,
+        event_type: Optional[EventType] = None,
     ) -> List[Dict]:
         """
         Find all enemies that drop the weapon and their drop rates.
@@ -1430,13 +1527,13 @@ class QuestCalculator:
             dar_multiplier *= 1.0 + RBR_DAR_BOOST
             rdr_multiplier *= 1.0 + RBR_RDR_BOOST
 
-        # Apply weekly boosts (doubled if Christmas boost is active)
-        weekly_boost_multiplier = CHRISTMAS_EVENT_WEEKLY_BOOST_RATE if christmas_boost else 1.0
+        # Apply weekly boosts (doubled if Christmas event is active)
+        christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
 
         if weekly_boost == WeeklyBoost.DAR:
-            dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * weekly_boost_multiplier)
+            dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
         elif weekly_boost == WeeklyBoost.RDR:
-            rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * weekly_boost_multiplier)
+            rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
 
         results = []
 

@@ -1,6 +1,4 @@
-# TODO
-List of high level TODOS
-
+# DONE
 - [X] Add ruff/mypy integration
 - [X] Add optimize_weapon_hunting.py to help direct to most efficient quests for hunting a specific weapon
 - [X] Add behavior to fit inestimable price values for weapons
@@ -15,10 +13,13 @@ List of high level TODOS
 - [X] Add "is_event_quest" field to quests.json, allow filtering out event quests
 - [X] Correct rare enemy mappings
 - [X] Add "evergreen" quests to quests.json, i.e. TE and MaxAttack quests
-- [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
-- [ ] Add event items (presents, cookies, eggs, etc) to price guide/drop tables
-- [ ] Add general item value calculation for all items (barriers, frames, etc) (i.e. calulate_weapon_value.py -> item_value_calculator.py)
+- [X] Add event items (presents, cookies, eggs, etc) to price guide/drop tables
+- [X] Add general item value calculation for all items (barriers, frames, etc) (i.e. calulate_weapon_value.py -> item_value_calculator.py)
+- [X] Add Euler drop probability calculation to optimize_item_hunting.py
+
+# TODO
 - [ ] Add disk drops to drop tables and item value calculation for quests
+- [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
 - [ ] Add common weapon value calculation to weapon_value_calculator.py, price guide, and drop tables (note only certain enemies drop common weapons)
 - [ ] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
 - [ ] Investigate modeling**

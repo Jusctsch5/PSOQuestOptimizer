@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost
+from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost, EventType
 
 
 class QuestOptimizer:
@@ -25,17 +25,20 @@ class QuestOptimizer:
         """
         self.calculator = calculator
 
-    def _get_top_items(self, enemy_breakdown: Dict, box_breakdown: Optional[Dict] = None, top_n: int = 3) -> List[Dict]:
+    def _get_top_items(
+        self, enemy_breakdown: Dict, box_breakdown: Optional[Dict] = None, event_drops_breakdown: Optional[Dict] = None, top_n: int = 3
+    ) -> List[Dict]:
         """
-        Calculate the top N items by PD value contribution from both enemies and boxes.
+        Calculate the top N items by PD value contribution from enemies, boxes, and event drops.
 
         Args:
             enemy_breakdown: Dictionary of enemy breakdown data
             box_breakdown: Optional dictionary of box breakdown data
+            event_drops_breakdown: Optional dictionary of event drops breakdown data
             top_n: Number of top items to return
 
         Returns:
-            List of dictionaries with item_name, source (enemy/box), pd_value
+            List of dictionaries with item_name, source (enemy/box/event), pd_value
             sorted by PD value (descending)
         """
         item_data: Dict[str, Dict] = {}  # item_name -> {pd_value, sources: [list of sources]}
@@ -71,10 +74,24 @@ class QuestOptimizer:
                     if "Box" not in box_sources_list:
                         box_sources_list.append("Box")
 
+        # Process event drops
+        if event_drops_breakdown:
+            for item_name, data in event_drops_breakdown.items():
+                pd_value = data.get("pd_value", 0.0)
+                if pd_value > 0:
+                    if item_name not in item_data:
+                        item_data[item_name] = {"pd_value": 0.0, "sources": []}
+
+                    item_data[item_name]["pd_value"] += pd_value
+                    # Mark as event drop
+                    event_sources_list: List[str] = item_data[item_name].get("sources", [])
+                    if "Event" not in event_sources_list:
+                        event_sources_list.append("Event")
+
         # Convert to list of dicts and sort by PD value (descending)
         result = []
         for item_name, data in item_data.items():
-            # For backward compatibility, use "enemies" key but include both enemies and boxes
+            # For backward compatibility, use "enemies" key but include enemies, boxes, and events
             result.append({"item": item_name, "pd_value": data["pd_value"], "enemies": data["sources"]})
 
         # Sort by PD value (descending) and return top N
@@ -90,7 +107,7 @@ class QuestOptimizer:
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_times: Optional[Dict[str, float]] = None,
         episode_filter: Optional[int] = None,
-        christmas_boost: bool = False,
+        event_type: Optional[EventType] = None,
         exclude_event_quests: bool = False,
     ) -> List[Dict]:
         """
@@ -104,7 +121,7 @@ class QuestOptimizer:
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             quest_times: Dictionary mapping quest names to time in minutes
             episode_filter: Filter by episode (1, 2, or 4), or None for all
-            christmas_boost: Whether Christmas boost is active (doubles weekly boosts)
+            event_type: Type of active event (EventType enum or None)
 
         Returns:
             List of quest results sorted by PD per minute (descending)
@@ -136,7 +153,7 @@ class QuestOptimizer:
 
             # Calculate quest value
             value_result = self.calculator.calculate_quest_value(
-                quest_data, section_id, quest_rbr_active, weekly_boost, christmas_boost
+                quest_data, section_id, quest_rbr_active, weekly_boost, event_type
             )
 
             # Get quest time
@@ -150,7 +167,10 @@ class QuestOptimizer:
             # Calculate top items by PD value (get up to 10 to have enough for display)
             # Include both enemy drops and box drops
             top_items = self._get_top_items(
-                value_result["enemy_breakdown"], box_breakdown=value_result.get("box_breakdown", {}), top_n=10
+                value_result["enemy_breakdown"],
+                box_breakdown=value_result.get("box_breakdown", {}),
+                event_drops_breakdown=value_result.get("event_drops_breakdown", {}),
+                top_n=10,
             )
 
             result = {
@@ -190,7 +210,7 @@ class QuestOptimizer:
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_times: Optional[Dict[str, float]] = None,
         episode_filter: Optional[int] = None,
-        christmas_boost: bool = False,
+        event_type: Optional[EventType] = None,
         exclude_event_quests: bool = False,
     ) -> Dict[str, List[Dict]]:
         """
@@ -222,7 +242,7 @@ class QuestOptimizer:
                 weekly_boost,
                 quest_times,
                 episode_filter,
-                christmas_boost,
+                event_type,
                 exclude_event_quests,
             )
 
@@ -557,9 +577,11 @@ Examples:
     )
 
     parser.add_argument(
-        "--christmas-boost",
-        action="store_true",
-        help="Enable Christmas boost (doubles weekly boost values)",
+        "--event-active",
+        type=str,
+        choices=[event.value for event in EventType],
+        default=None,
+        help="Active event type: Easter, Halloween, Christmas, ValentinesDay, or Anniversary (default: None)",
     )
 
     parser.add_argument(
@@ -655,6 +677,9 @@ Examples:
     rbr_active = args.rbr_active
     rbr_list = args.rbr_list if args.rbr_list else None
 
+    # Parse event type
+    event_type = EventType(args.event_active) if args.event_active else None
+
     # Rank quests
     print(f"Ranking quests by PD efficiency...")
     if args.section_id == "All":
@@ -668,7 +693,7 @@ Examples:
     else:
         print(f"  RBR Active: No")
     print(f"  Weekly Boost: {weekly_boost if weekly_boost else 'None'}")
-    print(f"  Christmas Boost: {args.christmas_boost}")
+    print(f"  Event Active: {event_type.value if event_type else 'None'}")
     if args.episode:
         print(f"  Episode Filter: {args.episode}")
     if args.quest:
@@ -703,7 +728,7 @@ Examples:
                 weekly_boost=weekly_boost,
                 quest_times=quest_times,
                 episode_filter=args.episode,
-                christmas_boost=args.christmas_boost,
+                event_type=event_type,
                 exclude_event_quests=args.exclude_event_quests,
             )
             all_rankings.extend(section_rankings)
@@ -720,7 +745,7 @@ Examples:
             rbr_list=rbr_list,
             weekly_boost=weekly_boost,
             quest_times=quest_times,
-            christmas_boost=args.christmas_boost,
+            event_type=event_type,
             episode_filter=args.episode,
             exclude_event_quests=args.exclude_event_quests,
         )

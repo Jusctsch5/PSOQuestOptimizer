@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost
+from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost, EventType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -27,8 +27,8 @@ def quest_calculator():
     return QuestCalculator(DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH)
 
 
-def test_qcalc_christmas_boost_doubles_weekly_boost(quest_calculator: QuestCalculator):
-    """Test that Christmas boost doubles weekly boost values"""
+def test_qcalc_christmas_event_boosts_dar_week(quest_calculator: QuestCalculator):
+    """Test that Christmas event increases quest value during DAR week"""
     # Find MU1 quest
     mu1_quest = None
     for quest in quest_calculator.quest_data:
@@ -41,30 +41,259 @@ def test_qcalc_christmas_boost_doubles_weekly_boost(quest_calculator: QuestCalcu
     section_id = "Skyly"
     weekly_boost = WeeklyBoost.DAR
 
-    # Calculate without Christmas boost
-    result_no_christmas = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, christmas_boost=False
+    # Calculate with DAR week only (no event)
+    result_dar_only = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, event_type=None
     )
 
-    # Calculate with Christmas boost
-    result_with_christmas = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, christmas_boost=True
+    # Calculate with DAR week AND Christmas event
+    result_dar_and_christmas = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, event_type=EventType.Christmas
     )
 
-    pd_no_christmas = result_no_christmas["total_pd"]
-    pd_with_christmas = result_with_christmas["total_pd"]
+    pd_dar_only = result_dar_only["total_pd"]
+    pd_dar_and_christmas = result_dar_and_christmas["total_pd"]
 
-    logger.info(f"MU1 Skyly DAR boost (no Christmas): {pd_no_christmas} PD")
-    logger.info(f"MU1 Skyly DAR boost (with Christmas): {pd_with_christmas} PD")
-
-    # Christmas boost should increase the PD value
-    assert pd_with_christmas > pd_no_christmas, (
-        f"Christmas boost should increase PD value: {pd_with_christmas} should be > {pd_no_christmas}"
-    )
+    logger.info(f"MU1 Skyly DAR week (no Christmas): {pd_dar_only} PD")
+    logger.info(f"MU1 Skyly DAR week + Christmas: {pd_dar_and_christmas} PD")
 
     # Both should be positive
-    assert pd_no_christmas > 0, f"PD value without Christmas boost should be > 0, got {pd_no_christmas}"
-    assert pd_with_christmas > 0, f"PD value with Christmas boost should be > 0, got {pd_with_christmas}"
+    assert pd_dar_only > 0, f"PD value with DAR week only should be > 0, got {pd_dar_only}"
+    assert pd_dar_and_christmas > 0, f"PD value with DAR week + Christmas should be > 0, got {pd_dar_and_christmas}"
+
+    # Christmas event should increase the PD value during DAR week
+    assert pd_dar_and_christmas > pd_dar_only, (
+        f"Christmas event should increase PD value during DAR week: "
+        f"{pd_dar_and_christmas} should be > {pd_dar_only}"
+    )
+
+
+def test_qcalc_christmas_event_boosts_rdr_week(quest_calculator: QuestCalculator):
+    """Test that Christmas event increases quest value during RDR week"""
+    # Find MU1 quest
+    mu1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+            break
+
+    assert mu1_quest is not None, "MU1 quest not found in quest data"
+
+    section_id = "Skyly"
+    weekly_boost = WeeklyBoost.RDR
+
+    # Calculate with RDR week only (no event)
+    result_rdr_only = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, event_type=None
+    )
+
+    # Calculate with RDR week AND Christmas event
+    result_rdr_and_christmas = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, event_type=EventType.Christmas
+    )
+
+    pd_rdr_only = result_rdr_only["total_pd"]
+    pd_rdr_and_christmas = result_rdr_and_christmas["total_pd"]
+
+    logger.info(f"MU1 Skyly RDR week (no Christmas): {pd_rdr_only} PD")
+    logger.info(f"MU1 Skyly RDR week + Christmas: {pd_rdr_and_christmas} PD")
+
+    # Both should be positive
+    assert pd_rdr_only > 0, f"PD value with RDR week only should be > 0, got {pd_rdr_only}"
+    assert pd_rdr_and_christmas > 0, f"PD value with RDR week + Christmas should be > 0, got {pd_rdr_and_christmas}"
+
+    # Christmas event should increase the PD value during RDR week
+    assert pd_rdr_and_christmas > pd_rdr_only, (
+        f"Christmas event should increase PD value during RDR week: "
+        f"{pd_rdr_and_christmas} should be > {pd_rdr_only}"
+    )
+
+
+def test_christmas_presents_only_during_christmas(quest_calculator: QuestCalculator):
+    """Test that Christmas Presents only drop during Christmas event"""
+    # Find MU1 quest
+    mu1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+            break
+
+    assert mu1_quest is not None, "MU1 quest not found in quest data"
+
+    section_id = "Skyly"
+
+    # Calculate without Christmas event
+    result_no_christmas = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
+    )
+
+    # Calculate with Christmas event
+    result_with_christmas = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Christmas
+    )
+
+    # No presents should drop outside Christmas
+    assert "event_drops_breakdown" in result_no_christmas
+    assert "Present" not in result_no_christmas["event_drops_breakdown"], (
+        "Presents should not drop outside Christmas event"
+    )
+    assert result_no_christmas["event_drops_pd"] == 0.0, (
+        "Event drops PD should be 0 outside Christmas"
+    )
+
+    # Presents should drop during Christmas
+    assert "event_drops_breakdown" in result_with_christmas
+    assert "Present" in result_with_christmas["event_drops_breakdown"], (
+        "Presents should drop during Christmas event"
+    )
+    assert result_with_christmas["event_drops_pd"] > 0.0, (
+        "Event drops PD should be > 0 during Christmas"
+    )
+
+    present_data = result_with_christmas["event_drops_breakdown"]["Present"]
+    assert present_data["expected_drops"] > 0, "Expected presents should be > 0"
+    assert present_data["pd_value"] > 0, "Present PD value should be > 0"
+
+
+def test_halloween_cookies_only_during_halloween(quest_calculator: QuestCalculator):
+    """Test that Halloween Cookies only drop during Halloween event"""
+    # Find MU1 quest
+    mu1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+            break
+
+    assert mu1_quest is not None, "MU1 quest not found in quest data"
+
+    section_id = "Skyly"
+
+    # Calculate without Halloween event
+    result_no_halloween = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
+    )
+
+    # Calculate with Halloween event
+    result_with_halloween = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween
+    )
+
+    # No cookies should drop outside Halloween
+    assert "event_drops_breakdown" in result_no_halloween
+    assert "Halloween Cookie" not in result_no_halloween["event_drops_breakdown"], (
+        "Cookies should not drop outside Halloween event"
+    )
+    assert result_no_halloween["event_drops_pd"] == 0.0, (
+        "Event drops PD should be 0 outside Halloween"
+    )
+
+    # Cookies should drop during Halloween
+    assert "event_drops_breakdown" in result_with_halloween
+    assert "Halloween Cookie" in result_with_halloween["event_drops_breakdown"], (
+        "Cookies should drop during Halloween event"
+    )
+    assert result_with_halloween["event_drops_pd"] > 0.0, (
+        "Event drops PD should be > 0 during Halloween"
+    )
+
+    cookie_data = result_with_halloween["event_drops_breakdown"]["Halloween Cookie"]
+    assert cookie_data["expected_drops"] > 0, "Expected cookies should be > 0"
+    assert cookie_data["pd_value"] > 0, "Cookie PD value should be > 0"
+
+
+def test_easter_eggs_only_during_easter(quest_calculator: QuestCalculator):
+    """Test that Easter Eggs only drop during Easter event"""
+    # Find MU1 quest
+    mu1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+            break
+
+    assert mu1_quest is not None, "MU1 quest not found in quest data"
+
+    section_id = "Skyly"
+
+    # Calculate without Easter event
+    result_no_easter = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
+    )
+
+    # Calculate with Easter event
+    result_with_easter = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Easter
+    )
+
+    # No eggs should drop outside Easter
+    assert "event_drops_breakdown" in result_no_easter
+    assert "Event Egg" not in result_no_easter["event_drops_breakdown"], (
+        "Event Eggs should not drop outside Easter event"
+    )
+
+    # Eggs should drop during Easter
+    assert "event_drops_breakdown" in result_with_easter
+    assert "Event Egg" in result_with_easter["event_drops_breakdown"], (
+        "Event Eggs should drop during Easter event"
+    )
+    assert result_with_easter["event_drops_pd"] > 0.0, (
+        "Event drops PD should be > 0 during Easter"
+    )
+
+    egg_data = result_with_easter["event_drops_breakdown"]["Event Egg"]
+    assert egg_data["expected_drops"] > 0, "Expected eggs should be > 0"
+    assert egg_data["pd_value"] > 0, "Egg PD value should be > 0"
+
+
+def test_halloween_cookies_boost_in_halloween_quests(quest_calculator: QuestCalculator):
+    """Test that Halloween Cookies drop more in Halloween quests during Halloween event"""
+    # Find a Halloween quest
+    halloween_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest_calculator._is_hallow_quest(quest):
+            halloween_quest = quest
+            break
+
+    assert halloween_quest is not None, "No Halloween quest found in quest data"
+
+    section_id = "Skyly"
+
+    # Calculate with Halloween event in a Halloween quest
+    result_halloween_quest = quest_calculator.calculate_quest_value(
+        halloween_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween
+    )
+
+    # Calculate with Halloween event in a regular quest (MU1)
+    mu1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+            break
+
+    assert mu1_quest is not None, "MU1 quest not found"
+    result_regular_quest = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween
+    )
+
+    # Both should have cookies
+    assert "Halloween Cookie" in result_halloween_quest["event_drops_breakdown"]
+    assert "Halloween Cookie" in result_regular_quest["event_drops_breakdown"]
+
+    halloween_quest_cookie_data = result_halloween_quest["event_drops_breakdown"]["Halloween Cookie"]
+    regular_quest_cookie_data = result_regular_quest["event_drops_breakdown"]["Halloween Cookie"]
+
+    # Halloween quest should have higher drop rate (20% boost)
+    assert halloween_quest_cookie_data["is_halloween_quest"] is True
+    assert halloween_quest_cookie_data["drop_rate"] > regular_quest_cookie_data["drop_rate"], (
+        f"Halloween quest cookie drop rate ({halloween_quest_cookie_data['drop_rate']}) "
+        f"should be > regular quest drop rate ({regular_quest_cookie_data['drop_rate']})"
+    )
+
+    # Verify the boost is approximately 20% (1.2x multiplier)
+    expected_boosted_rate = regular_quest_cookie_data["drop_rate"] * 1.2
+    assert abs(halloween_quest_cookie_data["drop_rate"] - expected_boosted_rate) < 0.0001, (
+        f"Halloween quest drop rate should be ~20% higher: "
+        f"got {halloween_quest_cookie_data['drop_rate']}, expected ~{expected_boosted_rate}"
+    )
 
 
 def test_process_box_drops(quest_calculator: QuestCalculator):
@@ -96,7 +325,7 @@ def test_box_drops_in_quest_value(quest_calculator: QuestCalculator):
 
     section_id = "Skyly"
     result = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
     )
 
     # Should have box_breakdown and box_pd in result
@@ -204,12 +433,12 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
 
     # Calculate without RBR boost
     result_no_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
     )
 
     # Calculate with RBR boost
     result_with_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=True, weekly_boost=None, christmas_boost=False
+        mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None
     )
 
     pd_no_rbr = result_no_rbr["total_pd"]
@@ -274,7 +503,7 @@ def test_rbr_list_with_existing_quests(quest_calculator: QuestCalculator):
         weekly_boost=None,
         quest_times=None,
         episode_filter=None,
-        christmas_boost=False,
+        event_type=None,
         exclude_event_quests=False,
     )
 
@@ -285,10 +514,10 @@ def test_rbr_list_with_existing_quests(quest_calculator: QuestCalculator):
 
     # Calculate MU1 with and without RBR to verify it's actually applied
     result_with_rbr_list = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=True, weekly_boost=None, christmas_boost=False
+        mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None
     )
     result_no_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
     )
 
     # RBR should increase PD value
@@ -331,7 +560,7 @@ def test_rbr_list_with_event_quest(quest_calculator: QuestCalculator):
         weekly_boost=None,
         quest_times=None,
         episode_filter=None,
-        christmas_boost=False,
+        event_type=None,
         exclude_event_quests=False,
     )
 
@@ -346,10 +575,10 @@ def test_rbr_list_with_event_quest(quest_calculator: QuestCalculator):
     if not in_rbr_rotation:
         # Calculate with and without RBR - should be the same if not in rotation
         result_with_rbr = quest_calculator.calculate_quest_value(
-            event_quest, section_id, rbr_active=True, weekly_boost=None, christmas_boost=False
+            event_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None
         )
         result_no_rbr = quest_calculator.calculate_quest_value(
-            event_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+            event_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
         )
         # If not in RBR rotation, RBR won't affect the result
         logger.info(
@@ -394,7 +623,7 @@ def test_rbr_list_with_nonexistent_quest(quest_calculator: QuestCalculator):
         weekly_boost=None,
         quest_times=None,
         episode_filter=None,
-        christmas_boost=False,
+        event_type=None,
         exclude_event_quests=False,
     )
 
@@ -406,10 +635,10 @@ def test_rbr_list_with_nonexistent_quest(quest_calculator: QuestCalculator):
 
     # Verify RBR is actually applied
     result_with_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=True, weekly_boost=None, christmas_boost=False
+        mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None
     )
     result_no_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
     )
 
     assert result_with_rbr["total_pd"] > result_no_rbr["total_pd"], (
