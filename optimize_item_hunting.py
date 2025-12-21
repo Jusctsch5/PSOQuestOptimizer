@@ -6,10 +6,42 @@ has the highest drop probability for the specified item (enemy drops + box drops
 """
 
 import argparse
+import math
 from pathlib import Path
 from typing import Optional
 
 from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost
+
+
+def calculate_runs_for_probability(drop_rate: float, target_probability: float = 0.95) -> float:
+    """
+    Calculate the number of runs needed to reach a target probability of at least one drop.
+    
+    Formula: P(at least 1 drop in N runs) = 1 - (1 - p)^N
+    Solving for N: N = ln(1 - target_probability) / ln(1 - drop_rate)
+    
+    Args:
+        drop_rate: Probability of drop per run (0.0 to 1.0)
+        target_probability: Target probability of at least one drop (default: 0.95 for 95%)
+    
+    Returns:
+        Number of runs needed (float)
+    """
+    if drop_rate <= 0:
+        return float('inf')
+    if drop_rate >= 1:
+        return 1.0
+    if target_probability >= 1:
+        return float('inf')
+    
+    # N = ln(1 - target_probability) / ln(1 - drop_rate)
+    numerator = math.log(1 - target_probability)
+    denominator = math.log(1 - drop_rate)
+    
+    if denominator == 0:
+        return float('inf')
+    
+    return numerator / denominator
 
 
 def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
@@ -35,7 +67,16 @@ def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
             rdr_str += f" -> {enemy_info['adjusted_rdr']:.6f}"
         print(f"   DAR: {dar_str}, RDR: {rdr_str}")
         print(f"   Drop Rate: {enemy_info['drop_rate_percent']:.6f}% per kill")
-        print(f"   (1 in {1 / enemy_info['drop_rate']:.1f} kills)")
+        drop_rate = enemy_info['drop_rate']
+        expected_kills = 1 / drop_rate
+        print(f"   (1 in {expected_kills:.1f} kills)")
+        # Euler's number: probability of at least 1 drop after N kills = 1 - (1 - p)^N
+        # For N = 1/p (expected kills), probability ≈ 1 - 1/e ≈ 63.21%
+        euler_probability = 1 - math.exp(-1)
+        print(f"   Probability after {expected_kills:.0f} kills: {euler_probability * 100:.2f}% (1 - 1/e)")
+        # Calculate runs for 95% probability
+        runs_95 = calculate_runs_for_probability(drop_rate, 0.95)
+        print(f"   Kills for 95% probability: {runs_95:.1f}")
         print()
 
 
@@ -54,7 +95,16 @@ def display_box_drops(box_drops, item_name):
         print(f"{i}. {box_info['area']} (Episode {box_info['episode']})")
         print(f"   Section ID: {box_info['section_id']}")
         print(f"   Drop Rate: {box_info['drop_rate_percent']:.6f}% per box")
-        print(f"   (1 in {1 / box_info['drop_rate']:.1f} boxes)")
+        drop_rate = box_info['drop_rate']
+        expected_boxes = 1 / drop_rate
+        print(f"   (1 in {expected_boxes:.1f} boxes)")
+        # Euler's number: probability of at least 1 drop after N boxes = 1 - (1 - p)^N
+        # For N = 1/p (expected boxes), probability ≈ 1 - 1/e ≈ 63.21%
+        euler_probability = 1 - math.exp(-1)
+        print(f"   Probability after {expected_boxes:.0f} boxes: {euler_probability * 100:.2f}% (1 - 1/e)")
+        # Calculate runs for 95% probability
+        runs_95 = calculate_runs_for_probability(drop_rate, 0.95)
+        print(f"   Boxes for 95% probability: {runs_95:.1f}")
         print()
 
 
@@ -75,7 +125,16 @@ def display_results(results, item_name, top_n: Optional[int] = 10):
         print(f"{i}. Quest: {result['quest_name']} ({result['long_name']})")
         print(f"   Section ID: {result['section_id']}")
         print(f"   Drop Probability: {result['percentage']:.6f}% per quest run")
-        print(f"   (1 in {1 / result['probability']:.1f} quest runs)")
+        probability = result['probability']
+        expected_runs = 1 / probability
+        print(f"   (1 in {expected_runs:.1f} quest runs)")
+        # Euler's number: probability of at least 1 drop after N runs = 1 - (1 - p)^N
+        # For N = 1/p (expected runs), probability ≈ 1 - 1/e ≈ 63.21%
+        euler_probability = 1 - math.exp(-1)
+        print(f"   Probability after {expected_runs:.0f} runs: {euler_probability * 100:.2f}% (1 - 1/e)")
+        # Calculate runs for 95% probability
+        runs_95 = calculate_runs_for_probability(probability, 0.95)
+        print(f"   Runs for 95% probability: {runs_95:.1f}")
         print(f"   Contributions:")
 
         for contrib in result["contributions"]:
@@ -103,12 +162,22 @@ def display_results(results, item_name, top_n: Optional[int] = 10):
 
     # Show best overall
     best = results[0]
+    best_probability = best['probability']
+    best_expected_runs = 1 / best_probability
+    euler_probability = 1 - math.exp(-1)
+    best_runs_95 = calculate_runs_for_probability(best_probability, 0.95)
     print(f"{'=' * 80}")
     print(f"BEST OPTION:")
     print(f"  Quest: {best['quest_name']} ({best['long_name']})")
     print(f"  Section ID: {best['section_id']}")
     print(f"  Drop Chance: {best['percentage']:.6f}% per quest run")
-    print(f"  Expected runs: {1 / best['probability']:.1f}")
+    print(f"  Expected runs: {best_expected_runs:.1f}")
+    print(f"  Probability after {best_expected_runs:.0f} runs: {euler_probability * 100:.2f}% (1 - 1/e)")
+    print(f"  Runs for 95% probability: {best_runs_95:.1f}")
+    print(f"\n  Note: Killing more enemies/opening more boxes increases the likelihood of")
+    print(f"  receiving an item, but it will never be 100% guaranteed. The probability")
+    print(f"  of at least 1 drop after N attempts (where N = 1/drop_rate) is always")
+    print(f"  approximately 63.21% (1 - 1/e, where e = Euler's number ≈ 2.718).")
     print(f"{'=' * 80}\n")
 
 

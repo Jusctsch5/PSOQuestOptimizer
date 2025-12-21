@@ -14,7 +14,7 @@ List of high level TODOS
 - [X] Add "is_in_rbr_rotation" field to quests.json, make sure RBR boost is only applied to quests in rotation
 - [X] Add "is_event_quest" field to quests.json, allow filtering out event quests
 - [X] Correct rare enemy mappings
-- [ ] Add "evergreen" quests to quests.json, i.e. TE and MaxAttack quests
+- [X] Add "evergreen" quests to quests.json, i.e. TE and MaxAttack quests
 - [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
 - [ ] Add event items (presents, cookies, eggs, etc) to price guide/drop tables
 - [ ] Add general item value calculation for all items (barriers, frames, etc) (i.e. calulate_weapon_value.py -> item_value_calculator.py)
