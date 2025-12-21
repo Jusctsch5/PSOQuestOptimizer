@@ -1001,7 +1001,7 @@
     "episode": 2,
     "areas": [
       {
-        "name": "Control Tower",
+        "name": "Central Control Area",
         "boxes": {
           "box": 24
         }
@@ -1140,7 +1140,7 @@
     "episode": 2,
     "areas": [
       {
-        "name": "Control Tower",
+        "name": "Central Control Area",
         "boxes": {
           "box": 28
         }
@@ -1173,7 +1173,7 @@
         }
       },
       {
-        "name": "Control Tower",
+        "name": "Central Control Area",
         "boxes": {
           "box": 12
         }
@@ -1212,7 +1212,7 @@
         }
       },
       {
-        "name": "Control Tower",
+        "name": "Central Control Area",
         "boxes": {
           "box": 12
         }
@@ -1824,6 +1824,7 @@
     "quest_completion_items": {
       "Coal": 6
     },
+    "is_event_quest": true,
     "enemies": {
       "Booma": 39,
       "Gobooma": 38,
@@ -1862,6 +1863,7 @@
     "quest_completion_items": {
       "Coal": 8
     },
+    "is_event_quest": true,
     "enemies": {
       "Gillchic": 38,
       "Poison Lily": 36,
@@ -1870,7 +1872,7 @@
       "Dimenian": 33,
       "Ul Gibbon": 30,
       "Ill Gill": 30,
-      "Rag Rappy": 29,
+      "El Rappy": 29,
       "Delsaber": 27,
       "La Dimenian": 26,
       "Hildebear": 26,
@@ -1902,13 +1904,20 @@
     }
   },
   {
-    "quest_name": "MAE4C",
+    "quest_name": "MA4C",
     "long_name": "Maxiumum Attack 4th Stage 4C",
     "episode": 4,
     "quest_completion_items": {
       "MAE Ticket": 12
     },
-    "is_event_quest": true,
+    "areas": [
+      {
+        "name": "Desert 3",
+        "boxes": {
+          "box": 10
+        }
+      }
+    ],
     "enemies": {
       "Boota": 20,
       "Goran": 37,
@@ -1927,18 +1936,50 @@
     }
   },
   {
+    "quest_name": "MAE4",
+    "long_name": "Maximum Attack E: Episode 4",
+    "episode": 4,
+    "quest_completion_items": {
+      "MAE Ticket": 12
+    },
+    "areas": [
+      {
+        "name": "Desert 3",
+        "boxes": {
+          "box": 0
+        }
+      }
+    ],
+    "enemies": {
+      "Boota": 24,
+      "Goran": 24,
+      "Ze Boota": 23,
+      "Pyro Goran": 26,
+      "Ba Boota": 25,
+      "Goran Detonator": 19,
+      "Astark": 18,
+      "Merissa A": 22,
+      "Dorphon": 9,
+      "Girtablulu": 4,
+      "Saint-Milion": 1,
+      "Sand Rappy": 31,
+      "Satellite Lizard": 66,
+      "Yowie": 43,
+      "Zu": 26
+    }
+  },
+  {
     "quest_name": "TE_FOREST",
     "long_name": "Tyrell's Ego Forest",
     "episode": 1,
     "areas": [
       {
-        "name": "Forest 1",
+        "name": "Forest 2",
         "boxes": {
           "box": 51
         }
       }
     ],
-    "is_event_quest": true,
     "enemies": {
       "Booma": 17,
       "Gobooma": 41,
@@ -1949,6 +1990,117 @@
       "El Rappy": 28,
       "Hildelt": 52,
       "Dragon": 1
+    }
+  },
+  {
+    "quest_name": "TE",
+    "long_name": "Tyrell's Ego",
+    "episode": 1,
+    "areas": [
+      {
+        "name": "Forest 2",
+        "boxes": {
+          "box": 51
+        }
+      },
+      {
+        "name": "Cave 3",
+        "boxes": {
+          "box": 13
+        }
+      },
+      {
+        "name": "Mine 2",
+        "boxes": {
+          "box": 38
+        }
+      }
+    ],
+    "enemies": {
+      "Booma": 17,
+      "Gobooma": 41,
+      "Gigobooma": 17,
+      "Savage Wolf": 21,
+      "Barbarous Wolf": 9,
+      "Monest": 16,
+      "El Rappy": 28,
+      "Hildelt": 52,
+      "Dragon": 1,
+      "Evil Shark": 68,
+      "Gillchic": 73,
+      "Dimenian": 64,
+      "Pal Shark": 25,
+      "Dubchic": 37,
+      "La Dimenian": 48,
+      "Guil Shark": 49,
+      "Dubwitch": 8,
+      "So Dimenian": 46,
+      "Poison Lily": 39,
+      "Canadine": 115,
+      "Claw": 82,
+      "Pofuilly Slime": 23,
+      "Canane": 8,
+      "Bulclaw": 24,
+      "Nano Dragon": 12,
+      "Sinow Beat": 25,
+      "Dark Belra": 34,
+      "Pan Arms": 6,
+      "Sinow Gold": 25,
+      "Dark Gunner": 31,
+      "De Rol Le": 1,
+      "Garanz": 28,
+      "Death Gunner": 7,
+      "Vol Opt": 1,
+      "Chaos Sorcerer": 24,
+      "Chaos Bringer": 21,
+      "Dark Falz": 1
+    }
+  },
+  {
+    "quest_name": "PW2",
+    "long_name": "Phantasmal World #2",
+    "episode": 2,
+    "areas": [
+      {
+        "name": "Mountain",
+        "boxes": {
+          "box": 18
+        }
+      },
+      {
+        "name": "Central Control Area",
+        "boxes": {
+          "box": 28
+        }
+      }
+    ],
+    "enemies": {
+      "Merillia": 54,
+      "Meriltas": 42,
+      "Ul Gibbon": 114,
+      "Zol Gibbon": 26,
+      "Gee": 80,
+      "Sinow Berill": 24,
+      "Sinow Spigell": 9,
+      "Gibbles": 9
+    }
+  },
+  {
+    "quest_name": "PW3_BOX",
+    "long_name": "Phantasmal World #3 Box",
+    "episode": 2,
+    "areas": [
+      {
+        "name": "Seabed Upper",
+        "boxes": {
+          "box": 44
+        }
+      }
+    ],
+    "enemies": {
+      "Dolmolm": 9,
+      "Dolmdarl": 2,
+      "Morfos": 2
     }
   },
   {

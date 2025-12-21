@@ -95,6 +95,12 @@ EP4_RARE_ENEMY_MAPPING = {
 }
 
 
+class DropTableNotFoundError(Exception):
+    """Exception raised when a box drop area is not found in the drop table."""
+
+    pass
+
+
 class QuestCalculator:
     """Calculate quest values based on drop tables and price guide."""
 
@@ -759,15 +765,27 @@ class QuestCalculator:
         # Get box drop data from drop table
         episode_key = f"episode{episode}"
         if episode_key not in self.drop_data:
-            return 0.0, {}
+            raise DropTableNotFoundError(f"Drop table not found for episode {episode}")
 
         boxes_data = self.drop_data[episode_key].get("boxes", {})
         if mapped_area not in boxes_data:
-            return 0.0, {}
+            raise DropTableNotFoundError(
+                f"Box drop area not found in drop table for episode {episode} and area name: '{area_name}'"
+            )
 
         section_ids_data = boxes_data[mapped_area].get("section_ids", {})
         if section_id not in section_ids_data:
-            return 0.0, {}
+            # Special case for Yellowboze certain areas, which has no box drops.
+            if section_id == "Yellowboze" and episode == 1 and area_name == "Forest 1":
+                return 0.0, {}
+            elif section_id == "Yellowboze" and episode == 1 and area_name == "Cave 1":
+                return 0.0, {}
+            elif section_id == "Yellowboze" and episode == 2 and area_name == "VR Spaceship Beta":
+                return 0.0, {}
+
+            raise DropTableNotFoundError(
+                f"Section ID not found in drop table for episode {episode} and area name: '{area_name}' and section ID: '{section_id}'"
+            )
 
         # Get list of items that can drop from boxes in this area/section
         box_items = section_ids_data[section_id]
@@ -784,11 +802,7 @@ class QuestCalculator:
             # Get item price
             # For rare weapons, area doesn't affect hit probability (always uses Pattern 5)
             # Area is only used for common weapons, so pass None for box drops (rare weapons)
-            try:
-                item_price_pd = self._get_item_price_pd(item_name)
-            except PriceGuideExceptionItemNameNotFound:
-                # Item not found in price guide, skip it
-                continue
+            item_price_pd = self._get_item_price_pd(item_name)
             # Expected PD value
             expected_pd = expected_drops * item_price_pd
             total_pd += expected_pd

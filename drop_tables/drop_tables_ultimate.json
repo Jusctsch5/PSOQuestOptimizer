@@ -6776,7 +6776,7 @@
       }
     },
     "boxes": {
-      "VR Temple: Alpha": {
+      "VR Temple Alpha": {
         "section_ids": {
           "Viridia": [
             {
@@ -6860,7 +6860,7 @@
           ]
         }
       },
-      "VR Temple: Beta": {
+      "VR Temple Beta": {
         "section_ids": {
           "Viridia": [
             {
@@ -7068,7 +7068,7 @@
           ]
         }
       },
-      "VR Spaceship: Alpha": {
+      "VR Spaceship Alpha": {
         "section_ids": {
           "Viridia": [
             {
@@ -7156,7 +7156,7 @@
           ]
         }
       },
-      "VR Spaceship: Beta": {
+      "VR Spaceship Beta": {
         "section_ids": {
           "Viridia": [
             {
@@ -7778,7 +7778,7 @@
           ]
         }
       },
-      "Seaside / CCA": {
+      "Seaside": {
         "section_ids": {
           "Viridia": [
             {
@@ -7886,7 +7886,115 @@
           ]
         }
       },
-      "Seabed: Upper Levels": {
+      "Central Control Area": {
+        "section_ids": {
+          "Viridia": [
+            {
+              "item": "Final Impact",
+              "rate": 0.0026852846401718583
+            },
+            {
+              "item": "Club of Zumiuran",
+              "rate": 0.0017091095539224063
+            },
+            {
+              "item": "Blue Barrier",
+              "rate": 0.0008544817568144921
+            }
+          ],
+          "Greenill": [
+            {
+              "item": "Justy-23ST",
+              "rate": 0.0026852846401718583
+            },
+            {
+              "item": "Amplifier of Blue",
+              "rate": 0.0008544817568144921
+            },
+            {
+              "item": "Blue Barrier",
+              "rate": 0.0008544817568144921
+            }
+          ],
+          "Skyly": [
+            {
+              "item": "Dragon Slayer",
+              "rate": 0.0026852846401718583
+            },
+            {
+              "item": "AddSlot",
+              "rate": 0.0008544817568144921
+            }
+          ],
+          "Bluefull": [
+            {
+              "item": "Gae Bolg",
+              "rate": 0.0026852846401718583
+            }
+          ],
+          "Purplenum": [
+            {
+              "item": "L&K14 Combat",
+              "rate": 0.0026852846401718583
+            }
+          ],
+          "Pinkal": [
+            {
+              "item": "Storm Wand: Indra",
+              "rate": 0.0026852846401718583
+            },
+            {
+              "item": "Amplifier of Rabarta",
+              "rate": 0.0015870496746548167
+            },
+            {
+              "item": "Amplifier of Blue",
+              "rate": 0.0015870496746548167
+            },
+            {
+              "item": "Blue Barrier",
+              "rate": 0.0015870496746548167
+            }
+          ],
+          "Redria": [
+            {
+              "item": "Diska of Braveman",
+              "rate": 0.0026852846401718583
+            },
+            {
+              "item": "Amplifier of Blue",
+              "rate": 0.0008544817568144921
+            },
+            {
+              "item": "Blue Barrier",
+              "rate": 0.0008544817568144921
+            }
+          ],
+          "Oran": [
+            {
+              "item": "Cross Scar",
+              "rate": 0.0026852846401718583
+            }
+          ],
+          "Yellowboze": [
+            {
+              "item": "Amplifier of Blue",
+              "rate": 0.0008544817568144921
+            },
+            {
+              "item": "Blue Barrier",
+              "rate": 0.0008544817568144921
+            }
+          ],
+          "Whitill": [
+            {
+              "item": "Diska of Braveman",
+              "rate": 0.0026852846401718583
+            }
+          ]
+        }
+      },
+      "Seabed Upper": {
         "section_ids": {
           "Viridia": [
             {
@@ -7982,7 +8090,7 @@
           ]
         }
       },
-      "Seabed: Lower Levels": {
+      "Seabed Lower": {
         "section_ids": {
           "Viridia": [
             {
@@ -9188,7 +9296,7 @@
           }
         }
       },
-      "Saint Million": {
+      "Saint-Milion": {
         "dar": 1.0,
         "section_ids": {
           "Viridia": {
@@ -9771,7 +9879,7 @@
           ]
         }
       },
-      "Crater Int.": {
+      "Crater Interior": {
         "section_ids": {
           "Viridia": [
             {

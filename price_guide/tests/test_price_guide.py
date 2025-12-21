@@ -147,11 +147,11 @@ def test_price_guide_barriers(fixed_price_guide: PriceGuideFixed):
 def test_edge_cases(fixed_price_guide: PriceGuideFixed):
     """Test boundary conditions and special cases"""
     price = fixed_price_guide.get_price_weapon("M&A60 VISE", {}, 0, 0, "")
-    assert price == 0 
+    assert price == 0
 
-    # Test weapon 
+    # Test weapon
     price = fixed_price_guide.get_price_weapon("Snow Queen", {}, 0, 0, "")
-    assert price != 0 
+    assert price != 0
 
 
 def test_price_guide_units(fixed_price_guide: PriceGuideFixed):
