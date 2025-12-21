@@ -86,6 +86,7 @@ class QuestOptimizer:
         quests_data: List[Dict],
         section_id: str,
         rbr_active: bool = False,
+        rbr_list: Optional[List[str]] = None,
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_times: Optional[Dict[str, float]] = None,
         episode_filter: Optional[int] = None,
@@ -98,7 +99,8 @@ class QuestOptimizer:
         Args:
             quests_data: List of quest dictionaries
             section_id: Section ID to use for calculations
-            rbr_active: Whether RBR boost is active
+            rbr_active: Whether RBR boost is active for all quests
+            rbr_list: Optional list of quest short names to apply RBR boost to (mutually exclusive with rbr_active)
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             quest_times: Dictionary mapping quest names to time in minutes
             episode_filter: Filter by episode (1, 2, or 4), or None for all
@@ -108,6 +110,9 @@ class QuestOptimizer:
             List of quest results sorted by PD per minute (descending)
         """
         results = []
+
+        # Normalize rbr_list to lowercase for case-insensitive matching
+        rbr_list_lower = [q.lower() for q in rbr_list] if rbr_list else None
 
         for quest_data in quests_data:
             # Apply episode filter
@@ -119,13 +124,22 @@ class QuestOptimizer:
             if exclude_event_quests and self.calculator._is_event_quest(quest_data):
                 continue
 
+            # Determine if RBR should be active for this specific quest
+            quest_name = quest_data.get("quest_name", "Unknown")
+            quest_rbr_active = False
+            if rbr_active:
+                # RBR active for all quests
+                quest_rbr_active = True
+            elif rbr_list_lower:
+                # RBR only for quests in the list
+                quest_rbr_active = quest_name.lower() in rbr_list_lower
+
             # Calculate quest value
             value_result = self.calculator.calculate_quest_value(
-                quest_data, section_id, rbr_active, weekly_boost, christmas_boost
+                quest_data, section_id, quest_rbr_active, weekly_boost, christmas_boost
             )
 
             # Get quest time
-            quest_name = quest_data.get("quest_name", "Unknown")
             quest_time = quest_times.get(quest_name) if quest_times else None
 
             # Calculate PD per minute
@@ -150,7 +164,7 @@ class QuestOptimizer:
                 "quest_time_minutes": quest_time,
                 "pd_per_minute": pd_per_minute,
                 "section_id": section_id,
-                "rbr_active": rbr_active,
+                "rbr_active": quest_rbr_active,
                 "weekly_boost": weekly_boost,
                 "enemy_breakdown": value_result["enemy_breakdown"],
                 "pd_drop_breakdown": value_result.get("pd_drop_breakdown", {}),
@@ -172,6 +186,7 @@ class QuestOptimizer:
         self,
         quests_data: List[Dict],
         rbr_active: bool = False,
+        rbr_list: Optional[List[str]] = None,
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_times: Optional[Dict[str, float]] = None,
         episode_filter: Optional[int] = None,
@@ -203,6 +218,7 @@ class QuestOptimizer:
                 quests_data,
                 section_id,
                 rbr_active,
+                rbr_list,
                 weekly_boost,
                 quest_times,
                 episode_filter,
@@ -485,16 +501,16 @@ def main():
         epilog="""
 Examples:
   # Rank all quests for Redria with RBR active and RDR boost
-  python quest_optimizer.py --section-id Redria --rbr --weekly-boost RDR
+  python optimize_quests.py --section-id Redria  --weekly-boost RDR --rbr-list MU1 LBA MU11
 
   # Show top 10 quests for Episode 1 only
-  python quest_optimizer.py --section-id Skyly --episode 1 --top-n 10
+  python optimize_quests.py --section-id Skyly --episode 1 --top-n 10
 
   # Show detailed breakdown for a specific quest
-  python quest_optimizer.py --section-id Oran --quest MU1 --details
+  python optimize_quests.py --section-id Oran --quest MU1 --details
 
   # Rank across all Section IDs
-  python quest_optimizer.py --section-id All --episode 1 --top-n 20
+  python optimize_quests.py --section-id All --episode 1 --top-n 20
         """,
     )
 
@@ -518,7 +534,19 @@ Examples:
         help="Section ID to use for drop calculations, or 'All' to rank across all IDs (default: All)",
     )
 
-    parser.add_argument("--rbr", action="store_true", help="Enable RBR boost (+25%% DAR, +25%% RDR)")
+    # RBR arguments - mutually exclusive
+    rbr_group = parser.add_mutually_exclusive_group()
+    rbr_group.add_argument(
+        "--rbr-active",
+        action="store_true",
+        help="Enable RBR boost (+25%% DAR, +25%% RDR) for all quests",
+    )
+    rbr_group.add_argument(
+        "--rbr-list",
+        nargs="+",
+        metavar="QUEST",
+        help="Enable RBR boost only for specified quests (provide quest short names, e.g., --rbr-list MU1 MU2 MU3)",
+    )
 
     parser.add_argument(
         "--weekly-boost",
@@ -623,13 +651,22 @@ Examples:
     # Load quest times (optional)
     quest_times = load_quest_times(times_path)
 
+    # Determine RBR settings
+    rbr_active = args.rbr_active
+    rbr_list = args.rbr_list if args.rbr_list else None
+
     # Rank quests
     print(f"Ranking quests by PD efficiency...")
     if args.section_id == "All":
         print(f"  Section ID: All (ranking across all Section IDs)")
     else:
         print(f"  Section ID: {args.section_id}")
-    print(f"  RBR Active: {args.rbr}")
+    if rbr_active:
+        print(f"  RBR Active: Yes (all quests)")
+    elif rbr_list:
+        print(f"  RBR Active: Yes (quests: {', '.join(rbr_list)})")
+    else:
+        print(f"  RBR Active: No")
     print(f"  Weekly Boost: {weekly_boost if weekly_boost else 'None'}")
     print(f"  Christmas Boost: {args.christmas_boost}")
     if args.episode:
@@ -661,7 +698,8 @@ Examples:
             section_rankings = optimizer.rank_quests(
                 quests_data,
                 section_id=section_id,
-                rbr_active=args.rbr,
+                rbr_active=rbr_active,
+                rbr_list=rbr_list,
                 weekly_boost=weekly_boost,
                 quest_times=quest_times,
                 episode_filter=args.episode,
@@ -678,7 +716,8 @@ Examples:
         rankings = optimizer.rank_quests(
             quests_data,
             section_id=args.section_id,
-            rbr_active=args.rbr,
+            rbr_active=rbr_active,
+            rbr_list=rbr_list,
             weekly_boost=weekly_boost,
             quest_times=quest_times,
             christmas_boost=args.christmas_boost,

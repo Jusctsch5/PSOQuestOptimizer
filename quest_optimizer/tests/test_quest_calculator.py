@@ -235,3 +235,183 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
         f"Expected ratio >= 1.15, got {increase_ratio:.4f} "
         f"({pd_with_rbr} / {pd_no_rbr})"
     )
+
+
+def test_rbr_list_with_existing_quests(quest_calculator: QuestCalculator):
+    """Test that rbr_list applies RBR boost only to specified existing quests"""
+    import sys
+    from pathlib import Path
+
+    # Import QuestOptimizer from optimize_quests module
+    optimize_quests_path = Path(__file__).parent.parent.parent
+    sys.path.insert(0, str(optimize_quests_path))
+    import optimize_quests
+    QuestOptimizer = optimize_quests.QuestOptimizer
+
+    optimizer = QuestOptimizer(quest_calculator)
+
+    # Find MU1 and MU2 quests (both should be in RBR rotation)
+    mu1_quest = None
+    mu2_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+        elif quest.get("quest_name") == "MU2":
+            mu2_quest = quest
+
+    assert mu1_quest is not None, "MU1 quest not found"
+    assert mu2_quest is not None, "MU2 quest not found"
+
+    section_id = "Skyly"
+    rbr_list = ["MU1", "MU2"]
+
+    # Rank quests with rbr_list
+    rankings = optimizer.rank_quests(
+        [mu1_quest, mu2_quest],
+        section_id=section_id,
+        rbr_active=False,
+        rbr_list=rbr_list,
+        weekly_boost=None,
+        quest_times=None,
+        episode_filter=None,
+        christmas_boost=False,
+        exclude_event_quests=False,
+    )
+
+    # Both quests should have RBR active
+    for ranking in rankings:
+        quest_name = ranking["quest_name"]
+        assert ranking["rbr_active"] is True, f"{quest_name} should have RBR active when in rbr_list"
+
+    # Calculate MU1 with and without RBR to verify it's actually applied
+    result_with_rbr_list = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=True, weekly_boost=None, christmas_boost=False
+    )
+    result_no_rbr = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+    )
+
+    # RBR should increase PD value
+    assert result_with_rbr_list["total_pd"] > result_no_rbr["total_pd"], (
+        "RBR boost should increase PD value when quest is in rbr_list"
+    )
+
+
+def test_rbr_list_with_event_quest(quest_calculator: QuestCalculator):
+    """Test that rbr_list can include event quests (they just won't get RBR boost if not in rotation)"""
+    import sys
+    from pathlib import Path
+
+    # Import QuestOptimizer from optimize_quests module
+    optimize_quests_path = Path(__file__).parent.parent.parent
+    sys.path.insert(0, str(optimize_quests_path))
+    import optimize_quests
+    QuestOptimizer = optimize_quests.QuestOptimizer
+
+    optimizer = QuestOptimizer(quest_calculator)
+
+    # Find an event quest
+    event_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest_calculator._is_event_quest(quest):
+            event_quest = quest
+            break
+
+    assert event_quest is not None, "No event quest found in quest data"
+
+    section_id = "Skyly"
+    rbr_list = [event_quest.get("quest_name")]
+
+    # Rank quest with rbr_list
+    rankings = optimizer.rank_quests(
+        [event_quest],
+        section_id=section_id,
+        rbr_active=False,
+        rbr_list=rbr_list,
+        weekly_boost=None,
+        quest_times=None,
+        episode_filter=None,
+        christmas_boost=False,
+        exclude_event_quests=False,
+    )
+
+    # The quest should be processed (no error)
+    assert len(rankings) == 1, "Event quest should be processed even if in rbr_list"
+    ranking = rankings[0]
+    assert ranking["rbr_active"] is True, "Event quest should have rbr_active=True when in rbr_list"
+
+    # However, if the event quest is not in RBR rotation, RBR won't actually apply
+    # (this is handled by the calculator's _is_in_rbr_rotation check)
+    in_rbr_rotation = quest_calculator._is_in_rbr_rotation(event_quest)
+    if not in_rbr_rotation:
+        # Calculate with and without RBR - should be the same if not in rotation
+        result_with_rbr = quest_calculator.calculate_quest_value(
+            event_quest, section_id, rbr_active=True, weekly_boost=None, christmas_boost=False
+        )
+        result_no_rbr = quest_calculator.calculate_quest_value(
+            event_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+        )
+        # If not in RBR rotation, RBR won't affect the result
+        logger.info(
+            f"Event quest {event_quest.get('quest_name')} not in RBR rotation, "
+            f"RBR has no effect: {result_with_rbr['total_pd']} == {result_no_rbr['total_pd']}"
+        )
+
+
+def test_rbr_list_with_nonexistent_quest(quest_calculator: QuestCalculator):
+    """Test that rbr_list gracefully handles quests that don't exist"""
+    import sys
+    from pathlib import Path
+
+    # Import QuestOptimizer from optimize_quests module
+    optimize_quests_path = Path(__file__).parent.parent.parent
+    sys.path.insert(0, str(optimize_quests_path))
+    import optimize_quests
+    QuestOptimizer = optimize_quests.QuestOptimizer
+
+    optimizer = QuestOptimizer(quest_calculator)
+
+    # Find a real quest
+    mu1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+            break
+
+    assert mu1_quest is not None, "MU1 quest not found"
+
+    section_id = "Skyly"
+    # Include a nonexistent quest in the list
+    rbr_list = ["MU1", "NONEXISTENT_QUEST", "ALSO_FAKE"]
+
+    # Rank quests with rbr_list containing nonexistent quests
+    # Should not raise an error - nonexistent quests are simply ignored
+    rankings = optimizer.rank_quests(
+        [mu1_quest],
+        section_id=section_id,
+        rbr_active=False,
+        rbr_list=rbr_list,
+        weekly_boost=None,
+        quest_times=None,
+        episode_filter=None,
+        christmas_boost=False,
+        exclude_event_quests=False,
+    )
+
+    # MU1 should still have RBR active (it's in the list and exists)
+    assert len(rankings) == 1, "Should process the existing quest"
+    ranking = rankings[0]
+    assert ranking["quest_name"] == "MU1", "Should process MU1"
+    assert ranking["rbr_active"] is True, "MU1 should have RBR active when in rbr_list"
+
+    # Verify RBR is actually applied
+    result_with_rbr = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=True, weekly_boost=None, christmas_boost=False
+    )
+    result_no_rbr = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, christmas_boost=False
+    )
+
+    assert result_with_rbr["total_pd"] > result_no_rbr["total_pd"], (
+        "RBR boost should be applied to existing quest in rbr_list, even if list contains nonexistent quests"
+    )
