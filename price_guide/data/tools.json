@@ -376,5 +376,8 @@
   },
   "Mag": {
     "base": "0.5"
+  },
+  "Gal Gryphon's Wing": {
+    "base": "1"
   }
 }

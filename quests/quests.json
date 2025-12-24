@@ -1293,6 +1293,92 @@
       "Epsilon": 1
     }
   },
+{ "quest_name": "RT",
+    "long_name": "Respective Tomorrow",
+    "areas": [
+      {
+        "name": "VR Temple Alpha",
+        "boxes": {
+          "box": 15
+        }
+      },
+      {
+        "name": "Central Control Area",
+        "boxes": {
+          "box": 13
+        }
+      },
+      {
+        "name": "VR Spaceship Alpha",
+        "boxes": {
+          "box": 15
+        }
+      },
+      {
+        "name": "Seaside",
+        "boxes": {
+          "box": 30
+        }
+      },
+      {
+        "name": "Seabed Lower",
+        "boxes": {
+          "box": 12
+        }
+      },
+      {
+        "name": "Central Control Area",
+        "boxes": {
+          "box": 9
+        }
+      }
+    ],
+    "episode": 2,
+    "enemies": {
+      "Dimenian": 18,
+      "Gillchic": 1,
+      "Merillia": 19,
+      "Dolmolm": 2,
+      "Recobox": 62,
+      "La Dimenian": 9,
+      "Dubchic": 28,
+      "Meriltas": 2,
+      "Dolmdarl": 4,
+      "Recon": 451,
+      "Rag Rappy": 10,
+      "Dubwitch": 6,
+      "Ul Gibbon": 6,
+      "Morfos": 4,
+      "Mericarol": 6,
+      "Poison Lily": 19,
+      "Savage Wolf": 1,
+      "Zol Gibbon": 3,
+      "Sinow Zoa": 9,
+      "Merikle": 1,
+      "Hildebear": 5,
+      "Barbarous Wolf": 1,
+      "Gee": 88,
+      "Sinow Zele": 1,
+      "Mericus": 1,
+      "Monest": 2,
+      "Delsaber": 1,
+      "Sinow Berill": 3,
+      "Gibbles": 4,
+      "Grass Assassin": 3,
+      "Pan Arms": 1,
+      "Gal Gryphon": 1,
+      "Olga Flow": 1,
+      "Gi Gue": 4,
+      "Barba Ray": 1,
+      "Garanz": 1,
+      "Delbiter": 1,
+      "Gol Dragon": 1,
+      "Del Lily": 3,
+      "Ill Gill": 3,
+      "Epsilon": 1
+    }
+  },
+
   {
     "quest_name": "WOL1",
     "long_name": "War of Limits #1",

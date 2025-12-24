@@ -2,7 +2,6 @@
 Front-end wrapper for the price guide data.
 """
 
-import asyncio
 import json
 import logging
 from abc import ABC, abstractmethod
@@ -120,7 +119,7 @@ class PriceGuideAbstract(ABC):
         return PriceGuideAbstract.get_price_from_range(price_range, bps) * number
 
     @abstractmethod
-    async def build_prices(self) -> None:
+    def build_prices(self) -> None:
         """Build the price database from the source"""
         pass
 
@@ -333,7 +332,7 @@ class PriceGuideFixed(PriceGuideAbstract):
     def __init__(self, directory: str, base_price_strategy: BasePriceStrategy = BasePriceStrategy.MINIMUM):
         super().__init__(base_price_strategy)
         self.directory = Path(directory)
-        asyncio.run(self.build_prices())
+        self.build_prices()
 
     def _extract_price_value(self, price_str: str) -> Optional[float]:
         """Extract a numeric price value from a price string for curve fitting."""
@@ -476,7 +475,7 @@ class PriceGuideFixed(PriceGuideAbstract):
             if "hit_values" in weapon_data and weapon_data["hit_values"]:
                 self._fit_inestimable_hit_values(weapon_data["hit_values"])
 
-    async def build_prices(self) -> None:
+    def build_prices(self) -> None:
         """Build price database from local JSON files"""
         logger.info(f"Building price database from {self.directory}")
         self.srank_weapon_prices = self._load_json_file("srankweapons.json")
@@ -508,9 +507,11 @@ class PriceGuideDynamic(PriceGuideAbstract):
     def __init__(self, api_url: str, base_price_strategy: BasePriceStrategy = BasePriceStrategy.MINIMUM):
         super().__init__(base_price_strategy)
         self.api_url = api_url
-        asyncio.run(self.build_prices())
+        # build_prices is async but doesn't do anything yet (placeholder)
+        # For now, just call it synchronously if possible, or skip initialization
+        pass
 
-    async def build_prices(self) -> None:
+    def build_prices(self) -> None:
         """Build price database from web API"""
         pass
         """
