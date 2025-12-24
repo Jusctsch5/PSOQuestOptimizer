@@ -615,7 +615,7 @@ Examples:
     parser.add_argument("--quests-data", type=str, default=None, help="Path to quests.json file (default: quests/quests.json)")
 
     parser.add_argument(
-        "--quest", type=str, default=None, help="Filter to a specific quest by exact match on quest_name (shortname)"
+        "--quest", type=str, nargs='+', default=None, help="Filter to one or more quests by exact match on quest_name (shortname). Can specify multiple quests to compare."
     )
 
     parser.add_argument(
@@ -652,11 +652,14 @@ Examples:
     calculator = QuestCalculator(drop_table_path, price_guide_path, quests_file_path)
     optimizer = QuestOptimizer(calculator)
 
-    # Filter to specific quest if requested
+    # Filter to specific quest(s) if requested
     if args.quest:
-        quest_filter = args.quest.lower()
-        quests_data = [quest for quest in calculator.quest_data if quest["quest_name"].lower() == quest_filter]
-        print(f"Filtered to {len(quests_data)} quest(s) matching '{args.quest}'")
+        quest_filters = [q.lower() for q in args.quest]
+        quests_data = [
+            quest for quest in calculator.quest_data 
+            if quest["quest_name"].lower() in quest_filters
+        ]
+        print(f"Filtered to {len(quests_data)} quest(s) matching: {', '.join(args.quest)}")
     else:
         quests_data = calculator.quest_data
         print(f"Loaded {len(quests_data)} quests")
@@ -697,7 +700,7 @@ Examples:
     if args.episode:
         print(f"  Episode Filter: {args.episode}")
     if args.quest:
-        print(f"  Quest Filter: {args.quest}")
+        print(f"  Quest Filter: {', '.join(args.quest)}")
     if args.exclude_event_quests:
         print(f"  Exclude Event Quests: Yes")
     print()
