@@ -644,6 +644,20 @@ class QuestCalculator:
 
         return None
 
+    @staticmethod
+    def _adjust_dar(base_dar: float, multiplier: float) -> float:
+        """
+        Adjust DAR (Drop Anything Rate) with a multiplier, capping at 1.0.
+        
+        Args:
+            base_dar: Base DAR value (0.0 to 1.0)
+            multiplier: Multiplier to apply (e.g., 1.25 for +25% boost)
+        
+        Returns:
+            Adjusted DAR value, capped at 1.0
+        """
+        return min(base_dar * multiplier, 1.0)
+
     def _process_enemy_drops(
         self, enemy_name: str, count: float, episode: int, section_id: str, dar_multiplier: float, rdr_multiplier: float
     ) -> Tuple[float, float, Dict, Dict]:
@@ -673,7 +687,7 @@ class QuestCalculator:
         section_ids_data = enemy_data.get("section_ids", {})
 
         # Apply DAR multiplier, but cap at 1.0
-        adjusted_dar = min(dar * dar_multiplier, 1.0)
+        adjusted_dar = self._adjust_dar(dar, dar_multiplier)
 
         # Check if enemy has any item drops at all
         if not section_ids_data:
@@ -1241,7 +1255,7 @@ class QuestCalculator:
         # Check if this item matches our target weapon
         if self._weapon_matches(item_name, weapon_name):
             # Apply multipliers (cap DAR at 1.0)
-            adjusted_dar = min(dar * dar_multiplier, 1.0)
+            adjusted_dar = self._adjust_dar(dar, dar_multiplier)
             adjusted_rdr = rdr * rdr_multiplier
             # Calculate drop probability: count * adjusted_DAR * adjusted_RDR
             enemy_prob = count * adjusted_dar * adjusted_rdr
@@ -1562,7 +1576,7 @@ class QuestCalculator:
 
                     if self._weapon_matches(item_name, weapon_name):
                         # Apply multipliers (cap DAR at 1.0)
-                        adjusted_dar = min(dar * dar_multiplier, 1.0)
+                        adjusted_dar = self._adjust_dar(dar, dar_multiplier)
                         adjusted_rdr = rdr * rdr_multiplier
                         drop_rate = adjusted_dar * adjusted_rdr
 

@@ -644,3 +644,16 @@ def test_rbr_list_with_nonexistent_quest(quest_calculator: QuestCalculator):
     assert result_with_rbr["total_pd"] > result_no_rbr["total_pd"], (
         "RBR boost should be applied to existing quest in rbr_list, even if list contains nonexistent quests"
     )
+
+
+def test_adjust_dar_caps_at_one():
+    """Test that _adjust_dar caps the result at 1.0"""
+    # Test that DAR is capped at 1.0 even with high multipliers
+    assert QuestCalculator._adjust_dar(0.8, 2.0) == 1.0  # 0.8 * 2.0 = 1.6, capped at 1.0
+    assert QuestCalculator._adjust_dar(0.9, 1.5) == 1.0  # 0.9 * 1.5 = 1.35, capped at 1.0
+    assert QuestCalculator._adjust_dar(1.0, 1.5) == 1.0  # Already at 1.0
+    
+    # Test normal cases below 1.0
+    assert QuestCalculator._adjust_dar(0.5, 1.25) == 0.625  # 0.5 * 1.25 = 0.625
+    assert QuestCalculator._adjust_dar(0.8, 1.0) == 0.8  # No change
+    assert QuestCalculator._adjust_dar(0.0, 2.0) == 0.0  # Zero stays zero

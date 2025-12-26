@@ -17,12 +17,19 @@
 - [X] Add general item value calculation for all items (barriers, frames, etc) (i.e. calulate_weapon_value.py -> item_value_calculator.py)
 - [X] Add Euler drop probability calculation to optimize_item_hunting.py
 
-# TODO
+
+# CORE TODO
+- [X] Implement short-name list filtering in optimize_quests.py/UI
 - [ ] Add disk drops to drop tables and item value calculation for quests
 - [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
 - [ ] Add common weapon value calculation to weapon_value_calculator.py, price guide, and drop tables (note only certain enemies drop common weapons)
-- [ ] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
+- [ ] Consider reworking slime splitting to only split for drops that are worthwhile to split for
 - [ ] Investigate modeling**
+
+# UI TODO
+- [ ] Implement base of UI
+- [ ] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
+
 
 
 Not doing:
