@@ -21,35 +21,38 @@ class Area(Enum):
     # Episode 1
     FOREST_1 = "Forest 1"
     FOREST_2 = "Forest 2"
-    UNDER_THE_DOME = "Under the Dome"
+    UNDER_THE_DOME = "Under the Dome"  # Dragon 
     CAVE_1 = "Cave 1"
     CAVE_2 = "Cave 2"
     CAVE_3 = "Cave 3"
+    UNDERGROUND_CHANNEL = "Underground Channel" # Dal Ra Lie
     MINE_1 = "Mine 1"
     MINE_2 = "Mine 2"
+    MONITOR_ROOM = "Monitor Room"  # Vol Opt
     RUINS_1 = "Ruins 1"
     RUINS_2 = "Ruins 2"
     RUINS_3 = "Ruins 3"
-    UNDERGROUND_CHANNEL = "Underground Channel"
-    MONITOR_ROOM = "Monitor Room"
-    QUESTION_MARKS = "????"
+    QUESTION_MARKS = "????"  # Dark Falz
 
     # Episode 2
     VR_TEMPLE_ALPHA = "VR Temple Alpha"
     VR_TEMPLE_BETA = "VR Temple Beta"
+    VR_TEMPLE_FINAL = "VR Temple Final"  #  Barba Ray
+
     VR_SPACESHIP_ALPHA = "VR Spaceship Alpha"    
     VR_SPACESHIP_BETA = "VR Spaceship Beta"
-    VR_TEMPLE_FINAL = "VR Temple Final"
-    VR_SPACESHIP_FINAL = "VR Spaceship Final"
+    VR_SPACESHIP_FINAL = "VR Spaceship Final"  # Gol Dragon
+
     JUNGLE_AREA_NORTH = "Jungle North"
     JUNGLE_AREA_EAST = "Jungle East"
     MOUNTAIN = "Mountain"
     SEASIDE_AREA = "Seaside"
     CENTRAL_CONTROL_AREA = "Central Control Area"
+    CLIFFS_OF_GAL_DA_VAL = "Cliffs of Gal Da Val"  # Gal Gryphon
+
     SEABED_UPPER_LEVELS = "Seabed Upper"
     SEABED_LOWER_LEVELS = "Seabed Lower"
-    CLIFFS_OF_GAL_DA_VAL = "Cliffs of Gal Da Val"
-    TEST_SUBJECT_DISPOSAL_AREA = "Test Subject Disposal Area"
+    TEST_SUBJECT_DISPOSAL_AREA = "Test Subject Disposal Area"  # Olga Flow
 
     # Episode 4
     CRATER_EAST = "Crater East"
@@ -60,7 +63,7 @@ class Area(Enum):
     SUBTERRANEAN_DESERT_1 = "Desert 1"
     SUBTERRANEAN_DESERT_2 = "Desert 2"
     SUBTERRANEAN_DESERT_3 = "Desert 3"
-    METEOR_IMPACT_SITE = "Meteor Impact Site"
+    METEOR_IMPACT_SITE = "Meteor Impact Site"  # Saint-Milion
 
 
 # Mapping from quest areas to drop table areas

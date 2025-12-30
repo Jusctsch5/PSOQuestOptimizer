@@ -24,7 +24,7 @@
 - [ ] Add coren gambling script
 - [ ] finish updating quests.json with enemies in areas
 - [ ] Central Tower actually shares drops with Seabed Lower not CCA, so fix that for many quests that take place in Tower.
-- [ ] Add Lost Soul Blade to quests.json
+- [X] Add Lost Soul Blade to quests.json
 - [ ] Add daily luck boost to quest_calculator.py
 - [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
 - [ ] Add common weapon value calculation to weapon_value_calculator.py, price guide, and drop tables (note only certain enemies drop common weapons)

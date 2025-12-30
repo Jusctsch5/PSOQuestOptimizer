@@ -722,6 +722,52 @@
     ]
   },
   {
+    "quest_name": "LSB",
+    "long_name": "Lost SOUL BLADE",
+    "episode": 1,
+    "is_in_rbr_rotation": false,
+    "areas": [
+      {
+        "name": "Mine 1",
+        "boxes": {
+          "box": 46
+        },
+        "enemies": {
+          "Gillchic":	59,
+          "Canadine":	57,
+          "Canane":	3,
+          "Sinow Beat":	46,
+          "Sinow Gold":	16
+        }
+      },
+      {
+        "name": "Mine 2",
+        "boxes": {
+          "box": 34
+        },
+        "enemies": {
+          "Gillchic":	26,
+          "Dubchic":	17,
+          "Dubwitch":	4,
+          "Canadine":	55,
+          "Canane":	1,
+          "Sinow Beat":	24,
+          "Sinow Gold":	21,
+          "Garanz":	26
+        }
+      },
+      {
+        "name": "Monitor Room",
+        "boxes": {
+          "box_tool": 7
+        },
+        "enemies": {
+          "Vol Opt": 1
+        }
+      }
+    ]
+  },
+  {
     "quest_name": "LHP",
     "long_name": "Lost HELL PALLASCH",
     "episode": 1,
@@ -1310,6 +1356,111 @@
       "Gran Sorcerer": 31,
       "Gol Dragon": 1
     }
+  },
+  {
+    "quest_name": "LFC",
+    "long_name": "Lost FILL CANNON",
+    "episode": 2,
+    "is_in_rbr_rotation": false,
+    "areas": [
+      {
+        "name": "Jungle North",
+        "boxes": {
+          "box": 18
+        },
+        "enemies": {
+          "Merillia":	25,
+          "Meriltas":	31,
+          "Ul Gibbon":	17,
+          "Zol Gibbon":	5,
+          "Gee":	17,
+          "Sinow Berill":	22,
+          "Sinow Spigell":	5,
+          "Mericarol":	7,
+          "Merikle":	3,
+          "Mericus":	6,
+          "Random Mericarol":	1
+        }
+      },
+      {
+        "name": "Jungle East",
+        "boxes": {
+          "box": 12
+        },
+        "enemies": {
+          "Merillia":	30,
+          "Meriltas":	16,
+          "Ul Gibbon":	12,
+          "Gee":	13,
+          "Sinow Berill":	11,
+          "Sinow Spigell":	8,
+          "Mericarol":	9,
+          "Merikle":	5,
+          "Mericus":	4
+        }
+      },
+      {
+        "name": "Mountain",
+        "boxes": {
+          "box": 13
+        },
+        "enemies": {
+          "Merillia":	13,
+          "Meriltas":	13,
+          "Ul Gibbon":	39,
+          "Zol Gibbon":	27,
+          "Gee":	19,
+          "Sinow Berill":	15,
+          "Sinow Spigell":	9,
+          "Gibbles":	12
+        }
+      },
+      {
+        "name": "Seaside",
+        "boxes": {
+          "box": 8
+        },
+        "enemies": {
+          "Merillia":	14,
+          "Meriltas":	4,
+          "Ul Gibbon":	14,
+          "Zol Gibbon":	8,
+          "Gee":	48,
+          "Sinow Berill":	11,
+          "Sinow Spigell":	18,
+          "Gi Gue":	13
+        }
+      },
+      {
+        "name": "Central Control Area",
+        "boxes": {
+          "box": 11
+        },
+        "enemies": {
+          "Merillia":	19,
+          "Meriltas":	15,
+          "Ul Gibbon":	16,
+          "Zol Gibbon":	12,
+          "Gee":	27,
+          "Sinow Berill":	20,
+          "Sinow Spigell":	3,
+          "Mericarol":	5,
+          "Merikle":	1,
+          "Mericus":	3,
+          "Gibbles":	9,
+          "Gi Gue":	7
+        }
+      },
+      {
+        "name": "Cliffs of Gal Da Val",
+        "boxes": {
+          "box": 4
+        },
+        "enemies": {
+          "Gal Gryphon": 1
+        }
+      }
+    ]
   },
   {
     "quest_name": "LDR",
