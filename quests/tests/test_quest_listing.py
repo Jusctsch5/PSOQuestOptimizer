@@ -14,6 +14,7 @@ from quests.quest_listing import (
     BOX_TYPE_RARELESS,
     BOX_TYPE_REGULAR,
     BOX_TYPE_WEAPON,
+    Area,
     QuestListing,
 )
 
@@ -99,41 +100,7 @@ def test_get_boxes_for_area(quest_listing: QuestListing):
     assert len(boxes2) == 0
 
 
-def test_area_mapping_under_the_dome(quest_listing: QuestListing):
-    """Test area mapping: Under the Dome -> Cave 1"""
-    mapped = quest_listing.map_quest_area_to_drop_table_area("Under the Dome")
-    assert mapped == "Cave 1"
-
-    # Test case-insensitive
-    mapped2 = quest_listing.map_quest_area_to_drop_table_area("under the dome")
-    assert mapped2 == "Cave 1"
-
-
-def test_area_mapping_underground_channel(quest_listing: QuestListing):
-    """Test area mapping: Underground Channel -> Mine 1"""
-    mapped = quest_listing.map_quest_area_to_drop_table_area("Underground Channel")
-    assert mapped == "Mine 1"
-
-
-def test_area_mapping_monitor_room(quest_listing: QuestListing):
-    """Test area mapping: Monitor Room -> Ruins 1"""
-    mapped = quest_listing.map_quest_area_to_drop_table_area("Monitor Room")
-    assert mapped == "Ruins 1"
-
-
-def test_area_mapping_question_marks(quest_listing: QuestListing):
-    """Test area mapping: ???? -> Ruins 3"""
-    mapped = quest_listing.map_quest_area_to_drop_table_area("????")
-    assert mapped == "Ruins 3"
-
-
-def test_area_mapping_vr_temple_final(quest_listing: QuestListing):
-    """Test area mapping: VR Temple Final -> VR Spaceship: Alpha"""
-    mapped = quest_listing.map_quest_area_to_drop_table_area("VR Temple Final")
-    assert mapped == "VR Spaceship: Alpha"
-
-
-def test_area_mapping_no_match(quest_listing: QuestListing):
+def test_area_mapping_simple(quest_listing: QuestListing):
     """Test that unmapped areas return original name"""
     mapped = quest_listing.map_quest_area_to_drop_table_area("Forest 1")
     assert mapped == "Forest 1"
@@ -142,13 +109,32 @@ def test_area_mapping_no_match(quest_listing: QuestListing):
     assert mapped2 == "Cave 2"
 
 
-def test_area_mapping_case_insensitive(quest_listing: QuestListing):
-    """Test case-insensitive area mapping"""
-    mapped = quest_listing.map_quest_area_to_drop_table_area("UNDER THE DOME")
+def test_area_mapping_boss_areas(quest_listing: QuestListing):
+    """Test area mapping: Under the Dome -> Cave 1"""
+    mapped = quest_listing.map_quest_area_to_drop_table_area("Under the Dome")
     assert mapped == "Cave 1"
 
-    mapped2 = quest_listing.map_quest_area_to_drop_table_area("underground channel")
-    assert mapped2 == "Mine 1"
+    # Test case-insensitive
+    mapped2 = quest_listing.map_quest_area_to_drop_table_area("under the dome")
+    assert mapped2 == "Cave 1"
+
+    mapped = quest_listing.map_quest_area_to_drop_table_area("Underground Channel")
+    assert mapped == "Mine 1"
+
+    mapped = quest_listing.map_quest_area_to_drop_table_area("Monitor Room")
+    assert mapped == "Ruins 1"
+
+    mapped = quest_listing.map_quest_area_to_drop_table_area("????")
+    assert mapped == "Ruins 3"
+
+    mapped = quest_listing.map_quest_area_to_drop_table_area("VR Temple Final")
+    assert mapped == "VR Spaceship Alpha"
+
+
+def test_area_mapping_all_areas(quest_listing: QuestListing):
+    """Test area mapping for all areas"""
+    for area in Area:
+        assert quest_listing.map_quest_area_to_drop_table_area(area.value) is not None
 
 
 def test_is_rare_dropping_box(quest_listing: QuestListing):
@@ -173,4 +159,3 @@ def test_get_rare_dropping_box_count(quest_listing: QuestListing):
     # Test non-existent area
     count3 = quest_listing.get_rare_dropping_box_count("MU1", "NONEXISTENT")
     assert count3 == 0
-

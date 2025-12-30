@@ -5,9 +5,9 @@ Provides an abstraction layer for quest data access, similar to price_guide.py.
 """
 
 import json
+from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional
-
 
 # Box type constants
 BOX_TYPE_REGULAR = "box"  # Can drop rare items
@@ -16,14 +16,75 @@ BOX_TYPE_WEAPON = "box_weapon"  # Cannot drop rare items
 BOX_TYPE_RARELESS = "box_rareless"  # Cannot drop rare items
 
 # Mapping from quest area names to drop table area names
+class Area(Enum):
+    """Enum for quest areas."""
+    # Episode 1
+    FOREST_1 = "Forest 1"
+    FOREST_2 = "Forest 2"
+    UNDER_THE_DOME = "Under the Dome"
+    CAVE_1 = "Cave 1"
+    CAVE_2 = "Cave 2"
+    CAVE_3 = "Cave 3"
+    MINE_1 = "Mine 1"
+    MINE_2 = "Mine 2"
+    RUINS_1 = "Ruins 1"
+    RUINS_2 = "Ruins 2"
+    RUINS_3 = "Ruins 3"
+    UNDERGROUND_CHANNEL = "Underground Channel"
+    MONITOR_ROOM = "Monitor Room"
+    QUESTION_MARKS = "????"
+
+    # Episode 2
+    VR_TEMPLE_ALPHA = "VR Temple Alpha"
+    VR_TEMPLE_BETA = "VR Temple Beta"
+    VR_SPACESHIP_ALPHA = "VR Spaceship Alpha"    
+    VR_SPACESHIP_BETA = "VR Spaceship Beta"
+    VR_TEMPLE_FINAL = "VR Temple Final"
+    VR_SPACESHIP_FINAL = "VR Spaceship Final"
+    JUNGLE_AREA_NORTH = "Jungle North"
+    JUNGLE_AREA_EAST = "Jungle East"
+    MOUNTAIN = "Mountain"
+    SEASIDE_AREA = "Seaside"
+    CENTRAL_CONTROL_AREA = "Central Control Area"
+    SEABED_UPPER_LEVELS = "Seabed Upper"
+    SEABED_LOWER_LEVELS = "Seabed Lower"
+    CLIFFS_OF_GAL_DA_VAL = "Cliffs of Gal Da Val"
+    TEST_SUBJECT_DISPOSAL_AREA = "Test Subject Disposal Area"
+
+    # Episode 4
+    CRATER_EAST = "Crater East"
+    CRATER_WEST = "Crater West"
+    CRATER_SOUTH = "Crater South"
+    CRATER_NORTH = "Crater North"
+    CRATER_INTERIOR = "Crater Interior"
+    SUBTERRANEAN_DESERT_1 = "Desert 1"
+    SUBTERRANEAN_DESERT_2 = "Desert 2"
+    SUBTERRANEAN_DESERT_3 = "Desert 3"
+    METEOR_IMPACT_SITE = "Meteor Impact Site"
+
+
+# Mapping from quest areas to drop table areas
 AREA_MAPPING = {
-    "Under the Dome": "Cave 1",
-    "Underground Channel": "Mine 1",
-    "Monitor Room": "Ruins 1",
-    "????": "Ruins 3",
-    "VR Temple Final": "VR Spaceship: Alpha",
+    # Episode 1
+    Area.UNDER_THE_DOME: Area.CAVE_1,
+    Area.UNDERGROUND_CHANNEL: Area.MINE_1,
+    Area.MONITOR_ROOM: Area.RUINS_1,
+    Area.QUESTION_MARKS: Area.RUINS_3,
+
+    # Episode 2
+    Area.VR_TEMPLE_FINAL: Area.VR_SPACESHIP_ALPHA,
+    Area.VR_SPACESHIP_FINAL: Area.CLIFFS_OF_GAL_DA_VAL,
+    Area.CLIFFS_OF_GAL_DA_VAL:  Area.SEABED_UPPER_LEVELS,
+    Area.TEST_SUBJECT_DISPOSAL_AREA: Area.METEOR_IMPACT_SITE,
+
+    # Episode 4
+    Area.METEOR_IMPACT_SITE: Area.METEOR_IMPACT_SITE,
 }
 
+
+class CouldNotFindAreaError(Exception):
+    """Exception raised when a quest area mapping is not found."""
+    pass
 
 class QuestListing:
     """Quest listing abstraction for accessing quest data."""
@@ -124,11 +185,21 @@ class QuestListing:
         """
         # Case-insensitive lookup
         area_name_lower = area_name.lower()
-        for quest_area, drop_table_area in AREA_MAPPING.items():
-            if quest_area.lower() == area_name_lower:
-                return drop_table_area
-        # No mapping found, return original
-        return area_name
+        
+        # Case-insensitive lookup for Area enum
+        for quest_area in Area:
+            if quest_area.value.lower() == area_name_lower:
+                area_enum = quest_area
+                break
+        else:
+            raise CouldNotFindAreaError(f"Could not find area for {area_name}")
+
+        # Normalize area mapping for things like "Under the Dome" -> "Cave 1"
+        if area_enum in AREA_MAPPING:
+            return AREA_MAPPING[area_enum].value
+        else:
+            return area_enum.value
+
 
     def is_rare_dropping_box(self, box_type: str) -> bool:
         """

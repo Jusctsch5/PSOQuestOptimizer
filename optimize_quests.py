@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from quest_optimizer.quest_calculator import QuestCalculator, WeeklyBoost, EventType
+from quest_optimizer.quest_calculator import EventType, QuestCalculator, WeeklyBoost
 
 
 class QuestOptimizer:
@@ -26,7 +26,11 @@ class QuestOptimizer:
         self.calculator = calculator
 
     def _get_top_items(
-        self, enemy_breakdown: Dict, box_breakdown: Optional[Dict] = None, event_drops_breakdown: Optional[Dict] = None, top_n: int = 3
+        self,
+        enemy_breakdown: Dict,
+        box_breakdown: Optional[Dict] = None,
+        event_drops_breakdown: Optional[Dict] = None,
+        top_n: Optional[int] = None,
     ) -> List[Dict]:
         """
         Calculate the top N items by PD value contribution from enemies, boxes, and event drops.
@@ -35,7 +39,7 @@ class QuestOptimizer:
             enemy_breakdown: Dictionary of enemy breakdown data
             box_breakdown: Optional dictionary of box breakdown data
             event_drops_breakdown: Optional dictionary of event drops breakdown data
-            top_n: Number of top items to return
+            top_n: Optional number of top items to return (default: all)
 
         Returns:
             List of dictionaries with item_name, source (enemy/box/event), pd_value
@@ -48,17 +52,25 @@ class QuestOptimizer:
             if "error" in data:
                 continue
 
-            item = data.get("item", "Unknown")
+            # For technique drops, the key is the item name (e.g., "Foie Lv30")
+            # For regular enemy drops, there's an "item" field
+            if " Lv30" in enemy or "item" not in data:
+                item = enemy  # Technique drop - key is the item name
+                source_label = data.get("area", "Technique")  # Use area as source for techniques
+            else:
+                item = data.get("item", "Unknown")
+                source_label = enemy  # Regular enemy drop - use enemy name as source
+
             pd_value = data.get("pd_value", 0.0)
 
             if item not in item_data:
                 item_data[item] = {"pd_value": 0.0, "sources": []}
 
             item_data[item]["pd_value"] += pd_value
-            # Track which enemy drops this item (for display)
+            # Track which enemy/area drops this item (for display)
             sources_list: List[str] = item_data[item].get("sources", [])
-            if enemy not in sources_list:
-                sources_list.append(enemy)
+            if source_label not in sources_list:
+                sources_list.append(source_label)
 
         # Process box drops
         if box_breakdown:
@@ -96,7 +108,10 @@ class QuestOptimizer:
 
         # Sort by PD value (descending) and return top N
         result.sort(key=lambda x: x["pd_value"], reverse=True)
-        return result[:top_n]
+        if top_n:
+            return result[:top_n]
+        else:
+            return result
 
     def rank_quests(
         self,
@@ -164,13 +179,12 @@ class QuestOptimizer:
             if quest_time and quest_time > 0:
                 pd_per_minute = value_result["total_pd"] / quest_time
 
-            # Calculate top items by PD value (get up to 10 to have enough for display)
+            # Calculate top items by PD value (get up to 30 to have enough for display)
             # Include both enemy drops and box drops
             top_items = self._get_top_items(
                 value_result["enemy_breakdown"],
                 box_breakdown=value_result.get("box_breakdown", {}),
                 event_drops_breakdown=value_result.get("event_drops_breakdown", {}),
-                top_n=10,
             )
 
             result = {
@@ -495,6 +509,87 @@ class QuestOptimizer:
                     print(f"  {'Total':<30} {'':<12} {'':<12} {'':<12} {'':<12} {'':<12} {total_box_pd:<12.8f}")
                     print()
 
+                # Technique Disk Breakdown from Enemies table
+                # Extract technique drops from enemy_breakdown only (boxes have their own section)
+                technique_breakdown = {}
+                total_technique_pd = 0.0
+
+                # Check enemy_breakdown for techniques (boxes are excluded - they have their own section)
+                if result.get("enemy_breakdown"):
+                    for item_name, data in result["enemy_breakdown"].items():
+                        if " Lv30" in item_name and "area" in data:
+                            area = data.get("area", "Unknown")
+                            technique_key = f"{item_name} ({area})"
+                            if technique_key not in technique_breakdown:
+                                technique_breakdown[technique_key] = {
+                                    "technique": item_name,
+                                    "area": area,
+                                    "expected_drops": 0.0,
+                                    "item_price_pd": data.get("item_price_pd", 0.0),
+                                    "pd_value": 0.0,
+                                    "enemy_count": 0.0,
+                                }
+                            technique_breakdown[technique_key]["expected_drops"] += data.get("expected_drops", 0.0)
+                            technique_breakdown[technique_key]["pd_value"] += data.get("pd_value", 0.0)
+                            technique_breakdown[technique_key]["enemy_count"] += data.get("count", 0.0)
+                    
+                    # Calculate effective average drop rate: expected_drops / enemy_count
+                    # This accounts for different DARs across enemy types in the same area
+                    for technique_key in technique_breakdown:
+                        data = technique_breakdown[technique_key]
+                        enemy_count = data["enemy_count"]
+                        expected_drops = data["expected_drops"]
+                        if enemy_count > 0:
+                            # Effective drop rate = total expected drops / total enemy count
+                            # This gives the average drop rate per enemy across all enemy types
+                            data["drop_rate"] = expected_drops / enemy_count
+                        else:
+                            data["drop_rate"] = 0.0
+
+                print("  Technique Disk Breakdown from Enemies:")
+                if technique_breakdown:
+                    header = (
+                        f"  {'Technique':<20} {'Area':<25} {'Drop Rate':<12} "
+                        f"{'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
+                    )
+                    print(header)
+                    print("  " + "-" * 102)
+
+                    for technique_key in sorted(technique_breakdown.keys()):
+                        data = technique_breakdown[technique_key]
+                        technique_name = data["technique"]
+                        area = data["area"]
+                        drop_rate = data["drop_rate"]
+                        expected_drops = data["expected_drops"]
+                        item_price_pd = data["item_price_pd"]
+                        exp_value = data["pd_value"]
+                        enemy_count = data["enemy_count"]
+
+                        total_technique_pd += exp_value
+
+                        # Truncate long names
+                        technique_display = technique_name[:18] if len(technique_name) <= 18 else technique_name[:15] + "..."
+                        area_display = area[:23] if len(area) <= 23 else area[:20] + "..."
+
+                        # Show source info (enemies only, no boxes)
+                        source_info = ""
+                        if enemy_count > 0:
+                            source_info = f" ({enemy_count:.0f} enemies)"
+
+                        row = (
+                            f"  {technique_display:<20} {area_display:<25} {drop_rate:<12.8f} "
+                            f"{expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
+                        )
+                        print(row)
+                        if source_info:
+                            print(f"    {source_info}")
+
+                    total_row = f"  {'Total':<20} {'':<25} {'':<12} {'':<12} {'':<12} {'':<12} {total_technique_pd:<12.8f}"
+                    print(total_row)
+                else:
+                    print("  No level 30 damaging techniques available in this quest.")
+                print()
+
 
 def load_quest_times(times_path: Path) -> Dict[str, float]:
     """
@@ -615,7 +710,11 @@ Examples:
     parser.add_argument("--quests-data", type=str, default=None, help="Path to quests.json file (default: quests/quests.json)")
 
     parser.add_argument(
-        "--quest", type=str, nargs='+', default=None, help="Filter to one or more quests by exact match on quest_name (shortname). Can specify multiple quests to compare."
+        "--quest",
+        type=str,
+        nargs="+",
+        default=None,
+        help="Filter to one or more quests by exact match on quest_name (shortname). Can specify multiple quests to compare.",
     )
 
     parser.add_argument(
@@ -655,10 +754,7 @@ Examples:
     # Filter to specific quest(s) if requested
     if args.quest:
         quest_filters = [q.lower() for q in args.quest]
-        quests_data = [
-            quest for quest in calculator.quest_data 
-            if quest["quest_name"].lower() in quest_filters
-        ]
+        quests_data = [quest for quest in calculator.quest_data if quest["quest_name"].lower() in quest_filters]
         print(f"Filtered to {len(quests_data)} quest(s) matching: {', '.join(args.quest)}")
     else:
         quests_data = calculator.quest_data
