@@ -21,7 +21,8 @@
 # CORE TODO
 - [X] Implement short-name list filtering in optimize_quests.py/UI
 - [X] Add disk drops to drop tables and item value calculation for quests
-- [X] finish updating quests.json with enemies in areas
+- [ ] Add coren gambling script
+- [ ] finish updating quests.json with enemies in areas
 - [ ] Central Tower actually shares drops with Seabed Lower not CCA, so fix that for many quests that take place in Tower.
 - [ ] Add Lost Soul Blade to quests.json
 - [ ] Add daily luck boost to quest_calculator.py

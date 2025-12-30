@@ -1711,6 +1711,29 @@
     "is_in_rbr_rotation": true
   },
   {
+    "quest_name": "NMU3",
+    "long_name": "New Mop-up Operation #3",
+    "episode": 4,
+    "is_in_rbr_rotation": true,
+    "areas": [
+      {
+        "name": "Desert 1",
+        "boxes": {
+          "box": 35
+        },
+        "enemies": {
+          "Goran":	108,
+          "Pyro Goran":	55,
+          "Goran Detonator":	16,
+          "Satellite Lizard":	73,
+          "Yowie":	41,
+          "Sand Rappy":	38,
+          "Zu":	4
+        }
+      }
+    ]
+  },
+  {
     "quest_name": "NMU4",
     "long_name": "New Mop-up Operation #4",
     "episode": 4,
