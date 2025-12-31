@@ -407,6 +407,9 @@ As an aside, these adjustments are required for the project to function properly
 ### Quest Optimizer
 Provides the connective tissue between the other libraries.
 
+### Web Interface
+A static web interface (html, w/ css for styling, js for interactivity) for the PSO Quest Optimizer, running entirely in the browser using Pyodide. The goal here is to minimize this logic as much as possible, so the scriptage can be first-class as well.
+
 ## Coding Stuff
 - uses python 3.x
 - uses ruff for linting and formatting (recommend the ruff extension for vscode, uses the pyproject.toml file for configuration+)

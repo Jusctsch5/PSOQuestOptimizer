@@ -32,8 +32,13 @@
 - [ ] Investigate modeling**
 
 # UI TODO
-- [ ] Implement base of UI
-- [ ] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
+- [X] Implement base of UI
+- [X] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
+- [ ] Add browsable price guide to UI
+- [ ] Add broswable quest list to UI
+- [ ] Add browsable drop tables to UI
+- [ ] Add tooltips to UI
+- [ ] Add links to/from UI to other tools (character viewer, price guide, drop tables, etc)
 
 
 
