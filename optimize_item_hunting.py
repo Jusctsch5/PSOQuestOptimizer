@@ -286,7 +286,20 @@ def main():
     """Main function to run the item hunting optimizer."""
     parser = argparse.ArgumentParser(description="Find the best quest and Section ID for hunting a specific item")
     parser.add_argument("item", help="Name of the item to search for")
-    parser.add_argument("--rbr", action="store_true", help="Enable RBR boost (+25%% DAR, +25%% RDR)")
+    # RBR arguments - mutually exclusive
+    rbr_group = parser.add_mutually_exclusive_group()
+    rbr_group.add_argument(
+        "--rbr-active",
+        action="store_true",
+        help="Enable RBR boost (+25%% DAR, +25%% RDR) for all quests",
+    )
+    rbr_group.add_argument(
+        "--rbr-list",
+        type=str,
+        nargs="+",
+        default=None,
+        help="Enable RBR boost only for specified quests (provide quest short names, e.g., --rbr-list MU1 MU2 MU3)",
+    )
     parser.add_argument(
         "--weekly-boost",
         type=str,
@@ -360,10 +373,18 @@ def main():
             print(f"Processing {len(calculator.quest_data)} quest(s)")
     print()
 
+    # Determine RBR settings
+    rbr_active = args.rbr_active
+    rbr_list = args.rbr_list if args.rbr_list else None
+
     # Find best quests
     print(f"Searching for '{item}' across all quests and Section IDs...")
-    if args.rbr:
-        print(f"  RBR Active: Yes")
+    if rbr_active:
+        print(f"  RBR Active: Yes (all quests)")
+    elif rbr_list:
+        print(f"  RBR Active: Yes (quests: {', '.join(rbr_list)})")
+    else:
+        print(f"  RBR Active: No")
     if weekly_boost:
         print(f"  Weekly Boost: {weekly_boost}")
     print(f"  Event Active: {event_type.value if event_type else 'None'}")
@@ -378,16 +399,16 @@ def main():
     
     # Find enemies that drop the item
     enemy_drops = calculator.find_enemies_that_drop_weapon(
-        item, rbr_active=args.rbr, weekly_boost=weekly_boost, event_type=event_type
+        item, rbr_active=rbr_active, rbr_list=rbr_list, weekly_boost=weekly_boost, event_type=event_type
     )
 
     # Display enemy drops based on item type
     if item_type == "disk":
         # For disks (techniques), show area-grouped display
-        display_disk_drops(enemy_drops, item, args.rbr, weekly_boost)
+        display_disk_drops(enemy_drops, item, rbr_active or (rbr_list is not None and len(rbr_list) > 0), weekly_boost)
     else:
         # For regular items, show standard display
-        display_enemy_drops(enemy_drops, item, args.rbr, weekly_boost)
+        display_enemy_drops(enemy_drops, item, rbr_active or (rbr_list is not None and len(rbr_list) > 0), weekly_boost)
 
     # Find boxes that drop the item
     box_drops = calculator.find_boxes_that_drop_weapon(item)
@@ -397,7 +418,12 @@ def main():
 
     # Find best quests
     results = calculator.find_best_quests_for_item(
-        item, rbr_active=args.rbr, weekly_boost=weekly_boost, quest_filter=args.quests, event_type=event_type
+        item,
+        rbr_active=rbr_active,
+        rbr_list=rbr_list,
+        weekly_boost=weekly_boost,
+        quest_filter=args.quests,
+        event_type=event_type,
     )
 
     # Display quest results

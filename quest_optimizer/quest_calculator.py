@@ -1908,6 +1908,7 @@ class QuestCalculator:
         self,
         weapon_name: str,
         rbr_active: bool = False,
+        rbr_list: Optional[List[str]] = None,
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_filter: Optional[List[str]] = None,
         event_type: Optional[EventType] = None,
@@ -1917,7 +1918,8 @@ class QuestCalculator:
 
         Args:
             weapon_name: Name of the weapon to search for
-            rbr_active: Whether RBR boost is active
+            rbr_active: Whether RBR boost is active for all quests
+            rbr_list: Optional list of quest short names to apply RBR boost to (mutually exclusive with rbr_active)
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             quest_filter: Optional list of quest names to filter to (case-insensitive)
 
@@ -1934,6 +1936,9 @@ class QuestCalculator:
 
         results = []
 
+        # Normalize rbr_list to lowercase for case-insensitive matching
+        rbr_list_lower = [q.lower() for q in rbr_list] if rbr_list else None
+
         # Filter quests if requested
         quests_to_search: List[Dict]
         if quest_filter:
@@ -1948,9 +1953,18 @@ class QuestCalculator:
             episode = quest.get("episode", 1)
             enemies = quest.get("enemies", {})
 
+            # Determine if RBR should be active for this specific quest
+            quest_rbr_active = False
+            if rbr_active:
+                # RBR active for all quests
+                quest_rbr_active = True
+            elif rbr_list_lower:
+                # RBR only for quests in the list
+                quest_rbr_active = quest_name.lower() in rbr_list_lower
+
             # Calculate quest-specific boost multipliers and rare enemy rates
             dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(
-                quest, rbr_active, weekly_boost, event_type
+                quest, quest_rbr_active, weekly_boost, event_type
             )
             rare_enemy_rate, kondrieu_rate = self._calculate_rare_enemy_rates(enemy_rate_multiplier)
 
@@ -2211,6 +2225,7 @@ class QuestCalculator:
         self,
         weapon_name: str,
         rbr_active: bool = False,
+        rbr_list: Optional[List[str]] = None,
         weekly_boost: Optional[WeeklyBoost] = None,
         event_type: Optional[EventType] = None,
     ) -> List[Dict]:
@@ -2220,7 +2235,8 @@ class QuestCalculator:
 
         Args:
             weapon_name: Name of the weapon/technique to search for
-            rbr_active: Whether RBR boost is active
+            rbr_active: Whether RBR boost is active for all quests
+            rbr_list: Optional list of quest short names to apply RBR boost to (mutually exclusive with rbr_active)
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             event_type: Type of active event (EventType enum or None)
 
@@ -2244,8 +2260,9 @@ class QuestCalculator:
             results = []
             
             # Calculate boost multipliers
+            # Apply RBR if rbr_active is True or rbr_list is provided (non-empty)
             dar_multiplier = 1.0
-            if rbr_active:
+            if rbr_active or (rbr_list and len(rbr_list) > 0):
                 dar_multiplier *= 1.0 + RBR_DAR_BOOST
             
             # Apply weekly boosts (doubled if Christmas event is active)
@@ -2313,10 +2330,11 @@ class QuestCalculator:
 
         # Regular weapon drop logic
         # Calculate boost multipliers
+        # Apply RBR if rbr_active is True or rbr_list is provided (non-empty)
         dar_multiplier = 1.0
         rdr_multiplier = 1.0
 
-        if rbr_active:
+        if rbr_active or (rbr_list and len(rbr_list) > 0):
             dar_multiplier *= 1.0 + RBR_DAR_BOOST
             rdr_multiplier *= 1.0 + RBR_RDR_BOOST
 

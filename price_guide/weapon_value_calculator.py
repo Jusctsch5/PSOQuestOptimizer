@@ -9,19 +9,16 @@ from specific areas, taking into account:
 """
 
 from bisect import bisect
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from drop_tables.weapon_patterns import (
     AREA_ATTRIBUTE_RATES,
     PATTERN_ATTRIBUTE_PROBABILITIES,
-    calculate_common_weapon_attributes,
     calculate_rare_weapon_attributes,
     get_hit_probability,
     get_three_roll_hit_probability,
 )
-
-if TYPE_CHECKING:
-    from price_guide.price_guide import PriceGuideAbstract
+from price_guide import PriceGuideAbstract
 
 
 def format_probability(prob: float) -> str:
@@ -311,17 +308,22 @@ class WeaponValueCalculator:
 
         return breakdown
 
-    def print_calculation_breakdown(self, weapon_name: str, drop_area: Optional[str] = None):
-        """Print detailed breakdown of the calculation."""
+    def get_calculation_breakdown(
+        self,
+        weapon_name: str,
+        drop_area: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Get detailed breakdown of the calculation as structured data.
 
+        Args:
+            weapon_name: Name of the weapon
+            drop_area: Area where weapon drops
+
+        Returns:
+            Dictionary with comprehensive breakdown data for display
+        """
         avg_value = self.calculate_weapon_expected_value(weapon_name, drop_area)
-
-        print(f"\n{'=' * 80}")
-        print(f"WEAPON VALUE CALCULATION BREAKDOWN")
-        print(f"{'=' * 80}")
-        print(f"Weapon: {weapon_name}")
-        print(f"Average Expected Value: {avg_value:.4f} PD")
-        print(f"\n{'-' * 80}")
 
         # Get breakdown from price guide
         breakdown = self.get_rare_weapon_value_breakdown(weapon_name, drop_area)
@@ -329,10 +331,11 @@ class WeaponValueCalculator:
         attr_results = breakdown["attr_results"]
         hit_breakdown = breakdown["hit_breakdown"]
         total_hit_contrib = breakdown["hit_contribution"]
+        total_attr_contrib = breakdown["attribute_contribution"]
 
         # Get area rates if area is specified
         area_rates = None
-        # Get hit probabilities directly (not from breakdown)
+        area_attribute_probs = None
         hit_probability = get_hit_probability(drop_area)
         three_roll_hit_prob = get_three_roll_hit_probability(drop_area)
         no_hit_prob = 1.0 - three_roll_hit_prob
@@ -343,15 +346,95 @@ class WeaponValueCalculator:
             if isinstance(area_rates, dict):
                 total_rate = sum(area_rates.values())
                 if total_rate > 0:
-                    print("AREA ATTRIBUTE PROBABILITIES:")
-                    print(f"{'-' * 80}")
-                    print(f"Native:        {format_probability(area_rates['native'] / total_rate)}")
-                    print(f"A.Beast:       {format_probability(area_rates['abeast'] / total_rate)}")
-                    print(f"Machine:       {format_probability(area_rates['machine'] / total_rate)}")
-                    print(f"Dark:          {format_probability(area_rates['dark'] / total_rate)}")
-                    print(f"Hit:           {format_probability(hit_probability)}")
-                    print(f"No Attribute:  {format_probability(area_rates['no_attribute'] / total_rate)}")
-                    print(f"\n{'-' * 80}")
+                    area_attribute_probs = {
+                        "native": area_rates["native"] / total_rate,
+                        "abeast": area_rates["abeast"] / total_rate,
+                        "machine": area_rates["machine"] / total_rate,
+                        "dark": area_rates["dark"] / total_rate,
+                        "hit": hit_probability,
+                        "no_attribute": area_rates["no_attribute"] / total_rate,
+                    }
+
+        # Pattern 5 probabilities
+        pattern5_probs = {
+            attr_val: prob
+            for attr_val, prob in sorted(PATTERN_ATTRIBUTE_PROBABILITIES[5].items())
+        }
+
+        # Attribute contribution details
+        attribute_details = []
+        if weapon_data:
+            modifiers = weapon_data.get("modifiers", {})
+            attr_to_modifier = {"native": "N", "abeast": "AB", "machine": "M", "dark": "D"}
+            for attr_name, attr_type in attr_to_modifier.items():
+                if attr_type in modifiers and attr_name in attr_results:
+                    modifier_price_str = modifiers[attr_type]
+                    try:
+                        modifier_price = self.price_guide.get_price_from_range(
+                            modifier_price_str, self.price_guide.bps
+                        )
+                        attr_contrib = attr_results[attr_name] * modifier_price
+                        attribute_details.append(
+                            {
+                                "attribute": attr_type,
+                                "modifier_price_str": modifier_price_str,
+                                "modifier_price": modifier_price,
+                                "probability": attr_results[attr_name],
+                                "contribution": attr_contrib,
+                            }
+                        )
+                    except Exception:
+                        continue
+
+        return {
+            "weapon_name": weapon_name,
+            "drop_area": drop_area,
+            "total_value": avg_value,
+            "hit_contribution": total_hit_contrib,
+            "attribute_contribution": total_attr_contrib,
+            "area_attribute_probs": area_attribute_probs,
+            "hit_probability": hit_probability,
+            "three_roll_hit_prob": three_roll_hit_prob,
+            "no_hit_prob": no_hit_prob,
+            "pattern5_probs": pattern5_probs,
+            "hit_breakdown": hit_breakdown,
+            "attribute_details": attribute_details,
+            "weapon_data": weapon_data,
+        }
+
+    def print_calculation_breakdown(self, weapon_name: str, drop_area: Optional[str] = None):
+        """Print detailed breakdown of the calculation."""
+        breakdown = self.get_calculation_breakdown(weapon_name, drop_area)
+        
+        avg_value = breakdown["total_value"]
+        weapon_name_display = breakdown["weapon_name"]
+        area_attribute_probs = breakdown["area_attribute_probs"]
+        three_roll_hit_prob = breakdown["three_roll_hit_prob"]
+        no_hit_prob = breakdown["no_hit_prob"]
+        pattern5_probs = breakdown["pattern5_probs"]
+        hit_breakdown = breakdown["hit_breakdown"]
+        attribute_details = breakdown["attribute_details"]
+        weapon_data = breakdown["weapon_data"]
+        total_hit_contrib = breakdown["hit_contribution"]
+        total_attr_contrib = breakdown["attribute_contribution"]
+
+        print(f"\n{'=' * 80}")
+        print(f"WEAPON VALUE CALCULATION BREAKDOWN")
+        print(f"{'=' * 80}")
+        print(f"Weapon: {weapon_name_display}")
+        print(f"Average Expected Value: {avg_value:.4f} PD")
+        print(f"\n{'-' * 80}")
+
+        if area_attribute_probs:
+            print("AREA ATTRIBUTE PROBABILITIES:")
+            print(f"{'-' * 80}")
+            print(f"Native:        {format_probability(area_attribute_probs['native'])}")
+            print(f"A.Beast:       {format_probability(area_attribute_probs['abeast'])}")
+            print(f"Machine:       {format_probability(area_attribute_probs['machine'])}")
+            print(f"Dark:          {format_probability(area_attribute_probs['dark'])}")
+            print(f"Hit:           {format_probability(area_attribute_probs['hit'])}")
+            print(f"No Attribute:  {format_probability(area_attribute_probs['no_attribute'])}")
+            print(f"\n{'-' * 80}")
 
         # For rare weapons, always use Pattern 5
         print(f"\n{'-' * 80}")
@@ -359,8 +442,7 @@ class WeaponValueCalculator:
         print("")
         print(f"  {'Value':<8} {'Probability':<15}")
         print(f"  {'-' * 8} {'-' * 15}")
-        for attr_val in sorted(PATTERN_ATTRIBUTE_PROBABILITIES[5].keys()):
-            prob = PATTERN_ATTRIBUTE_PROBABILITIES[5][attr_val]
+        for attr_val, prob in pattern5_probs.items():
             print(f"  {attr_val:<8} {format_probability(prob):<15}")
 
         # Calculate and print hit distribution
@@ -411,26 +493,14 @@ class WeaponValueCalculator:
             )
 
         # Calculate and print attribute contribution (multiply by prices)
-        total_attr_contrib = breakdown["attribute_contribution"]
-        if weapon_data:
-            modifiers = weapon_data.get("modifiers", {})
-            if modifiers:
-                print(f"\n{'-' * 80}")
-                print("ATTRIBUTE VALUE DISTRIBUTION (Pattern 5, >=50% only):")
-                print(f"{'-' * 80}")
+        if attribute_details:
+            print(f"\n{'-' * 80}")
+            print("ATTRIBUTE VALUE DISTRIBUTION (Pattern 5, >=50% only):")
+            print(f"{'-' * 80}")
 
-                attr_to_modifier = {"native": "N", "abeast": "AB", "machine": "M", "dark": "D"}
-                for attr_name, attr_type in attr_to_modifier.items():
-                    if attr_type in modifiers and attr_name in attr_results:
-                        modifier_price_str = modifiers[attr_type]
-                        try:
-                            modifier_price = self.price_guide.get_price_from_range(modifier_price_str, self.price_guide.bps)
-                            # attr_results[attr_name] is already probability * Pattern 5 prob sum (>=50%)
-                            attr_contrib = attr_results[attr_name] * modifier_price
-                            print(f"  {attr_type}: Expected contribution = {attr_contrib:.4f} PD")
-                            print(f"    (Probability assigned * Pattern 5 prob sum >= 50% * modifier price)")
-                        except Exception:
-                            continue
+            for attr_detail in attribute_details:
+                print(f"  {attr_detail['attribute']}: Expected contribution = {attr_detail['contribution']:.4f} PD")
+                print(f"    (Probability assigned * Pattern 5 prob sum >= 50% * modifier price)")
 
         # Print equation
         print(f"\n{'-' * 80}")

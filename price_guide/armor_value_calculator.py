@@ -368,8 +368,16 @@ class ArmorValueCalculator:
             },
         }
 
-    def print_frame_calculation_breakdown(self, frame_name: str):
-        """Print detailed breakdown of the frame calculation."""
+    def get_frame_calculation_breakdown(self, frame_name: str) -> Dict[str, Any]:
+        """
+        Get detailed breakdown of the frame calculation as structured data.
+
+        Args:
+            frame_name: Name of the frame
+
+        Returns:
+            Dictionary with comprehensive breakdown data for display
+        """
         breakdown = self.get_frame_value_breakdown(frame_name)
         frame_data = breakdown["frame_data"]
         stat_probs = breakdown["stat_probs"]
@@ -378,35 +386,8 @@ class ArmorValueCalculator:
         total = breakdown["total"]
         base_price = breakdown["base_price"]
 
-        print(f"\n{'=' * 80}")
-        print(f"FRAME VALUE CALCULATION BREAKDOWN")
-        print(f"{'=' * 80}")
-        print(f"Frame: {frame_name}")
-        print(f"Average Expected Value: {total:.4f} PD")
-        print(f"\n{'-' * 80}")
-
-        # Print stat tier probabilities
-        print("STAT TIER PROBABILITIES:")
-        print(f"{'-' * 80}")
-        print(f"  {'Tier':<10} {'Probability':<20}")
-        print(f"  {'-' * 10} {'-' * 20}")
-        for tier, prob in stat_probs.items():
-            print(f"  {tier.capitalize():<10} {format_probability(prob):<20}")
-
-        # Print base price
-        print(f"\n{'-' * 80}")
-        print("BASE PRICE:")
-        print(f"{'-' * 80}")
-        base_price_str = frame_data.get("base", "0")
-        print(f"  Base Price: {base_price_str} = {base_price:.4f} PD")
-
-        # Print stat tier prices and contributions
-        print(f"\n{'-' * 80}")
-        print("STAT TIER PRICES AND CONTRIBUTIONS:")
-        print(f"{'-' * 80}")
-        print(f"  {'Tier':<10} {'Price Range':<20} {'Price (avg)':<15} {'Probability':<20} {'Contribution':<18}")
-        print(f"  {'-' * 10} {'-' * 20} {'-' * 15} {'-' * 20} {'-' * 18}")
-
+        # Build tier details
+        tier_details = []
         tier_info = [
             ("low", "Min Stat", tier_prices["min_stat"]),
             ("medium", "Med Stat", tier_prices["med_stat"]),
@@ -419,46 +400,45 @@ class ArmorValueCalculator:
             price_val = tier_price if tier_price is not None else base_price
             prob = stat_probs[tier]
             contrib = stat_tier_contributions[tier]
-            print(
-                f"  {tier.capitalize():<10} {str(price_range):<20} {price_val:<15.4f} "
-                f"{format_probability(prob):<20} {contrib:<18.7f}"
+            tier_details.append(
+                {
+                    "tier": tier,
+                    "stat_key": stat_key,
+                    "price_range": price_range,
+                    "price": price_val,
+                    "probability": prob,
+                    "contribution": contrib,
+                }
             )
 
-        # Print equation
-        print(f"\n{'-' * 80}")
-        print("CALCULATION EQUATION:")
-        print(f"{'-' * 80}")
-        print("Final Value = sum over tiers [tier_price * tier_probability]")
-        print()
-        print("Where:")
-        for tier, contrib in stat_tier_contributions.items():
-            tier_price = tier_prices.get(f"{tier}_stat" if tier != "max" else "max_stat", None)
-            price_val = tier_price if tier_price is not None else base_price
-            prob = stat_probs[tier]
-            print(f"  {tier.capitalize()} tier: {price_val:.4f} * {format_probability(prob)} = {contrib:.4f} PD")
-        print()
-        print(f"Calculation:")
-        total_check = sum(stat_tier_contributions.values())
-        print(f"  {total_check:.4f} = {total:.4f} PD")
+        return {
+            "frame_name": frame_name,
+            "total_value": total,
+            "base_price": base_price,
+            "base_price_str": frame_data.get("base", "0"),
+            "stat_probs": stat_probs,
+            "tier_details": tier_details,
+            "stat_tier_contributions": stat_tier_contributions,
+            "tier_prices": tier_prices,
+            "frame_data": frame_data,
+        }
 
-        print(f"\n{'-' * 80}")
-        print(f"FINAL RESULT: {total:.4f} PD")
-        print(f"{'=' * 80}\n")
-
-    def print_barrier_calculation_breakdown(self, barrier_name: str):
-        """Print detailed breakdown of the barrier calculation."""
-        breakdown = self.get_barrier_value_breakdown(barrier_name)
-        barrier_data = breakdown["barrier_data"]
-        stat_probs = breakdown["stat_probs"]
-        stat_tier_contributions = breakdown["stat_tier_contributions"]
-        tier_prices = breakdown["tier_prices"]
-        total = breakdown["total"]
+    def print_frame_calculation_breakdown(self, frame_name: str):
+        """Print detailed breakdown of the frame calculation."""
+        breakdown = self.get_frame_calculation_breakdown(frame_name)
+        
+        frame_name_display = breakdown["frame_name"]
+        total = breakdown["total_value"]
         base_price = breakdown["base_price"]
+        base_price_str = breakdown["base_price_str"]
+        stat_probs = breakdown["stat_probs"]
+        tier_details = breakdown["tier_details"]
+        stat_tier_contributions = breakdown["stat_tier_contributions"]
 
         print(f"\n{'=' * 80}")
-        print(f"BARRIER VALUE CALCULATION BREAKDOWN")
+        print(f"FRAME VALUE CALCULATION BREAKDOWN")
         print(f"{'=' * 80}")
-        print(f"Barrier: {barrier_name}")
+        print(f"Frame: {frame_name_display}")
         print(f"Average Expected Value: {total:.4f} PD")
         print(f"\n{'-' * 80}")
 
@@ -474,7 +454,6 @@ class ArmorValueCalculator:
         print(f"\n{'-' * 80}")
         print("BASE PRICE:")
         print(f"{'-' * 80}")
-        base_price_str = barrier_data.get("base", "0")
         print(f"  Base Price: {base_price_str} = {base_price:.4f} PD")
 
         # Print stat tier prices and contributions
@@ -484,6 +463,54 @@ class ArmorValueCalculator:
         print(f"  {'Tier':<10} {'Price Range':<20} {'Price (avg)':<15} {'Probability':<20} {'Contribution':<18}")
         print(f"  {'-' * 10} {'-' * 20} {'-' * 15} {'-' * 20} {'-' * 18}")
 
+        for tier_detail in tier_details:
+            print(
+                f"  {tier_detail['tier'].capitalize():<10} {str(tier_detail['price_range']):<20} "
+                f"{tier_detail['price']:<15.4f} {format_probability(tier_detail['probability']):<20} "
+                f"{tier_detail['contribution']:<18.7f}"
+            )
+
+        # Print equation
+        print(f"\n{'-' * 80}")
+        print("CALCULATION EQUATION:")
+        print(f"{'-' * 80}")
+        print("Final Value = sum over tiers [tier_price * tier_probability]")
+        print()
+        print("Where:")
+        for tier_detail in tier_details:
+            print(
+                f"  {tier_detail['tier'].capitalize()} tier: {tier_detail['price']:.4f} * "
+                f"{format_probability(tier_detail['probability'])} = {tier_detail['contribution']:.4f} PD"
+            )
+        print()
+        print(f"Calculation:")
+        total_check = sum(stat_tier_contributions.values())
+        print(f"  {total_check:.4f} = {total:.4f} PD")
+
+        print(f"\n{'-' * 80}")
+        print(f"FINAL RESULT: {total:.4f} PD")
+        print(f"{'=' * 80}\n")
+
+    def get_barrier_calculation_breakdown(self, barrier_name: str) -> Dict[str, Any]:
+        """
+        Get detailed breakdown of the barrier calculation as structured data.
+
+        Args:
+            barrier_name: Name of the barrier
+
+        Returns:
+            Dictionary with comprehensive breakdown data for display
+        """
+        breakdown = self.get_barrier_value_breakdown(barrier_name)
+        barrier_data = breakdown["barrier_data"]
+        stat_probs = breakdown["stat_probs"]
+        stat_tier_contributions = breakdown["stat_tier_contributions"]
+        tier_prices = breakdown["tier_prices"]
+        total = breakdown["total"]
+        base_price = breakdown["base_price"]
+
+        # Build tier details
+        tier_details = []
         tier_info = [
             ("low", "Min Stat", tier_prices["min_stat"]),
             ("medium", "Med Stat", tier_prices["med_stat"]),
@@ -496,9 +523,74 @@ class ArmorValueCalculator:
             price_val = tier_price if tier_price is not None else base_price
             prob = stat_probs[tier]
             contrib = stat_tier_contributions[tier]
+            tier_details.append(
+                {
+                    "tier": tier,
+                    "stat_key": stat_key,
+                    "price_range": price_range,
+                    "price": price_val,
+                    "probability": prob,
+                    "contribution": contrib,
+                }
+            )
+
+        return {
+            "barrier_name": barrier_name,
+            "total_value": total,
+            "base_price": base_price,
+            "base_price_str": barrier_data.get("base", "0"),
+            "stat_probs": stat_probs,
+            "tier_details": tier_details,
+            "stat_tier_contributions": stat_tier_contributions,
+            "tier_prices": tier_prices,
+            "barrier_data": barrier_data,
+        }
+
+    def print_barrier_calculation_breakdown(self, barrier_name: str):
+        """Print detailed breakdown of the barrier calculation."""
+        breakdown = self.get_barrier_calculation_breakdown(barrier_name)
+        
+        barrier_name_display = breakdown["barrier_name"]
+        total = breakdown["total_value"]
+        base_price = breakdown["base_price"]
+        base_price_str = breakdown["base_price_str"]
+        stat_probs = breakdown["stat_probs"]
+        tier_details = breakdown["tier_details"]
+        stat_tier_contributions = breakdown["stat_tier_contributions"]
+
+        print(f"\n{'=' * 80}")
+        print(f"BARRIER VALUE CALCULATION BREAKDOWN")
+        print(f"{'=' * 80}")
+        print(f"Barrier: {barrier_name_display}")
+        print(f"Average Expected Value: {total:.4f} PD")
+        print(f"\n{'-' * 80}")
+
+        # Print stat tier probabilities
+        print("STAT TIER PROBABILITIES:")
+        print(f"{'-' * 80}")
+        print(f"  {'Tier':<10} {'Probability':<20}")
+        print(f"  {'-' * 10} {'-' * 20}")
+        for tier, prob in stat_probs.items():
+            print(f"  {tier.capitalize():<10} {format_probability(prob):<20}")
+
+        # Print base price
+        print(f"\n{'-' * 80}")
+        print("BASE PRICE:")
+        print(f"{'-' * 80}")
+        print(f"  Base Price: {base_price_str} = {base_price:.4f} PD")
+
+        # Print stat tier prices and contributions
+        print(f"\n{'-' * 80}")
+        print("STAT TIER PRICES AND CONTRIBUTIONS:")
+        print(f"{'-' * 80}")
+        print(f"  {'Tier':<10} {'Price Range':<20} {'Price (avg)':<15} {'Probability':<20} {'Contribution':<18}")
+        print(f"  {'-' * 10} {'-' * 20} {'-' * 15} {'-' * 20} {'-' * 18}")
+
+        for tier_detail in tier_details:
             print(
-                f"  {tier.capitalize():<10} {str(price_range):<20} {price_val:<15.4f} "
-                f"{format_probability(prob):<20} {contrib:<18.7f}"
+                f"  {tier_detail['tier'].capitalize():<10} {str(tier_detail['price_range']):<20} "
+                f"{tier_detail['price']:<15.4f} {format_probability(tier_detail['probability']):<20} "
+                f"{tier_detail['contribution']:<18.7f}"
             )
 
         # Print equation
@@ -508,11 +600,11 @@ class ArmorValueCalculator:
         print("Final Value = sum over tiers [tier_price * tier_probability]")
         print()
         print("Where:")
-        for tier, contrib in stat_tier_contributions.items():
-            tier_price = tier_prices.get(f"{tier}_stat" if tier != "max" else "max_evp", None)
-            price_val = tier_price if tier_price is not None else base_price
-            prob = stat_probs[tier]
-            print(f"  {tier.capitalize()} tier: {price_val:.4f} * {format_probability(prob)} = {contrib:.4f} PD")
+        for tier_detail in tier_details:
+            print(
+                f"  {tier_detail['tier'].capitalize()} tier: {tier_detail['price']:.4f} * "
+                f"{format_probability(tier_detail['probability'])} = {tier_detail['contribution']:.4f} PD"
+            )
         print()
         print(f"Calculation:")
         total_check = sum(stat_tier_contributions.values())

@@ -304,6 +304,10 @@ class PriceGuideAbstract(ABC):
             raise PriceGuideExceptionItemNameNotFound(
                 f"Level {level} for technique '{name}' exceeds maximum level {max_level}"
             )
+        if level < 1:
+            raise PriceGuideExceptionItemNameNotFound(
+                f"Level {level} for technique '{name}' is below minimum level 1"
+            )
         
         # Find the largest threshold <= actual level value
         index = bisect(sorted_thresholds, level) - 1
