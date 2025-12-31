@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSO Optimizer</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PSO Optimizer</h1>
+            <p>Optimize quests, find best item hunting locations, and calculate item values</p>
+        </header>
+
+        <div id="error-display" class="error hidden"></div>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <button type="button" class="tab-btn active" data-tab="optimize-quests">Optimize Quests</button>
+            <button type="button" class="tab-btn" data-tab="optimize-item-hunt">Optimize Item Hunt</button>
+            <button type="button" class="tab-btn" data-tab="calculate-item-value">Calculate Item Value</button>
+        </nav>
+
+        <div class="main-content">
+        <form id="optimizer-form">
+            <!-- Optimize Quests Tab -->
+            <div class="tab-content" id="tab-optimize-quests">
+            <div class="form-section">
+                <h2>Basic Settings</h2>
+                
+                <div class="form-group">
+                    <label for="section-id">Section ID:</label>
+                    <select id="section-id" name="section-id">
+                        <option value="All">All</option>
+                        <option value="Viridia">Viridia</option>
+                        <option value="Greenill">Greenill</option>
+                        <option value="Skyly">Skyly</option>
+                        <option value="Bluefull">Bluefull</option>
+                        <option value="Purplenum">Purplenum</option>
+                        <option value="Pinkal">Pinkal</option>
+                        <option value="Redria">Redria</option>
+                        <option value="Oran">Oran</option>
+                        <option value="Yellowboze">Yellowboze</option>
+                        <option value="Whitill">Whitill</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="quest-filter">Quest Filter (space-separated short names):</label>
+                    <input type="text" id="quest-filter" name="quest-filter" placeholder="e.g., MU1 CF4">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Boosts</h2>
+                
+                <div class="form-group">
+                    <label for="weekly-boost">Weekly Boost:</label>
+                    <select id="weekly-boost" name="weekly-boost">
+                        <option value="">None</option>
+                        <option value="DAR">DAR (Drop Anything Rate)</option>
+                        <option value="RDR">RDR (Rare Drop Rate)</option>
+                        <option value="RareEnemy">Rare Enemy</option>
+                        <option value="XP">XP</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-active">Event Active:</label>
+                    <select id="event-active" name="event-active">
+                        <option value="">None</option>
+                        <option value="Easter">Easter</option>
+                        <option value="Halloween">Halloween</option>
+                        <option value="Christmas">Christmas</option>
+                        <option value="ValentinesDay">Valentine's Day</option>
+                        <option value="Anniversary">Anniversary</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="rbr-list">RBR Quest List (space-separated short names):</label>
+                    <input type="text" id="rbr-list" name="rbr-list" placeholder="e.g., MU1 MU2 MU3">
+                    <small style="display: block; margin-top: 5px; color: #666;">Leave empty to disable RBR</small>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Display Options</h2>
+                
+                <div class="form-group">
+                    <label for="notable-items">Notable Items:</label>
+                    <input type="number" id="notable-items" name="notable-items" value="5" min="1" max="10">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="show-details" name="show-details">
+                        Show Detailed Breakdown
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="exclude-event-quests" name="exclude-event-quests">
+                        Exclude Event Quests
+                    </label>
+                </div>
+            </div>
+            </div>
+
+            <!-- Optimize Item Hunt Tab -->
+            <div class="tab-content hidden" id="tab-optimize-item-hunt">
+            <div class="form-section">
+                <h2>Item Search</h2>
+                
+                <div class="form-group">
+                    <label for="item-name">Item Name:</label>
+                    <input type="text" id="item-name" name="item-name" placeholder="e.g., VJAYA, Foie, RBR">
+                </div>
+
+                <div class="form-group">
+                    <label for="item-hunt-quest-filter">Quest Filter (space-separated short names):</label>
+                    <input type="text" id="item-hunt-quest-filter" name="item-hunt-quest-filter" placeholder="e.g., MU1 CF4">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Boosts</h2>
+                
+                <div class="form-group">
+                    <label for="item-hunt-weekly-boost">Weekly Boost:</label>
+                    <select id="item-hunt-weekly-boost" name="item-hunt-weekly-boost">
+                        <option value="">None</option>
+                        <option value="DAR">DAR (Drop Anything Rate)</option>
+                        <option value="RDR">RDR (Rare Drop Rate)</option>
+                        <option value="RareEnemy">Rare Enemy</option>
+                        <option value="XP">XP</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-hunt-event-active">Event Active:</label>
+                    <select id="item-hunt-event-active" name="item-hunt-event-active">
+                        <option value="">None</option>
+                        <option value="Easter">Easter</option>
+                        <option value="Halloween">Halloween</option>
+                        <option value="Christmas">Christmas</option>
+                        <option value="ValentinesDay">Valentine's Day</option>
+                        <option value="Anniversary">Anniversary</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-hunt-rbr-list">RBR Quest List (space-separated short names):</label>
+                    <input type="text" id="item-hunt-rbr-list" name="item-hunt-rbr-list" placeholder="e.g., MU1 MU2 MU3">
+                    <small style="display: block; margin-top: 5px; color: #666;">Leave empty to disable RBR</small>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Display Options</h2>
+                
+                <div class="form-group">
+                    <label for="item-hunt-top-n">Top N Results:</label>
+                    <input type="number" id="item-hunt-top-n" name="item-hunt-top-n" value="10" min="1" max="50">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="item-hunt-show-details" name="item-hunt-show-details">
+                        Show Detailed Breakdown
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="item-hunt-exclude-event-quests" name="item-hunt-exclude-event-quests">
+                        Exclude Event Quests
+                    </label>
+                </div>
+            </div>
+            </div>
+
+            <!-- Calculate Item Value Tab -->
+            <div class="tab-content hidden" id="tab-calculate-item-value">
+            <div class="form-section">
+                <h2>Item Information</h2>
+                
+                <div class="form-group">
+                    <label for="value-item-name">Item Name:</label>
+                    <input type="text" id="value-item-name" name="value-item-name" placeholder="e.g., VJAYA, Brightness Circle">
+                </div>
+
+                <div class="form-group">
+                    <label for="drop-area">Drop Area (optional, for weapons only):</label>
+                    <input type="text" id="drop-area" name="drop-area" placeholder="e.g., Forest 1, Ruins 3">
+                    <small style="display: block; margin-top: 5px; color: #666;">Only affects weapon hit probability calculations</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="price-strategy">Price Strategy:</label>
+                    <select id="price-strategy" name="price-strategy">
+                        <option value="MINIMUM">Minimum</option>
+                        <option value="AVERAGE">Average</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" id="submit-btn">Submit</button>
+                <button type="button" id="reset-btn">Reset</button>
+            </div>
+        </form>
+
+        <div id="results-container" class="hidden">
+            <h2>Results</h2>
+            <div id="loading-indicator" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Loading Pyodide...</p>
+            </div>
+            <div id="results-table"></div>
+        </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+    <script src="js/optimizer.js"></script>
+    <script src="js/render-quest-results.js"></script>
+    <script src="js/render-item-hunt-results.js"></script>
+    <script src="js/render-item-value-results.js"></script>
+</body>
+</html>
+
