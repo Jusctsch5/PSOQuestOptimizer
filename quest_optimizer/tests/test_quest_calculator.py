@@ -53,9 +53,7 @@ def test_qcalc_christmas_event_boosts_dar_week(quest_calculator: QuestCalculator
     weekly_boost = WeeklyBoost.DAR
 
     # Calculate with DAR week only (no event)
-    result_dar_only = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, event_type=None
-    )
+    result_dar_only = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, event_type=None)
 
     # Calculate with DAR week AND Christmas event
     result_dar_and_christmas = quest_calculator.calculate_quest_value(
@@ -73,9 +71,7 @@ def test_qcalc_christmas_event_boosts_dar_week(quest_calculator: QuestCalculator
     assert pd_dar_and_christmas > 0, f"PD value with DAR week + Christmas should be > 0, got {pd_dar_and_christmas}"
 
     # Christmas event should increase the PD value during DAR week
-    assert pd_dar_and_christmas > pd_dar_only, (
-        f"Christmas event should increase PD value during DAR week: {pd_dar_and_christmas} should be > {pd_dar_only}"
-    )
+    assert pd_dar_and_christmas > pd_dar_only, f"Christmas event should increase PD value during DAR week: {pd_dar_and_christmas} should be > {pd_dar_only}"
 
 
 def test_qcalc_christmas_event_boosts_rdr_week(quest_calculator: QuestCalculator):
@@ -93,9 +89,7 @@ def test_qcalc_christmas_event_boosts_rdr_week(quest_calculator: QuestCalculator
     weekly_boost = WeeklyBoost.RDR
 
     # Calculate with RDR week only (no event)
-    result_rdr_only = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, event_type=None
-    )
+    result_rdr_only = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=weekly_boost, event_type=None)
 
     # Calculate with RDR week AND Christmas event
     result_rdr_and_christmas = quest_calculator.calculate_quest_value(
@@ -113,9 +107,7 @@ def test_qcalc_christmas_event_boosts_rdr_week(quest_calculator: QuestCalculator
     assert pd_rdr_and_christmas > 0, f"PD value with RDR week + Christmas should be > 0, got {pd_rdr_and_christmas}"
 
     # Christmas event should increase the PD value during RDR week
-    assert pd_rdr_and_christmas > pd_rdr_only, (
-        f"Christmas event should increase PD value during RDR week: {pd_rdr_and_christmas} should be > {pd_rdr_only}"
-    )
+    assert pd_rdr_and_christmas > pd_rdr_only, f"Christmas event should increase PD value during RDR week: {pd_rdr_and_christmas} should be > {pd_rdr_only}"
 
 
 def test_christmas_presents_only_during_christmas(quest_calculator: QuestCalculator):
@@ -132,14 +124,10 @@ def test_christmas_presents_only_during_christmas(quest_calculator: QuestCalcula
     section_id = "Skyly"
 
     # Calculate without Christmas event
-    result_no_christmas = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
-    )
+    result_no_christmas = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None)
 
     # Calculate with Christmas event
-    result_with_christmas = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Christmas
-    )
+    result_with_christmas = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Christmas)
 
     # No presents should drop outside Christmas
     assert "event_drops_breakdown" in result_no_christmas
@@ -170,20 +158,14 @@ def test_halloween_cookies_only_during_halloween(quest_calculator: QuestCalculat
     section_id = "Skyly"
 
     # Calculate without Halloween event
-    result_no_halloween = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
-    )
+    result_no_halloween = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None)
 
     # Calculate with Halloween event
-    result_with_halloween = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween
-    )
+    result_with_halloween = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween)
 
     # No cookies should drop outside Halloween
     assert "event_drops_breakdown" in result_no_halloween
-    assert "Halloween Cookie" not in result_no_halloween["event_drops_breakdown"], (
-        "Cookies should not drop outside Halloween event"
-    )
+    assert "Halloween Cookie" not in result_no_halloween["event_drops_breakdown"], "Cookies should not drop outside Halloween event"
     assert result_no_halloween["event_drops_pd"] == 0.0, "Event drops PD should be 0 outside Halloween"
 
     # Cookies should drop during Halloween
@@ -210,14 +192,10 @@ def test_easter_eggs_only_during_easter(quest_calculator: QuestCalculator):
     section_id = "Skyly"
 
     # Calculate without Easter event
-    result_no_easter = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
-    )
+    result_no_easter = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None)
 
     # Calculate with Easter event
-    result_with_easter = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Easter
-    )
+    result_with_easter = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Easter)
 
     # No eggs should drop outside Easter
     assert "event_drops_breakdown" in result_no_easter
@@ -247,9 +225,7 @@ def test_halloween_cookies_boost_in_halloween_quests(quest_calculator: QuestCalc
     section_id = "Skyly"
 
     # Calculate with Halloween event in a Halloween quest
-    result_halloween_quest = quest_calculator.calculate_quest_value(
-        halloween_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween
-    )
+    result_halloween_quest = quest_calculator.calculate_quest_value(halloween_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween)
 
     # Calculate with Halloween event in a regular quest (MU1)
     mu1_quest = None
@@ -259,9 +235,7 @@ def test_halloween_cookies_boost_in_halloween_quests(quest_calculator: QuestCalc
             break
 
     assert mu1_quest is not None, "MU1 quest not found"
-    result_regular_quest = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween
-    )
+    result_regular_quest = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Halloween)
 
     # Both should have cookies
     assert "Halloween Cookie" in result_halloween_quest["event_drops_breakdown"]
@@ -273,15 +247,13 @@ def test_halloween_cookies_boost_in_halloween_quests(quest_calculator: QuestCalc
     # Halloween quest should have higher drop rate (20% boost)
     assert halloween_quest_cookie_data["is_halloween_quest"] is True
     assert halloween_quest_cookie_data["drop_rate"] > regular_quest_cookie_data["drop_rate"], (
-        f"Halloween quest cookie drop rate ({halloween_quest_cookie_data['drop_rate']}) "
-        f"should be > regular quest drop rate ({regular_quest_cookie_data['drop_rate']})"
+        f"Halloween quest cookie drop rate ({halloween_quest_cookie_data['drop_rate']}) should be > regular quest drop rate ({regular_quest_cookie_data['drop_rate']})"
     )
 
     # Verify the boost is approximately 20% (1.2x multiplier)
     expected_boosted_rate = regular_quest_cookie_data["drop_rate"] * 1.2
     assert abs(halloween_quest_cookie_data["drop_rate"] - expected_boosted_rate) < 0.0001, (
-        f"Halloween quest drop rate should be ~20% higher: "
-        f"got {halloween_quest_cookie_data['drop_rate']}, expected ~{expected_boosted_rate}"
+        f"Halloween quest drop rate should be ~20% higher: got {halloween_quest_cookie_data['drop_rate']}, expected ~{expected_boosted_rate}"
     )
 
 
@@ -363,7 +335,7 @@ def test_box_armor_weapon_excluded(quest_calculator: QuestCalculator):
     # Test that box technique drop rate calculation works
     box_rates = quest_calculator._calculate_box_technique_drop_rate(area_name)
     assert "Barta" in box_rates, "Barta should be eligible in Mine 1 boxes"
-    
+
     # Test that processing boxes now works (techniques are in price guide)
     pd, box_breakdown = quest_calculator._process_box_drops(area_name, boxes, episode, section_id)
     # Barta Lv30 should be in the box breakdown
@@ -423,14 +395,10 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
     section_id = "Skyly"
 
     # Calculate without RBR boost
-    result_no_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
-    )
+    result_no_rbr = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None)
 
     # Calculate with RBR boost
-    result_with_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None
-    )
+    result_with_rbr = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None)
 
     pd_no_rbr = result_no_rbr["total_pd"]
     pd_with_rbr = result_with_rbr["total_pd"]
@@ -450,11 +418,7 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
     # RBR provides +25% DAR and +25% RDR, so the increase should be significant
     # We expect at least a 20% increase (conservative estimate)
     increase_ratio = pd_with_rbr / pd_no_rbr
-    assert increase_ratio >= 1.15, (
-        f"RBR boost should provide significant increase. "
-        f"Expected ratio >= 1.15, got {increase_ratio:.4f} "
-        f"({pd_with_rbr} / {pd_no_rbr})"
-    )
+    assert increase_ratio >= 1.15, f"RBR boost should provide significant increase. Expected ratio >= 1.15, got {increase_ratio:.4f} ({pd_with_rbr} / {pd_no_rbr})"
 
 
 def test_rbr_list_with_existing_quests(quest_calculator: QuestCalculator):
@@ -495,17 +459,11 @@ def test_rbr_list_with_existing_quests(quest_calculator: QuestCalculator):
         assert ranking["rbr_active"] is True, f"{quest_name} should have RBR active when in rbr_list"
 
     # Calculate MU1 with and without RBR to verify it's actually applied
-    result_with_rbr_list = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None
-    )
-    result_no_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
-    )
+    result_with_rbr_list = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None)
+    result_no_rbr = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None)
 
     # RBR should increase PD value
-    assert result_with_rbr_list["total_pd"] > result_no_rbr["total_pd"], (
-        "RBR boost should increase PD value when quest is in rbr_list"
-    )
+    assert result_with_rbr_list["total_pd"] > result_no_rbr["total_pd"], "RBR boost should increase PD value when quest is in rbr_list"
 
 
 def test_rbr_list_with_event_quest(quest_calculator: QuestCalculator):
@@ -551,16 +509,11 @@ def test_rbr_list_with_event_quest(quest_calculator: QuestCalculator):
         # if techniques aren't in the price guide. That's expected behavior.
         # For now, we skip this check if techniques aren't in price guide (focusing on CF4)
         try:
-            result_with_rbr = quest_calculator.calculate_quest_value(
-                event_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None
-            )
-            result_no_rbr = quest_calculator.calculate_quest_value(
-                event_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
-            )
+            result_with_rbr = quest_calculator.calculate_quest_value(event_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None)
+            result_no_rbr = quest_calculator.calculate_quest_value(event_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None)
             # If not in RBR rotation, RBR won't affect the result
             logger.info(
-                f"Event quest {event_quest.get('quest_name')} not in RBR rotation, "
-                f"RBR has no effect: {result_with_rbr['total_pd']} == {result_no_rbr['total_pd']}"
+                f"Event quest {event_quest.get('quest_name')} not in RBR rotation, RBR has no effect: {result_with_rbr['total_pd']} == {result_no_rbr['total_pd']}"
             )
         except PriceGuideExceptionItemNameNotFound:
             # Expected if event quest has areas eligible for techniques but techniques aren't in price guide
@@ -606,12 +559,8 @@ def test_rbr_list_with_nonexistent_quest(quest_calculator: QuestCalculator):
     assert ranking["rbr_active"] is True, "MU1 should have RBR active when in rbr_list"
 
     # Verify RBR is actually applied
-    result_with_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None
-    )
-    result_no_rbr = quest_calculator.calculate_quest_value(
-        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
-    )
+    result_with_rbr = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=True, weekly_boost=None, event_type=None)
+    result_no_rbr = quest_calculator.calculate_quest_value(mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None)
 
     assert result_with_rbr["total_pd"] > result_no_rbr["total_pd"], (
         "RBR boost should be applied to existing quest in rbr_list, even if list contains nonexistent quests"
@@ -638,7 +587,7 @@ def test_technique_drops_in_eligible_area(quest_calculator: QuestCalculator):
     rates = quest_calculator._calculate_technique_drop_rate(None, "Ruins 2")
     assert "Foie" in rates, "Foie should be eligible in Ruins 2"
     assert rates["Foie"] > 0, "Foie should have non-zero conditional drop rate in Ruins 2"
-    
+
     # Test that processing enemies now works (techniques are in price guide)
     pd, _, breakdown, _ = quest_calculator._process_enemy_drops("Arlan", 45.0, 1, "Skyly", 1.0, 1.0, "Ruins 2", None)
     # Foie Lv30 should be in the breakdown
@@ -677,9 +626,7 @@ def test_box_technique_drop_rate(quest_calculator: QuestCalculator):
     box_rates = quest_calculator._calculate_box_technique_drop_rate("Ruins 2")
     assert "Foie" in box_rates, "Foie should be eligible in Ruins 2 boxes"
     expected_rate = 1.0 / 1_000_000.0
-    assert abs(box_rates["Foie"] - expected_rate) < 0.0000001, (
-        f"Box technique drop rate should be ~1/1,000,000, got {box_rates['Foie']}"
-    )
+    assert abs(box_rates["Foie"] - expected_rate) < 0.0000001, f"Box technique drop rate should be ~1/1,000,000, got {box_rates['Foie']}"
 
     # Test that processing boxes now works (techniques are in price guide)
     section_id = "Skyly"
@@ -693,16 +640,14 @@ def test_monster_technique_drop_rate_scales_with_dar(quest_calculator: QuestCalc
     """Test that monster technique drop rates scale with DAR"""
     # Get conditional rates (assuming DAR is met)
     conditional_rates = quest_calculator._calculate_technique_drop_rate(None, "Ruins 2")
-    
+
     assert "Foie" in conditional_rates, "Foie should be eligible in Ruins 2"
 
     # With DAR of .30, the conditional rate should be about 1/1,000,000
     dar_30 = 0.30
     foie_rate = conditional_rates["Foie"] * dar_30
     expected_rate = 1.0 / 1_000_000.0
-    assert abs(foie_rate - expected_rate) < 0.0000001, (
-        f"Foie technique drop rate should be ~1/1,000,000, got {foie_rate}"
-    )
+    assert abs(foie_rate - expected_rate) < 0.0000001, f"Foie technique drop rate should be ~1/1,000,000, got {foie_rate}"
 
     # Okay, test that processing enemies now works (techniques are in price guide)
     pd, _, breakdown, _ = quest_calculator._process_enemy_drops("Dimenian", 100.0, 1, "Skyly", 1.0, 1.0, "Ruins 2", None)
@@ -727,28 +672,22 @@ def test_technique_drops_only_in_eligible_areas(quest_calculator: QuestCalculato
 
     for technique_name, area_name, should_be_eligible in test_cases:
         is_eligible = quest_calculator._is_area_eligible_for_technique(area_name, technique_name)
-        assert is_eligible == should_be_eligible, (
-            f"{technique_name} should {'be' if should_be_eligible else 'not be'} eligible in {area_name}, got {is_eligible}"
-        )
+        assert is_eligible == should_be_eligible, f"{technique_name} should {'be' if should_be_eligible else 'not be'} eligible in {area_name}, got {is_eligible}"
 
 
 def test_technique_drops_with_area_context(quest_calculator: QuestCalculator):
     """Test that technique drops require area context"""
     # Process enemy drops without area context - should not raise exception (no techniques calculated)
-    pd_no_area, _, breakdown_no_area, _ = quest_calculator._process_enemy_drops(
-        "Dimenian", 100.0, 1, "Skyly", 1.0, 1.0, None, None
-    )
+    pd_no_area, _, breakdown_no_area, _ = quest_calculator._process_enemy_drops("Dimenian", 100.0, 1, "Skyly", 1.0, 1.0, None, None)
 
     # Process enemy drops with area context (Ruins 2, eligible for Foie)
     # Should now work (techniques are in price guide)
-    pd_with_area, _, breakdown_with_area, _ = quest_calculator._process_enemy_drops(
-        "Dimenian", 100.0, 1, "Skyly", 1.0, 1.0, "Ruins 2", None
-    )
+    pd_with_area, _, breakdown_with_area, _ = quest_calculator._process_enemy_drops("Dimenian", 100.0, 1, "Skyly", 1.0, 1.0, "Ruins 2", None)
 
     # Verify no techniques in breakdown without area context
     foie_no_area = any("Foie Lv30" in key for key in breakdown_no_area.keys())
     assert not foie_no_area, "Foie Lv30 should not appear without area context"
-    
+
     # Verify techniques appear with area context
     foie_with_area = any("Foie Lv30" in key for key in breakdown_with_area.keys())
     assert foie_with_area, "Foie Lv30 should appear with area context"
@@ -790,23 +729,17 @@ def test_cf4_technique_drops(quest_calculator: QuestCalculator):
     assert "Zonde" not in rates_crater_east, "Zonde should NOT be eligible in Crater East"
 
     # Test that processing enemies with area context now works (techniques are in price guide)
-    pd, _, breakdown, _ = quest_calculator._process_enemy_drops(
-        "Sand Rappy", 10.0, 4, "Skyly", 1.0, 1.0, "Crater East", None
-    )
+    pd, _, breakdown, _ = quest_calculator._process_enemy_drops("Sand Rappy", 10.0, 4, "Skyly", 1.0, 1.0, "Crater East", None)
     # Rafoie Lv30 should be in the breakdown
     rafoie_found = any("Rafoie Lv30" in key for key in breakdown.keys())
     assert rafoie_found, "Rafoie Lv30 should be found in breakdown from Crater East"
 
-    pd, _, breakdown, _ = quest_calculator._process_enemy_drops(
-        "Sand Rappy", 10.0, 4, "Skyly", 1.0, 1.0, "Desert 2", None
-    )
+    pd, _, breakdown, _ = quest_calculator._process_enemy_drops("Sand Rappy", 10.0, 4, "Skyly", 1.0, 1.0, "Desert 2", None)
     # Razonde Lv30 should be in the breakdown
     razonde_found = any("Razonde Lv30" in key for key in breakdown.keys())
     assert razonde_found, "Razonde Lv30 should be found in breakdown from Desert 2"
 
-    pd, _, breakdown, _ = quest_calculator._process_enemy_drops(
-        "Sand Rappy", 10.0, 4, "Skyly", 1.0, 1.0, "Desert 3", None
-    )
+    pd, _, breakdown, _ = quest_calculator._process_enemy_drops("Sand Rappy", 10.0, 4, "Skyly", 1.0, 1.0, "Desert 3", None)
     # Grants Lv30 and Megid Lv30 should be in the breakdown
     grants_found = any("Grants Lv30" in key for key in breakdown.keys())
     megid_found = any("Megid Lv30" in key for key in breakdown.keys())
@@ -822,14 +755,14 @@ def test_cf4_technique_drops(quest_calculator: QuestCalculator):
 
     # Verify that only Grants and Megid are eligible for Desert 3 boxes
     box_technique_names = list(box_rates.keys())
-    assert len(box_technique_names) == 2, f"Should have exactly 2 techniques for Desert 3 boxes (Grants and Megid), found {len(box_technique_names)}: {box_technique_names}"
+    assert len(box_technique_names) == 2, (
+        f"Should have exactly 2 techniques for Desert 3 boxes (Grants and Megid), found {len(box_technique_names)}: {box_technique_names}"
+    )
     assert "Grants" in box_technique_names, "Grants should be in Desert 3 box techniques"
     assert "Megid" in box_technique_names, "Megid should be in Desert 3 box techniques"
 
     # Test that processing boxes works now that techniques are in price guide
-    pd, box_breakdown = quest_calculator._process_box_drops(
-        "Desert 3", {"box": 14}, 4, "Skyly"
-    )
+    pd, box_breakdown = quest_calculator._process_box_drops("Desert 3", {"box": 14}, 4, "Skyly")
     # Grants Lv30 and Megid Lv30 should be in the box breakdown
     grants_box_found = any("Grants Lv30" in key for key in box_breakdown.keys())
     megid_box_found = any("Megid Lv30" in key for key in box_breakdown.keys())

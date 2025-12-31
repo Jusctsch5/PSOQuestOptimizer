@@ -413,6 +413,9 @@ Provides the connective tissue between the other libraries.
 - mypy for type checking
 - uses pytest for testing+
 
+### Formatting
+All code should be formatted using ruff. The ruff extension for vscode is recommended, ruff can also be installed independently using `pip install ruff` and run via `ruff format` and `ruff check` to lint the code.
+
 ### Running unit tests
 All of the tests use relative path strategies to find test files, so running the tests from the root directory is recommended.
 ```bash

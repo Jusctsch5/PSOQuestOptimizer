@@ -167,9 +167,7 @@ class QuestOptimizer:
                 quest_rbr_active = quest_name.lower() in rbr_list_lower
 
             # Calculate quest value
-            value_result = self.calculator.calculate_quest_value(
-                quest_data, section_id, quest_rbr_active, weekly_boost, event_type
-            )
+            value_result = self.calculator.calculate_quest_value(quest_data, section_id, quest_rbr_active, weekly_boost, event_type)
 
             # Get quest time
             quest_time = quest_times.get(quest_name) if quest_times else None
@@ -262,9 +260,7 @@ class QuestOptimizer:
 
         return results
 
-    def print_rankings(
-        self, rankings: List[Dict], top_n: Optional[int] = None, show_details: bool = False, notable_items_count: int = 5
-    ):
+    def print_rankings(self, rankings: List[Dict], top_n: Optional[int] = None, show_details: bool = False, notable_items_count: int = 5):
         """
         Print quest rankings in a readable format.
 
@@ -298,9 +294,7 @@ class QuestOptimizer:
         max_item_width = max(max_item_width, 20)
 
         # Check if we're showing multiple Section IDs (need to add Section ID column)
-        show_section_id = len(rankings) > 0 and any(
-            result.get("section_id") != rankings[0].get("section_id") for result in rankings
-        )
+        show_section_id = len(rankings) > 0 and any(result.get("section_id") != rankings[0].get("section_id") for result in rankings)
 
         # Calculate maximum width needed for quest name column
         max_quest_name_width = len("Quest Name")  # At least as wide as header
@@ -429,17 +423,13 @@ class QuestOptimizer:
                 print("  Enemy Breakdown:")
 
                 # Create table header
-                print(
-                    f"  {'Enemy':<20} {'Drop':<30} {'DAR':<10} {'RDR':<12} {'Rate':<12} {'Count':<8} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
-                )
+                print(f"  {'Enemy':<20} {'Drop':<30} {'DAR':<10} {'RDR':<12} {'Rate':<12} {'Count':<8} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}")
                 print("  " + "-" * 138)
 
                 for enemy, data in result["enemy_breakdown"].items():
                     if "error" in data:
                         error_msg = data["error"][:28]  # Truncate long error messages
-                        print(
-                            f"  {enemy:<20} {error_msg:<30} {'-':<10} {'-':<12} {'-':<12} {data.get('count', 0):<8} {'-':<12} {'-':<12} {'-':<12}"
-                        )
+                        print(f"  {enemy:<20} {error_msg:<30} {'-':<10} {'-':<12} {'-':<12} {data.get('count', 0):<8} {'-':<12} {'-':<12} {'-':<12}")
                     else:
                         item = data.get("item", "Unknown")
                         count = data.get("count", 0)
@@ -458,7 +448,9 @@ class QuestOptimizer:
                         enemy_display = enemy[:18] if len(enemy) <= 18 else enemy[:15] + "..."
 
                         print(
-                            f"  {enemy_display:<20} {item_display:<30} {adjusted_dar:<10.6f} {adjusted_rdr:<12.8f} {actual_rate:<12.8f} {count:<8} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
+                            f"  {enemy_display:<20} {item_display:<30} "
+                            f"{adjusted_dar:<10.6f} {adjusted_rdr:<12.8f} {actual_rate:<12.8f} "
+                            f"{count:<8} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
                         )
                 print()
 
@@ -476,9 +468,7 @@ class QuestOptimizer:
                         count = data.get("count", 0)
                         expected_pd_drops = data.get("expected_pd_drops", 0.0)
 
-                        print(
-                            f"  {enemy_display:<20} {adjusted_dar:<10.6f} {pd_drop_rate:<12.8f} {count:<8} {expected_pd_drops:<15.8f}"
-                        )
+                        print(f"  {enemy_display:<20} {adjusted_dar:<10.6f} {pd_drop_rate:<12.8f} {count:<8} {expected_pd_drops:<15.8f}")
 
                     print(f"  {'Total':<20} {'':<10} {'':<12} {'':<8} {total_pd_drops:<15.8f}")
                     print()
@@ -486,9 +476,7 @@ class QuestOptimizer:
                 # Box Drop Breakdown table
                 if result.get("box_breakdown"):
                     print("  Box Drop Breakdown:")
-                    print(
-                        f"  {'Item':<30} {'Box Count':<12} {'Drop Rate':<12} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
-                    )
+                    print(f"  {'Item':<30} {'Box Count':<12} {'Drop Rate':<12} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}")
                     print("  " + "-" * 102)
 
                     total_box_pd = result.get("box_pd", 0.0)
@@ -502,9 +490,7 @@ class QuestOptimizer:
                         # Truncate long item names
                         item_display = item_name[:28] if len(item_name) <= 28 else item_name[:25] + "..."
 
-                        print(
-                            f"  {item_display:<30} {box_count:<12} {drop_rate:<12.8f} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
-                        )
+                        print(f"  {item_display:<30} {box_count:<12} {drop_rate:<12.8f} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}")
 
                     print(f"  {'Total':<30} {'':<12} {'':<12} {'':<12} {'':<12} {'':<12} {total_box_pd:<12.8f}")
                     print()
@@ -532,7 +518,7 @@ class QuestOptimizer:
                             technique_breakdown[technique_key]["expected_drops"] += data.get("expected_drops", 0.0)
                             technique_breakdown[technique_key]["pd_value"] += data.get("pd_value", 0.0)
                             technique_breakdown[technique_key]["enemy_count"] += data.get("count", 0.0)
-                    
+
                     # Calculate effective average drop rate: expected_drops / enemy_count
                     # This accounts for different DARs across enemy types in the same area
                     for technique_key in technique_breakdown:
@@ -548,10 +534,7 @@ class QuestOptimizer:
 
                 print("  Technique Disk Breakdown from Enemies:")
                 if technique_breakdown:
-                    header = (
-                        f"  {'Technique':<20} {'Area':<25} {'Drop Rate':<12} "
-                        f"{'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
-                    )
+                    header = f"  {'Technique':<20} {'Area':<25} {'Drop Rate':<12} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
                     print(header)
                     print("  " + "-" * 102)
 
@@ -576,10 +559,7 @@ class QuestOptimizer:
                         if enemy_count > 0:
                             source_info = f" ({enemy_count:.0f} enemies)"
 
-                        row = (
-                            f"  {technique_display:<20} {area_display:<25} {drop_rate:<12.8f} "
-                            f"{expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
-                        )
+                        row = f"  {technique_display:<20} {area_display:<25} {drop_rate:<12.8f} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
                         print(row)
                         if source_info:
                             print(f"    {source_info}")
@@ -679,9 +659,7 @@ Examples:
         help="Active event type: Easter, Halloween, Christmas, ValentinesDay, or Anniversary (default: None)",
     )
 
-    parser.add_argument(
-        "--episode", type=int, choices=[1, 2, 4], default=None, help="Filter by episode (1, 2, or 4). Omit for all episodes"
-    )
+    parser.add_argument("--episode", type=int, choices=[1, 2, 4], default=None, help="Filter by episode (1, 2, or 4). Omit for all episodes")
 
     parser.add_argument("--top-n", type=int, default=None, help="Show only top N quests (default: show all)")
 
@@ -703,9 +681,7 @@ Examples:
         help="Path to drop_tables_ultimate.json (default: drop_tables/drop_tables_ultimate.json)",
     )
 
-    parser.add_argument(
-        "--price-guide", type=str, default=None, help="Path to price guide directory (default: ../price_guide/data)"
-    )
+    parser.add_argument("--price-guide", type=str, default=None, help="Path to price guide directory (default: ../price_guide/data)")
 
     parser.add_argument("--quests-data", type=str, default=None, help="Path to quests.json file (default: quests/quests.json)")
 

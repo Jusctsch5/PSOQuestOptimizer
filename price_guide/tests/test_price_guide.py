@@ -236,18 +236,18 @@ def test_rare_weapons_no_inestimable_hit_values(fixed_price_guide: PriceGuideFix
 def test_technique_disk_pricing_valid_level(fixed_price_guide: PriceGuideFixed):
     """Test technique disk pricing with valid levels"""
     pg = fixed_price_guide
-    
+
     # Test Foie Lv30 - should return a price (50-70 range, average = 60)
     pg.bps = BasePriceStrategy.AVERAGE
     price = pg.get_price_disk("Foie", 30)
     assert price > 0, "Foie Lv30 should have a price"
     assert 50 <= price <= 70, f"Foie Lv30 should be in range 50-70, got {price}"
-    
+
     # Test Rafoie Lv30 - should return a price (30-70 range)
     price = pg.get_price_disk("Rafoie", 30)
     assert price > 0, "Rafoie Lv30 should have a price"
     assert 30 <= price <= 70, f"Rafoie Lv30 should be in range 30-70, got {price}"
-    
+
     # Test Grants Lv30 - should return a price (20-40 range)
     price = pg.get_price_disk("Grants", 30)
     assert price > 0, "Grants Lv30 should have a price"
@@ -261,7 +261,7 @@ def test_technique_disk_pricing_worthless_levels(fixed_price_guide: PriceGuideFi
     (well, excluding 29 and grants/megid levels)
     """
     pg = fixed_price_guide
-    
+
     assert pg.get_price_disk("Foie", 14) == 0, "Foie Lv14 is worthless"
     assert pg.get_price_disk("Foie", 16) == 0, "Foie Lv16 is worthless"
     assert pg.get_price_disk("Foie", 19) == 0, "Foie Lv19 is worthless"
@@ -274,50 +274,45 @@ def test_technique_disk_pricing_worthless_levels(fixed_price_guide: PriceGuideFi
     assert pg.get_price_disk("Anti", 4) == 0, "A Lv15 is worthless"
 
 
-
 def test_technique_disk_pricing_case_insensitive(fixed_price_guide: PriceGuideFixed):
     """Test that technique disk pricing is case-insensitive"""
     pg = fixed_price_guide
-    
+
     pg.bps = BasePriceStrategy.AVERAGE
     price_upper = pg.get_price_disk("FOIE", 30)
     price_lower = pg.get_price_disk("foie", 30)
     price_mixed = pg.get_price_disk("Foie", 30)
-    
-    assert price_upper == price_lower == price_mixed, (
-        f"Case-insensitive lookup should work: {price_upper} == {price_lower} == {price_mixed}"
-    )
+
+    assert price_upper == price_lower == price_mixed, f"Case-insensitive lookup should work: {price_upper} == {price_lower} == {price_mixed}"
 
 
 def test_technique_disk_pricing_different_strategies(fixed_price_guide: PriceGuideFixed):
     """Test technique disk pricing with different base price strategies"""
     pg = fixed_price_guide
-    
+
     # Test MINIMUM strategy
     pg.bps = BasePriceStrategy.MINIMUM
     price_min = pg.get_price_disk("Foie", 30)
     assert price_min == 50, f"Foie Lv30 MINIMUM should be 50, got {price_min}"
-    
+
     # Test MAXIMUM strategy
     pg.bps = BasePriceStrategy.MAXIMUM
     price_max = pg.get_price_disk("Foie", 30)
     assert price_max == 70, f"Foie Lv30 MAXIMUM should be 70, got {price_max}"
-    
+
     # Test AVERAGE strategy
     pg.bps = BasePriceStrategy.AVERAGE
     price_avg = pg.get_price_disk("Foie", 30)
     assert price_avg == 60, f"Foie Lv30 AVERAGE should be 60, got {price_avg}"
-    
+
     # Verify ordering
-    assert price_min <= price_avg <= price_max, (
-        f"Price ordering should be: {price_min} <= {price_avg} <= {price_max}"
-    )
+    assert price_min <= price_avg <= price_max, f"Price ordering should be: {price_min} <= {price_avg} <= {price_max}"
 
 
 def test_technique_disk_pricing_negative(fixed_price_guide: PriceGuideFixed):
     """Test technique disk pricing negative cases"""
     pg = fixed_price_guide
-    
+
     try:
         _ = pg.get_price_disk("Foie", 31)
         assert False, "Foie Lv31 does not exist"
@@ -359,7 +354,7 @@ def test_technique_disk_pricing_multiple_techniques(fixed_price_guide: PriceGuid
     """Test multiple different techniques to ensure they all work"""
     pg = fixed_price_guide
     pg.bps = BasePriceStrategy.AVERAGE
-    
+
     techniques = [
         ("Barta", 30, 20, 40),
         ("Zonde", 30, 20, 40),
@@ -367,11 +362,8 @@ def test_technique_disk_pricing_multiple_techniques(fixed_price_guide: PriceGuid
         ("Megid", 30, 25, 50),
         ("Gifoie", 30, 100, 130),
     ]
-    
+
     for technique_name, level, min_price, max_price in techniques:
         price = pg.get_price_disk(technique_name, level)
         assert price > 0, f"{technique_name} Lv{level} should have a price"
-        assert min_price <= price <= max_price, (
-            f"{technique_name} Lv{level} should be in range {min_price}-{max_price}, got {price}"
-        )
-        
+        assert min_price <= price <= max_price, f"{technique_name} Lv{level} should be in range {min_price}-{max_price}, got {price}"

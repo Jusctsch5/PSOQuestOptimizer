@@ -85,9 +85,7 @@ Examples:
         help="Drop area (e.g., 'Forest 1', 'Ruins 3', 'VR Temple Alpha'). Only affects weapons (hit probability).",
     )
 
-    parser.add_argument(
-        "--price-guide", type=str, default=None, help="Path to price guide data directory (default: ./price_guide/data)"
-    )
+    parser.add_argument("--price-guide", type=str, default=None, help="Path to price guide data directory (default: ./price_guide/data)")
 
     parser.add_argument(
         "--price-strategy",
@@ -133,7 +131,7 @@ Examples:
     if result is None:
         print(f"Error: Could not find '{item_name}' in any item category")
         return 1
-    
+
     item_type, value = result
     print(f"Item type: {item_type}, Value: {value}")
     if print_breakdown:

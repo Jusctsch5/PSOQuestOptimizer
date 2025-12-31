@@ -477,14 +477,7 @@ def get_hit_probability(drop_area: Optional[str] = None) -> float:
         return area_rates["hit"] / total_rate
     else:
         # Dataclass format
-        total_rate = (
-            area_rates.native
-            + area_rates.abeast
-            + area_rates.machine
-            + area_rates.dark
-            + area_rates.hit
-            + area_rates.no_attribute
-        )
+        total_rate = area_rates.native + area_rates.abeast + area_rates.machine + area_rates.dark + area_rates.hit + area_rates.no_attribute
         if total_rate == 0:
             return 0.0
         return area_rates.hit / total_rate

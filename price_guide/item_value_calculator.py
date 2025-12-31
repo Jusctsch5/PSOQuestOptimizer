@@ -16,7 +16,7 @@ from price_guide.weapon_value_calculator import WeaponValueCalculator
 class ItemValueCalculator:
     """
     Unified calculator for item values across all item types.
-    
+
     This class wraps WeaponValueCalculator and ArmorValueCalculator,
     providing a single interface to calculate values for any item type.
     """
@@ -128,4 +128,3 @@ class ItemValueCalculator:
         elif item_type == "barrier":
             self.armor_calculator.print_barrier_calculation_breakdown(item_name)
         # Other item types don't have detailed breakdowns
-

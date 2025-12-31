@@ -356,10 +356,7 @@ class WeaponValueCalculator:
                     }
 
         # Pattern 5 probabilities
-        pattern5_probs = {
-            attr_val: prob
-            for attr_val, prob in sorted(PATTERN_ATTRIBUTE_PROBABILITIES[5].items())
-        }
+        pattern5_probs = {attr_val: prob for attr_val, prob in sorted(PATTERN_ATTRIBUTE_PROBABILITIES[5].items())}
 
         # Attribute contribution details
         attribute_details = []
@@ -370,9 +367,7 @@ class WeaponValueCalculator:
                 if attr_type in modifiers and attr_name in attr_results:
                     modifier_price_str = modifiers[attr_type]
                     try:
-                        modifier_price = self.price_guide.get_price_from_range(
-                            modifier_price_str, self.price_guide.bps
-                        )
+                        modifier_price = self.price_guide.get_price_from_range(modifier_price_str, self.price_guide.bps)
                         attr_contrib = attr_results[attr_name] * modifier_price
                         attribute_details.append(
                             {
@@ -405,7 +400,7 @@ class WeaponValueCalculator:
     def print_calculation_breakdown(self, weapon_name: str, drop_area: Optional[str] = None):
         """Print detailed breakdown of the calculation."""
         breakdown = self.get_calculation_breakdown(weapon_name, drop_area)
-        
+
         avg_value = breakdown["total_value"]
         weapon_name_display = breakdown["weapon_name"]
         area_attribute_probs = breakdown["area_attribute_probs"]
@@ -458,10 +453,7 @@ class WeaponValueCalculator:
 
             # Show detailed Pattern 5 breakdown with combined probabilities
             print(f"\nHit Value Prices and Expected Values:")
-            print(
-                f"  {'Hit':<6} {'Combined Prob':<20} {'Teched Hit':<12} "
-                f"{'Price Range':<20} {'Price (avg)':<15} {'Expected Value':<18}"
-            )
+            print(f"  {'Hit':<6} {'Combined Prob':<20} {'Teched Hit':<12} {'Price Range':<20} {'Price (avg)':<15} {'Expected Value':<18}")
             print(f"  {'-' * 6} {'-' * 20} {'-' * 12} {'-' * 20} {'-' * 15} {'-' * 18}")
 
             total_expected = 0.0
@@ -477,20 +469,12 @@ class WeaponValueCalculator:
                 teched_hit = item.get("teched_hit", item["hit_value"] + 10)
                 price_range = item.get("price_range", "N/A")
                 price_val = item.get("price", 0.0)
-                print(
-                    f"  {item['hit_value']:<6} {format_probability(combined_prob):<20} "
-                    f"{teched_hit:<12} {price_range:<20} {price_val:<15.4f} {expected_value:<18.7f}"
-                )
+                print(f"  {item['hit_value']:<6} {format_probability(combined_prob):<20} {teched_hit:<12} {price_range:<20} {price_val:<15.4f} {expected_value:<18.7f}")
 
             # Verify probabilities sum to 100%
-            print(
-                f"  {'Total':<6} {format_probability(total_combined_prob_check):<20} "
-                f"{'':<12} {'':<20} {'':<15} {total_expected:<18.7f}"
-            )
+            print(f"  {'Total':<6} {format_probability(total_combined_prob_check):<20} {'':<12} {'':<20} {'':<15} {total_expected:<18.7f}")
             print(f"\n  Probability Check:")
-            print(
-                f"    Combined probabilities (no hit + all hit values) sum to: {format_probability(total_combined_prob_check)}"
-            )
+            print(f"    Combined probabilities (no hit + all hit values) sum to: {format_probability(total_combined_prob_check)}")
 
         # Calculate and print attribute contribution (multiply by prices)
         if attribute_details:

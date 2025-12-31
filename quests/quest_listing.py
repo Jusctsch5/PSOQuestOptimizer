@@ -15,17 +15,19 @@ BOX_TYPE_ARMOR = "box_armor"  # Cannot drop rare items
 BOX_TYPE_WEAPON = "box_weapon"  # Cannot drop rare items
 BOX_TYPE_RARELESS = "box_rareless"  # Cannot drop rare items
 
+
 # Mapping from quest area names to drop table area names
 class Area(Enum):
     """Enum for quest areas."""
+
     # Episode 1
     FOREST_1 = "Forest 1"
     FOREST_2 = "Forest 2"
-    UNDER_THE_DOME = "Under the Dome"  # Dragon 
+    UNDER_THE_DOME = "Under the Dome"  # Dragon
     CAVE_1 = "Cave 1"
     CAVE_2 = "Cave 2"
     CAVE_3 = "Cave 3"
-    UNDERGROUND_CHANNEL = "Underground Channel" # Dal Ra Lie
+    UNDERGROUND_CHANNEL = "Underground Channel"  # Dal Ra Lie
     MINE_1 = "Mine 1"
     MINE_2 = "Mine 2"
     MONITOR_ROOM = "Monitor Room"  # Vol Opt
@@ -39,7 +41,7 @@ class Area(Enum):
     VR_TEMPLE_BETA = "VR Temple Beta"
     VR_TEMPLE_FINAL = "VR Temple Final"  #  Barba Ray
 
-    VR_SPACESHIP_ALPHA = "VR Spaceship Alpha"    
+    VR_SPACESHIP_ALPHA = "VR Spaceship Alpha"
     VR_SPACESHIP_BETA = "VR Spaceship Beta"
     VR_SPACESHIP_FINAL = "VR Spaceship Final"  # Gol Dragon
 
@@ -73,13 +75,11 @@ AREA_MAPPING = {
     Area.UNDERGROUND_CHANNEL: Area.MINE_1,
     Area.MONITOR_ROOM: Area.RUINS_1,
     Area.QUESTION_MARKS: Area.RUINS_3,
-
     # Episode 2
     Area.VR_TEMPLE_FINAL: Area.VR_SPACESHIP_ALPHA,
     Area.VR_SPACESHIP_FINAL: Area.CLIFFS_OF_GAL_DA_VAL,
-    Area.CLIFFS_OF_GAL_DA_VAL:  Area.SEABED_UPPER_LEVELS,
+    Area.CLIFFS_OF_GAL_DA_VAL: Area.SEABED_UPPER_LEVELS,
     Area.TEST_SUBJECT_DISPOSAL_AREA: Area.METEOR_IMPACT_SITE,
-
     # Episode 4
     Area.METEOR_IMPACT_SITE: Area.METEOR_IMPACT_SITE,
 }
@@ -87,7 +87,9 @@ AREA_MAPPING = {
 
 class CouldNotFindAreaError(Exception):
     """Exception raised when a quest area mapping is not found."""
+
     pass
+
 
 class QuestListing:
     """Quest listing abstraction for accessing quest data."""
@@ -188,7 +190,7 @@ class QuestListing:
         """
         # Case-insensitive lookup
         area_name_lower = area_name.lower()
-        
+
         # Case-insensitive lookup for Area enum
         for quest_area in Area:
             if quest_area.value.lower() == area_name_lower:
@@ -202,7 +204,6 @@ class QuestListing:
             return AREA_MAPPING[area_enum].value
         else:
             return area_enum.value
-
 
     def is_rare_dropping_box(self, box_type: str) -> bool:
         """
@@ -229,4 +230,3 @@ class QuestListing:
         """
         boxes = self.get_boxes_for_area(quest_name, area_name)
         return boxes.get(BOX_TYPE_REGULAR, 0)
-

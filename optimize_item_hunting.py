@@ -21,31 +21,31 @@ from quest_optimizer.quest_calculator import (
 def calculate_runs_for_probability(drop_rate: float, target_probability: float = 0.95) -> float:
     """
     Calculate the number of runs needed to reach a target probability of at least one drop.
-    
+
     Formula: P(at least 1 drop in N runs) = 1 - (1 - p)^N
     Solving for N: N = ln(1 - target_probability) / ln(1 - drop_rate)
-    
+
     Args:
         drop_rate: Probability of drop per run (0.0 to 1.0)
         target_probability: Target probability of at least one drop (default: 0.95 for 95%)
-    
+
     Returns:
         Number of runs needed (float)
     """
     if drop_rate <= 0:
-        return float('inf')
+        return float("inf")
     if drop_rate >= 1:
         return 1.0
     if target_probability >= 1:
-        return float('inf')
-    
+        return float("inf")
+
     # N = ln(1 - target_probability) / ln(1 - drop_rate)
     numerator = math.log(1 - target_probability)
     denominator = math.log(1 - drop_rate)
-    
+
     if denominator == 0:
-        return float('inf')
-    
+        return float("inf")
+
     return numerator / denominator
 
 
@@ -63,31 +63,29 @@ def display_disk_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
     if rbr_active or weekly_boost:
         print(f"  (RBR: {'Yes' if rbr_active else 'No'}, Weekly Boost: {weekly_boost.value if weekly_boost else 'None'})")
     print(f"{'=' * 80}\n")
-    
+
     # Group by area
     area_groups = defaultdict(list)
     for enemy_info in enemy_drops:
-        area = enemy_info.get('area', 'Unknown')
+        area = enemy_info.get("area", "Unknown")
         area_groups[area].append(enemy_info)
-    
+
     # Display each area
     for area_name in sorted(area_groups.keys()):
         area_enemies = area_groups[area_name]
         print(f"Area: {area_name}")
         print(f"  Eligible Enemies: {len(area_enemies)} enemy type(s)")
-        
+
         # Calculate aggregate probabilities for 10/100/1000 kills
         # Use the highest drop rate in the area as representative
         if area_enemies:
-            max_drop_rate = max(e['drop_rate'] for e in area_enemies)
+            max_drop_rate = max(e["drop_rate"] for e in area_enemies)
             if max_drop_rate > 0:
                 print(f"  Aggregate Probabilities (using highest drop rate in area):")
                 for num_kills in [10, 100, 1000]:
                     prob = 1 - (1 - max_drop_rate) ** num_kills
                     print(f"    {num_kills} enemies killed: {prob * 100:.2f}% chance of at least 1 drop")
         print()
-
-
 
 
 def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
@@ -104,7 +102,7 @@ def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
 
     for i, enemy_info in enumerate(enemy_drops, 1):
         print(f"{i}. {enemy_info['enemy']} (Episode {enemy_info['episode']})")
-        if enemy_info.get('section_id') is not None:
+        if enemy_info.get("section_id") is not None:
             print(f"   Section ID: {enemy_info['section_id']}")
         dar_str = f"{enemy_info['dar']:.4f}"
         rdr_str = f"{enemy_info['rdr']:.6f}"
@@ -114,7 +112,7 @@ def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
             rdr_str += f" -> {enemy_info['adjusted_rdr']:.6f}"
         print(f"   DAR: {dar_str}, RDR: {rdr_str}")
         print(f"   Drop Rate: {enemy_info['drop_rate_percent']:.6f}% per kill")
-        drop_rate = enemy_info['drop_rate']
+        drop_rate = enemy_info["drop_rate"]
         if drop_rate > 0:
             expected_kills = 1 / drop_rate
             print(f"   (1 in {expected_kills:.1f} kills)")
@@ -143,12 +141,12 @@ def display_box_drops(box_drops, item_name):
 
     for i, box_info in enumerate(box_drops, 1):
         print(f"{i}. {box_info['area']} (Episode {box_info['episode']})")
-        if box_info.get('section_id') is not None:
+        if box_info.get("section_id") is not None:
             print(f"   Section ID: {box_info['section_id']}")
         else:
             print(f"   (technique drop - not Section ID dependent)")
         print(f"   Drop Rate: {box_info['drop_rate_percent']:.6f}% per box")
-        drop_rate = box_info['drop_rate']
+        drop_rate = box_info["drop_rate"]
         if drop_rate > 0:
             expected_boxes = 1 / drop_rate
             print(f"   (1 in {expected_boxes:.1f} boxes)")
@@ -164,9 +162,7 @@ def display_box_drops(box_drops, item_name):
         print()
 
 
-def display_results(
-    results, item_name, top_n: Optional[int] = 10, is_disk: bool = False, show_details: bool = False
-):
+def display_results(results, item_name, top_n: Optional[int] = 10, is_disk: bool = False, show_details: bool = False):
     """Display the search results in a formatted way."""
     if not results:
         print(f"\nNo quests found that drop '{item_name}'.")
@@ -183,7 +179,7 @@ def display_results(
         print(f"{i}. Quest: {result['quest_name']} ({result['long_name']})")
         print(f"   Section ID: {result['section_id']}")
         print(f"   Drop Probability: {result['percentage']:.6f}% per quest run")
-        probability = result['probability']
+        probability = result["probability"]
         expected_runs = 1 / probability
         print(f"   (1 in {expected_runs:.1f} quest runs)")
         # Euler's number: probability of at least 1 drop after N runs = 1 - (1 - p)^N
@@ -200,7 +196,7 @@ def display_results(
             # Group technique contributions by area
             area_contributions = defaultdict(lambda: {"total_prob": 0.0, "enemies": [], "total_count": 0.0})
             box_contributions = []
-            
+
             for contrib in result["contributions"]:
                 if contrib.get("source") == "Box":
                     box_contributions.append(contrib)
@@ -209,16 +205,16 @@ def display_results(
                     area_contributions[area]["total_prob"] += contrib["probability"]
                     area_contributions[area]["enemies"].append(contrib)
                     area_contributions[area]["total_count"] += contrib.get("count", 0.0)
-            
+
             # Display area-grouped contributions
             for area in sorted(area_contributions.keys()):
                 area_data = area_contributions[area]
                 print(f"     - Area: {area}")
                 print(f"       Total Contribution: {area_data['total_prob'] * 100:.6f}%")
-                enemy_types = len(area_data['enemies'])
-                total_enemies = area_data['total_count']
+                enemy_types = len(area_data["enemies"])
+                total_enemies = area_data["total_count"]
                 print(f"       ({total_enemies:.0f} total enemies in this area, of {enemy_types} enemy type(s))")
-            
+
             # Display box contributions
             for contrib in box_contributions:
                 print(f"     - Box ({contrib['area']}): {contrib['box_count']} boxes")
@@ -263,7 +259,7 @@ def display_results(
 
     # Show best overall
     best = results[0]
-    best_probability = best['probability']
+    best_probability = best["probability"]
     best_expected_runs = 1 / best_probability
     euler_probability = 1 - math.exp(-1)
     best_runs_95 = calculate_runs_for_probability(best_probability, 0.95)
@@ -396,11 +392,9 @@ def main():
 
     # Identify item type
     item_type = calculator.price_guide.identify_item_type(item)
-    
+
     # Find enemies that drop the item
-    enemy_drops = calculator.find_enemies_that_drop_weapon(
-        item, rbr_active=rbr_active, rbr_list=rbr_list, weekly_boost=weekly_boost, event_type=event_type
-    )
+    enemy_drops = calculator.find_enemies_that_drop_weapon(item, rbr_active=rbr_active, rbr_list=rbr_list, weekly_boost=weekly_boost, event_type=event_type)
 
     # Display enemy drops based on item type
     if item_type == "disk":

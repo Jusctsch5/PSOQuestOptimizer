@@ -736,98 +736,96 @@ class QuestCalculator:
     def _is_area_eligible_for_technique(self, area_name: str, technique_name: str) -> bool:
         """
         Check if an area is eligible for a specific level 30 technique.
-        
+
         Args:
             area_name: Area name to check
             technique_name: Technique name (e.g., "Foie", "Barta")
-        
+
         Returns:
             True if area is eligible for the technique, False otherwise
         """
         if technique_name not in LEVEL_30_TECHNIQUE_AREAS:
             return False
-        
+
         eligible_areas = LEVEL_30_TECHNIQUE_AREAS[technique_name]
         # Check exact match or case-insensitive match
         area_name_lower = area_name.lower()
         return any(area.lower() == area_name_lower for area in eligible_areas)
 
-    def _calculate_technique_drop_rate(
-        self, event_type: Optional[EventType], area_name: str
-    ) -> Dict[str, float]:
+    def _calculate_technique_drop_rate(self, event_type: Optional[EventType], area_name: str) -> Dict[str, float]:
         """
         Calculate level 30 technique drop rates, assuming DAR has been met (something is dropping).
-        
+
         This calculates the conditional probability: given that something drops,
         what's the probability it's a level 30 technique?
-        
+
         Args:
             event_type: Active event type (None if no event)
             area_name: Area where monster is killed
-        
+
         Returns:
             Dictionary mapping technique names to their conditional drop rates
             (caller must multiply by DAR to get actual drop rate)
         """
         technique_rates = {}
-        
+
         # Conditional rate calculation (assuming DAR has been met):
-        # (1 - event_item_rate) × (1 - music_disk_rate) × (1/3 for Tool) × 
+        # (1 - event_item_rate) × (1 - music_disk_rate) × (1/3 for Tool) ×
         # (0.1 for Technique Disk) × (0.001 for specific technique) × (0.1 for level 30)
         # Note: RDR doesn't affect technique drops (techniques are not rare drops)
-        
+
         # Event item rate (must fail during events)
         event_item_rate = 0.0
         if event_type in [EventType.Easter, EventType.Anniversary, EventType.Halloween, EventType.Christmas]:
             # Approximate event item rate - this is a placeholder, actual rate varies by event
             event_item_rate = 0.001  # Small rate, will be refined if needed
-        
+
         # Calculate conditional rate (given something drops)
         conditional_rate = (
-            (1.0 - event_item_rate) *  # (1 - event_item_rate)
-            (1.0 - MUSIC_DISK_DROP_RATE) *  # (1 - music_disk_rate)
-            TOOL_DROP_RATE *  # 1/3 for Tool
-            TECHNIQUE_DISK_RATE *  # 0.1 for Technique Disk
-            SPECIFIC_TECHNIQUE_RATE *  # 0.001 for specific technique
-            LEVEL_30_RATE  # 0.1 for level 30
+            (1.0 - event_item_rate)  # (1 - event_item_rate)
+            * (1.0 - MUSIC_DISK_DROP_RATE)  # (1 - music_disk_rate)
+            * TOOL_DROP_RATE  # 1/3 for Tool
+            * TECHNIQUE_DISK_RATE  # 0.1 for Technique Disk
+            * SPECIFIC_TECHNIQUE_RATE  # 0.001 for specific technique
+            * LEVEL_30_RATE  # 0.1 for level 30
         )
-        
+
         # Calculate rate for each technique if area is eligible
         for technique_name in LEVEL_30_TECHNIQUE_AREAS.keys():
             if self._is_area_eligible_for_technique(area_name, technique_name):
                 technique_rates[technique_name] = conditional_rate
-        
+
         return technique_rates
 
     def _calculate_box_technique_drop_rate(self, area_name: str) -> Dict[str, float]:
         """
         Calculate level 30 technique drop rates for boxes in a specific area.
-        
+
         Note: Box drops (including techniques) are NOT affected by RDR multipliers or section_id.
         Techniques drop independently of rare drop rates.
-        
+
         Args:
             area_name: Area where box is located
-        
+
         Returns:
             Dictionary mapping technique names to their drop rates
         """
         technique_rates = {}
-        
+
         # Base rate: 0.1 (Tool) × 0.1 (Technique Disk) × 0.001 (specific technique) × 0.1 (level 30)
         # = 1/1,000,000 per box
         base_rate = (
-            0.1 *  # Tool roll (10%)
-            TECHNIQUE_DISK_RATE *  # 0.1 for Technique Disk
-            SPECIFIC_TECHNIQUE_RATE *  # 0.001 for specific technique
-            LEVEL_30_RATE  # 0.1 for level 30
+            0.1  # Tool roll (10%)
+            * TECHNIQUE_DISK_RATE  # 0.1 for Technique Disk
+            * SPECIFIC_TECHNIQUE_RATE  # 0.001 for specific technique
+            * LEVEL_30_RATE  # 0.1 for level 30
         )
-        
+
         # Calculate rate for each technique if area is eligible
         for technique_name in LEVEL_30_TECHNIQUE_AREAS.keys():
             if self._is_area_eligible_for_technique(area_name, technique_name):
                 technique_rates[technique_name] = base_rate
-        
+
         return technique_rates
 
     def _calculate_boost_multipliers(
@@ -840,13 +838,13 @@ class QuestCalculator:
         """
         Calculate boost multipliers for a quest, dependent on a number of factors.
         TODO: Does not account for daily luck boost.
-        
+
         Args:
             quest_data: Quest data dictionary
             rbr_active: Whether RBR boost is active
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             event_type: Type of active event (EventType enum or None)
-        
+
         Returns:
             Tuple of (dar_multiplier, rdr_multiplier, enemy_rate_multiplier)
         """
@@ -888,10 +886,10 @@ class QuestCalculator:
     def _calculate_rare_enemy_rates(enemy_rate_multiplier: float) -> Tuple[float, float]:
         """
         Calculate rare enemy spawn rates with boosts.
-        
+
         Args:
             enemy_rate_multiplier: Multiplier for enemy rate boosts
-        
+
         Returns:
             Tuple of (rare_enemy_rate, kondrieu_rate)
         """
@@ -903,16 +901,16 @@ class QuestCalculator:
         # Cap at reasonable maximum (e.g., 1/256 = ~0.39%)
         rare_enemy_rate = min(rare_enemy_rate, 1.0 / 256.0)
         kondrieu_rate = min(kondrieu_rate, 1.0)
-        
+
         return rare_enemy_rate, kondrieu_rate
 
     def _normalize_quest_enemies(self, enemies: Dict[str, int]) -> Dict[str, int]:
         """
         Normalize quest enemy names from non-Ultimate to Ultimate names.
-        
+
         Args:
             enemies: Dictionary mapping enemy names to counts
-        
+
         Returns:
             Dictionary mapping normalized (Ultimate) enemy names to counts
         """
@@ -928,26 +926,26 @@ class QuestCalculator:
     def _adjust_dar(base_dar: float, multiplier: float) -> float:
         """
         Adjust DAR (Drop Anything Rate) with a multiplier, capping at 1.0.
-        
+
         Args:
             base_dar: Base DAR value (0.0 to 1.0)
             multiplier: Multiplier to apply (e.g., 1.25 for +25% boost)
-        
+
         Returns:
             Adjusted DAR value, capped at 1.0
         """
         return min(base_dar * multiplier, 1.0)
 
     def _process_enemy_drops(
-        self, 
-        enemy_name: str, 
-        count: float, 
-        episode: int, 
-        section_id: str, 
-        dar_multiplier: float, 
-        rdr_multiplier: float, 
-        area_name: Optional[str] = None, 
-        event_type: Optional[EventType] = None
+        self,
+        enemy_name: str,
+        count: float,
+        episode: int,
+        section_id: str,
+        dar_multiplier: float,
+        rdr_multiplier: float,
+        area_name: Optional[str] = None,
+        event_type: Optional[EventType] = None,
     ) -> Tuple[float, float, Dict, Dict]:
         """
         Process drops for a single enemy type.
@@ -1055,12 +1053,11 @@ class QuestCalculator:
                 except PriceGuideExceptionItemNameNotFound:
                     # Technique not in price guide - this is a data issue that should be fixed
                     raise PriceGuideExceptionItemNameNotFound(
-                        f"Technique {technique_item_name} not found in price guide. "
-                        f"This technique can drop in {area_name} but is missing from price data."
+                        f"Technique {technique_item_name} not found in price guide. This technique can drop in {area_name} but is missing from price data."
                     )
                 technique_pd_value = expected_technique_drops * technique_price_pd
                 total_pd += technique_pd_value
-                
+
                 # Add to breakdown
                 if technique_item_name not in enemy_breakdown:
                     enemy_breakdown[technique_item_name] = {
@@ -1121,9 +1118,7 @@ class QuestCalculator:
 
         boxes_data = self.drop_data[episode_key].get("boxes", {})
         if mapped_area not in boxes_data:
-            raise DropTableNotFoundError(
-                f"Box drop area not found in drop table for episode {episode} and area name: '{area_name}'"
-            )
+            raise DropTableNotFoundError(f"Box drop area not found in drop table for episode {episode} and area name: '{area_name}'")
 
         section_ids_data = boxes_data[mapped_area].get("section_ids", {})
         if section_id not in section_ids_data:
@@ -1135,9 +1130,7 @@ class QuestCalculator:
             elif section_id == "Yellowboze" and episode == 2 and area_name == "VR Spaceship Beta":
                 return 0.0, {}
 
-            raise DropTableNotFoundError(
-                f"Section ID not found in drop table for episode {episode} and area name: '{area_name}' and section ID: '{section_id}'"
-            )
+            raise DropTableNotFoundError(f"Section ID not found in drop table for episode {episode} and area name: '{area_name}' and section ID: '{section_id}'")
 
         # Get list of items that can drop from boxes in this area/section
         box_items = section_ids_data[section_id]
@@ -1184,12 +1177,11 @@ class QuestCalculator:
             except PriceGuideExceptionItemNameNotFound:
                 # Technique not in price guide - this is a data issue that should be fixed
                 raise PriceGuideExceptionItemNameNotFound(
-                    f"Technique {technique_item_name} not found in price guide. "
-                    f"This technique can drop in {area_name} but is missing from price data."
+                    f"Technique {technique_item_name} not found in price guide. This technique can drop in {area_name} but is missing from price data."
                 )
             technique_pd_value = expected_technique_drops * technique_price_pd
             total_pd += technique_pd_value
-            
+
             # Add to breakdown
             if technique_item_name not in box_breakdown:
                 box_breakdown[technique_item_name] = {
@@ -1221,7 +1213,7 @@ class QuestCalculator:
     ) -> Tuple[float, float, int, Dict, Dict]:
         """
         Process a list of enemies and return PD values and breakdowns.
-        
+
         Args:
             enemies: Dictionary mapping enemy names to counts
             episode: Episode number
@@ -1234,7 +1226,7 @@ class QuestCalculator:
             area_name: Optional area name for technique drops
             event_type: Optional event type
             merge_breakdowns: If True, merge entries when they already exist (for multi-area processing)
-        
+
         Returns:
             Tuple of (total_pd, total_pd_drops, enemy_breakdown, pd_drop_breakdown)
         """
@@ -1243,24 +1235,24 @@ class QuestCalculator:
         enemy_breakdown = {}
         pd_drop_breakdown = {}
         total_enemies = 0
-        
+
         # Slime enemies that can be split
         SLIME_ENEMIES = ["Pofuilly Slime", "Pouilly Slime"]
-        
+
         # Normalize quest enemy names from non-Ultimate to Ultimate names
         normalized_enemies = self._normalize_quest_enemies(enemies)
-        
+
         # Process each enemy
         for enemy_name, count in normalized_enemies.items():
             # Apply slime splitting if enabled
             if SLIME_SPLIT and enemy_name in SLIME_ENEMIES:
                 count = count * SLIME_SPLIT_MULTIPLIER
-            
+
             total_enemies += count
-            
+
             # Check if this enemy can spawn as a rare variant
             rare_variant = rare_mapping.get(enemy_name)
-            
+
             if rare_variant:
                 # Special case: Kondrieu uses 1/10 base rate but can be boosted by RareEnemy boost
                 if rare_variant == "Kondrieu":
@@ -1270,21 +1262,21 @@ class QuestCalculator:
                     # Normal rare enemy rate calculation
                     normal_count = count * (1.0 - rare_enemy_rate)
                     rare_count = count * rare_enemy_rate
-                
+
                 # Process normal version
                 normal_pd, normal_pd_drops, normal_breakdown, normal_pd_breakdown = self._process_enemy_drops(
                     enemy_name, normal_count, episode, section_id, dar_multiplier, rdr_multiplier, area_name, event_type
                 )
-                
+
                 # Process rare version
                 rare_pd, rare_pd_drops, rare_breakdown, rare_pd_breakdown = self._process_enemy_drops(
                     rare_variant, rare_count, episode, section_id, dar_multiplier, rdr_multiplier, area_name, event_type
                 )
-                
+
                 # Combine results
                 total_pd += normal_pd + rare_pd
                 total_pd_drops += normal_pd_drops + rare_pd_drops
-                
+
                 # Merge breakdowns
                 if merge_breakdowns:
                     # Merge logic for multi-area processing - merge ALL entries (including techniques)
@@ -1297,7 +1289,7 @@ class QuestCalculator:
                                     enemy_breakdown[key]["expected_drops"] = enemy_breakdown[key].get("expected_drops", 0.0) + value.get("expected_drops", 0.0)
                             else:
                                 enemy_breakdown[key] = value.copy()
-                    
+
                     if rare_breakdown:
                         for key, value in rare_breakdown.items():
                             if key in enemy_breakdown:
@@ -1307,7 +1299,7 @@ class QuestCalculator:
                                     enemy_breakdown[key]["expected_drops"] = enemy_breakdown[key].get("expected_drops", 0.0) + value.get("expected_drops", 0.0)
                             else:
                                 enemy_breakdown[key] = value.copy()
-                    
+
                     # Merge PD drop breakdowns
                     if normal_pd_breakdown:
                         for key, value in normal_pd_breakdown.items():
@@ -1316,7 +1308,7 @@ class QuestCalculator:
                                 pd_drop_breakdown[key]["expected_pd_drops"] = pd_drop_breakdown[key].get("expected_pd_drops", 0.0) + value.get("expected_pd_drops", 0.0)
                             else:
                                 pd_drop_breakdown[key] = value.copy()
-                    
+
                     if rare_pd_breakdown:
                         for key, value in rare_pd_breakdown.items():
                             if key in pd_drop_breakdown:
@@ -1330,7 +1322,7 @@ class QuestCalculator:
                         enemy_breakdown.update(normal_breakdown)
                     if rare_breakdown:
                         enemy_breakdown.update(rare_breakdown)
-                    
+
                     # Merge PD drop breakdowns
                     if normal_pd_breakdown:
                         pd_drop_breakdown.update(normal_pd_breakdown)
@@ -1341,10 +1333,10 @@ class QuestCalculator:
                 normal_pd, normal_pd_drops, normal_breakdown, normal_pd_breakdown = self._process_enemy_drops(
                     enemy_name, count, episode, section_id, dar_multiplier, rdr_multiplier, area_name, event_type
                 )
-                
+
                 total_pd += normal_pd
                 total_pd_drops += normal_pd_drops
-                
+
                 # Merge breakdowns
                 if merge_breakdowns:
                     # Merge logic for multi-area processing
@@ -1357,7 +1349,7 @@ class QuestCalculator:
                                     enemy_breakdown[key]["expected_drops"] = enemy_breakdown[key].get("expected_drops", 0.0) + value.get("expected_drops", 0.0)
                             else:
                                 enemy_breakdown[key] = value.copy()
-                    
+
                     if normal_pd_breakdown:
                         for key, value in normal_pd_breakdown.items():
                             if key in pd_drop_breakdown:
@@ -1371,7 +1363,7 @@ class QuestCalculator:
                         enemy_breakdown.update(normal_breakdown)
                     if normal_pd_breakdown:
                         pd_drop_breakdown.update(normal_pd_breakdown)
-        
+
         return total_pd, total_pd_drops, total_enemies, enemy_breakdown, pd_drop_breakdown
 
     def calculate_quest_value(
@@ -1410,9 +1402,7 @@ class QuestCalculator:
         total_enemies = 0
 
         # Calculate boost multipliers and rare enemy rates
-        dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(
-            quest_data, rbr_active, weekly_boost, event_type
-        )
+        dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(quest_data, rbr_active, weekly_boost, event_type)
         rare_enemy_rate, kondrieu_rate = self._calculate_rare_enemy_rates(enemy_rate_multiplier)
 
         # Episode-specific rare enemy mapping
@@ -1420,12 +1410,11 @@ class QuestCalculator:
 
         # Process enemies per area (for technique drops, area matters)
         quest_areas = quest_data.get("areas", [])
-        
+
         # If no areas defined, process enemies globally (backward compatibility)
         if not quest_areas:
             area_pd, area_pd_drops, area_total_enemies, area_enemy_breakdown, area_pd_breakdown = self._process_enemy_list(
-                enemies, episode, section_id, dar_multiplier, rdr_multiplier,
-                rare_enemy_rate, kondrieu_rate, rare_mapping, None, event_type, False
+                enemies, episode, section_id, dar_multiplier, rdr_multiplier, rare_enemy_rate, kondrieu_rate, rare_mapping, None, event_type, False
             )
             total_pd += area_pd
             total_pd_drops += area_pd_drops
@@ -1438,16 +1427,15 @@ class QuestCalculator:
             # Process enemies per area
             # First, check if any areas have explicit enemies
             areas_with_enemies = [area for area in quest_areas if area.get("enemies")]
-            
+
             if areas_with_enemies:
                 # Process enemies from areas that explicitly have them
                 for area in areas_with_enemies:
                     area_name = area.get("name", "")
                     area_enemies = area.get("enemies", {})
-                    
+
                     area_pd, area_pd_drops, area_total_enemies, area_enemy_breakdown, area_pd_breakdown = self._process_enemy_list(
-                        area_enemies, episode, section_id, dar_multiplier, rdr_multiplier,
-                        rare_enemy_rate, kondrieu_rate, rare_mapping, area_name, event_type, True
+                        area_enemies, episode, section_id, dar_multiplier, rdr_multiplier, rare_enemy_rate, kondrieu_rate, rare_mapping, area_name, event_type, True
                     )
                     total_pd += area_pd
                     total_pd_drops += area_pd_drops
@@ -1470,10 +1458,9 @@ class QuestCalculator:
             else:
                 # No areas have explicit enemies, process global enemies once with first area as context
                 area_name = quest_areas[0].get("name", "") if quest_areas else None
-                
+
                 area_pd, area_pd_drops, area_total_enemies, area_enemy_breakdown, area_pd_breakdown = self._process_enemy_list(
-                    enemies, episode, section_id, dar_multiplier, rdr_multiplier,
-                    rare_enemy_rate, kondrieu_rate, rare_mapping, area_name, event_type, False
+                    enemies, episode, section_id, dar_multiplier, rdr_multiplier, rare_enemy_rate, kondrieu_rate, rare_mapping, area_name, event_type, False
                 )
                 total_pd += area_pd
                 total_pd_drops += area_pd_drops
@@ -1533,20 +1520,20 @@ class QuestCalculator:
         # Process event drops (Christmas Presents, Halloween Cookies, and Easter Eggs)
         event_drops_pd = 0.0
         event_drops_breakdown = {}
-        
+
         # Christmas Presents: only during Christmas event
         if event_type == EventType.Christmas:
             # Calculate expected presents from all enemies
             # Present drop rate: 1/2250, affected by DAR
             present_drop_rate = CHRISTMAS_PRESENT_DROP_RATE
             expected_presents = total_enemies * dar_multiplier * present_drop_rate
-            
+
             # Get present price
             try:
                 present_price = self._get_item_price_pd("Present")
                 present_pd_value = expected_presents * present_price
                 event_drops_pd += present_pd_value
-                
+
                 event_drops_breakdown["Present"] = {
                     "drop_rate": present_drop_rate,
                     "expected_drops": expected_presents,
@@ -1555,27 +1542,27 @@ class QuestCalculator:
                 }
             except Exception:
                 pass  # Present not found in price guide
-        
+
         # Halloween Cookies: only during Halloween event
         if event_type == EventType.Halloween:
             # Base cookie drop rate: 1/1500
             cookie_drop_rate = HALLOWEEN_COOKIE_DROP_RATE
-            
+
             # If this is a Halloween quest, apply 20% boost
             is_hallow = self._is_hallow_quest(quest_data)
             if is_hallow:
                 cookie_drop_rate *= HALLOWEEN_QUEST_COOKIE_MULTIPLIER
-            
+
             # Calculate expected cookies from all enemies
             # Cookie drop rate affected by DAR
             expected_cookies = total_enemies * dar_multiplier * cookie_drop_rate
-            
+
             # Get cookie price
             try:
                 cookie_price = self._get_item_price_pd("Halloween Cookie")
                 cookie_pd_value = expected_cookies * cookie_price
                 event_drops_pd += cookie_pd_value
-                
+
                 event_drops_breakdown["Halloween Cookie"] = {
                     "drop_rate": cookie_drop_rate,
                     "expected_drops": expected_cookies,
@@ -1585,20 +1572,20 @@ class QuestCalculator:
                 }
             except Exception:
                 pass  # Cookie not found in price guide
-        
+
         # Easter Eggs: only during Easter event
         if event_type == EventType.Easter:
             # Calculate expected eggs from all enemies
             # Egg drop rate: 1/500, affected by DAR
             egg_drop_rate = EASTER_EGG_DROP_RATE
             expected_eggs = total_enemies * dar_multiplier * egg_drop_rate
-            
+
             # Get egg price
             try:
                 egg_price = self._get_item_price_pd("Event Egg")
                 egg_pd_value = expected_eggs * egg_price
                 event_drops_pd += egg_pd_value
-                
+
                 event_drops_breakdown["Event Egg"] = {
                     "drop_rate": egg_drop_rate,
                     "expected_drops": expected_eggs,
@@ -1607,7 +1594,7 @@ class QuestCalculator:
                 }
             except Exception:
                 pass  # Event Egg not found in price guide
-        
+
         # Add event drops PD to total
         total_pd += event_drops_pd
 
@@ -1651,15 +1638,15 @@ class QuestCalculator:
     def _is_technique_lv30(self, item_name: str) -> Optional[str]:
         """
         Check if item name is a level 30 technique and return the technique name.
-        
+
         Args:
             item_name: Item name to check (e.g., "Foie Lv30", "Foie")
-        
+
         Returns:
             Technique name if it's a level 30 technique, None otherwise
         """
         item_norm = item_name.strip().lower()
-        
+
         # Check if it matches "Technique Lv30" pattern
         if "lv30" in item_norm or "lv 30" in item_norm:
             # Extract technique name (everything before "lv30" or "lv 30")
@@ -1669,13 +1656,13 @@ class QuestCalculator:
                 for tech_name in LEVEL_30_TECHNIQUE_AREAS.keys():
                     if tech_name.lower() == technique_name:
                         return tech_name
-        
+
         # Check if it's just a technique name (without level)
         if item_norm in [t.lower() for t in LEVEL_30_TECHNIQUE_AREAS.keys()]:
             for tech_name in LEVEL_30_TECHNIQUE_AREAS.keys():
                 if tech_name.lower() == item_norm:
                     return tech_name
-        
+
         return None
 
     def _weapon_matches(self, item_name: str, target_weapon: str) -> bool:
@@ -1738,14 +1725,14 @@ class QuestCalculator:
                 dar = enemy_data.get("dar", 0.0)
                 adjusted_dar = self._adjust_dar(dar, dar_multiplier)
                 technique_rates = self._calculate_technique_drop_rate(event_type, area_name)
-                
+
                 if technique_name in technique_rates:
                     conditional_rate = technique_rates[technique_name]
                     # Multiply by DAR to get actual drop rate
                     technique_rate = adjusted_dar * conditional_rate
                     technique_prob = count * technique_rate
                     total_prob += technique_prob
-                    
+
                     contributions.append(
                         {
                             "enemy": enemy_name,
@@ -1760,7 +1747,7 @@ class QuestCalculator:
                             "source": "Technique",
                         }
                     )
-            
+
             # Return early for techniques (they don't drop from regular enemy drops)
             return total_prob, contributions
 
@@ -1838,12 +1825,12 @@ class QuestCalculator:
             # Calculate technique drop probability for boxes
             # Technique drops are independent of section_id and don't require box drop data
             technique_rates = self._calculate_box_technique_drop_rate(area_name)
-            
+
             if technique_name in technique_rates:
                 technique_rate = technique_rates[technique_name]
                 technique_prob = regular_box_count * technique_rate
                 total_prob += technique_prob
-                
+
                 contributions.append(
                     {
                         "source": "Box",
@@ -1855,7 +1842,7 @@ class QuestCalculator:
                         "technique": True,
                     }
                 )
-            
+
             # Return early for techniques (they don't drop from regular box drops)
             return total_prob, contributions
 
@@ -1963,9 +1950,7 @@ class QuestCalculator:
                 quest_rbr_active = quest_name.lower() in rbr_list_lower
 
             # Calculate quest-specific boost multipliers and rare enemy rates
-            dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(
-                quest, quest_rbr_active, weekly_boost, event_type
-            )
+            dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(quest, quest_rbr_active, weekly_boost, event_type)
             rare_enemy_rate, kondrieu_rate = self._calculate_rare_enemy_rates(enemy_rate_multiplier)
 
             # Normalize quest enemy names from non-Ultimate to Ultimate names
@@ -1974,7 +1959,7 @@ class QuestCalculator:
 
             # Process enemies per area if quest has areas, otherwise process globally
             quest_areas = quest.get("areas", [])
-            
+
             if quest_areas:
                 # Process enemies per area
                 for area in quest_areas:
@@ -1982,16 +1967,16 @@ class QuestCalculator:
                     area_enemies = area.get("enemies", {})
                     if not area_enemies:
                         area_enemies = normalized_enemies
-                    
+
                     # Normalize area enemies
                     normalized_area_enemies = self._normalize_quest_enemies(area_enemies)
-                    
+
                     # Process each section ID for this area
                     for section_id_enum in SectionIds:
                         section_id: str = section_id_enum.value
                         total_prob = 0.0
                         contributions = []
-                        
+
                         for enemy_name, count in normalized_area_enemies.items():
                             # Check if this enemy can spawn as a rare variant
                             rare_variant = rare_mapping.get(enemy_name)
@@ -2029,17 +2014,15 @@ class QuestCalculator:
                                 if enemy_prob > 0:
                                     total_prob += enemy_prob
                                     contributions.extend(enemy_contrib)
-                        
+
                         # Check box drops for this area
                         boxes = area.get("boxes", {})
                         if boxes:
-                            box_prob, box_contrib = self._get_box_item_drop_prob(
-                                area_name, boxes, episode, section_id, weapon_name
-                            )
+                            box_prob, box_contrib = self._get_box_item_drop_prob(area_name, boxes, episode, section_id, weapon_name)
                             if box_prob > 0:
                                 total_prob += box_prob
                                 contributions.extend(box_contrib)
-                        
+
                         if total_prob > 0:
                             results.append(
                                 {
@@ -2057,11 +2040,11 @@ class QuestCalculator:
                     section_id: str = section_id_enum.value
                     total_prob = 0.0
                     contributions = []
-                    
+
                     for enemy_name, count in normalized_enemies.items():
                         # Determine area for this enemy (for techniques)
                         area_name = self._determine_drop_area(enemy_name, episode)
-                        
+
                         # Check if this enemy can spawn as a rare variant
                         rare_variant = rare_mapping.get(enemy_name)
 
@@ -2098,20 +2081,18 @@ class QuestCalculator:
                             if enemy_prob > 0:
                                 total_prob += enemy_prob
                                 contributions.extend(enemy_contrib)
-                    
+
                     # Check box drops
                     quest_areas_global = quest.get("areas", [])
                     for area in quest_areas_global:
                         area_name = area.get("name", "")
                         boxes = area.get("boxes", {})
                         if boxes:
-                            box_prob, box_contrib = self._get_box_item_drop_prob(
-                                area_name, boxes, episode, section_id, weapon_name
-                            )
+                            box_prob, box_contrib = self._get_box_item_drop_prob(area_name, boxes, episode, section_id, weapon_name)
                             if box_prob > 0:
                                 total_prob += box_prob
                                 contributions.extend(box_contrib)
-                    
+
                     if total_prob > 0:
                         results.append(
                             {
@@ -2152,7 +2133,7 @@ class QuestCalculator:
                         else:
                             # Fall back to determining area from enemy
                             area_name = self._determine_drop_area(enemy_name, episode)
-                        
+
                         normal_prob, normal_contrib = self._get_enemy_weapon_drop_prob(
                             enemy_name, normal_count, episode, section_id, dar_multiplier, rdr_multiplier, weapon_name, area_name, event_type
                         )
@@ -2183,7 +2164,7 @@ class QuestCalculator:
                         else:
                             # Fall back to determining area from enemy
                             area_name = self._determine_drop_area(enemy_name, episode)
-                        
+
                         enemy_prob, enemy_contrib = self._get_enemy_weapon_drop_prob(
                             enemy_name, count, episode, section_id, dar_multiplier, rdr_multiplier, weapon_name, area_name, event_type
                         )
@@ -2197,9 +2178,7 @@ class QuestCalculator:
                     area_name = area.get("name", "")
                     boxes = area.get("boxes", {})
                     if boxes:
-                        box_prob, box_contrib = self._get_box_item_drop_prob(
-                            area_name, boxes, episode, section_id, weapon_name
-                        )
+                        box_prob, box_contrib = self._get_box_item_drop_prob(area_name, boxes, episode, section_id, weapon_name)
                         if box_prob > 0:
                             total_prob += box_prob
                             contributions.extend(box_contrib)
@@ -2258,52 +2237,52 @@ class QuestCalculator:
         if technique_name:
             # Search for technique drops
             results = []
-            
+
             # Calculate boost multipliers
             # Apply RBR if rbr_active is True or rbr_list is provided (non-empty)
             dar_multiplier = 1.0
             if rbr_active or (rbr_list and len(rbr_list) > 0):
                 dar_multiplier *= 1.0 + RBR_DAR_BOOST
-            
+
             # Apply weekly boosts (doubled if Christmas event is active)
             christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
             if weekly_boost == WeeklyBoost.DAR:
                 dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
-            
+
             # Search through all quests to find enemies in eligible areas
             seen = set()
             for quest in self.quest_data:
                 episode = quest.get("episode", 1)
                 quest_areas = quest.get("areas", [])
-                
+
                 # Process enemies per area
                 for area in quest_areas:
                     area_name = area.get("name", "")
                     if not self._is_area_eligible_for_technique(area_name, technique_name):
                         continue
-                    
+
                     area_enemies = area.get("enemies", {})
                     if not area_enemies:
                         area_enemies = quest.get("enemies", {})
-                    
+
                     for enemy_name, count in area_enemies.items():
                         # Normalize enemy name
                         ultimate_name = self._normalize_quest_enemy_to_ultimate(enemy_name)
-                        
+
                         # Find enemy in drop table
                         enemy_data = self._find_enemy_in_drop_table(ultimate_name, episode)
                         if not enemy_data:
                             continue
-                        
+
                         dar = enemy_data.get("dar", 0.0)
                         adjusted_dar = self._adjust_dar(dar, dar_multiplier)
                         technique_rates = self._calculate_technique_drop_rate(event_type, area_name)
-                        
+
                         if technique_name in technique_rates:
                             conditional_rate = technique_rates[technique_name]
                             # Multiply by DAR to get actual drop rate
                             technique_rate = adjusted_dar * conditional_rate
-                            
+
                             # Use a key to avoid duplicates
                             key = (ultimate_name, episode, area_name)
                             if key not in seen:
@@ -2323,7 +2302,7 @@ class QuestCalculator:
                                         "item": f"{technique_name} Lv30",
                                     }
                                 )
-            
+
             # Sort by drop rate (highest first)
             results.sort(key=lambda x: x["drop_rate"], reverse=True)
             return results
@@ -2430,22 +2409,22 @@ class QuestCalculator:
             # Search for technique drops from boxes
             results = []
             seen = set()
-            
+
             # Search through all quests to find boxes in eligible areas
             for quest in self.quest_data:
                 episode = quest.get("episode", 1)
                 quest_areas = quest.get("areas", [])
-                
+
                 for area in quest_areas:
                     area_name = area.get("name", "")
                     if not self._is_area_eligible_for_technique(area_name, technique_name):
                         continue
-                    
+
                     boxes = area.get("boxes", {})
                     regular_box_count = boxes.get("box", 0)
                     if regular_box_count == 0:
                         continue
-                    
+
                     # Get total rare drop rate from boxes in this area
                     mapped_area = self.quest_listing.map_quest_area_to_drop_table_area(area_name)
                     episode_key = f"episode{episode}"
@@ -2453,10 +2432,10 @@ class QuestCalculator:
                         boxes_data = self.drop_data[episode_key].get("boxes", {})
                         if mapped_area in boxes_data:
                             technique_rates = self._calculate_box_technique_drop_rate(area_name)
-                            
+
                             if technique_name in technique_rates:
                                 technique_rate = technique_rates[technique_name]
-                                
+
                                 # Use a key to avoid duplicates
                                 key = (area_name, episode)
                                 if key not in seen:
@@ -2472,7 +2451,7 @@ class QuestCalculator:
                                         }
                                     )
                             break
-            
+
             # Sort by drop rate (highest first)
             results.sort(key=lambda x: x["drop_rate"], reverse=True)
             return results

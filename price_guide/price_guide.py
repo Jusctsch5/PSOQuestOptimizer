@@ -22,6 +22,7 @@ class BasePriceStrategy(Enum):
 
 class ItemType(Enum):
     """Enumeration of item types in the price guide."""
+
     SRANK_WEAPON = "srank_weapon"
     WEAPON = "weapon"
     COMMON_WEAPON = "common_weapon"
@@ -201,9 +202,7 @@ class PriceGuideAbstract(ABC):
             if hit_values and "0" in hit_values:
                 base_price = self.get_price_from_range(hit_values["0"], self.bps)
             else:
-                raise CannotInferBasePriceException(
-                    f"Cannot infer base price for weapon '{name}': base is null and no 0-hit value found"
-                )
+                raise CannotInferBasePriceException(f"Cannot infer base price for weapon '{name}': base is null and no 0-hit value found")
         else:
             base_price = self.get_price_from_range(base_price_str, self.bps)
 
@@ -282,36 +281,32 @@ class PriceGuideAbstract(ABC):
 
     def get_price_disk(self, name: str, level: int) -> float:
         logger.info(f"get_price_disk: {name} {level}")
-        
+
         # Look up technique in techniques_prices (techniques are disks)
         actual_key = self._ci_key(self.techniques_prices, name)
         if actual_key is None:
             raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in techniques_prices")
-        
+
         levels = self.techniques_prices[actual_key]
         # Convert string keys to integers and sort
         sorted_thresholds = sorted(map(int, levels.keys()))
-        
+
         if not sorted_thresholds:
             # No levels defined for this technique
             return 0.0
-        
+
         # Get the maximum level for this technique
         max_level = sorted_thresholds[-1]
-        
+
         # If requested level is above the maximum, raise an exception
         if level > max_level:
-            raise PriceGuideExceptionItemNameNotFound(
-                f"Level {level} for technique '{name}' exceeds maximum level {max_level}"
-            )
+            raise PriceGuideExceptionItemNameNotFound(f"Level {level} for technique '{name}' exceeds maximum level {max_level}")
         if level < 1:
-            raise PriceGuideExceptionItemNameNotFound(
-                f"Level {level} for technique '{name}' is below minimum level 1"
-            )
-        
+            raise PriceGuideExceptionItemNameNotFound(f"Level {level} for technique '{name}' is below minimum level 1")
+
         # Find the largest threshold <= actual level value
         index = bisect(sorted_thresholds, level) - 1
-        
+
         if index >= 0:
             threshold = sorted_thresholds[index]
             # Only return price if the level exactly matches a threshold
@@ -321,7 +316,7 @@ class PriceGuideAbstract(ABC):
             price_range = levels[str(threshold)]
             price = self.get_price_from_range(price_range, self.bps)
             return price
-        
+
         # If level not found but is within valid range (e.g., Foie level 10, which is between 0 and 15), return 0
         return 0.0
 
@@ -354,25 +349,35 @@ class PriceGuideAbstract(ABC):
     def identify_item_type(self, item_name: str) -> Optional[str]:
         """
         Identify the type of an item by checking all price guide categories.
-        
+
         Args:
             item_name: Name of the item to check
-        
+
         Returns:
             String representation of ItemType enum value, or None if not found
         """
         item_norm = item_name.strip()
-        
-        if self._ci_key(self.srank_weapon_prices["weapons"], item_norm): return ItemType.SRANK_WEAPON.value
-        if self._ci_key(self.common_weapon_prices, item_norm): return ItemType.COMMON_WEAPON.value
-        if self._ci_key(self.weapon_prices, item_norm): return ItemType.WEAPON.value
-        if self._ci_key(self.frame_prices, item_norm): return ItemType.FRAME.value
-        if self._ci_key(self.barrier_prices, item_norm): return ItemType.BARRIER.value
-        if self._ci_key(self.unit_prices, item_norm): return ItemType.UNIT.value
-        if self._ci_key(self.mag_prices, item_norm): return ItemType.MAG.value
-        if self._ci_key(self.cell_prices, item_norm): return ItemType.CELL.value
-        if self._ci_key(self.tool_prices, item_norm): return ItemType.TOOL.value
-        if self._ci_key(self.techniques_prices, item_norm): return ItemType.DISK.value
+
+        if self._ci_key(self.srank_weapon_prices["weapons"], item_norm):
+            return ItemType.SRANK_WEAPON.value
+        if self._ci_key(self.common_weapon_prices, item_norm):
+            return ItemType.COMMON_WEAPON.value
+        if self._ci_key(self.weapon_prices, item_norm):
+            return ItemType.WEAPON.value
+        if self._ci_key(self.frame_prices, item_norm):
+            return ItemType.FRAME.value
+        if self._ci_key(self.barrier_prices, item_norm):
+            return ItemType.BARRIER.value
+        if self._ci_key(self.unit_prices, item_norm):
+            return ItemType.UNIT.value
+        if self._ci_key(self.mag_prices, item_norm):
+            return ItemType.MAG.value
+        if self._ci_key(self.cell_prices, item_norm):
+            return ItemType.CELL.value
+        if self._ci_key(self.tool_prices, item_norm):
+            return ItemType.TOOL.value
+        if self._ci_key(self.techniques_prices, item_norm):
+            return ItemType.DISK.value
         return None
 
     def get_weapon_data(self, name: str) -> Dict[str, Any]:

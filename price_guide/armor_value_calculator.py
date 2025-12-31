@@ -110,9 +110,7 @@ class ArmorValueCalculator:
 
         return expected_evp_value
 
-    def _get_frame_def_value(
-        self, frame_data: Dict
-    ) -> Tuple[float, Optional[float], Optional[float], Optional[float], Optional[float]]:
+    def _get_frame_def_value(self, frame_data: Dict) -> Tuple[float, Optional[float], Optional[float], Optional[float], Optional[float]]:
         """
         Get DEF value for a frame based on stat tier probabilities.
 
@@ -183,9 +181,7 @@ class ArmorValueCalculator:
 
         return expected_value, min_stat_price, med_stat_price, high_stat_price, max_stat_price
 
-    def _get_barrier_evp_value(
-        self, barrier_data: Dict
-    ) -> Tuple[float, Optional[float], Optional[float], Optional[float], Optional[float]]:
+    def _get_barrier_evp_value(self, barrier_data: Dict) -> Tuple[float, Optional[float], Optional[float], Optional[float], Optional[float]]:
         """
         Get EVP (EVA) value for a barrier based on stat tier probabilities.
 
@@ -291,9 +287,7 @@ class ArmorValueCalculator:
         # Calculate contributions for each tier
         stat_tier_contributions = {}
         stat_tier_contributions["low"] = (min_stat_price if min_stat_price is not None else base_price) * stat_probs["low"]
-        stat_tier_contributions["medium"] = (med_stat_price if med_stat_price is not None else base_price) * stat_probs[
-            "medium"
-        ]
+        stat_tier_contributions["medium"] = (med_stat_price if med_stat_price is not None else base_price) * stat_probs["medium"]
         stat_tier_contributions["high"] = (high_stat_price if high_stat_price is not None else base_price) * stat_probs["high"]
         stat_tier_contributions["max"] = (max_stat_price if max_stat_price is not None else base_price) * stat_probs["max"]
 
@@ -337,9 +331,7 @@ class ArmorValueCalculator:
         stat_probs = self.get_stat_probabilities()
 
         # Get EVP value breakdown
-        expected_value, min_stat_price, med_stat_price, high_stat_price, max_evp_price = self._get_barrier_evp_value(
-            barrier_data
-        )
+        expected_value, min_stat_price, med_stat_price, high_stat_price, max_evp_price = self._get_barrier_evp_value(barrier_data)
 
         # Get base price
         base_price_str = barrier_data.get("base", "0")
@@ -348,9 +340,7 @@ class ArmorValueCalculator:
         # Calculate contributions for each tier
         stat_tier_contributions = {}
         stat_tier_contributions["low"] = (min_stat_price if min_stat_price is not None else base_price) * stat_probs["low"]
-        stat_tier_contributions["medium"] = (med_stat_price if med_stat_price is not None else base_price) * stat_probs[
-            "medium"
-        ]
+        stat_tier_contributions["medium"] = (med_stat_price if med_stat_price is not None else base_price) * stat_probs["medium"]
         stat_tier_contributions["high"] = (high_stat_price if high_stat_price is not None else base_price) * stat_probs["high"]
         stat_tier_contributions["max"] = (max_evp_price if max_evp_price is not None else base_price) * stat_probs["max"]
 
@@ -426,7 +416,7 @@ class ArmorValueCalculator:
     def print_frame_calculation_breakdown(self, frame_name: str):
         """Print detailed breakdown of the frame calculation."""
         breakdown = self.get_frame_calculation_breakdown(frame_name)
-        
+
         frame_name_display = breakdown["frame_name"]
         total = breakdown["total_value"]
         base_price = breakdown["base_price"]
@@ -549,7 +539,7 @@ class ArmorValueCalculator:
     def print_barrier_calculation_breakdown(self, barrier_name: str):
         """Print detailed breakdown of the barrier calculation."""
         breakdown = self.get_barrier_calculation_breakdown(barrier_name)
-        
+
         barrier_name_display = breakdown["barrier_name"]
         total = breakdown["total_value"]
         base_price = breakdown["base_price"]
