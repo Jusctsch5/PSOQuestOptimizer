@@ -29,7 +29,7 @@ const PYTHON_MODULES = [
     'optimize_quests.py',
     'optimize_item_hunting.py',
     'calculate_item_value.py',
-    'web/py/api.py',
+    'py/api.py',
 ];
 
 // Data files to load
@@ -104,11 +104,11 @@ os.makedirs("${dirPath}", exist_ok=True)
             }
         }
         
-        // Set up Python path - root for packages, web/py for api module
+        // Set up Python path - root for packages, py for api module
         pyodide.runPython(`
 import sys
 sys.path.insert(0, '/')
-sys.path.insert(0, '/web/py')
+sys.path.insert(0, '/py')
 `);
         
         loadingIndicator.querySelector('p').textContent = 'Ready!';
