@@ -4,11 +4,15 @@
 
 let pyodide = null;
 let pyodideReady = false;
-// Base path: always use '../' to access repo root from web/ directory
-// This works for both GitHub Pages (serving from web/) and local dev (serving from repo root)
-const basePath = '../';
+// Base path: determine from current URL path
+// If we're at /web/ or /web/index.html, use '../' to go up to repo root
+// If we're at / or /index.html, use './' (deployed environment)
+const basePath = (() => {
+    const path = window.location.pathname;
+    return path.includes('/web/') ? '../' : './';
+})();
 
-// List of Python files to load (relative to repository root)
+// List of Python files to load (relative to web directory)
 const PYTHON_MODULES = [
     // Core modules
     'drop_tables/__init__.py',
@@ -69,15 +73,15 @@ async function initializePyodide() {
         
         loadingIndicator.querySelector('p').textContent = 'Loading Python modules...';
         
+        // Initialize cache and check version
+        await initCache();
+        await checkVersion(basePath);
+        
         // Load Python modules
         for (const modulePath of PYTHON_MODULES) {
             try {
                 const fetchUrl = `${basePath}${modulePath}`;
-                const response = await fetch(fetchUrl);
-                if (!response.ok) {
-                    throw new Error(`Failed to load ${modulePath} from ${fetchUrl}: ${response.status} ${response.statusText}`);
-                }
-                const code = await response.text();
+                const code = await fetchTextWithCache(fetchUrl);
                 
                 // Determine the path in Pyodide's filesystem
                 // For modules, we need to maintain the directory structure
@@ -132,32 +136,32 @@ async function loadDataFiles() {
     };
     
     try {
-        // Load drop table (using detected base path)
-        const dropTableResponse = await fetch(`${basePath}${DATA_FILES.drop_table}`);
-        if (!dropTableResponse.ok) {
-            throw new Error(`Failed to load drop table: ${dropTableResponse.statusText}`);
+        // Ensure cache is initialized
+        if (!db) {
+            await initCache();
         }
-        data.drop_table = await dropTableResponse.json();
         
-        // Load quests
-        const questsResponse = await fetch(`${basePath}${DATA_FILES.quests}`);
-        if (!questsResponse.ok) {
-            throw new Error(`Failed to load quests: ${questsResponse.statusText}`);
+        // Load drop table (using cache)
+        try {
+            data.drop_table = await fetchJSONWithCache(`${basePath}${DATA_FILES.drop_table}`);
+        } catch (error) {
+            throw new Error(`Failed to load drop table: ${error.message}`);
         }
-        data.quests = await questsResponse.json();
         
-        // Load price guide files
+        // Load quests (using cache)
+        try {
+            data.quests = await fetchJSONWithCache(`${basePath}${DATA_FILES.quests}`);
+        } catch (error) {
+            throw new Error(`Failed to load quests: ${error.message}`);
+        }
+        
+        // Load price guide files (using cache)
         for (const priceGuideFile of DATA_FILES.price_guide) {
             try {
-                const response = await fetch(`${basePath}${priceGuideFile}`);
-                if (response.ok) {
-                    const filename = priceGuideFile.split('/').pop();
-                    data.price_guide[filename] = await response.json();
-                } else {
-                    console.warn(`Failed to load ${priceGuideFile}, skipping...`);
-                }
+                const filename = priceGuideFile.split('/').pop();
+                data.price_guide[filename] = await fetchJSONWithCache(`${basePath}${priceGuideFile}`);
             } catch (error) {
-                console.warn(`Error loading ${priceGuideFile}:`, error);
+                console.warn(`Failed to load ${priceGuideFile}, skipping...`, error);
             }
         }
         

@@ -410,6 +410,8 @@ Provides the connective tissue between the other libraries.
 ### Web Interface
 A static web interface (html, w/ css for styling, js for interactivity) for the PSO Quest Optimizer, running entirely in the browser using Pyodide. The goal here is to minimize this logic as much as possible, so the scriptage can be first-class as well.
 
+Caching - The web interface uses a caching mechanism to improve performance, and put less strain on github. This is done using IndexedDB, and is automatically managed by the deployment workflow. The cache lasts for 7 days, or until the version changes by some meaningful update. The cache can be manually cleared via browser DevTools if needed.
+
 ## Coding Stuff
 - uses python 3.x
 - uses ruff for linting and formatting (recommend the ruff extension for vscode, uses the pyproject.toml file for configuration+)

@@ -1,0 +1,71 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'web/**'
+      - 'drop_tables/**'
+      - 'price_guide/**'
+      - 'quests/**'
+      - 'quest_optimizer/**'
+      - 'optimize_*.py'
+      - 'calculate_item_value.py'
+      - '.github/workflows/deploy.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Pages
+        uses: actions/configure-pages@v4
+
+      - name: Prepare deployment
+        run: |
+          # Create deployment directory
+          mkdir -p _site
+          
+          # Copy web directory contents to root of deployment
+          cp -r web/* _site/
+          
+          # Copy Python modules and data files into the same directory
+          # Everything runs from the web directory root
+          cp -r drop_tables _site/
+          cp -r price_guide _site/
+          cp -r quests _site/
+          cp -r quest_optimizer _site/
+          cp optimize_quests.py _site/
+          cp optimize_item_hunting.py _site/
+          cp calculate_item_value.py _site/
+          
+          # Generate version file for cache busting
+          # Use git commit hash + timestamp for unique version
+          VERSION=$(git rev-parse --short HEAD)-$(date +%s)
+          echo "{\"version\": \"$VERSION\", \"timestamp\": $(date +%s)}" > _site/version.json
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
