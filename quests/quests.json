@@ -212,7 +212,7 @@
           "Barbarous Wolf": 1,
           "Monest": 1,
           "Rag Rappy": 5
-        }          
+        }
       },
       {
         "name": "Forest 2",
@@ -271,7 +271,7 @@
           "Poison Lily": 19,
           "Pofuilly Slime": 5,
           "Grass Assassin": 13,
-          "Nano Dragon": 1          
+          "Nano Dragon": 1
         }
       }
     ]
@@ -315,7 +315,7 @@
           "Sinow Beat": 33,
           "Sinow Gold": 10,
           "Garanz": 7
-        }          
+        }
       }
     ]
   },
@@ -340,8 +340,8 @@
           "Bulclaw": 2,
           "Delsaber": 11,
           "Dark Belra": 28,
-          "Chaos Sorcerer": 3  
-        }          
+          "Chaos Sorcerer": 3
+        }
       },
       {
         "name": "Ruins 2",
@@ -358,7 +358,7 @@
           "Bulclaw": 4,
           "Delsaber": 33,
           "Dark Gunner": 21,
-          "Chaos Bringer": 13          
+          "Chaos Bringer": 13
         }
       }
     ]
@@ -381,7 +381,7 @@
           "Barbarous Wolf": 1,
           "Monest": 2,
           "Rag Rappy": 11
-        }          
+        }
       },
       {
         "name": "Forest 2",
@@ -454,12 +454,12 @@
           "box": 81
         },
         "enemies": {
-          "Gillchic":	66,
-          "Canadine":	73,
-          "Canane":	4,
-          "Sinow Beat":	26,
-          "Sinow Gold":	22,
-          "Garanz":	7
+          "Gillchic": 66,
+          "Canadine": 73,
+          "Canane": 4,
+          "Sinow Beat": 26,
+          "Sinow Gold": 22,
+          "Garanz": 7
         }
       },
       {
@@ -468,13 +468,13 @@
           "box": 36
         },
         "enemies": {
-          "Gillchic":	57,
-          "Dubchic":	33,
-          "Canadine":	69,
-          "Canane":	3,
-          "Sinow Beat":	39,
-          "Sinow Gold":	40,
-          "Garanz":	22
+          "Gillchic": 57,
+          "Dubchic": 33,
+          "Canadine": 69,
+          "Canane": 3,
+          "Sinow Beat": 39,
+          "Sinow Gold": 40,
+          "Garanz": 22
         }
       }
     ]
@@ -493,15 +493,15 @@
           "box_weapon": 1
         },
         "enemies": {
-          "Dimenian":	62,
-          "La Dimenian":	41,
-          "So Dimenian":	29,
-          "Claw":	57,
-          "Bulclaw":	13,
-          "Delsaber":	36,
-          "Dark Gunner":	17,
-          "Chaos Bringer":	15
-        }          
+          "Dimenian": 62,
+          "La Dimenian": 41,
+          "So Dimenian": 29,
+          "Claw": 57,
+          "Bulclaw": 13,
+          "Delsaber": 36,
+          "Dark Gunner": 17,
+          "Chaos Bringer": 15
+        }
       },
       {
         "name": "Ruins 3",
@@ -509,15 +509,15 @@
           "box": 6
         },
         "enemies": {
-          "Dimenian":	20,
-          "La Dimenian":	30,
-          "So Dimenian":	22,
-          "Claw":	37,
-          "Bulclaw":	7,
-          "Dark Belra":	33,
-          "Dark Gunner":	8,
-          "Chaos Sorcerer":	19,
-          "Chaos Bringer":	15          
+          "Dimenian": 20,
+          "La Dimenian": 30,
+          "So Dimenian": 22,
+          "Claw": 37,
+          "Bulclaw": 7,
+          "Dark Belra": 33,
+          "Dark Gunner": 8,
+          "Chaos Sorcerer": 19,
+          "Chaos Bringer": 15
         }
       }
     ]
@@ -534,13 +534,13 @@
           "box_weapon": 1
         },
         "enemies": {
-          "Booma":	34,
-          "Gobooma":	13,
-          "Gigobooma":	17,
-          "Savage Wolf":	20,
-          "Barbarous Wolf":	11,
-          "Monest":	3,
-          "Rag Rappy":	21
+          "Booma": 34,
+          "Gobooma": 13,
+          "Gigobooma": 17,
+          "Savage Wolf": 20,
+          "Barbarous Wolf": 11,
+          "Monest": 3,
+          "Rag Rappy": 21
         }
       },
       {
@@ -550,14 +550,14 @@
           "box_weapon": 3
         },
         "enemies": {
-          "Dimenian":	42,
-          "La Dimenian":	24,
-          "So Dimenian":	24,
-          "Bulclaw":	13,
-          "Claw":	59,
-          "Delsaber":	25,
-          "Dark Belra":	17,
-          "Chaos Sorcerer":	13
+          "Dimenian": 42,
+          "La Dimenian": 24,
+          "So Dimenian": 24,
+          "Bulclaw": 13,
+          "Claw": 59,
+          "Delsaber": 25,
+          "Dark Belra": 17,
+          "Chaos Sorcerer": 13
         }
       }
     ]
@@ -574,13 +574,13 @@
           "box": 25
         },
         "enemies": {
-          "Evil Shark":	63,
-          "Pal Shark":	30,
-          "Guil Shark":	27,
-          "Poison Lily":	39,
-          "Pofuilly Slime":	16,
-          "Nano Dragon":	20,
-          "Pan Arms":	9          
+          "Evil Shark": 63,
+          "Pal Shark": 30,
+          "Guil Shark": 27,
+          "Poison Lily": 39,
+          "Pofuilly Slime": 16,
+          "Nano Dragon": 20,
+          "Pan Arms": 9
         }
       },
       {
@@ -590,14 +590,14 @@
           "box_weapon": 8
         },
         "enemies": {
-          "Gillchic":	83,
-          "Dubchic":	39,
-          "Dubwitch":	13,
-          "Canadine":	83,
-          "Canane":	4,
-          "Sinow Beat":	34,
-          "Sinow Gold":	39,
-          "Garanz":	34
+          "Gillchic": 83,
+          "Dubchic": 39,
+          "Dubwitch": 13,
+          "Canadine": 83,
+          "Canane": 4,
+          "Sinow Beat": 34,
+          "Sinow Gold": 39,
+          "Garanz": 34
         }
       }
     ]
@@ -617,13 +617,13 @@
           "box_rareless": 5
         },
         "enemies": {
-          "Booma":	16,
-          "Gobooma":	9,
-          "Gigobooma":	43,
-          "Savage Wolf":	11,
-          "Barbarous Wolf":	3,
-          "Monest":	2
-        }          
+          "Booma": 16,
+          "Gobooma": 9,
+          "Gigobooma": 43,
+          "Savage Wolf": 11,
+          "Barbarous Wolf": 3,
+          "Monest": 2
+        }
       },
       {
         "name": "Forest 2",
@@ -632,14 +632,14 @@
           "box_weapon": 2
         },
         "enemies": {
-          "Booma":	13,
-          "Gobooma":	29,
-          "Gigobooma":	15,
-          "Savage Wolf":	15,
-          "Barbarous Wolf":	4,
-          "Monest":	5,
-          "Rag Rappy":	10,
-          "Hildebear":	12
+          "Booma": 13,
+          "Gobooma": 29,
+          "Gigobooma": 15,
+          "Savage Wolf": 15,
+          "Barbarous Wolf": 4,
+          "Monest": 5,
+          "Rag Rappy": 10,
+          "Hildebear": 12
         }
       },
       {
@@ -667,13 +667,13 @@
           "box": 4
         },
         "enemies": {
-          "Evil Shark":	52,
-          "Pal Shark":	18,
-          "Guil Shark":	53,
-          "Poison Lily":	29,
-          "Grass Assassin":	22,
-          "Nano Dragon":	10,
-          "Pan Arms":	2          
+          "Evil Shark": 52,
+          "Pal Shark": 18,
+          "Guil Shark": 53,
+          "Poison Lily": 29,
+          "Grass Assassin": 22,
+          "Nano Dragon": 10,
+          "Pan Arms": 2
         }
       },
       {
@@ -684,13 +684,13 @@
           "box_weapon": 4
         },
         "enemies": {
-          "Evil Shark":	50,
-          "Pal Shark":	30,
-          "Guil Shark":	46,
-          "Poison Lily":	11,
-          "Pofuilly Slime":	3,
-          "Grass Assassin":	15,
-          "Nano Dragon":	9
+          "Evil Shark": 50,
+          "Pal Shark": 30,
+          "Guil Shark": 46,
+          "Poison Lily": 11,
+          "Pofuilly Slime": 3,
+          "Grass Assassin": 15,
+          "Nano Dragon": 9
         }
       },
       {
@@ -699,14 +699,14 @@
           "box": 10
         },
         "enemies": {
-          "Evil Shark":	27,
-          "Pal Shark":	17,
-          "Guil Shark":	26,
-          "Poison Lily":	16,
-          "Pofuilly Slime":	4,
-          "Nano Dragon":	7,
-          "Pan Arms":	3          
-        }          
+          "Evil Shark": 27,
+          "Pal Shark": 17,
+          "Guil Shark": 26,
+          "Poison Lily": 16,
+          "Pofuilly Slime": 4,
+          "Nano Dragon": 7,
+          "Pan Arms": 3
+        }
       },
       {
         "name": "Underground Channel",
@@ -733,11 +733,11 @@
           "box": 46
         },
         "enemies": {
-          "Gillchic":	59,
-          "Canadine":	57,
-          "Canane":	3,
-          "Sinow Beat":	46,
-          "Sinow Gold":	16
+          "Gillchic": 59,
+          "Canadine": 57,
+          "Canane": 3,
+          "Sinow Beat": 46,
+          "Sinow Gold": 16
         }
       },
       {
@@ -746,14 +746,14 @@
           "box": 34
         },
         "enemies": {
-          "Gillchic":	26,
-          "Dubchic":	17,
-          "Dubwitch":	4,
-          "Canadine":	55,
-          "Canane":	1,
-          "Sinow Beat":	24,
-          "Sinow Gold":	21,
-          "Garanz":	26
+          "Gillchic": 26,
+          "Dubchic": 17,
+          "Dubwitch": 4,
+          "Canadine": 55,
+          "Canane": 1,
+          "Sinow Beat": 24,
+          "Sinow Gold": 21,
+          "Garanz": 26
         }
       },
       {
@@ -771,7 +771,7 @@
     "quest_name": "LHP",
     "long_name": "Lost HELL PALLASCH",
     "episode": 1,
-    "is_in_rbr_rotation": true,    
+    "is_in_rbr_rotation": true,
     "areas": [
       {
         "name": "Ruins 1",
@@ -779,14 +779,14 @@
           "box": 11
         },
         "enemies": {
-          "Dimenian":	22,
-          "La Dimenian":	11,
-          "So Dimenian":	8,
-          "Claw":	31,
-          "Bulclaw":	28,
-          "Delsaber":	31,
-          "Dark Belra":	26,
-          "Chaos Sorcerer":	27          
+          "Dimenian": 22,
+          "La Dimenian": 11,
+          "So Dimenian": 8,
+          "Claw": 31,
+          "Bulclaw": 28,
+          "Delsaber": 31,
+          "Dark Belra": 26,
+          "Chaos Sorcerer": 27
         }
       },
       {
@@ -795,15 +795,15 @@
           "box": 13
         },
         "enemies": {
-          "Dimenian":	12,
-          "La Dimenian":	9,
-          "So Dimenian":	6,
-          "Claw":	29,
-          "Bulclaw":	17,
-          "Delsaber":	31,
-          "Dark Gunner":	21,
-          "Chaos Bringer":	8          
-        }          
+          "Dimenian": 12,
+          "La Dimenian": 9,
+          "So Dimenian": 6,
+          "Claw": 29,
+          "Bulclaw": 17,
+          "Delsaber": 31,
+          "Dark Gunner": 21,
+          "Chaos Bringer": 8
+        }
       },
       {
         "name": "Ruins 3",
@@ -811,15 +811,15 @@
           "box": 4
         },
         "enemies": {
-          "Dimenian":	20,
-          "So Dimenian":	12,
-          "Claw":	27,
-          "Bulclaw":	10,
-          "Dark Belra":	14,
-          "Dark Gunner":	24,
-          "Chaos Sorcerer":	34,
-          "Chaos Bringer":	7
-        }          
+          "Dimenian": 20,
+          "So Dimenian": 12,
+          "Claw": 27,
+          "Bulclaw": 10,
+          "Dark Belra": 14,
+          "Dark Gunner": 24,
+          "Chaos Sorcerer": 34,
+          "Chaos Bringer": 7
+        }
       },
       {
         "name": "????",
@@ -845,15 +845,15 @@
           "box": 4
         },
         "enemies": {
-          "Merillia":	58,
-          "Meriltas":	25,
-          "Ul Gibbon":	26,
-          "Zol Gibbon":	11,
-          "Gee":	55,
-          "Sinow Berill":	16,
-          "Sinow Spigell":	6,
-          "Mericarol":	6
-        }          
+          "Merillia": 58,
+          "Meriltas": 25,
+          "Ul Gibbon": 26,
+          "Zol Gibbon": 11,
+          "Gee": 55,
+          "Sinow Berill": 16,
+          "Sinow Spigell": 6,
+          "Mericarol": 6
+        }
       },
       {
         "name": "Seaside",
@@ -861,14 +861,14 @@
           "box": 24
         },
         "enemies": {
-          "Merillia":	25,
-          "Meriltas":	16,
-          "Ul Gibbon":	19,
-          "Zol Gibbon":	9,
-          "Gee":	67,
-          "Sinow Berill":	9,
-          "Sinow Spigell":	1,
-          "Gi Gue":	12          
+          "Merillia": 25,
+          "Meriltas": 16,
+          "Ul Gibbon": 19,
+          "Zol Gibbon": 9,
+          "Gee": 67,
+          "Sinow Berill": 9,
+          "Sinow Spigell": 1,
+          "Gi Gue": 12
         }
       }
     ],
@@ -888,13 +888,13 @@
           "box": 18
         },
         "enemies": {
-          "Merillia":	26,
-          "Meriltas":	22,
-          "Ul Gibbon":	53,
-          "Zol Gibbon":	10,
-          "Gee":	40,
-          "Sinow Berill":	7,
-          "Gibbles":	9          
+          "Merillia": 26,
+          "Meriltas": 22,
+          "Ul Gibbon": 53,
+          "Zol Gibbon": 10,
+          "Gee": 40,
+          "Sinow Berill": 7,
+          "Gibbles": 9
         }
       },
       {
@@ -903,14 +903,14 @@
           "box": 28
         },
         "enemies": {
-          "Merillia":	28,
-          "Meriltas":	20,
-          "Ul Gibbon":	61,
-          "Zol Gibbon":	16,
-          "Gee":	40,
-          "Sinow Berill":	17,
-          "Sinow Spigell":	9
-        }          
+          "Merillia": 28,
+          "Meriltas": 20,
+          "Ul Gibbon": 61,
+          "Zol Gibbon": 16,
+          "Gee": 40,
+          "Sinow Berill": 17,
+          "Sinow Spigell": 9
+        }
       }
     ],
     "quest_completion_items": {
@@ -947,15 +947,15 @@
           "box": 89
         },
         "enemies": {
-          "Dolmolm":	64,
-          "Dolmdarl":	31,
-          "Recobox":	12,
-          "Recon":	128,
-          "Morfos":	23,
-          "Deldepth":	1,
-          "Sinow Zoa":	16,
-          "Sinow Zele":	7,
-          "Delbiter":	12
+          "Dolmolm": 64,
+          "Dolmdarl": 31,
+          "Recobox": 12,
+          "Recon": 128,
+          "Morfos": 23,
+          "Deldepth": 1,
+          "Sinow Zoa": 16,
+          "Sinow Zele": 7,
+          "Delbiter": 12
         }
       },
       {
@@ -964,15 +964,15 @@
           "box": 37
         },
         "enemies": {
-          "Dolmolm":	39,
-          "Dolmdarl":	26,
-          "Recobox":	15,
-          "Recon":	104,
-          "Morfos":	24,
-          "Deldepth":	30,
-          "Sinow Zoa":	17,
-          "Sinow Zele":	15,
-          "Delbiter":	15
+          "Dolmolm": 39,
+          "Dolmdarl": 26,
+          "Recobox": 15,
+          "Recon": 104,
+          "Morfos": 24,
+          "Deldepth": 30,
+          "Sinow Zoa": 17,
+          "Sinow Zele": 15,
+          "Delbiter": 15
         }
       }
     ],
@@ -1098,16 +1098,16 @@
           "box": 20
         },
         "enemies": {
-          "Dimenian":	73,
-          "La Dimenian":	55,
-          "So Dimenian":	35,
-          "Rag Rappy":	28,
-          "Poison Lily":	21,
-          "Hildebear":	18,
-          "Monest":	6,
-          "Grass Assassin":	23,
-          "Dark Belra":	18
-        }          
+          "Dimenian": 73,
+          "La Dimenian": 55,
+          "So Dimenian": 35,
+          "Rag Rappy": 28,
+          "Poison Lily": 21,
+          "Hildebear": 18,
+          "Monest": 6,
+          "Grass Assassin": 23,
+          "Dark Belra": 18
+        }
       },
       {
         "name": "VR Temple Beta",
@@ -1115,15 +1115,15 @@
           "box": 20
         },
         "enemies": {
-          "Dimenian":	30,
-          "La Dimenian":	24,
-          "So Dimenian":	26,
-          "Rag Rappy":	25,
-          "Poison Lily":	34,
-          "Hildebear":	27,
-          "Monest":	1,
-          "Grass Assassin":	22,
-          "Dark Belra":	29
+          "Dimenian": 30,
+          "La Dimenian": 24,
+          "So Dimenian": 26,
+          "Rag Rappy": 25,
+          "Poison Lily": 34,
+          "Hildebear": 27,
+          "Monest": 1,
+          "Grass Assassin": 22,
+          "Dark Belra": 29
         }
       }
     ]
@@ -1140,19 +1140,28 @@
           "box": 38
         },
         "enemies": {
-          "Gillchic":	96,
-          "Dubchic":	61,
-          "Savage Wolf":	62,
-          "Barbarous Wolf":	28,
-          "Delsaber":	10,
-          "Pan Arms":	21,
-          "Garanz":	8
-        }          
+          "Gillchic": 96,
+          "Dubchic": 61,
+          "Savage Wolf": 62,
+          "Barbarous Wolf": 28,
+          "Delsaber": 10,
+          "Pan Arms": 21,
+          "Garanz": 8
+        }
       },
       {
         "name": "VR Spaceship Beta",
         "boxes": {
           "box": 20
+        },
+        "enemies": {
+          "Gillchic": 104,
+          "Dubchic": 49,
+          "Savage Wolf": 38,
+          "Barbarous Wolf": 27,
+          "Delsaber": 57,
+          "Pan Arms": 14,
+          "Chaos Sorcerer": 61
         }
       }
     ]
@@ -1161,46 +1170,69 @@
     "quest_name": "PS3",
     "long_name": "Penumbral Surge #3",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "areas": [
       {
-        "name": "Jungle North",
+        "name": "Seaside",
         "boxes": {
-          "box": 10
+          "box": 21
+        },
+        "enemies": {
+          "Merillia": 33,
+          "Meriltas": 10,
+          "Ul Gibbon": 14,
+          "Zol Gibbon": 9,
+          "Gee": 33,
+          "Sinow Berill": 11,
+          "Sinow Spigell": 12,
+          "Mericarol": 3,
+          "Merikle": 1,
+          "Gi Gue": 14
         }
       },
       {
         "name": "Mountain",
         "boxes": {
           "box": 13
+        },
+        "enemies": {
+          "Merillia": 17,
+          "Meriltas": 7,
+          "Ul Gibbon": 45,
+          "Zol Gibbon": 30,
+          "Gee": 27,
+          "Sinow Berill": 8,
+          "Sinow Spigell": 7,
+          "Gibbles": 7,
+          "Random Mericarol": 2
         }
       },
       {
-        "name": "Seaside",
+        "name": "Jungle North",
         "boxes": {
-          "box": 21
+          "box": 10
+        },
+        "enemies": {
+          "Merillia": 25,
+          "Meriltas": 23,
+          "Ul Gibbon": 15,
+          "Zol Gibbon": 6,
+          "Gee": 22,
+          "Sinow Berill": 11,
+          "Sinow Spigell": 4,
+          "Mericarol": 4,
+          "Merikle": 3,
+          "Mericus": 2,
+          "Gibbles": 2
         }
       }
-    ],
-    "is_in_rbr_rotation": true,
-    "enemies": {
-      "Merillia": 68,
-      "Meriltas": 44,
-      "Ul Gibbon": 76,
-      "Zol Gibbon": 45,
-      "Gee": 102,
-      "Sinow Berill": 33,
-      "Sinow Spigell": 23,
-      "Mericarol": 9,
-      "Merikle": 4,
-      "Mericus": 2,
-      "Gibbles": 9,
-      "Gi Gue": 16
-    }
+    ]
   },
   {
     "quest_name": "PS4",
     "long_name": "Penumbral Surge #4",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "areas": [
       {
         "name": "Central Control Area",
@@ -1222,38 +1254,46 @@
           "Gi Gue": 8
         }
       }
-    ],
-    "is_in_rbr_rotation": true
+    ]
   },
   {
     "quest_name": "PS5",
     "long_name": "Penumbral Surge #5",
     "episode": 2,
+    "is_in_rbr_rotation": true,
     "areas": [
       {
         "name": "Seabed Upper",
         "boxes": {
           "box": 0
+        },
+        "enemies": {
+          "Dolmolm": 62,
+          "Dolmdarl": 45,
+          "Recobox": 37,
+          "Morfos": 20,
+          "Sinow Zoa": 18,
+          "Sinow Zele": 8,
+          "Delbiter": 8
         }
       },
       {
         "name": "Seabed Lower",
         "boxes": {
           "box": 0
+        },
+        "enemies": {
+          "Dolmolm": 54,
+          "Dolmdarl": 40,
+          "Recobox": 20,
+          "Morfos": 24,
+          "Deldepth": 25,
+          "Sinow Zoa": 21,
+          "Sinow Zele": 14,
+          "Delbiter": 11
         }
       }
-    ],
-    "is_in_rbr_rotation": true,
-    "enemies": {
-      "Dolmolm": 116,
-      "Dolmdarl": 85,
-      "Recobox": 57,
-      "Morfos": 44,
-      "Deldepth": 25,
-      "Sinow Zoa": 39,
-      "Sinow Zele": 22,
-      "Delbiter": 21
-    }
+    ]
   },
   {
     "quest_name": "PS6",
@@ -1369,17 +1409,17 @@
           "box": 18
         },
         "enemies": {
-          "Merillia":	25,
-          "Meriltas":	31,
-          "Ul Gibbon":	17,
-          "Zol Gibbon":	5,
-          "Gee":	17,
-          "Sinow Berill":	22,
-          "Sinow Spigell":	5,
-          "Mericarol":	7,
-          "Merikle":	3,
-          "Mericus":	6,
-          "Random Mericarol":	1
+          "Merillia": 25,
+          "Meriltas": 31,
+          "Ul Gibbon": 17,
+          "Zol Gibbon": 5,
+          "Gee": 17,
+          "Sinow Berill": 22,
+          "Sinow Spigell": 5,
+          "Mericarol": 7,
+          "Merikle": 3,
+          "Mericus": 6,
+          "Random Mericarol": 1
         }
       },
       {
@@ -1388,15 +1428,15 @@
           "box": 12
         },
         "enemies": {
-          "Merillia":	30,
-          "Meriltas":	16,
-          "Ul Gibbon":	12,
-          "Gee":	13,
-          "Sinow Berill":	11,
-          "Sinow Spigell":	8,
-          "Mericarol":	9,
-          "Merikle":	5,
-          "Mericus":	4
+          "Merillia": 30,
+          "Meriltas": 16,
+          "Ul Gibbon": 12,
+          "Gee": 13,
+          "Sinow Berill": 11,
+          "Sinow Spigell": 8,
+          "Mericarol": 9,
+          "Merikle": 5,
+          "Mericus": 4
         }
       },
       {
@@ -1405,14 +1445,14 @@
           "box": 13
         },
         "enemies": {
-          "Merillia":	13,
-          "Meriltas":	13,
-          "Ul Gibbon":	39,
-          "Zol Gibbon":	27,
-          "Gee":	19,
-          "Sinow Berill":	15,
-          "Sinow Spigell":	9,
-          "Gibbles":	12
+          "Merillia": 13,
+          "Meriltas": 13,
+          "Ul Gibbon": 39,
+          "Zol Gibbon": 27,
+          "Gee": 19,
+          "Sinow Berill": 15,
+          "Sinow Spigell": 9,
+          "Gibbles": 12
         }
       },
       {
@@ -1421,14 +1461,14 @@
           "box": 8
         },
         "enemies": {
-          "Merillia":	14,
-          "Meriltas":	4,
-          "Ul Gibbon":	14,
-          "Zol Gibbon":	8,
-          "Gee":	48,
-          "Sinow Berill":	11,
-          "Sinow Spigell":	18,
-          "Gi Gue":	13
+          "Merillia": 14,
+          "Meriltas": 4,
+          "Ul Gibbon": 14,
+          "Zol Gibbon": 8,
+          "Gee": 48,
+          "Sinow Berill": 11,
+          "Sinow Spigell": 18,
+          "Gi Gue": 13
         }
       },
       {
@@ -1437,18 +1477,18 @@
           "box": 11
         },
         "enemies": {
-          "Merillia":	19,
-          "Meriltas":	15,
-          "Ul Gibbon":	16,
-          "Zol Gibbon":	12,
-          "Gee":	27,
-          "Sinow Berill":	20,
-          "Sinow Spigell":	3,
-          "Mericarol":	5,
-          "Merikle":	1,
-          "Mericus":	3,
-          "Gibbles":	9,
-          "Gi Gue":	7
+          "Merillia": 19,
+          "Meriltas": 15,
+          "Ul Gibbon": 16,
+          "Zol Gibbon": 12,
+          "Gee": 27,
+          "Sinow Berill": 20,
+          "Sinow Spigell": 3,
+          "Mericarol": 5,
+          "Merikle": 1,
+          "Mericus": 3,
+          "Gibbles": 9,
+          "Gi Gue": 7
         }
       },
       {
@@ -1873,13 +1913,13 @@
           "box": 35
         },
         "enemies": {
-          "Goran":	108,
-          "Pyro Goran":	55,
-          "Goran Detonator":	16,
-          "Satellite Lizard":	73,
-          "Yowie":	41,
-          "Sand Rappy":	38,
-          "Zu":	4
+          "Goran": 108,
+          "Pyro Goran": 55,
+          "Goran Detonator": 16,
+          "Satellite Lizard": 73,
+          "Yowie": 41,
+          "Sand Rappy": 38,
+          "Zu": 4
         }
       }
     ]
