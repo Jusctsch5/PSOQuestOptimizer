@@ -70,7 +70,6 @@ HOLLOWEEN_QUEST_COOKIE_BOOST = 0.20  # +20% Halloween Cookie drop rate
 
 RBR_DAR_BOOST = 0.25  # +25% Drop Anything Rate
 RBR_RDR_BOOST = 0.25  # +25% Rare Drop Rate
-RBR_ENEMY_RATE_BOOST = 0.50  # +50% to rare enemy drop rate
 
 BASE_PD_DROP_RATE = 1.0 / 375.0  # 1/375 chance for PD drop
 BASE_RARE_ENEMY_RATE = 1.0 / 512  # 1/512 base chance for rare enemy spawn
@@ -868,7 +867,6 @@ class QuestCalculator:
             if in_rbr_rotation and rbr_active:
                 dar_multiplier *= 1.0 + RBR_DAR_BOOST
                 rdr_multiplier *= 1.0 + RBR_RDR_BOOST
-                enemy_rate_multiplier *= 1.0 + RBR_ENEMY_RATE_BOOST
 
             # Apply weekly boosts (doubled if Christmas event is active)
             christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
