@@ -22,6 +22,7 @@
 - [X] Implement short-name list filtering in optimize_quests.py/UI
 - [X] Add disk drops to drop tables and item value calculation for quests
 - [ ] Add coren gambling script
+- [ ] Add BPD Script
 - [ ] finish updating quests.json with enemies in areas
 - [ ] Central Tower actually shares drops with Seabed Lower not CCA, so fix that for many quests that take place in Tower.
 - [X] Add Lost Soul Blade to quests.json
@@ -35,7 +36,7 @@
 - [X] Implement base of UI
 - [X] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
 - [ ] Add browsable price guide to UI
-- [ ] Add broswable quest list to UI
+- [X] Add browsable quest list to UI
 - [ ] Add browsable drop tables to UI
 - [ ] Add tooltips to UI
 - [ ] Add links to/from UI to other tools (character viewer, price guide, drop tables, etc)

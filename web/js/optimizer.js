@@ -29,7 +29,7 @@ const PYTHON_MODULES = [
     'optimize_quests.py',
     'optimize_item_hunting.py',
     'calculate_item_value.py',
-    'py/api.py',
+    'py-api/api.py',
 ];
 
 // Data files to load
@@ -59,35 +59,35 @@ async function initializePyodide() {
     const loadingIndicator = document.getElementById('loading-indicator');
     const errorDisplay = document.getElementById('error-display');
     const resultsContainer = document.getElementById('results-container');
-    
+
     try {
         // Show results container and loading indicator during initialization
         resultsContainer.classList.remove('hidden');
         loadingIndicator.classList.remove('hidden');
         loadingIndicator.querySelector('p').textContent = 'Loading Pyodide...';
-        
+
         // Load Pyodide
         pyodide = await loadPyodide({
             indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/',
         });
-        
+
         loadingIndicator.querySelector('p').textContent = 'Loading Python modules...';
-        
+
         // Initialize cache and check version
         await initCache();
         await checkVersion(basePath);
-        
+
         // Load Python modules
         for (const modulePath of PYTHON_MODULES) {
             try {
                 const fetchUrl = `${basePath}${modulePath}`;
                 const code = await fetchTextWithCache(fetchUrl);
-                
+
                 // Determine the path in Pyodide's filesystem
                 // For modules, we need to maintain the directory structure
                 const pyodidePath = `/${modulePath}`;
                 const dirPath = pyodidePath.substring(0, pyodidePath.lastIndexOf('/'));
-                
+
                 // Create directory if needed (skip if dirPath is empty or just '/')
                 if (dirPath && dirPath !== '/' && dirPath.length > 0) {
                     pyodide.runPython(`
@@ -95,7 +95,7 @@ import os
 os.makedirs("${dirPath}", exist_ok=True)
 `);
                 }
-                
+
                 // Write file
                 pyodide.FS.writeFile(pyodidePath, code);
             } catch (error) {
@@ -103,19 +103,19 @@ os.makedirs("${dirPath}", exist_ok=True)
                 throw new Error(`Failed to load Python module ${modulePath}: ${error.message}`);
             }
         }
-        
-        // Set up Python path - root for packages, py for api module
+
+        // Set up Python path - root for packages, py-api for api module
         pyodide.runPython(`
 import sys
 sys.path.insert(0, '/')
-sys.path.insert(0, '/py')
+sys.path.insert(0, '/py-api')
 `);
-        
+
         loadingIndicator.querySelector('p').textContent = 'Ready!';
         pyodideReady = true;
         loadingIndicator.classList.add('hidden');
         resultsContainer.classList.add('hidden');
-        
+
     } catch (error) {
         console.error('Pyodide initialization error:', error);
         errorDisplay.textContent = `Initialization error: ${error.message}`;
@@ -134,27 +134,27 @@ async function loadDataFiles() {
         quests: null,
         price_guide: {},
     };
-    
+
     try {
         // Ensure cache is initialized
         if (!db) {
             await initCache();
         }
-        
+
         // Load drop table (using cache)
         try {
             data.drop_table = await fetchJSONWithCache(`${basePath}${DATA_FILES.drop_table}`);
         } catch (error) {
             throw new Error(`Failed to load drop table: ${error.message}`);
         }
-        
+
         // Load quests (using cache)
         try {
             data.quests = await fetchJSONWithCache(`${basePath}${DATA_FILES.quests}`);
         } catch (error) {
             throw new Error(`Failed to load quests: ${error.message}`);
         }
-        
+
         // Load price guide files (using cache)
         for (const priceGuideFile of DATA_FILES.price_guide) {
             try {
@@ -164,7 +164,7 @@ async function loadDataFiles() {
                 console.warn(`Failed to load ${priceGuideFile}, skipping...`, error);
             }
         }
-        
+
         return data;
     } catch (error) {
         console.error('Error loading data files:', error);
@@ -186,17 +186,17 @@ function getActiveTab() {
 function getOptimizeQuestsParameters() {
     const form = document.getElementById('optimizer-form');
     const formData = new FormData(form);
-    
+
     // Handle RBR list
     const rbrListStr = formData.get('rbr-list');
     const rbrList = rbrListStr && rbrListStr.trim() ? rbrListStr.trim().split(/\s+/) : null;
-    
+
     // Parse quest filter as space-separated list
     const questFilterStr = formData.get('quest-filter');
-    const quest_filter = questFilterStr && questFilterStr.trim() 
-        ? questFilterStr.trim().split(/\s+/) 
+    const quest_filter = questFilterStr && questFilterStr.trim()
+        ? questFilterStr.trim().split(/\s+/)
         : null;
-    
+
     const params = {
         section_id: formData.get('section-id') || 'All',
         quest_filter: quest_filter,
@@ -209,7 +209,7 @@ function getOptimizeQuestsParameters() {
         rbr_active: rbrList !== null,
         rbr_list: rbrList,
     };
-    
+
     return params;
 }
 
@@ -219,17 +219,17 @@ function getOptimizeQuestsParameters() {
 function getOptimizeItemHuntParameters() {
     const form = document.getElementById('optimizer-form');
     const formData = new FormData(form);
-    
+
     const questFilterStr = formData.get('item-hunt-quest-filter');
-    const quest_filter = questFilterStr && questFilterStr.trim() 
-        ? questFilterStr.trim().split(/\s+/) 
+    const quest_filter = questFilterStr && questFilterStr.trim()
+        ? questFilterStr.trim().split(/\s+/)
         : null;
-    
+
     const rbrListStr = formData.get('item-hunt-rbr-list');
-    const rbrList = rbrListStr && rbrListStr.trim() 
-        ? rbrListStr.trim().split(/\s+/) 
+    const rbrList = rbrListStr && rbrListStr.trim()
+        ? rbrListStr.trim().split(/\s+/)
         : null;
-    
+
     const params = {
         item_name: formData.get('item-name'),
         quest_filter: quest_filter,
@@ -241,7 +241,7 @@ function getOptimizeItemHuntParameters() {
         top_n: parseInt(formData.get('item-hunt-top-n')) || 10,
         show_details: document.getElementById('item-hunt-show-details').checked,
     };
-    
+
     return params;
 }
 
@@ -251,13 +251,13 @@ function getOptimizeItemHuntParameters() {
 function getCalculateItemValueParameters() {
     const form = document.getElementById('optimizer-form');
     const formData = new FormData(form);
-    
+
     const params = {
         item_name: formData.get('value-item-name'),
         drop_area: formData.get('drop-area') || null,
         price_strategy: formData.get('price-strategy') || 'MINIMUM',
     };
-    
+
     return params;
 }
 
@@ -268,30 +268,30 @@ async function optimizeQuests() {
     if (!pyodideReady) {
         throw new Error('Pyodide is not ready yet');
     }
-    
+
     const loadingIndicator = document.getElementById('loading-indicator');
     const errorDisplay = document.getElementById('error-display');
     const resultsContainer = document.getElementById('results-container');
-    
+
     try {
         // Hide previous results and errors, show results container
         resultsContainer.classList.remove('hidden');
         errorDisplay.classList.add('hidden');
-        
+
         // Show loading in results area, hide results table
         const resultsTable = document.getElementById('results-table');
         resultsTable.innerHTML = '';
         loadingIndicator.classList.remove('hidden');
         loadingIndicator.querySelector('p').textContent = 'Processing Data';
-        
+
         // Load data files
         const data = await loadDataFiles();
-        
+
         loadingIndicator.querySelector('p').textContent = 'Calculating quest rankings...';
-        
+
         // Get form parameters
         const params = getOptimizeQuestsParameters();
-        
+
         // Call Python API
         // Convert JavaScript values to Python equivalents
         const convertToPython = (obj) => {
@@ -300,7 +300,7 @@ async function optimizeQuests() {
                 .replace(/\btrue\b/g, 'True')
                 .replace(/\bfalse\b/g, 'False');
         };
-        
+
         const result = pyodide.runPython(`
 import json
 from api import optimize_quests
@@ -313,23 +313,23 @@ params = ${convertToPython(params)}
 result = optimize_quests(drop_table_data, quests_data, price_guide_data, params)
 json.dumps(result)
 `);
-        
+
         const resultObj = JSON.parse(result);
-        
+
         // Hide loading
         loadingIndicator.classList.add('hidden');
-        
+
         // Check for errors
         if (resultObj.error) {
             errorDisplay.textContent = resultObj.error;
             errorDisplay.classList.remove('hidden');
             return;
         }
-        
+
         // Display results
         renderResults(resultObj.rankings, params);
         resultsContainer.classList.remove('hidden');
-        
+
     } catch (error) {
         console.error('Error optimizing quests:', error);
         loadingIndicator.classList.add('hidden');
@@ -344,10 +344,10 @@ json.dumps(result)
 function switchToTab(tabId) {
     console.log('Switching to tab:', tabId);
     const tabButtons = document.querySelectorAll('.tab-btn');
-    
+
     // Remove active class from all tabs
     tabButtons.forEach(b => b.classList.remove('active'));
-    
+
     // Add active class to the target tab button
     const targetButton = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
     if (targetButton) {
@@ -355,12 +355,12 @@ function switchToTab(tabId) {
     } else {
         console.error('Tab button not found for:', tabId);
     }
-    
+
     // Hide all tab contents
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.add('hidden');
     });
-    
+
     // Show active tab content
     const tabContent = document.getElementById(`tab-${tabId}`);
     if (tabContent) {
@@ -369,7 +369,7 @@ function switchToTab(tabId) {
     } else {
         console.error('Tab content not found for:', tabId);
     }
-    
+
     // Update submit button text
     const submitBtn = document.getElementById('submit-btn');
     if (submitBtn) {
@@ -388,14 +388,14 @@ function switchToTab(tabId) {
  */
 function setupTabHandlers() {
     const tabButtons = document.querySelectorAll('.tab-btn');
-    
+
     console.log('Setting up tab handlers, found', tabButtons.length, 'buttons');
-    
+
     if (tabButtons.length === 0) {
         console.error('No tab buttons found!');
         return;
     }
-    
+
     tabButtons.forEach((btn, index) => {
         const tabId = btn.dataset.tab;
         console.log(`Setting up handler for button ${index}:`, tabId);
@@ -410,7 +410,7 @@ function setupTabHandlers() {
             }
         });
     });
-    
+
     // Initialize first tab (optimize-quests) as active
     switchToTab('optimize-quests');
 }
@@ -421,12 +421,12 @@ function setupTabHandlers() {
 function setupFormHandlers() {
     const form = document.getElementById('optimizer-form');
     const resetBtn = document.getElementById('reset-btn');
-    
+
     // Handle form submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const activeTab = getActiveTab();
-        
+
         // Validate required fields based on active tab
         if (activeTab === 'optimize-item-hunt') {
             const itemName = document.getElementById('item-name').value.trim();
@@ -447,10 +447,10 @@ function setupFormHandlers() {
                 return;
             }
         }
-        
+
         // Clear any previous errors
         document.getElementById('error-display').classList.add('hidden');
-        
+
         if (activeTab === 'optimize-quests') {
             await optimizeQuests();
         } else if (activeTab === 'optimize-item-hunt') {
@@ -459,7 +459,7 @@ function setupFormHandlers() {
             await calculateItemValue();
         }
     });
-    
+
     // Handle reset
     resetBtn.addEventListener('click', () => {
         form.reset();
@@ -475,34 +475,34 @@ async function optimizeItemHunting() {
     if (!pyodideReady) {
         throw new Error('Pyodide is not ready yet');
     }
-    
+
     const loadingIndicator = document.getElementById('loading-indicator');
     const errorDisplay = document.getElementById('error-display');
     const resultsContainer = document.getElementById('results-container');
-    
+
     try {
         // Hide previous results and errors, show results container
         resultsContainer.classList.remove('hidden');
         errorDisplay.classList.add('hidden');
-        
+
         // Show loading in results area, hide results table
         const resultsTable = document.getElementById('results-table');
         resultsTable.innerHTML = '';
         loadingIndicator.classList.remove('hidden');
         loadingIndicator.querySelector('p').textContent = 'Processing Data';
-        
+
         // Load data files
         const data = await loadDataFiles();
-        
+
         loadingIndicator.querySelector('p').textContent = 'Finding best quests for item...';
-        
+
         // Get form parameters
         const params = getOptimizeItemHuntParameters();
-        
+
         if (!params.item_name) {
             throw new Error('Item name is required');
         }
-        
+
         // Call Python API
         const convertToPython = (obj) => {
             return JSON.stringify(obj)
@@ -510,7 +510,7 @@ async function optimizeItemHunting() {
                 .replace(/\btrue\b/g, 'True')
                 .replace(/\bfalse\b/g, 'False');
         };
-        
+
         const result = pyodide.runPython(`
 import json
 from api import optimize_item_hunting
@@ -523,23 +523,23 @@ params = ${convertToPython(params)}
 result = optimize_item_hunting(drop_table_data, quests_data, price_guide_data, params)
 json.dumps(result)
 `);
-        
+
         const resultObj = JSON.parse(result);
-        
+
         // Hide loading
         loadingIndicator.classList.add('hidden');
-        
+
         // Check for errors
         if (resultObj.error) {
             errorDisplay.textContent = resultObj.error;
             errorDisplay.classList.remove('hidden');
             return;
         }
-        
+
         // Display results
         renderItemHuntResults(resultObj, params);
         resultsContainer.classList.remove('hidden');
-        
+
     } catch (error) {
         console.error('Error optimizing item hunt:', error);
         loadingIndicator.classList.add('hidden');
@@ -555,34 +555,34 @@ async function calculateItemValue() {
     if (!pyodideReady) {
         throw new Error('Pyodide is not ready yet');
     }
-    
+
     const loadingIndicator = document.getElementById('loading-indicator');
     const errorDisplay = document.getElementById('error-display');
     const resultsContainer = document.getElementById('results-container');
-    
+
     try {
         // Hide previous results and errors, show results container
         resultsContainer.classList.remove('hidden');
         errorDisplay.classList.add('hidden');
-        
+
         // Show loading in results area, hide results table
         const resultsTable = document.getElementById('results-table');
         resultsTable.innerHTML = '';
         loadingIndicator.classList.remove('hidden');
         loadingIndicator.querySelector('p').textContent = 'Processing Data';
-        
+
         // Load price guide data
         const data = await loadDataFiles();
-        
+
         loadingIndicator.querySelector('p').textContent = 'Calculating item value...';
-        
+
         // Get form parameters
         const params = getCalculateItemValueParameters();
-        
+
         if (!params.item_name) {
             throw new Error('Item name is required');
         }
-        
+
         // Call Python API
         const convertToPython = (obj) => {
             return JSON.stringify(obj)
@@ -590,7 +590,7 @@ async function calculateItemValue() {
                 .replace(/\btrue\b/g, 'True')
                 .replace(/\bfalse\b/g, 'False');
         };
-        
+
         const result = pyodide.runPython(`
 import json
 from api import calculate_item_value
@@ -601,23 +601,23 @@ params = ${convertToPython(params)}
 result = calculate_item_value(price_guide_data, params)
 json.dumps(result)
 `);
-        
+
         const resultObj = JSON.parse(result);
-        
+
         // Hide loading
         loadingIndicator.classList.add('hidden');
-        
+
         // Check for errors
         if (resultObj.error) {
             errorDisplay.textContent = resultObj.error;
             errorDisplay.classList.remove('hidden');
             return;
         }
-        
+
         // Display results
         renderItemValueResults(resultObj);
         resultsContainer.classList.remove('hidden');
-        
+
     } catch (error) {
         console.error('Error calculating item value:', error);
         loadingIndicator.classList.add('hidden');
@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up tab handlers immediately - don't wait for Pyodide
     setupTabHandlers();
     setupFormHandlers();
-    
+
     // Initialize Pyodide in the background
     initializePyodide();
 });

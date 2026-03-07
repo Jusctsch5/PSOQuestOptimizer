@@ -13,7 +13,7 @@ The web interface is automatically deployed to GitHub Pages via GitHub Actions. 
 
 ```bash
 cd PSOQuestOptimizer  # Go to repository root
-python -m http.server 8000
+python -m http.server 8000 --directory ./web
 ```
 
 Then open `http://localhost:8000/web/` in your browser.

@@ -1,8 +1,16 @@
 /**
  * IndexedDB cache for Python modules and data files
- * Reduces load time on subsequent visits
+ * Reduces load time on subsequent visits.
+ * Disable with URL param: ?nocache=1 or ?cache=0
  */
-
+function getCacheDisabled() {
+    if (typeof window === 'undefined') return false;
+    const p = new URLSearchParams(window.location.search);
+    const nocache = p.get('nocache');
+    const cache = p.get('cache');
+    return nocache === '1' || nocache === 'true' || cache === '0' || cache === 'false';
+}
+const CACHE_DISABLED = getCacheDisabled();
 const DB_NAME = 'pso_optimizer_cache';
 const DB_VERSION = 2; // Increment to force cache clear on schema change
 const CACHE_STORE = 'files';
@@ -53,6 +61,7 @@ async function initCache() {
  * Get cached file if available and not expired
  */
 async function getCached(url, maxAge = 7 * 24 * 60 * 60 * 1000) { // 7 days default
+    if (CACHE_DISABLED) return null;
     if (!db) {
         await initCache();
     }
@@ -91,6 +100,7 @@ async function getCached(url, maxAge = 7 * 24 * 60 * 60 * 1000) { // 7 days defa
  * Cache a file
  */
 async function setCached(url, data) {
+    if (CACHE_DISABLED) return;
     if (!db) {
         await initCache();
     }
@@ -201,13 +211,14 @@ async function fetchJSONWithCache(url) {
  * @param {string} basePath - Base path for fetching version.json
  */
 async function checkVersion(basePath = './') {
+    if (CACHE_DISABLED) return false;
     if (!db) {
         await initCache();
     }
 
     try {
-        // Fetch current version from server (don't use cache for version check!)
-        const response = await fetch(`${basePath}version.json`);
+        // Fetch version.json from same directory as the page (no 404 in local or deployed)
+        const response = await fetch('version.json');
         if (!response.ok) {
             throw new Error(`Failed to fetch version: ${response.status}`);
         }
