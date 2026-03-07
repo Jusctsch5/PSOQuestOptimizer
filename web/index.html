@@ -248,8 +248,7 @@
         <div id="section-data" class="section-content hidden">
             <nav class="data-subnav">
                 <button type="button" class="data-tab-btn active" data-data-tab="quest-list">Quest List</button>
-                <button type="button" class="data-tab-btn" data-data-tab="price-guide" disabled
-                    title="Coming soon">Price Guide</button>
+                <button type="button" class="data-tab-btn" data-data-tab="price-guide">Price Guide</button>
                 <button type="button" class="data-tab-btn" data-data-tab="drop-tables" disabled title="Coming soon">Drop
                     Tables</button>
             </nav>
@@ -270,7 +269,27 @@
                     <div id="quest-detail-content" class="quest-detail-placeholder">Select a quest from the list.</div>
                 </div>
             </div>
-            <div id="data-price-guide" class="data-tab-panel hidden"></div>
+            <div id="data-price-guide" class="data-tab-panel hidden quest-list-layout">
+                <aside class="quest-list-sidebar">
+                    <div class="quest-list-controls">
+                        <label for="price-guide-type" class="price-guide-label">Type</label>
+                        <select id="price-guide-type" aria-label="Filter by item type">
+                            <option value="">All types</option>
+                        </select>
+                        <input type="text" id="price-guide-search" placeholder="Search items..."
+                            aria-label="Search price guide">
+                    </div>
+                    <div id="price-guide-loading" class="loading hidden">
+                        <div class="spinner"></div>
+                        <p>Loading price guide...</p>
+                    </div>
+                    <div id="price-guide-summary" class="quest-list-summary hidden"></div>
+                    <div id="price-guide-container" class="quest-list-scroll"></div>
+                </aside>
+                <div class="quest-detail-panel">
+                    <div id="price-guide-detail" class="quest-detail-placeholder">Select an item from the list.</div>
+                </div>
+            </div>
             <div id="data-drop-tables" class="data-tab-panel hidden"></div>
         </div>
     </div>
@@ -282,6 +301,7 @@
     <script src="js/render-item-hunt-results.js"></script>
     <script src="js/render-item-value-results.js"></script>
     <script src="js/quest-list.js"></script>
+    <script src="js/price-guide.js"></script>
 </body>
 
 </html>

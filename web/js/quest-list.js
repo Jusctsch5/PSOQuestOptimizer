@@ -181,6 +181,7 @@
                 const panel = document.getElementById('data-' + tab);
                 if (panel) panel.classList.remove('hidden');
                 if (tab === 'quest-list') showQuestList();
+                if (tab === 'price-guide' && typeof window.showPriceGuide === 'function') window.showPriceGuide();
             });
         });
     }

@@ -177,6 +177,11 @@ header p {
     background: white;
 }
 
+.price-guide-label {
+    font-size: 0.9em;
+    color: #555;
+}
+
 .quest-list-summary {
     margin-bottom: 12px;
     font-size: 0.95em;
@@ -249,6 +254,12 @@ header p {
     margin-left: 6px;
 }
 
+.quest-item-category {
+    font-size: 0.85em;
+    color: #777;
+    margin-left: 6px;
+}
+
 .quest-detail-panel {
     background: white;
     padding: 20px;
@@ -287,6 +298,17 @@ header p {
 .quest-detail-area p {
     margin: 4px 0;
     font-size: 0.95em;
+}
+
+.quest-detail-area .price-guide-nested {
+    margin-left: 1.5em;
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+
+.quest-detail-area .price-guide-nested ul {
+    margin: 0;
+    padding-left: 1.25em;
 }
 
 .quest-detail-completion {
