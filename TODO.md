@@ -35,7 +35,7 @@
 # UI TODO
 - [X] Implement base of UI
 - [X] Add usable front-end for quest-optimizer/ item-value-calculator hosted by github pages
-- [ ] Add browsable price guide to UI
+- [X] Add browsable price guide to UI
 - [X] Add browsable quest list to UI
 - [ ] Add browsable drop tables to UI
 - [ ] Add tooltips to UI

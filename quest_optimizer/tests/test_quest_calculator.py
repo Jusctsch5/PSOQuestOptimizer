@@ -110,6 +110,39 @@ def test_qcalc_christmas_event_boosts_rdr_week(quest_calculator: QuestCalculator
     assert pd_rdr_and_christmas > pd_rdr_only, f"Christmas event should increase PD value during RDR week: {pd_rdr_and_christmas} should be > {pd_rdr_only}"
 
 
+def test_whitill_gee_drops_diska_of_braveman(quest_calculator: QuestCalculator):
+    """Test that Gee (Whitill) is counted and drops Diska of Braveman with positive PD value.
+
+    Gee appears in episode 2 drop table and drops Diska of Braveman for Whitill.
+    This guards against Gee being mis-resolved (e.g. to Gi Gue via partial match).
+    """
+    pw1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "PW1":
+            pw1_quest = quest
+            break
+
+    assert pw1_quest is not None, "PW1 (Phantasmal World #1) quest not found in quest data"
+    assert pw1_quest.get("episode") == 2, "PW1 should be episode 2"
+
+    result = quest_calculator.calculate_quest_value(
+        pw1_quest, "Whitill", rbr_active=False, weekly_boost=None, event_type=None
+    )
+    enemy_breakdown = result.get("enemy_breakdown", {})
+
+    assert "Gee" in enemy_breakdown, (
+        "Gee should appear in enemy_breakdown for PW1 (Whitill). "
+        f"Keys present: {list(enemy_breakdown.keys())}"
+    )
+    gee_data = enemy_breakdown["Gee"]
+    assert "error" not in gee_data, f"Gee should have no error: {gee_data.get('error')}"
+    assert gee_data.get("item") == "Diska of Braveman", (
+        f"Whitill Gee should drop Diska of Braveman, got item: {gee_data.get('item')}"
+    )
+    pd_value = gee_data.get("pd_value", 0.0)
+    assert pd_value > 0, f"Gee (Diska of Braveman) should have positive pd_value, got {pd_value}"
+
+
 def test_christmas_presents_only_during_christmas(quest_calculator: QuestCalculator):
     """Test that Christmas Presents only drop during Christmas event"""
     # Find MU1 quest

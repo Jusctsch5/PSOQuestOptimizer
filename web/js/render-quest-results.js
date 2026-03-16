@@ -86,16 +86,18 @@ function renderResults(rankings, params) {
             html += `<td>${rewardStr}</td>`;
         }
         
-        // Notable items columns
+        // Notable items columns (sources ordered by contribution, top first)
         const topItems = ranking.top_items || [];
         for (let i = 0; i < notableItemsCount; i++) {
             if (i < topItems.length && topItems[i]) {
                 const item = topItems[i];
                 const itemName = item.item || 'Unknown';
                 const sources = item.enemies || [];
-                const source = sources[0] || 'Unknown';
                 const pdValue = item.pd_value || 0;
-                const itemStr = `${escapeHtml(itemName)} (${escapeHtml(source)}: ${pdValue.toFixed(4)})`;
+                const sourceLabel = sources.length > 1
+                    ? sources.map(s => escapeHtml(s)).join(', ') + ': '
+                    : (escapeHtml(sources[0] || 'Unknown') + ': ');
+                const itemStr = `${escapeHtml(itemName)} (${sourceLabel}${pdValue.toFixed(4)})`;
                 html += `<td data-tooltip="${escapeHtml(itemStr)}">${itemStr}</td>`;
             } else {
                 html += '<td></td>';

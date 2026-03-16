@@ -45,7 +45,8 @@ class QuestOptimizer:
             List of dictionaries with item_name, source (enemy/box/event), pd_value
             sorted by PD value (descending)
         """
-        item_data: Dict[str, Dict] = {}  # item_name -> {pd_value, sources: [list of sources]}
+        # item_name -> {pd_value, source_pd: {source_label: pd_value}} so we can order by contribution
+        item_data: Dict[str, Dict] = {}
 
         # Process enemy drops
         for enemy, data in enemy_breakdown.items():
@@ -64,13 +65,12 @@ class QuestOptimizer:
             pd_value = data.get("pd_value", 0.0)
 
             if item not in item_data:
-                item_data[item] = {"pd_value": 0.0, "sources": []}
+                item_data[item] = {"pd_value": 0.0, "source_pd": {}}
 
             item_data[item]["pd_value"] += pd_value
-            # Track which enemy/area drops this item (for display)
-            sources_list: List[str] = item_data[item].get("sources", [])
-            if source_label not in sources_list:
-                sources_list.append(source_label)
+            item_data[item]["source_pd"][source_label] = (
+                item_data[item]["source_pd"].get(source_label, 0.0) + pd_value
+            )
 
         # Process box drops
         if box_breakdown:
@@ -78,13 +78,12 @@ class QuestOptimizer:
                 pd_value = data.get("pd_value", 0.0)
                 if pd_value > 0:
                     if item_name not in item_data:
-                        item_data[item_name] = {"pd_value": 0.0, "sources": []}
+                        item_data[item_name] = {"pd_value": 0.0, "source_pd": {}}
 
                     item_data[item_name]["pd_value"] += pd_value
-                    # Mark as box drop
-                    box_sources_list: List[str] = item_data[item_name].get("sources", [])
-                    if "Box" not in box_sources_list:
-                        box_sources_list.append("Box")
+                    item_data[item_name]["source_pd"]["Box"] = (
+                        item_data[item_name]["source_pd"].get("Box", 0.0) + pd_value
+                    )
 
         # Process event drops
         if event_drops_breakdown:
@@ -92,19 +91,22 @@ class QuestOptimizer:
                 pd_value = data.get("pd_value", 0.0)
                 if pd_value > 0:
                     if item_name not in item_data:
-                        item_data[item_name] = {"pd_value": 0.0, "sources": []}
+                        item_data[item_name] = {"pd_value": 0.0, "source_pd": {}}
 
                     item_data[item_name]["pd_value"] += pd_value
-                    # Mark as event drop
-                    event_sources_list: List[str] = item_data[item_name].get("sources", [])
-                    if "Event" not in event_sources_list:
-                        event_sources_list.append("Event")
+                    item_data[item_name]["source_pd"]["Event"] = (
+                        item_data[item_name]["source_pd"].get("Event", 0.0) + pd_value
+                    )
 
-        # Convert to list of dicts and sort by PD value (descending)
+        # Convert to list of dicts; sort by total PD; enemies = sources ordered by contribution (top first)
         result = []
         for item_name, data in item_data.items():
-            # For backward compatibility, use "enemies" key but include enemies, boxes, and events
-            result.append({"item": item_name, "pd_value": data["pd_value"], "enemies": data["sources"]})
+            sources_sorted = sorted(
+                data["source_pd"].keys(),
+                key=lambda s: data["source_pd"][s],
+                reverse=True,
+            )
+            result.append({"item": item_name, "pd_value": data["pd_value"], "enemies": sources_sorted})
 
         # Sort by PD value (descending) and return top N
         result.sort(key=lambda x: x["pd_value"], reverse=True)
