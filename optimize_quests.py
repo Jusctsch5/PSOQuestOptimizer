@@ -8,7 +8,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from quest_optimizer.quest_calculator import EventType, QuestCalculator, WeeklyBoost
 
@@ -42,11 +42,42 @@ class QuestOptimizer:
             top_n: Optional number of top items to return (default: all)
 
         Returns:
-            List of dictionaries with item_name, source (enemy/box/event), pd_value
+            List of dictionaries with item_name, source (enemy/box/event), pd_value,
+            optional breakdown lines (expected_drops × item_price_pd) for UI tooltips,
             sorted by PD value (descending)
         """
-        # item_name -> {pd_value, source_pd: {source_label: pd_value}} so we can order by contribution
-        item_data: Dict[str, Dict] = {}
+        # item_name -> {pd_value, source_pd, contributions: [...]}
+        item_data: Dict[str, Dict[str, Any]] = {}
+
+        def _ensure_item(it: str) -> Dict[str, Any]:
+            if it not in item_data:
+                item_data[it] = {"pd_value": 0.0, "source_pd": {}, "contributions": []}
+            elif "contributions" not in item_data[it]:
+                item_data[it]["contributions"] = []
+            return item_data[it]
+
+        def _append_contribution(
+            item: str,
+            source_label: str,
+            kind: str,
+            expected_drops: float,
+            item_price_pd: float,
+            pd_value: float,
+            equation: str,
+            extra: Optional[Dict[str, Any]] = None,
+        ) -> None:
+            row = _ensure_item(item)
+            line: Dict[str, Any] = {
+                "source": source_label,
+                "kind": kind,
+                "expected_drops": float(expected_drops),
+                "item_price_pd": float(item_price_pd),
+                "pd_value": float(pd_value),
+                "equation": equation,
+            }
+            if extra:
+                line["detail"] = extra
+            row["contributions"].append(line)
 
         # Process enemy drops
         for enemy, data in enemy_breakdown.items():
@@ -58,44 +89,106 @@ class QuestOptimizer:
             if " Lv30" in enemy or "item" not in data:
                 item = enemy  # Technique drop - key is the item name
                 source_label = data.get("area", "Technique")  # Use area as source for techniques
+                kind = "technique"
             else:
                 item = data.get("item", "Unknown")
                 source_label = enemy  # Regular enemy drop - use enemy name as source
+                kind = "enemy"
 
-            pd_value = data.get("pd_value", 0.0)
+            pd_value = float(data.get("pd_value", 0.0))
+            expected_drops = float(data.get("expected_drops", 0.0))
+            item_price_pd = float(data.get("item_price_pd", 0.0))
 
-            if item not in item_data:
-                item_data[item] = {"pd_value": 0.0, "source_pd": {}}
+            row = _ensure_item(item)
+            row["pd_value"] += pd_value
+            row["source_pd"][source_label] = row["source_pd"].get(source_label, 0.0) + pd_value
 
-            item_data[item]["pd_value"] += pd_value
-            item_data[item]["source_pd"][source_label] = (
-                item_data[item]["source_pd"].get(source_label, 0.0) + pd_value
-            )
+            if kind == "enemy":
+                cnt = data.get("count", 0)
+                adj_dar = float(data.get("adjusted_dar", 0.0))
+                adj_rdr = float(data.get("adjusted_rdr", 0.0))
+                equation = (
+                    f"{cnt} enemies × adjusted_DAR × adjusted_RDR × item_price_pd = "
+                    f"{cnt} × {adj_dar:.6f} × {adj_rdr:.8f} × {item_price_pd:.8f} = {pd_value:.6f}"
+                )
+                extra = {
+                    "enemy_count": cnt,
+                    "dar": float(data.get("dar", 0.0)),
+                    "adjusted_dar": adj_dar,
+                    "rdr": float(data.get("rdr", 0.0)),
+                    "adjusted_rdr": adj_rdr,
+                }
+            else:
+                equation = (
+                    f"expected_drops × item_price_pd = {expected_drops:.8f} × {item_price_pd:.8f} = {pd_value:.6f}"
+                )
+                extra = {"technique_area": source_label, "drop_rate": float(data.get("drop_rate", 0.0))}
+
+            _append_contribution(item, source_label, kind, expected_drops, item_price_pd, pd_value, equation, extra)
 
         # Process box drops
         if box_breakdown:
             for item_name, data in box_breakdown.items():
-                pd_value = data.get("pd_value", 0.0)
+                pd_value = float(data.get("pd_value", 0.0))
                 if pd_value > 0:
-                    if item_name not in item_data:
-                        item_data[item_name] = {"pd_value": 0.0, "source_pd": {}}
+                    row = _ensure_item(item_name)
+                    row["pd_value"] += pd_value
+                    row["source_pd"]["Box"] = row["source_pd"].get("Box", 0.0) + pd_value
 
-                    item_data[item_name]["pd_value"] += pd_value
-                    item_data[item_name]["source_pd"]["Box"] = (
-                        item_data[item_name]["source_pd"].get("Box", 0.0) + pd_value
+                    expected_drops = float(data.get("expected_drops", 0.0))
+                    item_price_pd = float(data.get("item_price_pd", 0.0))
+                    box_count = data.get("box_count")
+                    drop_rate = data.get("drop_rate")
+                    area = data.get("area")
+                    # Use expected_drops × price (merged box rows may combine areas; counts/rates are in detail)
+                    equation = (
+                        f"expected_drops × item_price_pd = {expected_drops:.8f} × {item_price_pd:.8f} = {pd_value:.6f}"
+                    )
+                    extra: Dict[str, Any] = {}
+                    if box_count is not None:
+                        extra["box_count"] = box_count
+                    if drop_rate is not None:
+                        extra["drop_rate"] = float(drop_rate)
+                    if area:
+                        extra["area"] = area
+                    _append_contribution(
+                        item_name,
+                        "Box",
+                        "box",
+                        expected_drops,
+                        item_price_pd,
+                        pd_value,
+                        equation,
+                        extra if extra else None,
                     )
 
         # Process event drops
         if event_drops_breakdown:
             for item_name, data in event_drops_breakdown.items():
-                pd_value = data.get("pd_value", 0.0)
+                pd_value = float(data.get("pd_value", 0.0))
                 if pd_value > 0:
-                    if item_name not in item_data:
-                        item_data[item_name] = {"pd_value": 0.0, "source_pd": {}}
+                    row = _ensure_item(item_name)
+                    row["pd_value"] += pd_value
+                    row["source_pd"]["Event"] = row["source_pd"].get("Event", 0.0) + pd_value
 
-                    item_data[item_name]["pd_value"] += pd_value
-                    item_data[item_name]["source_pd"]["Event"] = (
-                        item_data[item_name]["source_pd"].get("Event", 0.0) + pd_value
+                    expected_drops = float(data.get("expected_drops", 0.0))
+                    item_price_pd = float(data.get("item_price_pd", 0.0))
+                    dr = data.get("drop_rate")
+                    equation = (
+                        f"expected_drops × item_price_pd = {expected_drops:.8f} × {item_price_pd:.8f} = {pd_value:.6f}"
+                    )
+                    extra_ev: Dict[str, Any] = {}
+                    if dr is not None:
+                        extra_ev["drop_rate"] = float(dr)
+                    _append_contribution(
+                        item_name,
+                        f"Event: {item_name}",
+                        "event",
+                        expected_drops,
+                        item_price_pd,
+                        pd_value,
+                        equation,
+                        extra_ev if extra_ev else None,
                     )
 
         # Convert to list of dicts; sort by total PD; enemies = sources ordered by contribution (top first)
@@ -106,7 +199,16 @@ class QuestOptimizer:
                 key=lambda s: data["source_pd"][s],
                 reverse=True,
             )
-            result.append({"item": item_name, "pd_value": data["pd_value"], "enemies": sources_sorted})
+            contribs = list(data.get("contributions", []))
+            contribs.sort(key=lambda c: c["pd_value"], reverse=True)
+            result.append(
+                {
+                    "item": item_name,
+                    "pd_value": data["pd_value"],
+                    "enemies": sources_sorted,
+                    "breakdown": contribs,
+                }
+            )
 
         # Sort by PD value (descending) and return top N
         result.sort(key=lambda x: x["pd_value"], reverse=True)

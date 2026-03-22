@@ -15,7 +15,7 @@ const QUEST_RESULTS_HEADER_TOOLTIPS = {
         'Expected average number of photon drops per quest run (raw PD contribution from PD drops only, before item price value).',
     questReward: 'Quest completion reward items and their PD value contribution.',
     notableItem:
-        'Next most worthwhile item by expected PD value for this quest (sources may be listed; number is total expected PD from that item).',
+        'Next most worthwhile item by expected PD value for this quest (sources may be listed; number is total expected PD from that item). Hover the cell for per-source equations.',
 };
 
 /**
@@ -35,6 +35,27 @@ function escapeAttr(text) {
 function thWithTitle(label, tooltip) {
     const titleAttr = tooltip ? ` title="${escapeAttr(tooltip)}"` : '';
     return `<th scope="col" class="col-has-tooltip"${titleAttr}>${escapeHtml(label)}</th>`;
+}
+
+/**
+ * Row tooltip for a notable item: total PD plus per-source equations from server `breakdown`.
+ */
+function formatNotableItemTooltip(item) {
+    const name = item.item || 'Item';
+    const total = Number(item.pd_value || 0);
+    const totalStr = total.toFixed(6);
+    const breakdown = item.breakdown;
+    if (!Array.isArray(breakdown) || breakdown.length === 0) {
+        return `${name}: total ${totalStr} PD (per-source breakdown unavailable — use latest optimizer output).`;
+    }
+    const lines = breakdown.map((b) => {
+        const src = b.source != null ? String(b.source) : 'source';
+        const eq = b.equation != null
+            ? String(b.equation)
+            : `expected_drops × item_price_pd = ${Number(b.expected_drops || 0).toFixed(8)} × ${Number(b.item_price_pd || 0).toFixed(8)} = ${Number(b.pd_value || 0).toFixed(6)}`;
+        return `${src}: ${eq}`;
+    });
+    return `${name} — total ${totalStr} PD\n${lines.join('\n')}`;
 }
 
 /**
@@ -133,7 +154,8 @@ function renderResults(rankings, params) {
                     ? sources.map(s => escapeHtml(s)).join(', ') + ': '
                     : (escapeHtml(sources[0] || 'Unknown') + ': ');
                 const itemStr = `${escapeHtml(itemName)} (${sourceLabel}${pdValue.toFixed(4)})`;
-                html += `<td data-tooltip="${escapeHtml(itemStr)}">${itemStr}</td>`;
+                const breakdownTitle = escapeAttr(formatNotableItemTooltip(item));
+                html += `<td class="notable-item-cell" title="${breakdownTitle}">${itemStr}</td>`;
             } else {
                 html += '<td></td>';
             }

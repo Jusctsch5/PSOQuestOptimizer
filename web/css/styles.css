@@ -678,6 +678,11 @@ button {
     cursor: help;
 }
 
+/* Notable item cells: help cursor + native title tooltip (no extra icon) */
+.results-table td.notable-item-cell {
+    cursor: help;
+}
+
 .results-table td {
     padding: 10px 12px;
     border-bottom: 1px solid #eee;
