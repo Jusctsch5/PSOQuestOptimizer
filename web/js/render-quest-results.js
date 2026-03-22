@@ -2,6 +2,41 @@
  * Renderer for quest optimization results
  */
 
+/** Column header tooltips (Optimize Quests results) */
+const QUEST_RESULTS_HEADER_TOOLTIPS = {
+    rank: 'Position in the ranking (1 = best). Sorted by PD per minute when quest times are available; otherwise by total PD.',
+    questName: 'Full quest title and short quest code (e.g. MU1).',
+    sectionId: 'Section ID used for area-specific rare drop rates (RDR) and which items enemies can drop.',
+    episode: 'Episode: 1, 2, or 4.',
+    pdPerQuest:
+        'PD per quest: sums expected PD from enemy and box drops, raw photon-drop PD, and completion rewards. Completion rewards are the same entries as the Quest Reward column (when shown)—not a separate quest-item source.',
+    enemies: 'Total number of enemies across the quest (used for drop expectations).',
+    rawPdPerQuest:
+        'Expected average number of photon drops per quest run (raw PD contribution from PD drops only, before item price value).',
+    questReward: 'Quest completion reward items and their PD value contribution.',
+    notableItem:
+        'Next most worthwhile item by expected PD value for this quest (sources may be listed; number is total expected PD from that item).',
+};
+
+/**
+ * Escape text for use inside an HTML attribute (e.g. title="...").
+ */
+function escapeAttr(text) {
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+/**
+ * Table header cell with native tooltip (title).
+ */
+function thWithTitle(label, tooltip) {
+    const titleAttr = tooltip ? ` title="${escapeAttr(tooltip)}"` : '';
+    return `<th scope="col" class="col-has-tooltip"${titleAttr}>${escapeHtml(label)}</th>`;
+}
+
 /**
  * Render quest rankings as an HTML table
  */
@@ -29,22 +64,22 @@ function renderResults(rankings, params) {
     // Create table
     let html = '<table class="results-table">';
     
-    // Header row
+    // Header row (tooltips on columns for quick reference)
     html += '<thead><tr>';
-    html += '<th>Rank</th>';
-    html += '<th>Quest Name</th>';
+    html += thWithTitle('Rank', QUEST_RESULTS_HEADER_TOOLTIPS.rank);
+    html += thWithTitle('Quest Name', QUEST_RESULTS_HEADER_TOOLTIPS.questName);
     if (showSectionId) {
-        html += '<th>Section ID</th>';
+        html += thWithTitle('Section ID', QUEST_RESULTS_HEADER_TOOLTIPS.sectionId);
     }
-    html += '<th>Episode</th>';
-    html += '<th>PD/Quest</th>';
-    html += '<th>Enemies</th>';
-    html += '<th>Raw PD/Quest</th>';
+    html += thWithTitle('Episode', QUEST_RESULTS_HEADER_TOOLTIPS.episode);
+    html += thWithTitle('PD/Quest', QUEST_RESULTS_HEADER_TOOLTIPS.pdPerQuest);
+    html += thWithTitle('Enemies', QUEST_RESULTS_HEADER_TOOLTIPS.enemies);
+    html += thWithTitle('Raw PD/Quest', QUEST_RESULTS_HEADER_TOOLTIPS.rawPdPerQuest);
     if (hasCompletionItems) {
-        html += '<th>Quest Reward</th>';
+        html += thWithTitle('Quest Reward', QUEST_RESULTS_HEADER_TOOLTIPS.questReward);
     }
     for (let i = 1; i <= notableItemsCount; i++) {
-        html += `<th>Notable Item ${i}</th>`;
+        html += thWithTitle(`Notable Item ${i}`, QUEST_RESULTS_HEADER_TOOLTIPS.notableItem);
     }
     html += '</tr></thead>';
     

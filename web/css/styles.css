@@ -674,6 +674,10 @@ button {
     border-bottom: 2px solid #5568d3;
 }
 
+.results-table th.col-has-tooltip {
+    cursor: help;
+}
+
 .results-table td {
     padding: 10px 12px;
     border-bottom: 1px solid #eee;
