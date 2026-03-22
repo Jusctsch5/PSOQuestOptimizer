@@ -197,6 +197,10 @@ function getOptimizeQuestsParameters() {
         ? questFilterStr.trim().split(/\s+/)
         : null;
 
+    const dlRaw = formData.get('daily-luck');
+    const dailyLuck = dlRaw === null || dlRaw === '' ? 0 : parseInt(dlRaw, 10);
+    const daily_luck = Number.isFinite(dailyLuck) ? dailyLuck : 0;
+
     const params = {
         section_id: formData.get('section-id') || 'All',
         quest_filter: quest_filter,
@@ -208,6 +212,7 @@ function getOptimizeQuestsParameters() {
         quest_times: {}, // TODO: Load quest times if available
         rbr_active: rbrList !== null,
         rbr_list: rbrList,
+        daily_luck,
     };
 
     return params;
@@ -230,6 +235,10 @@ function getOptimizeItemHuntParameters() {
         ? rbrListStr.trim().split(/\s+/)
         : null;
 
+    const ihDlRaw = formData.get('item-hunt-daily-luck');
+    const ihDailyLuck = ihDlRaw === null || ihDlRaw === '' ? 0 : parseInt(ihDlRaw, 10);
+    const daily_luck = Number.isFinite(ihDailyLuck) ? ihDailyLuck : 0;
+
     const params = {
         item_name: formData.get('item-name'),
         quest_filter: quest_filter,
@@ -240,6 +249,7 @@ function getOptimizeItemHuntParameters() {
         exclude_event_quests: document.getElementById('item-hunt-exclude-event-quests').checked,
         top_n: parseInt(formData.get('item-hunt-top-n')) || 10,
         show_details: document.getElementById('item-hunt-show-details').checked,
+        daily_luck,
     };
 
     return params;

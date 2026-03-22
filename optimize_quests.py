@@ -228,6 +228,7 @@ class QuestOptimizer:
         episode_filter: Optional[int] = None,
         event_type: Optional[EventType] = None,
         exclude_event_quests: bool = False,
+        daily_luck: int = 0,
     ) -> List[Dict]:
         """
         Rank quests by PD efficiency.
@@ -241,6 +242,7 @@ class QuestOptimizer:
             quest_times: Dictionary mapping quest names to time in minutes
             episode_filter: Filter by episode (1, 2, or 4), or None for all
             event_type: Type of active event (EventType enum or None)
+            daily_luck: Integer percent bonus to the RDR multiplier. 0 = no change.
 
         Returns:
             List of quest results sorted by PD per minute (descending)
@@ -271,7 +273,9 @@ class QuestOptimizer:
                 quest_rbr_active = quest_name.lower() in rbr_list_lower
 
             # Calculate quest value
-            value_result = self.calculator.calculate_quest_value(quest_data, section_id, quest_rbr_active, weekly_boost, event_type)
+            value_result = self.calculator.calculate_quest_value(
+                quest_data, section_id, quest_rbr_active, weekly_boost, event_type, daily_luck
+            )
 
             # Get quest time
             quest_time = quest_times.get(quest_name) if quest_times else None
@@ -302,6 +306,7 @@ class QuestOptimizer:
                 "section_id": section_id,
                 "rbr_active": quest_rbr_active,
                 "weekly_boost": weekly_boost,
+                "daily_luck": daily_luck,
                 "enemy_breakdown": value_result["enemy_breakdown"],
                 "pd_drop_breakdown": value_result.get("pd_drop_breakdown", {}),
                 "box_breakdown": value_result.get("box_breakdown", {}),
@@ -328,6 +333,7 @@ class QuestOptimizer:
         episode_filter: Optional[int] = None,
         event_type: Optional[EventType] = None,
         exclude_event_quests: bool = False,
+        daily_luck: int = 0,
     ) -> Dict[str, List[Dict]]:
         """
         Rank quests for all Section IDs.
@@ -360,6 +366,7 @@ class QuestOptimizer:
                 episode_filter,
                 event_type,
                 exclude_event_quests,
+                daily_luck,
             )
 
         return results
@@ -763,6 +770,13 @@ Examples:
         help="Active event type: Easter, Halloween, Christmas, ValentinesDay, or Anniversary (default: None)",
     )
 
+    parser.add_argument(
+        "--daily-luck",
+        type=int,
+        default=0,
+        help="Daily luck as integer percent added to the RDR multiplier, e.g. 5 for +5 percent. 0 means no change",
+    )
+
     parser.add_argument("--episode", type=int, choices=[1, 2, 4], default=None, help="Filter by episode (1, 2, or 4). Omit for all episodes")
 
     parser.add_argument("--top-n", type=int, default=None, help="Show only top N quests (default: show all)")
@@ -873,6 +887,10 @@ Examples:
         print(f"  RBR Active: No")
     print(f"  Weekly Boost: {weekly_boost if weekly_boost else 'None'}")
     print(f"  Event Active: {event_type.value if event_type else 'None'}")
+    if args.daily_luck:
+        print(f"  Daily Luck: {args.daily_luck}%")
+    else:
+        print(f"  Daily Luck: 0")
     if args.episode:
         print(f"  Episode Filter: {args.episode}")
     if args.quest:
@@ -909,6 +927,7 @@ Examples:
                 episode_filter=args.episode,
                 event_type=event_type,
                 exclude_event_quests=args.exclude_event_quests,
+                daily_luck=args.daily_luck,
             )
             all_rankings.extend(section_rankings)
 
@@ -927,6 +946,7 @@ Examples:
             event_type=event_type,
             episode_filter=args.episode,
             exclude_event_quests=args.exclude_event_quests,
+            daily_luck=args.daily_luck,
         )
 
     # Print results

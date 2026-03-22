@@ -41,6 +41,7 @@ def optimize_quests(
             - show_details: bool (default: False)
             - exclude_event_quests: bool (default: False)
             - quest_times: Optional[Dict[str, float]] (quest name to minutes)
+            - daily_luck: int (default: 0) — percent added to RDR multiplier, e.g. 5 for +5%
 
     Returns:
         Dict with keys:
@@ -110,6 +111,10 @@ def optimize_quests(
     show_details = params.get("show_details", False)
     exclude_event_quests = params.get("exclude_event_quests", False)
     quest_times = params.get("quest_times", {})
+    try:
+        daily_luck = int(float(params.get("daily_luck", 0) or 0))
+    except (TypeError, ValueError):
+        daily_luck = 0
 
     # Filter quests if needed (quest_filter can be a list of quest names)
     quests_to_process = calculator.quest_data
@@ -154,6 +159,7 @@ def optimize_quests(
                     episode_filter=None,
                     event_type=event_type,
                     exclude_event_quests=False,  # Already filtered above
+                    daily_luck=daily_luck,
                 )
                 all_rankings.extend(section_rankings)
 
@@ -171,6 +177,7 @@ def optimize_quests(
                 episode_filter=None,
                 event_type=event_type,
                 exclude_event_quests=False,  # Already filtered above
+                daily_luck=daily_luck,
             )
 
         # Convert to JSON-serializable format
@@ -189,6 +196,7 @@ def optimize_quests(
                 "pd_per_minute": float(ranking.get("pd_per_minute")) if ranking.get("pd_per_minute") is not None else None,
                 "rbr_active": ranking.get("rbr_active", False),
                 "weekly_boost": ranking.get("weekly_boost").value if ranking.get("weekly_boost") else None,
+                "daily_luck": int(ranking.get("daily_luck", 0)),
                 "top_items": ranking.get("top_items", []),
                 "completion_items_breakdown": ranking.get("completion_items_breakdown", {}),
                 "completion_items_pd": float(ranking.get("completion_items_pd", 0.0)),
@@ -234,6 +242,7 @@ def optimize_item_hunting(
             - exclude_event_quests: bool (default: False)
             - top_n: Optional[int] (limit results, default: 10)
             - show_details: bool (default: False)
+            - daily_luck: int (default: 0) — percent added to RDR multiplier
 
     Returns:
         Dict with keys:
@@ -337,6 +346,11 @@ def optimize_item_hunting(
     exclude_event_quests = params.get("exclude_event_quests", False)
     top_n = params.get("top_n", 10)
 
+    try:
+        daily_luck = int(float(params.get("daily_luck", 0) or 0))
+    except (TypeError, ValueError):
+        daily_luck = 0
+
     # Filter quests if needed
     if exclude_event_quests:
         calculator.quest_data = [q for q in calculator.quest_data if not calculator._is_event_quest(q)]
@@ -346,7 +360,14 @@ def optimize_item_hunting(
         item_type = calculator.price_guide.identify_item_type(item_name)
 
         # Find enemies that drop the item
-        enemy_drops = calculator.find_enemies_that_drop_weapon(item_name, rbr_active=rbr_active, rbr_list=rbr_list, weekly_boost=weekly_boost, event_type=event_type)
+        enemy_drops = calculator.find_enemies_that_drop_weapon(
+            item_name,
+            rbr_active=rbr_active,
+            rbr_list=rbr_list,
+            weekly_boost=weekly_boost,
+            event_type=event_type,
+            daily_luck=daily_luck,
+        )
 
         # Find boxes that drop the item
         box_drops = calculator.find_boxes_that_drop_weapon(item_name)
@@ -359,6 +380,7 @@ def optimize_item_hunting(
             weekly_boost=weekly_boost,
             quest_filter=quest_filter,
             event_type=event_type,
+            daily_luck=daily_luck,
         )
 
         # Limit results if top_n is specified

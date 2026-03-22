@@ -833,16 +833,17 @@ class QuestCalculator:
         rbr_active: bool,
         weekly_boost: Optional[WeeklyBoost],
         event_type: Optional[EventType],
+        daily_luck: int = 0,
     ) -> Tuple[float, float, float]:
         """
         Calculate boost multipliers for a quest, dependent on a number of factors.
-        TODO: Does not account for daily luck boost.
 
         Args:
             quest_data: Quest data dictionary
             rbr_active: Whether RBR boost is active
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             event_type: Type of active event (EventType enum or None)
+            daily_luck: Bonus to RDR as an integer percent added to the RDR multiplier, e.g. 5 means +5%. 0 = no change.
 
         Returns:
             Tuple of (dar_multiplier, rdr_multiplier, enemy_rate_multiplier)
@@ -877,6 +878,9 @@ class QuestCalculator:
                 rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
             elif weekly_boost == WeeklyBoost.RareEnemy:
                 enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * christmas_multiplier)
+
+        # Daily luck: user-configured bonus applied to rare drop rate multiplier
+        rdr_multiplier *= 1.0 + daily_luck / 100.0
 
         return dar_multiplier, rdr_multiplier, enemy_rate_multiplier
 
@@ -1371,6 +1375,7 @@ class QuestCalculator:
         rbr_active: bool = False,
         weekly_boost: Optional[WeeklyBoost] = None,
         event_type: Optional[EventType] = None,
+        daily_luck: int = 0,
     ) -> Dict:
         """
         Calculate expected PD value for a quest.
@@ -1381,6 +1386,7 @@ class QuestCalculator:
             rbr_active: Whether RBR boost is active
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             event_type: Type of active event (EventType enum or None)
+            daily_luck: Integer percent bonus to the RDR multiplier, e.g. 5 for +5%. 0 = no change.
 
         Returns:
             Dictionary with calculated values:
@@ -1400,7 +1406,9 @@ class QuestCalculator:
         total_enemies = 0
 
         # Calculate boost multipliers and rare enemy rates
-        dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(quest_data, rbr_active, weekly_boost, event_type)
+        dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(
+            quest_data, rbr_active, weekly_boost, event_type, daily_luck
+        )
         rare_enemy_rate, kondrieu_rate = self._calculate_rare_enemy_rates(enemy_rate_multiplier)
 
         # Episode-specific rare enemy mapping
@@ -1611,6 +1619,7 @@ class QuestCalculator:
             "section_id": section_id,
             "rbr_active": rbr_active,
             "weekly_boost": weekly_boost,
+            "daily_luck": daily_luck,
         }
 
     def calculate_all_section_ids(
@@ -1619,6 +1628,7 @@ class QuestCalculator:
         rbr_active: bool = False,
         weekly_boost: Optional[WeeklyBoost] = None,
         event_type: Optional[EventType] = None,
+        daily_luck: int = 0,
     ) -> Dict[str, Dict]:
         """
         Calculate quest value for all Section IDs.
@@ -1629,7 +1639,9 @@ class QuestCalculator:
         results = {}
         for section_id_enum in SectionIds:
             section_id: str = section_id_enum.value
-            results[section_id] = self.calculate_quest_value(quest_data, section_id, rbr_active, weekly_boost, event_type)
+            results[section_id] = self.calculate_quest_value(
+                quest_data, section_id, rbr_active, weekly_boost, event_type, daily_luck
+            )
 
         return results
 
@@ -1897,6 +1909,7 @@ class QuestCalculator:
         weekly_boost: Optional[WeeklyBoost] = None,
         quest_filter: Optional[List[str]] = None,
         event_type: Optional[EventType] = None,
+        daily_luck: int = 0,
     ) -> List[Dict]:
         """
         Find all quest/Section ID combinations that drop the weapon, sorted by probability.
@@ -1907,8 +1920,9 @@ class QuestCalculator:
             rbr_list: Optional list of quest short names to apply RBR boost to (mutually exclusive with rbr_active)
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             quest_filter: Optional list of quest names to filter to (case-insensitive)
+            daily_luck: Integer percent bonus to the RDR multiplier. 0 = no change.
 
-            Returns:
+        Returns:
             List of results, each containing:
             - quest_name: Quest ID
             - long_name: Quest full name
@@ -1948,7 +1962,9 @@ class QuestCalculator:
                 quest_rbr_active = quest_name.lower() in rbr_list_lower
 
             # Calculate quest-specific boost multipliers and rare enemy rates
-            dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(quest, quest_rbr_active, weekly_boost, event_type)
+            dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(
+                quest, quest_rbr_active, weekly_boost, event_type, daily_luck
+            )
             rare_enemy_rate, kondrieu_rate = self._calculate_rare_enemy_rates(enemy_rate_multiplier)
 
             # Normalize quest enemy names from non-Ultimate to Ultimate names
@@ -2205,6 +2221,7 @@ class QuestCalculator:
         rbr_list: Optional[List[str]] = None,
         weekly_boost: Optional[WeeklyBoost] = None,
         event_type: Optional[EventType] = None,
+        daily_luck: int = 0,
     ) -> List[Dict]:
         """
         Find all enemies that drop the weapon and their drop rates.
@@ -2216,6 +2233,7 @@ class QuestCalculator:
             rbr_list: Optional list of quest short names to apply RBR boost to (mutually exclusive with rbr_active)
             weekly_boost: Type of weekly boost (WeeklyBoost enum or None)
             event_type: Type of active event (EventType enum or None)
+            daily_luck: Integer percent RDR multiplier bonus for weapon drops. 0 = no change.
 
         Returns:
             List of enemy drop information, each containing:
@@ -2322,6 +2340,8 @@ class QuestCalculator:
             dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
         elif weekly_boost == WeeklyBoost.RDR:
             rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
+
+        rdr_multiplier *= 1.0 + daily_luck / 100.0
 
         results = []
 

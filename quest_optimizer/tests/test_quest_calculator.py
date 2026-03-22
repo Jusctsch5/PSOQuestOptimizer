@@ -454,6 +454,26 @@ def test_rbr_boost_increases_pd_value(quest_calculator: QuestCalculator):
     assert increase_ratio >= 1.15, f"RBR boost should provide significant increase. Expected ratio >= 1.15, got {increase_ratio:.4f} ({pd_with_rbr} / {pd_no_rbr})"
 
 
+def test_daily_luck_increases_pd_when_rdr_chain_applies(quest_calculator: QuestCalculator):
+    """Daily luck multiplies the RDR multiplier chain; with weekly RDR boost it should raise expected PD."""
+    mu1_quest = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "MU1":
+            mu1_quest = quest
+            break
+    assert mu1_quest is not None
+    section_id = "Skyly"
+    result_base = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=WeeklyBoost.RDR, event_type=None, daily_luck=0
+    )
+    result_luck = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=WeeklyBoost.RDR, event_type=None, daily_luck=10
+    )
+    assert result_base["daily_luck"] == 0
+    assert result_luck["daily_luck"] == 10
+    assert result_luck["total_pd"] > result_base["total_pd"]
+
+
 def test_rbr_list_with_existing_quests(quest_calculator: QuestCalculator):
     """Test that rbr_list applies RBR boost only to specified existing quests"""
     optimizer = QuestOptimizer(quest_calculator)

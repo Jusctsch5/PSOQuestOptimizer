@@ -581,6 +581,46 @@ header p {
     border-color: #667eea;
 }
 
+/* Number + % suffix as one control */
+.form-group .input-with-percent {
+    display: inline-flex;
+    align-items: stretch;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+}
+
+.form-group .input-with-percent:focus-within {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-group .input-with-percent input[type="number"] {
+    width: 5rem;
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+}
+
+.form-group .input-with-percent input[type="number"]:focus {
+    outline: none;
+    border: none;
+}
+
+.form-group .input-with-percent .percent-sign {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background: #f9f9f9;
+    color: #666;
+    font-weight: 600;
+    border-left: 1px solid #eee;
+    user-select: none;
+}
+
 .radio-group {
     display: flex;
     gap: 20px;

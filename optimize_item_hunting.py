@@ -318,6 +318,12 @@ def main():
         help="Active event type: Easter, Halloween, Christmas, ValentinesDay, or Anniversary (default: None)",
     )
     parser.add_argument(
+        "--daily-luck",
+        type=int,
+        default=0,
+        help="Daily luck as integer percent added to the RDR multiplier, e.g. 5 for +5 percent. 0 means no change",
+    )
+    parser.add_argument(
         "--exclude-event-quests",
         action="store_true",
         help="Exclude event quests from the search (quests marked with is_event_quest: true)",
@@ -384,6 +390,10 @@ def main():
     if weekly_boost:
         print(f"  Weekly Boost: {weekly_boost}")
     print(f"  Event Active: {event_type.value if event_type else 'None'}")
+    if args.daily_luck:
+        print(f"  Daily Luck: {args.daily_luck}%")
+    else:
+        print(f"  Daily Luck: 0")
     if args.quests:
         print(f"  Quest Filter: {', '.join(args.quests)}")
     if args.exclude_event_quests:
@@ -394,7 +404,14 @@ def main():
     item_type = calculator.price_guide.identify_item_type(item)
 
     # Find enemies that drop the item
-    enemy_drops = calculator.find_enemies_that_drop_weapon(item, rbr_active=rbr_active, rbr_list=rbr_list, weekly_boost=weekly_boost, event_type=event_type)
+    enemy_drops = calculator.find_enemies_that_drop_weapon(
+        item,
+        rbr_active=rbr_active,
+        rbr_list=rbr_list,
+        weekly_boost=weekly_boost,
+        event_type=event_type,
+        daily_luck=args.daily_luck,
+    )
 
     # Display enemy drops based on item type
     if item_type == "disk":
@@ -418,6 +435,7 @@ def main():
         weekly_boost=weekly_boost,
         quest_filter=args.quests,
         event_type=event_type,
+        daily_luck=args.daily_luck,
     )
 
     # Display quest results
