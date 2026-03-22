@@ -785,6 +785,36 @@ button {
     max-width: 100%;
 }
 
+/* Multi-token autocomplete dropdown for quest short names */
+.multitoken-autocomplete-dropdown {
+    position: absolute;
+    z-index: 10000;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.multitoken-autocomplete-dropdown.hidden {
+    display: none;
+}
+
+.multitoken-autocomplete-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.95em;
+    white-space: normal;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.multitoken-autocomplete-option:hover,
+.multitoken-autocomplete-option.active {
+    background: #f0f0f0;
+}
+
 /* Responsive design */
 @media (max-width: 1200px) {
     .main-content,

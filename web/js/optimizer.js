@@ -633,8 +633,268 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up tab handlers immediately - don't wait for Pyodide
     setupTabHandlers();
     setupFormHandlers();
+    setupQuestShortNameAutocompletes();
 
     // Initialize Pyodide in the background
     initializePyodide();
 });
+
+/**
+ * Quest short-name multi-token autocomplete (space-separated tokens).
+ * Used for:
+ * - RBR Quest List (rbr-list / item-hunt-rbr-list)
+ * - Quest Filter (quest-filter / item-hunt-quest-filter)
+ */
+let questShortNameAutocompleteCache = null;
+
+/**
+ * @typedef {{ shortName: string, longName: string, label: string }} QuestAutocompleteEntry
+ */
+
+/**
+ * Build list of quests for autocomplete: label "Long Name (SHORT)", match on short or long name.
+ * @returns {Promise<QuestAutocompleteEntry[]>}
+ */
+async function loadQuestShortNamesForAutocomplete() {
+    if (questShortNameAutocompleteCache) return questShortNameAutocompleteCache;
+
+    const quests = await fetchJSONWithCache(`${basePath}${DATA_FILES.quests}`);
+    /** @type {Map<string, QuestAutocompleteEntry>} */
+    const byShortLower = new Map();
+
+    (quests || []).forEach((q) => {
+        if (!q || !q.quest_name) return;
+        const shortName = String(q.quest_name).trim();
+        if (!shortName) return;
+        const longName = q.long_name != null ? String(q.long_name).trim() : '';
+        const k = shortName.toLowerCase();
+        if (byShortLower.has(k)) return;
+
+        const label = longName ? `${longName} (${shortName})` : shortName;
+        byShortLower.set(k, { shortName, longName, label });
+    });
+
+    const list = Array.from(byShortLower.values());
+    list.sort((a, b) => a.label.localeCompare(b.label));
+    questShortNameAutocompleteCache = list;
+    return list;
+}
+
+/**
+ * Whether the current token matches short name or long name (case-insensitive).
+ * @param {QuestAutocompleteEntry} entry
+ * @param {string} tokenLower
+ */
+function questEntryMatchesToken(entry, tokenLower) {
+    if (!tokenLower) return false;
+    const s = entry.shortName.toLowerCase();
+    const l = (entry.longName || '').toLowerCase();
+    return (
+        s.startsWith(tokenLower) ||
+        l.startsWith(tokenLower) ||
+        l.includes(tokenLower) ||
+        s.includes(tokenLower)
+    );
+}
+
+function parseTokensForAutocomplete(value) {
+    // Split by whitespace, drop empties.
+    const trimmed = (value || '').trim();
+    if (!trimmed) return [];
+    return trimmed.split(/\s+/).filter(Boolean);
+}
+
+function getHasTrailingSpace(value) {
+    return /\s$/.test(value || '');
+}
+
+function getCurrentToken(value) {
+    // The token at the end (partial allowed).
+    const v = value || '';
+    if (!v.trim()) return '';
+    const match = v.match(/(\S*)$/);
+    return match ? match[1] : '';
+}
+
+function selectSuggestionIntoInput(inputEl, suggestionValue) {
+    const rawValue = inputEl.value || '';
+    const parts = parseTokensForAutocomplete(rawValue);
+    const hasTrailingSpace = getHasTrailingSpace(rawValue);
+
+    // If we're currently typing the last (partial) token, replace it.
+    if (!hasTrailingSpace && parts.length > 0) {
+        parts.pop();
+    }
+
+    parts.push(suggestionValue);
+    inputEl.value = parts.join(' ') + ' ';
+}
+
+/**
+ * @param {HTMLInputElement} inputEl
+ * @param {QuestAutocompleteEntry[]} suggestions
+ */
+function attachMultiTokenAutocomplete(inputEl, suggestions) {
+    if (!inputEl) return;
+    if (!Array.isArray(suggestions) || suggestions.length === 0) return;
+
+    // Use an overlay dropdown (absolute-positioned near the input).
+    const dropdown = document.createElement('div');
+    dropdown.className = 'multitoken-autocomplete-dropdown hidden';
+    dropdown.setAttribute('role', 'listbox');
+    document.body.appendChild(dropdown);
+
+    /** @type {QuestAutocompleteEntry[]} */
+    let currentMatches = [];
+    let activeIndex = -1;
+
+    function hideDropdown() {
+        dropdown.classList.add('hidden');
+        dropdown.innerHTML = '';
+        currentMatches = [];
+        activeIndex = -1;
+    }
+
+    function positionDropdown() {
+        const rect = inputEl.getBoundingClientRect();
+        dropdown.style.left = (rect.left + window.scrollX) + 'px';
+        dropdown.style.top = (rect.bottom + window.scrollY) + 'px';
+        dropdown.style.width = rect.width + 'px';
+    }
+
+    function renderDropdown(matches) {
+        dropdown.innerHTML = '';
+        currentMatches = matches;
+        activeIndex = matches.length ? 0 : -1;
+
+        if (!matches.length) {
+            hideDropdown();
+            return;
+        }
+
+        positionDropdown();
+        dropdown.classList.remove('hidden');
+
+        matches.forEach((entry, idx) => {
+            const opt = document.createElement('div');
+            opt.className = 'multitoken-autocomplete-option' + (idx === activeIndex ? ' active' : '');
+            opt.textContent = entry.label;
+            opt.setAttribute('role', 'option');
+            opt.dataset.index = String(idx);
+            opt.addEventListener('mousedown', (e) => {
+                e.preventDefault(); // keep input focus
+                selectSuggestionIntoInput(inputEl, entry.shortName);
+                hideDropdown();
+                inputEl.focus();
+                inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+            dropdown.appendChild(opt);
+        });
+    }
+
+    function updateMatches() {
+        const rawValue = inputEl.value || '';
+        const hasTrailingSpace = getHasTrailingSpace(rawValue);
+        const currentToken = getCurrentToken(rawValue).toLowerCase();
+
+        // If user already typed a space, they are ready to enter the next token.
+        if (!currentToken || hasTrailingSpace) {
+            hideDropdown();
+            return;
+        }
+
+        const allParts = parseTokensForAutocomplete(rawValue);
+        // Remove the partial token from the "already chosen" list.
+        const chosenParts = hasTrailingSpace ? allParts : allParts.slice(0, Math.max(0, allParts.length - 1));
+        const chosenLower = new Set(chosenParts.map(t => t.toLowerCase()));
+
+        const matches = suggestions
+            .filter((entry) => !chosenLower.has(entry.shortName.toLowerCase()))
+            .filter((entry) => questEntryMatchesToken(entry, currentToken))
+            .slice(0, 10);
+
+        renderDropdown(matches);
+    }
+
+    function moveActive(delta) {
+        if (!currentMatches.length) return;
+        activeIndex = Math.max(0, Math.min(currentMatches.length - 1, activeIndex + delta));
+        dropdown.querySelectorAll('.multitoken-autocomplete-option').forEach((el) => {
+            el.classList.remove('active');
+        });
+        const opt = dropdown.querySelector(`.multitoken-autocomplete-option[data-index="${activeIndex}"]`);
+        if (opt) opt.classList.add('active');
+    }
+
+    inputEl.addEventListener('focus', () => updateMatches());
+    inputEl.addEventListener('input', () => updateMatches());
+
+    inputEl.addEventListener('keydown', (e) => {
+        if (dropdown.classList.contains('hidden')) {
+            return;
+        }
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            moveActive(1);
+            return;
+        }
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            moveActive(-1);
+            return;
+        }
+        // Tab: confirm top match (index 0) for quick entry; Shift+Tab keeps native focus move
+        if (e.key === 'Tab') {
+            if (e.shiftKey) {
+                hideDropdown();
+                return;
+            }
+            if (currentMatches.length > 0) {
+                e.preventDefault();
+                selectSuggestionIntoInput(inputEl, currentMatches[0].shortName);
+                hideDropdown();
+                inputEl.focus();
+                inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            return;
+        }
+        if (e.key === 'Enter') {
+            if (activeIndex >= 0 && currentMatches[activeIndex]) {
+                e.preventDefault();
+                selectSuggestionIntoInput(inputEl, currentMatches[activeIndex].shortName);
+                hideDropdown();
+                inputEl.focus();
+            }
+            return;
+        }
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            hideDropdown();
+            return;
+        }
+    });
+
+    document.addEventListener('mousedown', (e) => {
+        const target = e.target;
+        if (!target) return;
+        if (target === inputEl || inputEl.contains(target)) return;
+        if (target === dropdown || dropdown.contains(target)) return;
+        hideDropdown();
+    });
+}
+
+function setupQuestShortNameAutocompletes() {
+    const inputIds = ['rbr-list', 'quest-filter', 'item-hunt-rbr-list', 'item-hunt-quest-filter'];
+    const inputEls = inputIds.map(id => document.getElementById(id)).filter(Boolean);
+    if (!inputEls.length) return;
+
+    loadQuestShortNamesForAutocomplete()
+        .then((names) => {
+            inputEls.forEach(inputEl => attachMultiTokenAutocomplete(inputEl, names));
+        })
+        .catch((err) => {
+            console.error('Failed to initialize quest autocomplete:', err);
+        });
+}
 
