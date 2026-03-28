@@ -644,6 +644,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTabHandlers();
     setupFormHandlers();
     setupQuestShortNameAutocompletes();
+    setupItemNameAutocompletes();
 
     // Initialize Pyodide in the background
     initializePyodide();
@@ -905,6 +906,232 @@ function setupQuestShortNameAutocompletes() {
         })
         .catch((err) => {
             console.error('Failed to initialize quest autocomplete:', err);
+        });
+}
+
+/**
+ * Item name autocomplete (price guide keys): single value, same dropdown UX as quest filter.
+ */
+let itemNameAutocompleteCache = null;
+
+/**
+ * @typedef {{ name: string, category: string, label: string }} ItemAutocompleteEntry
+ */
+
+/**
+ * Category label from price guide filename (matches price-guide.js).
+ * @param {string} filename e.g. "weapons.json"
+ */
+function itemCategoryFromFilename(filename) {
+    const base = filename.replace(/\.json$/i, '');
+    return base.replace(/_/g, ' ');
+}
+
+/**
+ * @returns {Promise<ItemAutocompleteEntry[]>}
+ */
+async function loadItemNamesForAutocomplete() {
+    if (itemNameAutocompleteCache) return itemNameAutocompleteCache;
+
+    /** @type {ItemAutocompleteEntry[]} */
+    const list = [];
+
+    for (const priceGuideFile of DATA_FILES.price_guide) {
+        try {
+            const data = await fetchJSONWithCache(`${basePath}${priceGuideFile}`);
+            const fn = priceGuideFile.split('/').pop() || '';
+            const category = itemCategoryFromFilename(fn);
+            if (!data || typeof data !== 'object') continue;
+            Object.keys(data).forEach((name) => {
+                const trimmed = String(name).trim();
+                if (!trimmed) return;
+                const label = `${trimmed} (${category})`;
+                list.push({ name: trimmed, category, label });
+            });
+        } catch (e) {
+            console.warn(`Failed to load item list from ${priceGuideFile}:`, e);
+        }
+    }
+
+    list.sort((a, b) => a.label.localeCompare(b.label));
+    itemNameAutocompleteCache = list;
+    return list;
+}
+
+/**
+ * @param {ItemAutocompleteEntry} entry
+ * @param {string} queryLower
+ */
+function itemEntryMatchesQuery(entry, queryLower) {
+    if (!queryLower) return false;
+    const n = entry.name.toLowerCase();
+    const l = entry.label.toLowerCase();
+    const c = (entry.category || '').toLowerCase();
+    return (
+        n.startsWith(queryLower) ||
+        n.includes(queryLower) ||
+        l.includes(queryLower) ||
+        c.includes(queryLower)
+    );
+}
+
+/**
+ * Single-line autocomplete: filter price guide item names as user types (same dropdown pattern as quest filter).
+ * @param {HTMLInputElement} inputEl
+ * @param {ItemAutocompleteEntry[]} suggestions
+ */
+function attachSingleTokenItemAutocomplete(inputEl, suggestions) {
+    if (!inputEl) return;
+    if (!Array.isArray(suggestions) || suggestions.length === 0) return;
+
+    const dropdown = document.createElement('div');
+    dropdown.className = 'multitoken-autocomplete-dropdown hidden';
+    dropdown.setAttribute('role', 'listbox');
+    document.body.appendChild(dropdown);
+
+    /** @type {ItemAutocompleteEntry[]} */
+    let currentMatches = [];
+    let activeIndex = -1;
+
+    function hideDropdown() {
+        dropdown.classList.add('hidden');
+        dropdown.innerHTML = '';
+        currentMatches = [];
+        activeIndex = -1;
+    }
+
+    function positionDropdown() {
+        const rect = inputEl.getBoundingClientRect();
+        dropdown.style.left = (rect.left + window.scrollX) + 'px';
+        dropdown.style.top = (rect.bottom + window.scrollY) + 'px';
+        dropdown.style.width = rect.width + 'px';
+    }
+
+    function renderDropdown(matches) {
+        dropdown.innerHTML = '';
+        currentMatches = matches;
+        activeIndex = matches.length ? 0 : -1;
+
+        if (!matches.length) {
+            hideDropdown();
+            return;
+        }
+
+        positionDropdown();
+        dropdown.classList.remove('hidden');
+
+        matches.forEach((entry, idx) => {
+            const opt = document.createElement('div');
+            opt.className = 'multitoken-autocomplete-option' + (idx === activeIndex ? ' active' : '');
+            opt.textContent = entry.label;
+            opt.setAttribute('role', 'option');
+            opt.dataset.index = String(idx);
+            opt.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                inputEl.value = entry.name;
+                hideDropdown();
+                inputEl.focus();
+                inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+            dropdown.appendChild(opt);
+        });
+    }
+
+    function updateMatches() {
+        const raw = (inputEl.value || '').trim();
+        const queryLower = raw.toLowerCase();
+
+        if (!queryLower) {
+            hideDropdown();
+            return;
+        }
+
+        const matches = suggestions
+            .filter((entry) => itemEntryMatchesQuery(entry, queryLower))
+            .slice(0, 15);
+
+        renderDropdown(matches);
+    }
+
+    function moveActive(delta) {
+        if (!currentMatches.length) return;
+        activeIndex = Math.max(0, Math.min(currentMatches.length - 1, activeIndex + delta));
+        dropdown.querySelectorAll('.multitoken-autocomplete-option').forEach((el) => {
+            el.classList.remove('active');
+        });
+        const opt = dropdown.querySelector(`.multitoken-autocomplete-option[data-index="${activeIndex}"]`);
+        if (opt) opt.classList.add('active');
+    }
+
+    inputEl.addEventListener('focus', () => updateMatches());
+    inputEl.addEventListener('input', () => updateMatches());
+
+    inputEl.addEventListener('keydown', (e) => {
+        if (dropdown.classList.contains('hidden')) {
+            return;
+        }
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            moveActive(1);
+            return;
+        }
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            moveActive(-1);
+            return;
+        }
+        if (e.key === 'Tab') {
+            if (e.shiftKey) {
+                hideDropdown();
+                return;
+            }
+            if (currentMatches.length > 0) {
+                e.preventDefault();
+                inputEl.value = currentMatches[0].name;
+                hideDropdown();
+                inputEl.focus();
+                inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            return;
+        }
+        if (e.key === 'Enter') {
+            if (activeIndex >= 0 && currentMatches[activeIndex]) {
+                e.preventDefault();
+                inputEl.value = currentMatches[activeIndex].name;
+                hideDropdown();
+                inputEl.focus();
+                inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            return;
+        }
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            hideDropdown();
+            return;
+        }
+    });
+
+    document.addEventListener('mousedown', (e) => {
+        const target = e.target;
+        if (!target) return;
+        if (target === inputEl || inputEl.contains(target)) return;
+        if (target === dropdown || dropdown.contains(target)) return;
+        hideDropdown();
+    });
+}
+
+function setupItemNameAutocompletes() {
+    const inputIds = ['item-name', 'value-item-name'];
+    const inputEls = inputIds.map(id => document.getElementById(id)).filter(Boolean);
+    if (!inputEls.length) return;
+
+    loadItemNamesForAutocomplete()
+        .then((items) => {
+            inputEls.forEach((inputEl) => attachSingleTokenItemAutocomplete(inputEl, items));
+        })
+        .catch((err) => {
+            console.error('Failed to initialize item name autocomplete:', err);
         });
 }
 
