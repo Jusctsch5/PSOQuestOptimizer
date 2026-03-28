@@ -12,7 +12,7 @@ import json
 from bisect import bisect
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from drop_tables.weapon_patterns import (
     PATTERN_ATTRIBUTE_PROBABILITIES,
@@ -1975,7 +1975,8 @@ class QuestCalculator:
             quest_areas = quest.get("areas", [])
 
             if quest_areas:
-                # Process enemies per area
+                # One row per quest × section_id: accumulate drop probability across all areas
+                section_totals: Dict[str, Dict[str, Any]] = {}
                 for area in quest_areas:
                     area_name = area.get("name", "")
                     area_enemies = area.get("enemies", {})
@@ -2038,16 +2039,25 @@ class QuestCalculator:
                                 contributions.extend(box_contrib)
 
                         if total_prob > 0:
-                            results.append(
-                                {
-                                    "quest_name": quest_name,
-                                    "long_name": long_name,
-                                    "section_id": section_id,
-                                    "probability": total_prob,
-                                    "percentage": total_prob * 100,
-                                    "contributions": contributions,
-                                }
+                            bucket = section_totals.setdefault(
+                                section_id, {"total_prob": 0.0, "contributions": []}
                             )
+                            bucket["total_prob"] += total_prob
+                            bucket["contributions"].extend(contributions)
+
+                for section_id, bucket in section_totals.items():
+                    tp = bucket["total_prob"]
+                    if tp > 0:
+                        results.append(
+                            {
+                                "quest_name": quest_name,
+                                "long_name": long_name,
+                                "section_id": section_id,
+                                "probability": tp,
+                                "percentage": tp * 100,
+                                "contributions": bucket["contributions"],
+                            }
+                        )
             else:
                 # No areas defined, process enemies globally
                 for section_id_enum in SectionIds:
@@ -2118,96 +2128,6 @@ class QuestCalculator:
                                 "contributions": contributions,
                             }
                         )
-                    # Check if this enemy can spawn as a rare variant
-                    rare_variant = rare_mapping.get(enemy_name)
-
-                    if rare_variant:
-                        # Special case: Kondrieu uses 1/10 base rate
-                        if rare_variant == "Kondrieu":
-                            normal_count = count * (1.0 - kondrieu_rate)
-                            rare_count = count * kondrieu_rate
-                        else:
-                            # Normal rare enemy rate calculation
-                            normal_count = count * (1.0 - rare_enemy_rate)
-                            rare_count = count * rare_enemy_rate
-
-                        # Process normal version - need area context for techniques and common weapon drops.
-                        # Determine area from quest structure or enemy default
-                        area_name = None
-                        quest_areas = quest.get("areas", [])
-                        if quest_areas:
-                            # Use first area as default (or find area with this enemy)
-                            area_name = quest_areas[0].get("name", "")
-                            # Try to find area that contains this enemy
-                            for area in quest_areas:
-                                area_enemies = area.get("enemies", {})
-                                if enemy_name in area_enemies or self._normalize_quest_enemy_to_ultimate(enemy_name) in area_enemies:
-                                    area_name = area.get("name", "")
-                                    break
-                        else:
-                            # Fall back to determining area from enemy
-                            area_name = self._determine_drop_area(enemy_name, episode)
-
-                        normal_prob, normal_contrib = self._get_enemy_weapon_drop_prob(
-                            enemy_name, normal_count, episode, section_id, dar_multiplier, rdr_multiplier, weapon_name, area_name, event_type
-                        )
-                        if normal_prob > 0:
-                            total_prob += normal_prob
-                            contributions.extend(normal_contrib)
-
-                        # Process rare version
-                        rare_prob, rare_contrib = self._get_enemy_weapon_drop_prob(
-                            rare_variant, rare_count, episode, section_id, dar_multiplier, rdr_multiplier, weapon_name, area_name, event_type
-                        )
-                        if rare_prob > 0:
-                            total_prob += rare_prob
-                            contributions.extend(rare_contrib)
-                    else:
-                        # No rare variant, process normally - need area context for techniques
-                        area_name = None
-                        quest_areas = quest.get("areas", [])
-                        if quest_areas:
-                            # Use first area as default (or find area with this enemy)
-                            area_name = quest_areas[0].get("name", "")
-                            # Try to find area that contains this enemy
-                            for area in quest_areas:
-                                area_enemies = area.get("enemies", {})
-                                if enemy_name in area_enemies or self._normalize_quest_enemy_to_ultimate(enemy_name) in area_enemies:
-                                    area_name = area.get("name", "")
-                                    break
-                        else:
-                            # Fall back to determining area from enemy
-                            area_name = self._determine_drop_area(enemy_name, episode)
-
-                        enemy_prob, enemy_contrib = self._get_enemy_weapon_drop_prob(
-                            enemy_name, count, episode, section_id, dar_multiplier, rdr_multiplier, weapon_name, area_name, event_type
-                        )
-                        if enemy_prob > 0:
-                            total_prob += enemy_prob
-                            contributions.extend(enemy_contrib)
-
-                # Check box drops
-                quest_areas = quest.get("areas", [])
-                for area in quest_areas:
-                    area_name = area.get("name", "")
-                    boxes = area.get("boxes", {})
-                    if boxes:
-                        box_prob, box_contrib = self._get_box_item_drop_prob(area_name, boxes, episode, section_id, weapon_name)
-                        if box_prob > 0:
-                            total_prob += box_prob
-                            contributions.extend(box_contrib)
-
-                if total_prob > 0:
-                    results.append(
-                        {
-                            "quest_name": quest_name,
-                            "long_name": long_name,
-                            "section_id": section_id,
-                            "probability": total_prob,
-                            "percentage": total_prob * 100,
-                            "contributions": contributions,
-                        }
-                    )
 
         # Sort by probability (highest first)
         results.sort(key=lambda x: x["probability"], reverse=True)

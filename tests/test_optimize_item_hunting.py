@@ -51,6 +51,26 @@ def test_find_quests_for_weapon(quest_calculator: QuestCalculator):
     assert first_result["probability"] > 0
 
 
+def test_heaven_striker_no_duplicate_quest_section_for_item_hunt(quest_calculator: QuestCalculator):
+    """Each quest short name + Section ID appears at most once; multi-area quests merge into one row per section."""
+    # Drop table / UI name is "Heaven Striker" (often written "Heaven's Striker" in prose)
+    item_name = "Heaven Striker"
+    results = quest_calculator.find_best_quests_for_item(
+        item_name,
+        rbr_active=False,
+        weekly_boost=None,
+        quest_filter=None,
+        event_type=None,
+    )
+    assert len(results) > 0, f"Expected at least one quest row for {item_name}"
+
+    seen = set()
+    for row in results:
+        key = (row["quest_name"], row["section_id"])
+        assert key not in seen, f"Duplicate optimize-item-hunt row for {item_name}: {key!r}"
+        seen.add(key)
+
+
 def test_find_quests_for_disk(quest_calculator: QuestCalculator):
     """Test finding quests for a technique disk item"""
     # Use a technique that should have drops

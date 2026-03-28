@@ -39,16 +39,22 @@ function renderItemHuntResults(result, params) {
         const expectedRuns = probability > 0 ? (1 / probability).toFixed(1) : '∞';
         const runs95 = probability > 0 ? calculateRunsForProbability(probability, 0.95).toFixed(1) : '∞';
         
-        // Build drops from string from contributions
+        // Build drops-from labels from contributions (dedupe; merged multi-area quests repeat sources)
         const dropsFrom = [];
+        const dropsFromSeen = new Set();
         if (quest.contributions && quest.contributions.length > 0) {
             quest.contributions.forEach(contrib => {
+                let label = null;
                 if (contrib.source === 'Box') {
-                    dropsFrom.push(`Box (${escapeHtml(contrib.area)})`);
+                    label = `Box (${escapeHtml(contrib.area)})`;
                 } else if (contrib.source === 'Technique') {
-                    dropsFrom.push(`${escapeHtml(contrib.enemy)} (${escapeHtml(contrib.area)})`);
+                    label = `${escapeHtml(contrib.enemy)} (${escapeHtml(contrib.area)})`;
                 } else if (contrib.enemy) {
-                    dropsFrom.push(escapeHtml(contrib.enemy));
+                    label = escapeHtml(contrib.enemy);
+                }
+                if (label && !dropsFromSeen.has(label)) {
+                    dropsFromSeen.add(label);
+                    dropsFrom.push(label);
                 }
             });
         }
