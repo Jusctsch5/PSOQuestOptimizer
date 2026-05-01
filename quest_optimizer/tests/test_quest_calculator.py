@@ -143,6 +143,62 @@ def test_whitill_gee_drops_diska_of_braveman(quest_calculator: QuestCalculator):
     assert pd_value > 0, f"Gee (Diska of Braveman) should have positive pd_value, got {pd_value}"
 
 
+def test_same_item_multiple_enemies_su12_whitill_diska_of_braveman(quest_calculator: QuestCalculator):
+    """SU12 Whitill: Diska of Braveman must be attributed to every quest enemy the ep4 table assigns it to.
+
+    Same rare item can come from multiple enemy types; this guards per-enemy breakdown (Zu and Merissa A).
+    """
+    item = "Diska of Braveman"
+    section_id = "Whitill"
+    episode = 4
+    episode_key = f"episode{episode}"
+
+    su12 = None
+    for quest in quest_calculator.quest_data:
+        if quest.get("quest_name") == "SU12":
+            su12 = quest
+            break
+    assert su12 is not None, "SU12 quest not found in quest data"
+    assert su12.get("episode") == episode
+
+    enemies_table = quest_calculator.drop_data[episode_key]["enemies"]
+    quest_enemy_names = set()
+    for area in su12["areas"]:
+        quest_enemy_names.update(area["enemies"])
+
+    expected_diska = {
+        name
+        for name in quest_enemy_names
+        if enemies_table.get(name, {})
+        .get("section_ids", {})
+        .get(section_id, {})
+        .get("item")
+        == item
+    }
+    assert len(expected_diska) >= 2, (
+        f"Fixture regression: expected at least two Whitill {item} sources in SU12, got {expected_diska}"
+    )
+
+    result = quest_calculator.calculate_quest_value(
+        su12, section_id, rbr_active=False, weekly_boost=None, event_type=None
+    )
+    breakdown = result["enemy_breakdown"]
+
+    for enemy in sorted(expected_diska):
+        assert enemy in breakdown, f"{enemy} missing from enemy_breakdown keys: {sorted(breakdown)}"
+        row = breakdown[enemy]
+        assert "error" not in row, f"{enemy}: {row}"
+        assert row.get("item") == item, f"{enemy}: expected item {item!r}, got {row.get('item')!r}"
+        assert row.get("pd_value", 0.0) > 0, f"{enemy}: expected positive pd_value, got {row.get('pd_value')}"
+
+    for enemy in sorted(quest_enemy_names - expected_diska):
+        if enemy not in breakdown:
+            continue
+        assert breakdown[enemy].get("item") != item, (
+            f"{enemy} should not be attributed Whitill {item} for SU12"
+        )
+
+
 def test_christmas_presents_only_during_christmas(quest_calculator: QuestCalculator):
     """Test that Christmas Presents only drop during Christmas event"""
     # Find MU1 quest

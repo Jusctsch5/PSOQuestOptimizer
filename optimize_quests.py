@@ -392,9 +392,9 @@ class QuestOptimizer:
                 if isinstance(item_data, dict):
                     item_name = item_data.get("item", "Unknown")
                     sources = item_data.get("enemies", [])  # "enemies" key contains both enemies and "Box"
-                    source = sources[0] if sources else "Unknown"
+                    source = ", ".join(sources) if sources else "Unknown"
                     pd_value = item_data.get("pd_value", 0.0)
-                    # Format: "Item (Source: PD)" where Source can be enemy name or "Box"
+                    # Format: "Item (Sources: PD)" — multiple sources merged like the web UI
                     item_str = f"{item_name} ({source}: {pd_value:.4f})"
                     max_item_width = max(max_item_width, len(item_str), len("Notable Item X"))
                 else:
@@ -517,9 +517,9 @@ class QuestOptimizer:
                     if isinstance(item_data, dict):
                         item_name = item_data.get("item", "Unknown")
                         sources = item_data.get("enemies", [])  # "enemies" key contains both enemies and "Box"
-                        source = sources[0] if sources else "Unknown"
+                        source = ", ".join(sources) if sources else "Unknown"
                         pd_value = item_data.get("pd_value", 0.0)
-                        # Format: "Item (Source: PD)" where Source can be enemy name or "Box"
+                        # Format: "Item (Sources: PD)" — multiple sources merged like the web UI
                         item_str = f"{item_name} ({source}: {pd_value:.4f})"
                     else:
                         # Legacy format support

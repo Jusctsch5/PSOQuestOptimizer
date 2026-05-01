@@ -32,6 +32,9 @@
   "Devil/Technique": {
     "base": "0.5"
   },
+  "Devil/Battle": {
+    "base": "0.5"
+  },
   "Friend Ring": {
     "base": "0"
   },
