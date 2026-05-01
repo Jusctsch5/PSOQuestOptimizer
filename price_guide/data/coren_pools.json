@@ -1,0 +1,1378 @@
+{
+  "schema_version": 1,
+  "source": "https://wiki.pioneer2.net/w/Coren",
+  "weekdays": {
+    "Sunday": {
+      "tier1": [
+        {
+          "name": "God/Power",
+          "stars": 11
+        },
+        {
+          "name": "Cure/Poison",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Paralysis",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Slow",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Confuse",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Freeze",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Shock",
+          "stars": 9
+        },
+        {
+          "name": "Tablet",
+          "stars": 5
+        }
+      ],
+      "tier2": [
+        {
+          "name": "Kaladbolg",
+          "stars": 9
+        },
+        {
+          "name": "Durandal",
+          "stars": 9
+        },
+        {
+          "name": "Blade Dance",
+          "stars": 9
+        },
+        {
+          "name": "M&A60 Vise",
+          "stars": 9
+        },
+        {
+          "name": "H&S25 Justice",
+          "stars": 9
+        },
+        {
+          "name": "L&K14 Combat",
+          "stars": 9
+        },
+        {
+          "name": "Club of Laconium",
+          "stars": 9
+        },
+        {
+          "name": "Photon Claw",
+          "stars": 9
+        },
+        {
+          "name": "Silence Claw",
+          "stars": 10
+        },
+        {
+          "name": "Stag Cutlery",
+          "stars": 10
+        },
+        {
+          "name": "Holy Ray",
+          "stars": 10
+        },
+        {
+          "name": "Ancient Saber",
+          "stars": 10
+        },
+        {
+          "name": "Elysion",
+          "stars": 10
+        },
+        {
+          "name": "Twin Psychogun",
+          "stars": 10
+        },
+        {
+          "name": "Guilty Light",
+          "stars": 10
+        },
+        {
+          "name": "Red Scorpio",
+          "stars": 10
+        },
+        {
+          "name": "DB's Saber",
+          "stars": 9
+        },
+        {
+          "name": "DF Field",
+          "stars": 11
+        },
+        {
+          "name": "Morning Prayer",
+          "stars": 10
+        },
+        {
+          "name": "S-Parts ver1.16",
+          "stars": 10
+        },
+        {
+          "name": "Standstill Shield",
+          "stars": 10
+        },
+        {
+          "name": "Kasami Bracer",
+          "stars": 10
+        },
+        {
+          "name": "Secure Feet",
+          "stars": 11
+        },
+        {
+          "name": "AddSlot",
+          "stars": 5
+        },
+        {
+          "name": "Photon Crystal",
+          "stars": 5
+        },
+        {
+          "name": "Dragon Scale",
+          "stars": 5
+        },
+        {
+          "name": "Rappy's Beak",
+          "stars": 5
+        }
+      ],
+      "tier3": [
+        {
+          "name": "Zero Divide",
+          "stars": 10
+        },
+        {
+          "name": "Asteron Belt",
+          "stars": 10
+        },
+        {
+          "name": "Raikiri",
+          "stars": 10
+        },
+        {
+          "name": "Skyly Card",
+          "stars": 11
+        },
+        {
+          "name": "Purplenum Card",
+          "stars": 11
+        },
+        {
+          "name": "Oran Card",
+          "stars": 11
+        },
+        {
+          "name": "Guren",
+          "stars": 10
+        },
+        {
+          "name": "Black Odoshi Red Nimaidou",
+          "stars": 10
+        },
+        {
+          "name": "V101",
+          "stars": 11
+        }
+      ]
+    },
+    "Monday": {
+      "tier1": [
+        {
+          "name": "Three Seals",
+          "stars": 11
+        },
+        {
+          "name": "God/Mind",
+          "stars": 11
+        },
+        {
+          "name": "God/Arm",
+          "stars": 11
+        },
+        {
+          "name": "Hero/Ability",
+          "stars": 10
+        },
+        {
+          "name": "HP/Revival",
+          "stars": 9
+        },
+        {
+          "name": "PB/Create",
+          "stars": 9
+        },
+        {
+          "name": "Devil/Battle",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Slow",
+          "stars": 9
+        }
+      ],
+      "tier2": [
+        {
+          "name": "Kaladbolg",
+          "stars": 9
+        },
+        {
+          "name": "Flowen's Sword",
+          "stars": 9
+        },
+        {
+          "name": "Last Survivor",
+          "stars": 9
+        },
+        {
+          "name": "Dragon Slayer",
+          "stars": 9
+        },
+        {
+          "name": "Rianov 303SNR",
+          "stars": 9
+        },
+        {
+          "name": "H&S25 Justice",
+          "stars": 9
+        },
+        {
+          "name": "L&K14 Combat",
+          "stars": 9
+        },
+        {
+          "name": "Crush Bullet",
+          "stars": 9
+        },
+        {
+          "name": "Meteor Smash",
+          "stars": 9
+        },
+        {
+          "name": "Final Impact",
+          "stars": 9
+        },
+        {
+          "name": "Club of Zumiuran",
+          "stars": 9
+        },
+        {
+          "name": "Brave Hammer",
+          "stars": 9
+        },
+        {
+          "name": "Alive Aqhu",
+          "stars": 9
+        },
+        {
+          "name": "Ice Staff: Dagon",
+          "stars": 9
+        },
+        {
+          "name": "Double Saber",
+          "stars": 9
+        },
+        {
+          "name": "Elysion",
+          "stars": 10
+        },
+        {
+          "name": "Red Saber",
+          "stars": 10
+        },
+        {
+          "name": "Meteor Cudgel",
+          "stars": 10
+        },
+        {
+          "name": "Red Sword",
+          "stars": 10
+        },
+        {
+          "name": "Panzer Faust",
+          "stars": 10
+        },
+        {
+          "name": "Plantain Leaf",
+          "stars": 10
+        },
+        {
+          "name": "Fatsia",
+          "stars": 10
+        },
+        {
+          "name": "Sange",
+          "stars": 10
+        },
+        {
+          "name": "Kamui",
+          "stars": 10
+        },
+        {
+          "name": "Talis",
+          "stars": 9
+        },
+        {
+          "name": "DB's Saber",
+          "stars": 9
+        },
+        {
+          "name": "Guardianna",
+          "stars": 10
+        },
+        {
+          "name": "Regenerate Gear",
+          "stars": 10
+        },
+        {
+          "name": "DB's Shield",
+          "stars": 10
+        },
+        {
+          "name": "AddSlot",
+          "stars": 5
+        },
+        {
+          "name": "Photon Crystal",
+          "stars": 5
+        },
+        {
+          "name": "Dragon Scale",
+          "stars": 5
+        },
+        {
+          "name": "Rappy's Beak",
+          "stars": 5
+        }
+      ],
+      "tier3": [
+        {
+          "name": "Earth Wand: Brownie",
+          "stars": 10
+        },
+        {
+          "name": "Viridia Card",
+          "stars": 11
+        },
+        {
+          "name": "Greenill Card",
+          "stars": 11
+        },
+        {
+          "name": "Yellowboze Card",
+          "stars": 11
+        },
+        {
+          "name": "Yunchang",
+          "stars": 10
+        },
+        {
+          "name": "Black Odoshi Domaru",
+          "stars": 10
+        },
+        {
+          "name": "Revival Cuirass",
+          "stars": 10
+        },
+        {
+          "name": "Gratia",
+          "stars": 10
+        },
+        {
+          "name": "Regenerate Gear B.P.",
+          "stars": 10
+        },
+        {
+          "name": "Honeycomb Reflector",
+          "stars": 10
+        },
+        {
+          "name": "V501",
+          "stars": 11
+        },
+        {
+          "name": "Heavenly/Battle",
+          "stars": 11
+        }
+      ]
+    },
+    "Tuesday": {
+      "tier1": [
+        {
+          "name": "God/HP",
+          "stars": 11
+        },
+        {
+          "name": "God/Body",
+          "stars": 11
+        },
+        {
+          "name": "PB/Create",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Poison",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Paralysis",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Freeze",
+          "stars": 9
+        }
+      ],
+      "tier2": [
+        {
+          "name": "Blade Dance",
+          "stars": 9
+        },
+        {
+          "name": "Bloody Art",
+          "stars": 9
+        },
+        {
+          "name": "Cross Scar",
+          "stars": 9
+        },
+        {
+          "name": "Brionac",
+          "stars": 9
+        },
+        {
+          "name": "Diska of Braveman",
+          "stars": 9
+        },
+        {
+          "name": "M&A60 Vise",
+          "stars": 9
+        },
+        {
+          "name": "Club of Laconium",
+          "stars": 9
+        },
+        {
+          "name": "Mace of Adaman",
+          "stars": 9
+        },
+        {
+          "name": "Twin Brand",
+          "stars": 10
+        },
+        {
+          "name": "Brave Knuckle",
+          "stars": 9
+        },
+        {
+          "name": "Angry Fist",
+          "stars": 10
+        },
+        {
+          "name": "God Hand",
+          "stars": 10
+        },
+        {
+          "name": "Red Dagger",
+          "stars": 10
+        },
+        {
+          "name": "Maser Beam",
+          "stars": 10
+        },
+        {
+          "name": "Asuka",
+          "stars": 10
+        },
+        {
+          "name": "Talis",
+          "stars": 9
+        },
+        {
+          "name": "DB's Saber",
+          "stars": 9
+        },
+        {
+          "name": "Red Coat",
+          "stars": 10
+        },
+        {
+          "name": "Secret Gear",
+          "stars": 10
+        },
+        {
+          "name": "Regenerate Gear",
+          "stars": 10
+        },
+        {
+          "name": "Black Ring",
+          "stars": 9
+        },
+        {
+          "name": "AddSlot",
+          "stars": 5
+        },
+        {
+          "name": "Photon Crystal",
+          "stars": 5
+        },
+        {
+          "name": "Dragon Scale",
+          "stars": 5
+        },
+        {
+          "name": "Rappy's Beak",
+          "stars": 5
+        }
+      ],
+      "tier3": [
+        {
+          "name": "Zero Divide",
+          "stars": 10
+        },
+        {
+          "name": "Asteron Belt",
+          "stars": 10
+        },
+        {
+          "name": "Phoenix Claw",
+          "stars": 10
+        },
+        {
+          "name": "Skyly Card",
+          "stars": 11
+        },
+        {
+          "name": "Pinkal Card",
+          "stars": 11
+        },
+        {
+          "name": "Whitill Card",
+          "stars": 11
+        },
+        {
+          "name": "Morning Glory",
+          "stars": 10
+        },
+        {
+          "name": "Ignition Cloak",
+          "stars": 10
+        },
+        {
+          "name": "Bunny Ears",
+          "stars": 9
+        },
+        {
+          "name": "Cat Ears",
+          "stars": 9
+        },
+        {
+          "name": "V502",
+          "stars": 11
+        },
+        {
+          "name": "Smartlink",
+          "stars": 11
+        }
+      ]
+    },
+    "Wednesday": {
+      "tier1": [
+        {
+          "name": "God/Legs",
+          "stars": 11
+        },
+        {
+          "name": "Hero/Ability",
+          "stars": 10
+        },
+        {
+          "name": "TP/Revival",
+          "stars": 9
+        },
+        {
+          "name": "Devil/Battle",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Slow",
+          "stars": 9
+        },
+        {
+          "name": "Tablet",
+          "stars": 5
+        }
+      ],
+      "tier2": [
+        {
+          "name": "Bloody Art",
+          "stars": 9
+        },
+        {
+          "name": "Brionac",
+          "stars": 9
+        },
+        {
+          "name": "Vjaya",
+          "stars": 9
+        },
+        {
+          "name": "Rianov 303SNR",
+          "stars": 9
+        },
+        {
+          "name": "Battle Verge",
+          "stars": 9
+        },
+        {
+          "name": "Brave Hammer",
+          "stars": 9
+        },
+        {
+          "name": "Alive Aqhu",
+          "stars": 9
+        },
+        {
+          "name": "Soul Banish",
+          "stars": 10
+        },
+        {
+          "name": "Red Partisan",
+          "stars": 10
+        },
+        {
+          "name": "Yasminkov 2000H",
+          "stars": 10
+        },
+        {
+          "name": "Yasminkov 7000V",
+          "stars": 10
+        },
+        {
+          "name": "Maser Beam",
+          "stars": 10
+        },
+        {
+          "name": "Musashi",
+          "stars": 9
+        },
+        {
+          "name": "Yamato",
+          "stars": 10
+        },
+        {
+          "name": "Zanba",
+          "stars": 10
+        },
+        {
+          "name": "Ruby Bullet",
+          "stars": 10
+        },
+        {
+          "name": "Sacred Guard",
+          "stars": 10
+        },
+        {
+          "name": "S-Parts ver1.16",
+          "stars": 10
+        },
+        {
+          "name": "S-Parts ver2.01",
+          "stars": 10
+        },
+        {
+          "name": "Light Relief",
+          "stars": 10
+        },
+        {
+          "name": "Attribute Wall",
+          "stars": 10
+        },
+        {
+          "name": "AddSlot",
+          "stars": 5
+        },
+        {
+          "name": "Photon Crystal",
+          "stars": 5
+        },
+        {
+          "name": "Dragon Scale",
+          "stars": 5
+        },
+        {
+          "name": "Rappy's Beak",
+          "stars": 5
+        }
+      ],
+      "tier3": [
+        {
+          "name": "Phoenix Claw",
+          "stars": 10
+        },
+        {
+          "name": "Bluefull Card",
+          "stars": 11
+        },
+        {
+          "name": "Purplenum Card",
+          "stars": 11
+        },
+        {
+          "name": "Pinkal Card",
+          "stars": 11
+        },
+        {
+          "name": "Morning Glory",
+          "stars": 10
+        },
+        {
+          "name": "Cannon Rouge",
+          "stars": 10
+        },
+        {
+          "name": "Clio",
+          "stars": 10
+        },
+        {
+          "name": "Morning Prayer",
+          "stars": 10
+        },
+        {
+          "name": "Sacred Guard",
+          "stars": 10
+        },
+        {
+          "name": "Honeycomb Reflector",
+          "stars": 10
+        },
+        {
+          "name": "Heavenly/Legs",
+          "stars": 11
+        }
+      ]
+    },
+    "Thursday": {
+      "tier1": [
+        {
+          "name": "God/TP",
+          "stars": 11
+        },
+        {
+          "name": "Hero/Ability",
+          "stars": 10
+        },
+        {
+          "name": "HP/Revival",
+          "stars": 9
+        },
+        {
+          "name": "God/Technique",
+          "stars": 11
+        },
+        {
+          "name": "Cure/Shock",
+          "stars": 9
+        }
+      ],
+      "tier2": [
+        {
+          "name": "Gae Bolg",
+          "stars": 9
+        },
+        {
+          "name": "Slicer of Assassin",
+          "stars": 9
+        },
+        {
+          "name": "Diska of Liberator",
+          "stars": 9
+        },
+        {
+          "name": "Diska of Braveman",
+          "stars": 9
+        },
+        {
+          "name": "Varista",
+          "stars": 9
+        },
+        {
+          "name": "M&A60 Vise",
+          "stars": 9
+        },
+        {
+          "name": "Mace of Adaman",
+          "stars": 9
+        },
+        {
+          "name": "Battle Verge",
+          "stars": 9
+        },
+        {
+          "name": "Fire Scepter: Agni",
+          "stars": 9
+        },
+        {
+          "name": "Ice Staff: Dagon",
+          "stars": 9
+        },
+        {
+          "name": "Storm Wand: Indra",
+          "stars": 9
+        },
+        {
+          "name": "Twin Brand",
+          "stars": 10
+        },
+        {
+          "name": "Spread Needle",
+          "stars": 10
+        },
+        {
+          "name": "Holy Ray",
+          "stars": 10
+        },
+        {
+          "name": "Inferno Bazooka",
+          "stars": 10
+        },
+        {
+          "name": "Victor Axe",
+          "stars": 10
+        },
+        {
+          "name": "Flight Cutter",
+          "stars": 10
+        },
+        {
+          "name": "Red Slicer",
+          "stars": 10
+        },
+        {
+          "name": "Branch of Pakupaku",
+          "stars": 10
+        },
+        {
+          "name": "Heart of Poumn",
+          "stars": 10
+        },
+        {
+          "name": "Photon Launcher",
+          "stars": 9
+        },
+        {
+          "name": "Guilty Light",
+          "stars": 10
+        },
+        {
+          "name": "Talis",
+          "stars": 9
+        },
+        {
+          "name": "Demolition Comet",
+          "stars": 10
+        },
+        {
+          "name": "Ruby Bullet",
+          "stars": 10
+        },
+        {
+          "name": "Guard Wave",
+          "stars": 11
+        },
+        {
+          "name": "DF Field",
+          "stars": 11
+        },
+        {
+          "name": "Luminous Field",
+          "stars": 11
+        },
+        {
+          "name": "Morning Prayer",
+          "stars": 10
+        },
+        {
+          "name": "Red Coat",
+          "stars": 10
+        },
+        {
+          "name": "Infantry Mantle",
+          "stars": 10
+        },
+        {
+          "name": "Regenerate Gear",
+          "stars": 10
+        },
+        {
+          "name": "AddSlot",
+          "stars": 5
+        },
+        {
+          "name": "Photon Crystal",
+          "stars": 5
+        },
+        {
+          "name": "Dragon Scale",
+          "stars": 5
+        },
+        {
+          "name": "Rappy's Beak",
+          "stars": 5
+        }
+      ],
+      "tier3": [
+        {
+          "name": "Asteron Belt",
+          "stars": 10
+        },
+        {
+          "name": "Earth Wand: Brownie",
+          "stars": 10
+        },
+        {
+          "name": "Phoenix Claw",
+          "stars": 10
+        },
+        {
+          "name": "Raikiri",
+          "stars": 10
+        },
+        {
+          "name": "Greenill Card",
+          "stars": 11
+        },
+        {
+          "name": "Redria Card",
+          "stars": 11
+        },
+        {
+          "name": "Whitill Card",
+          "stars": 11
+        },
+        {
+          "name": "Flamberge",
+          "stars": 10
+        },
+        {
+          "name": "Cannon Rouge",
+          "stars": 10
+        },
+        {
+          "name": "Glide Divine",
+          "stars": 10
+        },
+        {
+          "name": "Star Cuirass",
+          "stars": 10
+        },
+        {
+          "name": "Stink Shield",
+          "stars": 9
+        }
+      ]
+    },
+    "Friday": {
+      "tier1": [
+        {
+          "name": "God/Luck",
+          "stars": 11
+        },
+        {
+          "name": "TP/Revival",
+          "stars": 9
+        },
+        {
+          "name": "PB/Create",
+          "stars": 9
+        },
+        {
+          "name": "Devil/Battle",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Paralysis",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Slow",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Shock",
+          "stars": 9
+        },
+        {
+          "name": "Tablet",
+          "stars": 5
+        }
+      ],
+      "tier2": [
+        {
+          "name": "Varista",
+          "stars": 9
+        },
+        {
+          "name": "Custom Ray ver.OO",
+          "stars": 9
+        },
+        {
+          "name": "Bravace",
+          "stars": 9
+        },
+        {
+          "name": "Visk-235W",
+          "stars": 9
+        },
+        {
+          "name": "Rianov 303SNR",
+          "stars": 9
+        },
+        {
+          "name": "M&A60 Vise",
+          "stars": 9
+        },
+        {
+          "name": "H&S25 Justice",
+          "stars": 9
+        },
+        {
+          "name": "Crush Bullet",
+          "stars": 9
+        },
+        {
+          "name": "Club of Laconium",
+          "stars": 9
+        },
+        {
+          "name": "Fire Scepter: Agni",
+          "stars": 9
+        },
+        {
+          "name": "Victor Axe",
+          "stars": 10
+        },
+        {
+          "name": "Caduceus",
+          "stars": 10
+        },
+        {
+          "name": "Sting Tip",
+          "stars": 10
+        },
+        {
+          "name": "Ancient Saber",
+          "stars": 10
+        },
+        {
+          "name": "Red Saber",
+          "stars": 10
+        },
+        {
+          "name": "Red Handgun",
+          "stars": 10
+        },
+        {
+          "name": "Twin Psychogun",
+          "stars": 10
+        },
+        {
+          "name": "Fatsia",
+          "stars": 10
+        },
+        {
+          "name": "The Sigh of a God",
+          "stars": 10
+        },
+        {
+          "name": "Guilty Light",
+          "stars": 10
+        },
+        {
+          "name": "Talis",
+          "stars": 9
+        },
+        {
+          "name": "Mahu",
+          "stars": 10
+        },
+        {
+          "name": "Graviton Plate",
+          "stars": 10
+        },
+        {
+          "name": "Attribute Plate",
+          "stars": 10
+        },
+        {
+          "name": "Aura Field",
+          "stars": 11
+        },
+        {
+          "name": "Electro Frame",
+          "stars": 11
+        },
+        {
+          "name": "Sacred Cloth",
+          "stars": 11
+        },
+        {
+          "name": "Smoking Plate",
+          "stars": 11
+        },
+        {
+          "name": "Red Coat",
+          "stars": 10
+        },
+        {
+          "name": "AddSlot",
+          "stars": 5
+        },
+        {
+          "name": "Photon Crystal",
+          "stars": 5
+        },
+        {
+          "name": "Dragon Scale",
+          "stars": 5
+        },
+        {
+          "name": "Rappy's Beak",
+          "stars": 5
+        }
+      ],
+      "tier3": [
+        {
+          "name": "Zero Divide",
+          "stars": 10
+        },
+        {
+          "name": "Phoenix Claw",
+          "stars": 10
+        },
+        {
+          "name": "Raikiri",
+          "stars": 10
+        },
+        {
+          "name": "Power Maser",
+          "stars": 11
+        },
+        {
+          "name": "Viridia Card",
+          "stars": 11
+        },
+        {
+          "name": "Yellowboze Card",
+          "stars": 11
+        },
+        {
+          "name": "Ophelie Seize",
+          "stars": 10
+        },
+        {
+          "name": "Black Odoshi Domaru",
+          "stars": 10
+        },
+        {
+          "name": "Black Odoshi Red Nimaidou",
+          "stars": 10
+        }
+      ]
+    },
+    "Saturday": {
+      "tier1": [
+        {
+          "name": "Three Seals",
+          "stars": 11
+        },
+        {
+          "name": "Hero/Ability",
+          "stars": 10
+        },
+        {
+          "name": "God/Ability",
+          "stars": 11
+        },
+        {
+          "name": "HP/Revival",
+          "stars": 9
+        },
+        {
+          "name": "PB/Create",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Poison",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Paralysis",
+          "stars": 9
+        },
+        {
+          "name": "Cure/Freeze",
+          "stars": 9
+        }
+      ],
+      "tier2": [
+        {
+          "name": "Kaladbolg",
+          "stars": 9
+        },
+        {
+          "name": "Varista",
+          "stars": 9
+        },
+        {
+          "name": "Visk-235W",
+          "stars": 9
+        },
+        {
+          "name": "Wals-MK2",
+          "stars": 9
+        },
+        {
+          "name": "Justy-23ST",
+          "stars": 9
+        },
+        {
+          "name": "Rianov 303SNR",
+          "stars": 9
+        },
+        {
+          "name": "Club of Zumiuran",
+          "stars": 9
+        },
+        {
+          "name": "Storm Wand: Indra",
+          "stars": 9
+        },
+        {
+          "name": "Double Saber",
+          "stars": 9
+        },
+        {
+          "name": "Caduceus",
+          "stars": 10
+        },
+        {
+          "name": "Sting Tip",
+          "stars": 10
+        },
+        {
+          "name": "Suppressed Gun",
+          "stars": 10
+        },
+        {
+          "name": "Ancient Saber",
+          "stars": 10
+        },
+        {
+          "name": "Twin Psychogun",
+          "stars": 10
+        },
+        {
+          "name": "Red Mechgun",
+          "stars": 10
+        },
+        {
+          "name": "Windmill",
+          "stars": 10
+        },
+        {
+          "name": "Plantain Leaf",
+          "stars": 10
+        },
+        {
+          "name": "Fatsia",
+          "stars": 10
+        },
+        {
+          "name": "Revival Garment",
+          "stars": 10
+        },
+        {
+          "name": "Spirit Garment",
+          "stars": 10
+        },
+        {
+          "name": "Stink Frame",
+          "stars": 10
+        },
+        {
+          "name": "D-Parts ver1.01",
+          "stars": 10
+        },
+        {
+          "name": "D-Parts ver2.10",
+          "stars": 10
+        },
+        {
+          "name": "Sense Plate",
+          "stars": 10
+        },
+        {
+          "name": "Graviton Plate",
+          "stars": 10
+        },
+        {
+          "name": "Custom Frame ver.OO",
+          "stars": 10
+        },
+        {
+          "name": "AddSlot",
+          "stars": 5
+        },
+        {
+          "name": "Photon Crystal",
+          "stars": 5
+        },
+        {
+          "name": "Dragon Scale",
+          "stars": 5
+        },
+        {
+          "name": "Rappy's Beak",
+          "stars": 5
+        }
+      ],
+      "tier3": [
+        {
+          "name": "Earth Wand: Brownie",
+          "stars": 10
+        },
+        {
+          "name": "Bluefull Card",
+          "stars": 11
+        },
+        {
+          "name": "Redria Card",
+          "stars": 11
+        },
+        {
+          "name": "Oran Card",
+          "stars": 11
+        },
+        {
+          "name": "Kusanagi",
+          "stars": 10
+        },
+        {
+          "name": "Honeycomb Reflector",
+          "stars": 10
+        }
+      ]
+    }
+  }
+}
