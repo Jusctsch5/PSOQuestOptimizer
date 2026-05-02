@@ -1,0 +1,273 @@
+{
+  "source": {
+    "bpd1_wiki": "https://wiki.pioneer2.net/w/Black_Paper%27s_Dangerous_Deal",
+    "bpd2_wiki": "https://wiki.pioneer2.net/w/Black_Paper%27s_Dangerous_Deal_2",
+    "notes": [
+      "BPD1: wiki — each reward roll draws from good pool for arena+difficulty plus junk; all outcomes weight 1 except Meseta weight 6.",
+      "BPD2: wiki — uniform over listed items per roll (no junk).",
+      "Meseta stack size from the quest is not modeled; meseta outcome uses meseta_reward_pd_if_known (default 0)."
+    ]
+  },
+  "bpd1": {
+    "rewards_per_difficulty": {
+      "Normal": 1,
+      "Hard": 2,
+      "Very Hard": 3,
+      "Ultimate": 4
+    },
+    "junk_items_equal_weight": [
+      "Sol Atomizer",
+      "Moon Atomizer",
+      "Star Atomizer"
+    ],
+    "junk_meseta_weight": 6,
+    "junk_meseta_label": "Meseta",
+    "arenas": {
+      "sand_rappy": {
+        "Normal": [
+          "Smoking Plate",
+          "Tripolic Shield",
+          "Bunny Ears",
+          "God/Power",
+          "God/Arm",
+          "Rappy's Beak",
+          "Resist/Burning",
+          "Resist/Blizzard",
+          "Resist/Storm",
+          "Resist/Holy",
+          "Resist/Devil"
+        ],
+        "Hard": [
+          "Red Coat",
+          "Invisible Guard",
+          "Yata Mirror",
+          "Cat Ears",
+          "Cure/Poison",
+          "Cure/Paralysis",
+          "Cure/Slow",
+          "Cure/Confuse",
+          "Cure/Freeze",
+          "Cure/Shock",
+          "Rappy's Beak"
+        ],
+        "Very Hard": [
+          "Club of Laconium",
+          "Club of Zumiuran",
+          "Alive Aqhu",
+          "Sting Tip",
+          "Madam's Parasol",
+          "Madam's Umbrella",
+          "Windmill",
+          "Rabbit Wand",
+          "Book of Hitogata",
+          "Tyrell's Parasol",
+          "Kasami Bracer",
+          "Rappy's Beak"
+        ],
+        "Ultimate": [
+          "Mace of Adaman",
+          "Club of Zumiuran",
+          "Battle Verge",
+          "Sting Tip",
+          "Technical Crozier",
+          "Madam's Umbrella",
+          "Windmill",
+          "Evil Curst",
+          "Plantain Leaf",
+          "Standstill Shield",
+          "God/Ability",
+          "God/Technique",
+          "Divine Protection",
+          "Rappy's Beak"
+        ]
+      },
+      "zu": {
+        "Normal": [
+          "Stag Cutlery",
+          "Twin Brand",
+          "Meteor Cudgel",
+          "Monkey King Bar",
+          "Twin Blaze",
+          "Partisan of Lightning",
+          "Demolition Comet",
+          "Vivienne",
+          "Electro Frame",
+          "God/Body",
+          "AddSlot"
+        ],
+        "Hard": [
+          "Final Impact",
+          "Flame Visit",
+          "Panzer Faust",
+          "Maser Beam",
+          "Photon Launcher",
+          "Red Scorpio",
+          "NUG2000-Bazooka",
+          "Cannon Rouge",
+          "Ano Bazooka",
+          "Flame Garment",
+          "AddSlot"
+        ],
+        "Very Hard": [
+          "Slicer of Assassin",
+          "Diska of Liberator",
+          "Diska of Braveman",
+          "Flight Cutter",
+          "Flight Fan",
+          "Red Slicer",
+          "Slicer of Fanatic",
+          "Thirteen",
+          "Infantry Gear",
+          "Regene Gear Adv.",
+          "AddSlot"
+        ],
+        "Ultimate": [
+          "Spread Needle",
+          "Holy Ray",
+          "Handgun: Milla",
+          "Frozen Shooter",
+          "Yasminkov 3000R",
+          "Yasminkov 7000V",
+          "Yasminkov 9000M",
+          "Angel Harp",
+          "Ophelie Seize",
+          "Tanegashima",
+          "Smartlink",
+          "AddSlot"
+        ]
+      },
+      "dorphon": {
+        "Normal": [
+          "DB's Saber (3062)",
+          "DB's Saber (3069 Chris)",
+          "DB's Saber (3077)",
+          "Officer Uniform",
+          "God/Mind",
+          "God/Battle",
+          "AddSlot"
+        ],
+        "Hard": [
+          "Kaladbolg",
+          "Elysion",
+          "Red Sword",
+          "DB's Saber (3062)",
+          "DB's Saber (3064)",
+          "DB's Saber (3067)",
+          "DB's Saber (3069 Torato)",
+          "DB's Saber (3069 Chris)",
+          "DB's Saber (3070)",
+          "DB's Saber (3073)",
+          "DB's Saber (3075)",
+          "DB's Saber (3077)",
+          "Flamberge",
+          "Secure Feet",
+          "AddSlot"
+        ],
+        "Very Hard": [
+          "Durandal",
+          "Agito (1975)",
+          "Agito (1977)",
+          "Agito (1980)",
+          "Agito (1983)",
+          "Agito (1991)",
+          "Agito (2001)",
+          "Ancient Saber",
+          "Yasha",
+          "Guren",
+          "AddSlot"
+        ],
+        "Ultimate": [
+          "Agito (1975)",
+          "Agito (1977)",
+          "Agito (1980)",
+          "Agito (1983)",
+          "Agito (1991)",
+          "Agito (2001)",
+          "Yamigarasu",
+          "Sange",
+          "Kamui",
+          "Shouren",
+          "AddSlot"
+        ]
+      }
+    }
+  },
+  "bpd2": {
+    "rewards_per_difficulty": {
+      "Normal": 1,
+      "Hard": 1,
+      "Very Hard": 2,
+      "Ultimate": 2
+    },
+    "pools": {
+      "Normal": [
+        "Rianov 303SNR",
+        "Phoenix Claw",
+        "Master Raven",
+        "Last Swan",
+        "Yunchang",
+        "Decalog",
+        "Yasakani Magatama",
+        "Smartlink",
+        "Photon Drop"
+      ],
+      "Hard": [
+        "Rianov 303SNR",
+        "Phoenix Claw",
+        "Master Raven",
+        "Kusanagi",
+        "Shouren",
+        "Yunchang",
+        "Snake Spire",
+        "Flapjack Flapper",
+        "Decalog",
+        "Black Hound Cuirass",
+        "Yata Mirror",
+        "Stink Shield",
+        "Smartlink",
+        "Divine Protection",
+        "Centurion/Ability",
+        "Photon Drop"
+      ],
+      "Very Hard": [
+        "Rianov 303SNR",
+        "Phoenix Claw",
+        "Last Swan",
+        "Vivienne",
+        "Kusanagi",
+        "Guren",
+        "Yunchang",
+        "Decalog",
+        "Black Hound Cuirass",
+        "Gratia",
+        "Yata Mirror",
+        "Stink Shield",
+        "Yasakani Magatama",
+        "Smartlink",
+        "Divine Protection",
+        "Centurion/Ability",
+        "Photon Drop"
+      ],
+      "Ultimate": [
+        "Rianov 303SNR",
+        "Phoenix Claw",
+        "Last Swan",
+        "Vivienne",
+        "Kusanagi",
+        "Guren",
+        "Shouren",
+        "Decalog",
+        "Black Hound Cuirass",
+        "Gratia",
+        "Yata Mirror",
+        "Stink Shield",
+        "Yasakani Magatama",
+        "Smartlink",
+        "Divine Protection",
+        "Centurion/Ability",
+        "Photon Drop"
+      ]
+    }
+  },
+  "meseta_reward_pd_if_known": 0.0
+}
