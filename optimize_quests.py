@@ -11,6 +11,10 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from quest_optimizer.quest_calculator import EventType, QuestCalculator, WeeklyBoost
+from quest_optimizer.quest_time_estimate import (
+    estimate_quest_minutes_heuristic,
+    ranking_efficiency_sort_key,
+)
 
 
 class QuestOptimizer:
@@ -229,6 +233,9 @@ class QuestOptimizer:
         event_type: Optional[EventType] = None,
         exclude_event_quests: bool = False,
         daily_luck: int = 0,
+        time_estimation: bool = False,
+        minutes_per_area: float = 15.0,
+        minutes_per_boss_area: float = 5.0,
     ) -> List[Dict]:
         """
         Rank quests by PD efficiency.
@@ -243,9 +250,13 @@ class QuestOptimizer:
             episode_filter: Filter by episode (1, 2, or 4), or None for all
             event_type: Type of active event (EventType enum or None)
             daily_luck: Integer percent bonus to the RDR multiplier. 0 = no change.
+            time_estimation: If True, add ``quest_time_estimated_minutes`` and ``pd_per_minute_estimated``
+                (heuristic: minutes_per_area / minutes_per_boss_area per quest area).
+            minutes_per_area: Minutes per non-boss area when time_estimation is True.
+            minutes_per_boss_area: Minutes per boss arena when time_estimation is True.
 
         Returns:
-            List of quest results sorted by PD per minute (descending)
+            List of quest results sorted by PD per minute when available, else estimated PD/min, else total PD.
         """
         results = []
 
@@ -277,13 +288,25 @@ class QuestOptimizer:
                 quest_data, section_id, quest_rbr_active, weekly_boost, event_type, daily_luck
             )
 
-            # Get quest time
+            # Get quest time (explicit quest_times.json overrides nothing for display-only estimate)
             quest_time = quest_times.get(quest_name) if quest_times else None
 
-            # Calculate PD per minute
+            # Calculate PD per minute (explicit timing)
             pd_per_minute = None
             if quest_time and quest_time > 0:
                 pd_per_minute = value_result["total_pd"] / quest_time
+
+            quest_time_estimated_minutes = None
+            pd_per_minute_estimated = None
+            if time_estimation:
+                est = estimate_quest_minutes_heuristic(
+                    quest_data,
+                    minutes_per_area=minutes_per_area,
+                    minutes_per_boss_area=minutes_per_boss_area,
+                )
+                if est > 0:
+                    quest_time_estimated_minutes = est
+                    pd_per_minute_estimated = value_result["total_pd"] / est
 
             # Calculate top items by PD value (get up to 30 to have enough for display)
             # Include both enemy drops and box drops
@@ -303,6 +326,8 @@ class QuestOptimizer:
                 "total_enemies": value_result["total_enemies"],
                 "quest_time_minutes": quest_time,
                 "pd_per_minute": pd_per_minute,
+                "quest_time_estimated_minutes": quest_time_estimated_minutes,
+                "pd_per_minute_estimated": pd_per_minute_estimated,
                 "section_id": section_id,
                 "rbr_active": quest_rbr_active,
                 "weekly_boost": weekly_boost,
@@ -318,8 +343,7 @@ class QuestOptimizer:
 
             results.append(result)
 
-        # Sort by PD per minute (descending), or by total PD if no time data
-        results.sort(key=lambda x: x["pd_per_minute"] if x["pd_per_minute"] is not None else x["total_pd"], reverse=True)
+        results.sort(key=ranking_efficiency_sort_key, reverse=True)
 
         return results
 
@@ -334,6 +358,9 @@ class QuestOptimizer:
         event_type: Optional[EventType] = None,
         exclude_event_quests: bool = False,
         daily_luck: int = 0,
+        time_estimation: bool = False,
+        minutes_per_area: float = 15.0,
+        minutes_per_boss_area: float = 5.0,
     ) -> Dict[str, List[Dict]]:
         """
         Rank quests for all Section IDs.
@@ -367,6 +394,9 @@ class QuestOptimizer:
                 event_type,
                 exclude_event_quests,
                 daily_luck,
+                time_estimation=time_estimation,
+                minutes_per_area=minutes_per_area,
+                minutes_per_boss_area=minutes_per_boss_area,
             )
 
         return results
@@ -381,8 +411,17 @@ class QuestOptimizer:
             show_details: Show detailed enemy breakdown
             notable_items_count: Number of notable item columns to show (default: 5)
         """
+        full_rankings = list(rankings)
+        show_section_id = len(full_rankings) > 0 and any(
+            result.get("section_id") != full_rankings[0].get("section_id") for result in full_rankings
+        )
+        has_completion_items = any(result.get("completion_items_pd", 0.0) > 0 for result in full_rankings)
+        show_time_estimation = any(r.get("pd_per_minute_estimated") is not None for r in full_rankings)
+
         if top_n:
-            rankings = rankings[:top_n]
+            rankings = full_rankings[:top_n]
+        else:
+            rankings = full_rankings
 
         # Calculate maximum width needed for each notable item column
         max_item_width = 0
@@ -404,12 +443,9 @@ class QuestOptimizer:
         # Ensure minimum width
         max_item_width = max(max_item_width, 20)
 
-        # Check if we're showing multiple Section IDs (need to add Section ID column)
-        show_section_id = len(rankings) > 0 and any(result.get("section_id") != rankings[0].get("section_id") for result in rankings)
-
         # Calculate maximum width needed for quest name column
         max_quest_name_width = len("Quest Name")  # At least as wide as header
-        for result in rankings:
+        for result in full_rankings:
             short_name = result.get("quest_name", "Unknown")
             long_name = result.get("long_name")
             if long_name:
@@ -418,13 +454,12 @@ class QuestOptimizer:
                 quest_name = short_name
             max_quest_name_width = max(max_quest_name_width, len(quest_name))
 
-        # Check if any quests have completion items
-        has_completion_items = any(result.get("completion_items_pd", 0.0) > 0 for result in rankings)
+        est_w, pme_w = 10, 14
 
         # Calculate maximum width needed for quest reward column
         max_reward_width = len("Quest Reward")  # At least as wide as header
         if has_completion_items:
-            for result in rankings:
+            for result in full_rankings:
                 completion_items_breakdown = result.get("completion_items_breakdown", {})
                 reward_pd = result.get("completion_items_pd", 0.0)
                 if reward_pd > 0 and completion_items_breakdown:
@@ -441,14 +476,15 @@ class QuestOptimizer:
         # Calculate total table width
         reward_column_width = max_reward_width if has_completion_items else 0
         divider_width = 1 if has_completion_items else 0  # Space for divider "|"
+        time_est_extra = (est_w + 1 + pme_w) if show_time_estimation else 0
         if show_section_id:
             fixed_width = (
-                6 + max_quest_name_width + 12 + 8 + 12 + 10 + 15 + reward_column_width + divider_width
-            )  # Rank + Quest Name + Section ID + Episode + PD + Enemies + Raw PD/Quest + Quest Reward + Divider
+                6 + max_quest_name_width + 12 + 8 + 12 + 10 + 15 + time_est_extra + reward_column_width + divider_width
+            )  # Rank + Quest Name + Section ID + Episode + PD + Enemies + Raw PD/Quest + [Est + PD/min est] + Quest Reward + Divider
         else:
             fixed_width = (
-                6 + max_quest_name_width + 8 + 12 + 10 + 15 + reward_column_width + divider_width
-            )  # Rank + Quest Name + Episode + PD + Enemies + Raw PD/Quest + Quest Reward + Divider
+                6 + max_quest_name_width + 8 + 12 + 10 + 15 + time_est_extra + reward_column_width + divider_width
+            )  # Rank + Quest Name + Episode + PD + Enemies + Raw PD/Quest + [Est + PD/min est] + Quest Reward + Divider
         total_width = fixed_width + (max_item_width * notable_items_count)
 
         # Print header
@@ -456,6 +492,9 @@ class QuestOptimizer:
         if show_section_id:
             header_parts.append(f"{'Section ID':<12}")
         header_parts.extend([f"{'Episode':<8}", f"{'PD/Quest':<12}", f"{'Enemies':<10}", f"{'Raw PD/Quest':<15}"])
+        if show_time_estimation:
+            header_parts.append(f"{'Est (min)':>{est_w}}")
+            header_parts.append(f"{'PD/min (est)':>{pme_w}}")
         # Add Quest Reward column if any quest has completion items
         if has_completion_items:
             header_parts.append(f"{'Quest Reward':<{max_reward_width}}")
@@ -493,6 +532,11 @@ class QuestOptimizer:
             if show_section_id:
                 row_parts.append(f"{section_id:<12}")
             row_parts.extend([f"{episode:<8}", f"{pd_str:<12}", f"{enemies:<10}", f"{raw_pd_str:<15}"])
+            if show_time_estimation:
+                em = result.get("quest_time_estimated_minutes")
+                pme = result.get("pd_per_minute_estimated")
+                row_parts.append(f"{em:>{est_w}.2f}" if em is not None else f"{'':>{est_w}}")
+                row_parts.append(f"{pme:>{pme_w}.4f}" if pme is not None else f"{'':>{pme_w}}")
 
             # Add Quest Reward column if any quest has completion items
             if has_completion_items:
@@ -817,6 +861,12 @@ Examples:
         help="Exclude event quests from the rankings (quests marked with is_event_quest: true)",
     )
 
+    parser.add_argument(
+        "--time-estimation",
+        action="store_true",
+        help="Heuristic quest time: 15 min per area, 5 min per boss area; adds Est (min) and PD/min (est) columns",
+    )
+
     args = parser.parse_args()
     weekly_boost = WeeklyBoost(args.weekly_boost) if args.weekly_boost else None
 
@@ -897,6 +947,8 @@ Examples:
         print(f"  Quest Filter: {', '.join(args.quest)}")
     if args.exclude_event_quests:
         print(f"  Exclude Event Quests: Yes")
+    if args.time_estimation:
+        print(f"  Time Estimation: Yes (15 min/area, 5 min/boss, heuristic PD/min)")
     print()
 
     # Check if we should rank across all Section IDs
@@ -928,11 +980,11 @@ Examples:
                 event_type=event_type,
                 exclude_event_quests=args.exclude_event_quests,
                 daily_luck=args.daily_luck,
+                time_estimation=args.time_estimation,
             )
             all_rankings.extend(section_rankings)
 
-        # Sort combined results by PD per minute (or total PD if no time data)
-        all_rankings.sort(key=lambda x: x["pd_per_minute"] if x["pd_per_minute"] is not None else x["total_pd"], reverse=True)
+        all_rankings.sort(key=ranking_efficiency_sort_key, reverse=True)
 
         rankings = all_rankings
     else:
@@ -947,6 +999,7 @@ Examples:
             episode_filter=args.episode,
             exclude_event_quests=args.exclude_event_quests,
             daily_luck=args.daily_luck,
+            time_estimation=args.time_estimation,
         )
 
     # Print results

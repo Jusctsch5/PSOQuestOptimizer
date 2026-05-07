@@ -10,6 +10,7 @@ from typing import Any, Dict, List
 
 from calculate_item_value import calculate_item_value as calc_item_value
 from optimize_quests import QuestOptimizer
+from quest_optimizer.quest_time_estimate import ranking_efficiency_sort_key
 from price_guide import BasePriceStrategy, PriceGuideFixed
 from price_guide.item_value_calculator import ItemValueCalculator
 from quest_optimizer.quest_calculator import EventType, QuestCalculator, WeeklyBoost
@@ -42,6 +43,9 @@ def optimize_quests(
             - exclude_event_quests: bool (default: False)
             - quest_times: Optional[Dict[str, float]] (quest name to minutes)
             - daily_luck: int (default: 0) — percent added to RDR multiplier, e.g. 5 for +5%
+            - time_estimation: bool (default: False) — heuristic minutes/area + boss; adds estimated PD/min
+            - minutes_per_area: float (default: 15)
+            - minutes_per_boss_area: float (default: 5)
 
     Returns:
         Dict with keys:
@@ -116,6 +120,13 @@ def optimize_quests(
     except (TypeError, ValueError):
         daily_luck = 0
 
+    time_estimation = bool(params.get("time_estimation", False))
+    try:
+        minutes_per_area = float(params.get("minutes_per_area", 15) or 15)
+        minutes_per_boss_area = float(params.get("minutes_per_boss_area", 5) or 5)
+    except (TypeError, ValueError):
+        minutes_per_area, minutes_per_boss_area = 15.0, 5.0
+
     # Filter quests if needed (quest_filter can be a list of quest names)
     quests_to_process = calculator.quest_data
     if quest_filter:
@@ -160,11 +171,13 @@ def optimize_quests(
                     event_type=event_type,
                     exclude_event_quests=False,  # Already filtered above
                     daily_luck=daily_luck,
+                    time_estimation=time_estimation,
+                    minutes_per_area=minutes_per_area,
+                    minutes_per_boss_area=minutes_per_boss_area,
                 )
                 all_rankings.extend(section_rankings)
 
-            # Sort combined results
-            all_rankings.sort(key=lambda x: x["pd_per_minute"] if x["pd_per_minute"] is not None else x["total_pd"], reverse=True)
+            all_rankings.sort(key=ranking_efficiency_sort_key, reverse=True)
             rankings = all_rankings
         else:
             rankings = optimizer.rank_quests(
@@ -178,6 +191,9 @@ def optimize_quests(
                 event_type=event_type,
                 exclude_event_quests=False,  # Already filtered above
                 daily_luck=daily_luck,
+                time_estimation=time_estimation,
+                minutes_per_area=minutes_per_area,
+                minutes_per_boss_area=minutes_per_boss_area,
             )
 
         # Convert to JSON-serializable format
@@ -194,6 +210,12 @@ def optimize_quests(
                 "total_enemies": ranking.get("total_enemies", 0),
                 "quest_time_minutes": ranking.get("quest_time_minutes"),
                 "pd_per_minute": float(ranking.get("pd_per_minute")) if ranking.get("pd_per_minute") is not None else None,
+                "quest_time_estimated_minutes": float(ranking["quest_time_estimated_minutes"])
+                if ranking.get("quest_time_estimated_minutes") is not None
+                else None,
+                "pd_per_minute_estimated": float(ranking["pd_per_minute_estimated"])
+                if ranking.get("pd_per_minute_estimated") is not None
+                else None,
                 "rbr_active": ranking.get("rbr_active", False),
                 "weekly_boost": ranking.get("weekly_boost").value if ranking.get("weekly_boost") else None,
                 "daily_luck": int(ranking.get("daily_luck", 0)),

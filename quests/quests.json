@@ -1301,21 +1301,39 @@
     "episode": 2,
     "areas": [
       {
-        "name": "Central Control Area",
+        "name": "East Tower",
         "boxes": {
-          "box": 24
+          "box": 14
         },
         "enemies": {
-          "Recobox": 42,
-          "Mericarol": 16,
-          "Merikle": 10,
-          "Mericus": 8,
-          "Gibbles": 22,
-          "Gi Gue": 29,
-          "Del Lily": 61,
-          "Ill Gill": 57,
-          "Delbiter": 18,
-          "Epsilon": 14
+          "Recobox": 25,
+          "Mericarol": 5,
+          "Merikle": 3,
+          "Mericus": 1,
+          "Gibbles": 9,
+          "Gi Gue": 11,
+          "Del Lily": 31,
+          "Ill Gill": 26,
+          "Delbiter": 7,
+          "Epsilon": 3
+        }
+      },
+      {
+        "name": "West Tower",
+        "boxes": {
+          "box": 14
+        },
+        "enemies": {
+          "Recobox": 17,
+          "Mericarol": 11,
+          "Merikle": 7,
+          "Mericus": 7,
+          "Gibbles": 13,
+          "Gi Gue": 18,
+          "Del Lily": 30,
+          "Ill Gill": 31,
+          "Delbiter": 11,
+          "Epsilon": 11
         }
       }
     ],
@@ -1330,34 +1348,47 @@
         "name": "VR Temple Alpha",
         "boxes": {
           "box": 27
+        },
+        "enemies": {
+          "Dimenian": 42,
+          "La Dimenian": 37,
+          "So Dimenian": 29,
+          "Rag Rappy": 29,
+          "Poison Lily": 29,
+          "Hildebear": 20,
+          "Monest": 5,
+          "Grass Assassin": 16,
+          "Dark Belra": 12
         }
       },
       {
         "name": "VR Temple Beta",
         "boxes": {
           "box": 33
+        },
+        "enemies": {
+          "Dimenian": 31,
+          "La Dimenian": 25,
+          "So Dimenian": 46,
+          "Rag Rappy": 26,
+          "Poison Lily": 34,
+          "Hildebear": 21,
+          "Monest": 5,
+          "Grass Assassin": 20,
+          "Dark Belra": 16
         }
       },
       {
         "name": "VR Temple Final",
         "boxes": {
           "box": 0
+        },
+        "enemies": {
+          "Barba Ray": 1
         }
       }
     ],
-    "is_in_rbr_rotation": true,
-    "enemies": {
-      "Arlan": 73,
-      "Merlan": 62,
-      "Del-D": 75,
-      "El Rappy": 55,
-      "Ob Lily": 63,
-      "Hildelt": 41,
-      "Monest": 10,
-      "Crimson Assassin": 36,
-      "Indi Belra": 28,
-      "Barba Ray": 1
-    }
+    "is_in_rbr_rotation": true
   },
   {
     "quest_name": "LBA",
@@ -1545,22 +1576,41 @@
     "episode": 2,
     "areas": [
       {
-        "name": "Central Control Area",
+        "name": "East Tower",
         "boxes": {
-          "box": 28
+          "box": 10
         },
         "enemies": {
-          "Recobox": 31,
-          "Recon": 155,
-          "Mericarol": 22,
-          "Merikle": 9,
-          "Mericus": 8,
-          "Gibbles": 22,
-          "Gi Gue": 22,
-          "Delbiter": 29,
-          "Ill Gill": 55,
-          "Del Lily": 51,
-          "Epsilon": 10
+          "Recobox": 11,
+          "Recon": 55,
+          "Mericarol": 11,
+          "Merikle": 5,
+          "Mericus": 4,
+          "Gibbles": 10,
+          "Gi Gue": 12,
+          "Delbiter": 9,
+          "Del Lily": 32,
+          "Ill Gill": 24,
+          "Epsilon": 4
+        }
+      },
+      {
+        "name": "West Tower",
+        "boxes": {
+          "box": 11
+        },
+        "enemies": {
+          "Recobox": 20,
+          "Recon": 100,
+          "Mericarol": 11,
+          "Merikle": 4,
+          "Mericus": 4,
+          "Gibbles": 12,
+          "Gi Gue": 10,
+          "Delbiter": 20,
+          "Del Lily": 19,
+          "Ill Gill": 31,
+          "Epsilon": 6
         }
       }
     ],
@@ -2158,23 +2208,68 @@
     "quest_name": "POD",
     "long_name": "Point of Disaster",
     "episode": 4,
-    "enemies": {
-      "Boota": 24,
-      "Ze Boota": 8,
-      "Ba Boota": 6,
-      "Astark": 31,
-      "Dorphon": 9,
-      "Sand Rappy": 50,
-      "Satellite Lizard": 50,
-      "Yowie": 31,
-      "Zu": 20,
-      "Goran": 12,
-      "Pyro Goran": 2,
-      "Goran Detonator": 3,
-      "Merissa A": 4,
-      "Girtablulu": 1,
-      "Shambertin": 1
-    }
+    "areas": [
+      {
+        "name": "Crater East",
+        "boxes": {
+          "box": 22
+        },
+        "enemies": {
+          "Boota": 13,
+          "Ze Boota": 6,
+          "Ba Boota": 4,
+          "Satellite Lizard": 23,
+          "Yowie": 9,
+          "Sand Rappy": 15,
+          "Zu": 5,
+          "Astark": 17,
+          "Dorphon": 6
+        }
+      },
+      {
+        "name": "Crater Interior",
+        "boxes": {
+          "box": 20
+        },
+        "enemies": {
+          "Boota": 6,
+          "Ze Boota": 1,
+          "Ba Boota": 2,
+          "Satellite Lizard": 16,
+          "Yowie": 4,
+          "Sand Rappy": 19,
+          "Zu": 5,
+          "Astark": 11,
+          "Dorphon": 2
+        }
+      },
+      {
+        "name": "Desert 3",
+        "boxes": {
+          "box": 12
+        },
+        "enemies": {
+          "Goran": 3,
+          "Pyro Goran": 2,
+          "Goran Detonator": 2,
+          "Satellite Lizard": 3,
+          "Yowie": 8,
+          "Sand Rappy": 5,
+          "Zu": 2,
+          "Merissa A": 0,
+          "Girtablulu": 1
+        }
+      },
+      {
+        "name": "Meteor Impact Site",
+        "boxes": {
+          "box": 16
+        },
+        "enemies": {
+          "Shambertin": 1
+        }
+      }
+    ]
   },
   {
     "quest_name": "VL1",
@@ -2382,36 +2477,71 @@
       "Coal": 6
     },
     "is_event_quest": true,
-    "enemies": {
-      "Booma": 39,
-      "Gobooma": 38,
-      "Gigobooma": 28,
-      "Rag Rappy": 27,
-      "Savage Wolf": 32,
-      "Barbarous Wolf": 27,
-      "Hildebear": 33,
-      "Guil Shark": 3,
-      "Poison Lily": 14,
-      "Nano Dragon": 7,
-      "Pan Arms": 8,
-      "Pofuilly Slime": 1,
-      "Gillchic": 23,
-      "Dubchic": 6,
-      "Dubwitch": 6,
-      "Canadine": 8,
-      "Canane": 4,
-      "Garanz": 13,
-      "Sinow Beat": 3,
-      "Sinow Gold": 5,
-      "Dimenian": 32,
-      "La Dimenian": 35,
-      "So Dimenian": 42,
-      "Delsaber": 24,
-      "Dark Belra": 43,
-      "Chaos Sorcerer": 23,
-      "Chaos Bringer": 17,
-      "Dark Gunner": 10
-    }
+    "areas": [
+      {
+        "name": "Forest 2",
+        "enemies": {
+          "Booma": 28,
+          "Gobooma": 32,
+          "Gigobooma": 26,
+          "Rag Rappy": 25,
+          "Savage Wolf": 24,
+          "Barbarous Wolf": 23,
+          "Hildebear": 21,
+          "Monest": 5,
+          "Delsaber": 3,
+          "Pan Arms": 1
+        }
+      },
+      {
+        "name": "Ruins 1",
+        "enemies": {
+          "Dimenian": 27,
+          "La Dimenian": 27,
+          "So Dimenian": 30,
+          "Delsaber": 16,
+          "Claw": 23,
+          "Bulclaw": 15,
+          "Dark Belra": 28,
+          "Chaos Sorcerer": 15,
+          "Chaos Bringer": 3,
+          "Garanz": 1
+        }
+      },
+      {
+        "name": "Ruins 2",
+        "enemies": {
+          "Booma": 11,
+          "Gobooma": 6,
+          "Gigobooma": 2,
+          "Rag Rappy": 2,
+          "Savage Wolf": 8,
+          "Barbarous Wolf": 4,
+          "Hildebear": 12,
+          "Guil Shark": 3,
+          "Poison Lily": 14,
+          "Nano Dragon": 7,
+          "Pan Arms": 7,
+          "Pofuilly Slime": 1,
+          "Gillchic": 23,
+          "Dubchic": 6,
+          "Dubwitch": 6,
+          "Canadine": 8,
+          "Canane": 4,
+          "Garanz": 12,
+          "Sinow Beat": 3,
+          "Sinow Gold": 5,
+          "Dimenian": 5,
+          "La Dimenian": 8,
+          "So Dimenian": 12,
+          "Delsaber": 5,
+          "Dark Belra": 15,
+          "Chaos Sorcerer": 8,
+          "Chaos Bringer": 14,
+          "Dark Gunner": 10
+        }
+      }
+    ]
   },
   {
     "quest_name": "DD2",
@@ -2421,44 +2551,94 @@
       "Coal": 8
     },
     "is_event_quest": true,
-    "enemies": {
-      "Gillchic": 38,
-      "Poison Lily": 36,
-      "Garanz": 35,
-      "Merillia": 33,
-      "Dimenian": 33,
-      "Ul Gibbon": 30,
-      "Ill Gill": 30,
-      "El Rappy": 29,
-      "Delsaber": 27,
-      "La Dimenian": 26,
-      "Hildebear": 26,
-      "Dubchic": 25,
-      "Zol Gibbon": 23,
-      "Grass Assassin": 23,
-      "Sinow Berill": 21,
-      "Meriltas": 21,
-      "So Dimenian": 20,
-      "Gee": 20,
-      "Del Lily": 20,
-      "Sinow Spigell": 16,
-      "Mericarol": 16,
-      "Chaos Sorcerer": 15,
-      "Savage Wolf": 14,
-      "Dark Belra": 14,
-      "Gi Gue": 12,
-      "Delbiter": 12,
-      "Barbarous Wolf": 12,
-      "Gibbles": 9,
-      "Sinow Zoa": 7,
-      "Pan Arms": 7,
-      "Dolmolm": 7,
-      "Merikle": 6,
-      "Epsilon": 6,
-      "Dubwitch": 6,
-      "Sinow Zele": 4,
-      "Mericus": 3
-    }
+    "areas": [
+      {
+        "name": "Jungle East",
+        "enemies": {
+          "Dimenian": 22,
+          "La Dimenian": 19,
+          "So Dimenian": 13,
+          "Rag Rappy": 17,
+          "Poison Lily": 27,
+          "Hildebear": 17,
+          "Grass Assassin": 17,
+          "Dark Belra": 10,
+          "Merillia": 16,
+          "Meriltas": 8,
+          "Gee": 6,
+          "Mericarol": 5,
+          "Merikle": 2,
+          "Mericus": 1,
+          "Gi Gue": 3,
+          "Sinow Berill": 4
+        }
+      },
+      {
+        "name": "Mountain",
+        "enemies": {
+          "Gillchic": 32,
+          "Dubchic": 21,
+          "Dubwitch": 5,
+          "Savage Wolf": 14,
+          "Barbarous Wolf": 12,
+          "Delsaber": 17,
+          "Garanz": 23,
+          "Chaos Sorcerer": 13,
+          "Pan Arms": 7,
+          "Merillia": 4,
+          "Meriltas": 2,
+          "Ul Gibbon": 16,
+          "Zol Gibbon": 13,
+          "Gee": 8,
+          "Mericarol": 6,
+          "Merikle": 2,
+          "Gibbles": 6,
+          "Gi Gue": 3,
+          "Sinow Berill": 10,
+          "Sinow Spigell": 7,
+          "Ill Gill": 5,
+          "Del Lily": 1
+        }
+      },
+      {
+        "name": "Central Control Area",
+        "enemies": {
+          "Dimenian": 11,
+          "La Dimenian": 7,
+          "So Dimenian": 7,
+          "Rag Rappy": 12,
+          "Poison Lily": 9,
+          "Grass Assassin": 6,
+          "Hildebear": 9,
+          "Dark Belra": 4,
+          "Gillchic": 6,
+          "Dubchic": 4,
+          "Dubwitch": 1,
+          "Delsaber": 10,
+          "Chaos Sorcerer": 2,
+          "Garanz": 12,
+          "Merillia": 13,
+          "Meriltas": 11,
+          "Ul Gibbon": 14,
+          "Zol Gibbon": 10,
+          "Gee": 6,
+          "Mericarol": 5,
+          "Merikle": 2,
+          "Mericus": 2,
+          "Gibbles": 3,
+          "Gi Gue": 6,
+          "Sinow Berill": 7,
+          "Sinow Spigell": 9,
+          "Dolmolm": 7,
+          "Sinow Zoa": 7,
+          "Sinow Zele": 4,
+          "Delbiter": 12,
+          "Ill Gill": 25,
+          "Del Lily": 19,
+          "Epsilon": 6
+        }
+      }
+    ]
   },
   {
     "quest_name": "MA4C",
@@ -2469,25 +2649,34 @@
     },
     "areas": [
       {
+        "name": "Crater Interior",
+        "enemies": {
+          "Boota": 20,
+          "Ze Boota": 22,
+          "Ba Boota": 16,
+          "Satellite Lizard": 38,
+          "Yowie": 45,
+          "Sand Rappy": 33,
+          "Zu": 17,
+          "Astark": 16,
+          "Dorphon": 13
+        }
+      },
+      {
         "name": "Desert 3",
         "boxes": {
           "box": 10
         },
         "enemies": {
-          "Boota": 20,
           "Goran": 37,
-          "Ze Boota": 22,
           "Pyro Goran": 26,
-          "Ba Boota": 16,
           "Goran Detonator": 18,
-          "Astark": 16,
+          "Satellite Lizard": 31,
+          "Yowie": 29,
+          "Sand Rappy": 40,
+          "Zu": 16,
           "Merissa A": 37,
-          "Dorphon": 13,
-          "Girtablulu": 6,
-          "Sand Rappy": 73,
-          "Satellite Lizard": 69,
-          "Yowie": 74,
-          "Zu": 33
+          "Girtablulu": 6
         }
       }
     ]
@@ -2501,26 +2690,43 @@
     },
     "areas": [
       {
+        "name": "Crater West",
+        "enemies": {
+          "Boota": 24,
+          "Ze Boota": 23,
+          "Ba Boota": 25,
+          "Satellite Lizard": 36,
+          "Yowie": 23,
+          "Sand Rappy": 18,
+          "Zu": 8,
+          "Astark": 18,
+          "Dorphon": 9
+        }
+      },
+      {
         "name": "Desert 3",
         "boxes": {
           "box": 0
         },
         "enemies": {
-          "Boota": 24,
           "Goran": 24,
-          "Ze Boota": 23,
           "Pyro Goran": 26,
-          "Ba Boota": 25,
           "Goran Detonator": 19,
-          "Astark": 18,
+          "Satellite Lizard": 30,
+          "Yowie": 20,
+          "Sand Rappy": 13,
+          "Zu": 18,
           "Merissa A": 22,
-          "Dorphon": 9,
-          "Girtablulu": 4,
-          "Saint-Milion": 1,
-          "Sand Rappy": 31,
-          "Satellite Lizard": 66,
-          "Yowie": 43,
-          "Zu": 26
+          "Girtablulu": 4
+        }
+      },
+      {
+        "name": "Meteor Impact Site",
+        "boxes": {
+          "box": 16
+        },
+        "enemies": {
+          "Saint-Milion": 1
         }
       }
     ]
@@ -2558,60 +2764,69 @@
         "name": "Forest 2",
         "boxes": {
           "box": 51
+        },
+        "enemies": {
+          "Booma": 17,
+          "Gobooma": 41,
+          "Gigobooma": 17,
+          "Savage Wolf": 21,
+          "Barbarous Wolf": 9,
+          "Monest": 16,
+          "El Rappy": 28,
+          "Hildelt": 52,
+          "Dragon": 1
         }
       },
       {
         "name": "Cave 3",
         "boxes": {
           "box": 13
+        },
+        "enemies": {
+          "Poison Lily": 39,
+          "Pofuilly Slime": 23,
+          "Evil Shark": 68,
+          "Nano Dragon": 12,
+          "Pal Shark": 25,
+          "Guil Shark": 49,
+          "Pan Arms": 6,
+          "De Rol Le": 1
         }
       },
       {
         "name": "Mine 2",
         "boxes": {
           "box": 38
+        },
+        "enemies": {
+          "Gillchic": 73,
+          "Dubchic": 37,
+          "Dubwitch": 8,
+          "Canadine": 115,
+          "Canane": 8,
+          "Sinow Beat": 25,
+          "Sinow Gold": 25,
+          "Garanz": 28,
+          "Vol Opt": 1
+        }
+      },
+      {
+        "name": "Ruins 3",
+        "enemies": {
+          "Dimenian": 64,
+          "So Dimenian": 46,
+          "La Dimenian": 48,
+          "Claw": 82,
+          "Bulclaw": 24,
+          "Dark Belra": 34,
+          "Dark Gunner": 31,
+          "Death Gunner": 7,
+          "Chaos Sorcerer": 24,
+          "Chaos Bringer": 21,
+          "Dark Falz": 1
         }
       }
-    ],
-    "enemies": {
-      "Booma": 17,
-      "Gobooma": 41,
-      "Gigobooma": 17,
-      "Savage Wolf": 21,
-      "Barbarous Wolf": 9,
-      "Monest": 16,
-      "El Rappy": 28,
-      "Hildelt": 52,
-      "Dragon": 1,
-      "Evil Shark": 68,
-      "Gillchic": 73,
-      "Dimenian": 64,
-      "Pal Shark": 25,
-      "Dubchic": 37,
-      "La Dimenian": 48,
-      "Guil Shark": 49,
-      "Dubwitch": 8,
-      "So Dimenian": 46,
-      "Poison Lily": 39,
-      "Canadine": 115,
-      "Claw": 82,
-      "Pofuilly Slime": 23,
-      "Canane": 8,
-      "Bulclaw": 24,
-      "Nano Dragon": 12,
-      "Sinow Beat": 25,
-      "Dark Belra": 34,
-      "Pan Arms": 6,
-      "Sinow Gold": 25,
-      "Dark Gunner": 31,
-      "De Rol Le": 1,
-      "Garanz": 28,
-      "Death Gunner": 7,
-      "Vol Opt": 1,
-      "Chaos Sorcerer": 24,
-      "Chaos Bringer": 21,
-      "Dark Falz": 1
-    }
+    ]
   },
   {
     "quest_name": "HBF",

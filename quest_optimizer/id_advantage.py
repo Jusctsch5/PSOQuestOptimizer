@@ -7,16 +7,14 @@ from __future__ import annotations
 from statistics import median
 from typing import Dict, List, Optional
 
+from quest_optimizer.quest_time_estimate import ranking_efficiency_sort_key
+
 
 def score_for_ranking_row(row: Dict) -> float:
     """
-    Match QuestOptimizer sorting behavior:
-    use PD/min when available, otherwise total PD.
+    Match QuestOptimizer sorting: explicit PD/min, else estimated PD/min, else total PD.
     """
-    pd_per_minute = row.get("pd_per_minute")
-    if pd_per_minute is not None:
-        return float(pd_per_minute)
-    return float(row.get("total_pd", 0.0))
+    return ranking_efficiency_sort_key(row)
 
 
 def build_quest_matrix(rank_by_section: Dict[str, List[Dict]]) -> Dict[str, Dict[str, float]]:

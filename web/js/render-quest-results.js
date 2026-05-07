@@ -13,6 +13,10 @@ const QUEST_RESULTS_HEADER_TOOLTIPS = {
     enemies: 'Total number of enemies across the quest (used for drop expectations).',
     rawPdPerQuest:
         'Expected average number of photon drops per quest run (raw PD contribution from PD drops only, before item price value).',
+    estMinutes:
+        'Estimated quest length in minutes (heuristic: 15 min per area, 5 min per boss arena). Optional; enable Time estimation in the form.',
+    pdPerMinuteEst:
+        'PD per minute using estimated time only — separate from PD/min when you supply quest_times. Sort uses explicit PD/min first, then this estimate.',
     questReward: 'Quest completion reward items and their PD value contribution.',
     notableItem:
         'Next most worthwhile item by expected PD value for this quest (sources may be listed; number is total expected PD from that item). Hover the cell for per-source equations.',
@@ -81,6 +85,7 @@ function renderResults(rankings, params) {
     
     const notableItemsCount = params.notable_items || 5;
     const showDetails = params.show_details || false;
+    const showTimeEstimation = params.time_estimation === true;
     
     // Create table
     let html = '<table class="results-table">';
@@ -96,6 +101,10 @@ function renderResults(rankings, params) {
     html += thWithTitle('PD/Quest', QUEST_RESULTS_HEADER_TOOLTIPS.pdPerQuest);
     html += thWithTitle('Enemies', QUEST_RESULTS_HEADER_TOOLTIPS.enemies);
     html += thWithTitle('Raw PD/Quest', QUEST_RESULTS_HEADER_TOOLTIPS.rawPdPerQuest);
+    if (showTimeEstimation) {
+        html += thWithTitle('Est (min)', QUEST_RESULTS_HEADER_TOOLTIPS.estMinutes);
+        html += thWithTitle('PD/min (est)', QUEST_RESULTS_HEADER_TOOLTIPS.pdPerMinuteEst);
+    }
     if (hasCompletionItems) {
         html += thWithTitle('Quest Reward', QUEST_RESULTS_HEADER_TOOLTIPS.questReward);
     }
@@ -127,7 +136,13 @@ function renderResults(rankings, params) {
         html += `<td>${totalPd}</td>`;
         html += `<td>${enemies}</td>`;
         html += `<td>${rawPd}</td>`;
-        
+        if (showTimeEstimation) {
+            const em = ranking.quest_time_estimated_minutes;
+            const pme = ranking.pd_per_minute_estimated;
+            html += `<td>${em != null && em !== undefined ? Number(em).toFixed(2) : ''}</td>`;
+            html += `<td>${pme != null && pme !== undefined ? Number(pme).toFixed(4) : ''}</td>`;
+        }
+
         // Quest Reward column
         if (hasCompletionItems) {
             let rewardStr = '';
@@ -165,7 +180,9 @@ function renderResults(rankings, params) {
         
         // Detailed breakdown row (if show_details is true)
         if (showDetails) {
-            html += `<tr class="details-row"><td colspan="${7 + (showSectionId ? 1 : 0) + (hasCompletionItems ? 1 : 0) + notableItemsCount}">`;
+            const fixedCols =
+                6 + (showSectionId ? 1 : 0) + (showTimeEstimation ? 2 : 0) + (hasCompletionItems ? 1 : 0);
+            html += `<tr class="details-row"><td colspan="${fixedCols + notableItemsCount}">`;
             html += renderDetailedBreakdown(ranking);
             html += '</td></tr>';
         }

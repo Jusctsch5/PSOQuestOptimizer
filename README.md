@@ -23,7 +23,7 @@ This repository currently includes scripts to make use of the surrounding logic 
 Let's say I want to understand christmas quests, take CF4, which is a christmas quest that rewards 6 coal on completion in Ultimate. Let's say we are running CF4 during RDR week during the christmas event (double boost).
 
 ```bash
-PS C:\Users\JSchumac\source\repos\PSOQuestOptimizer> python .\optimize_quests.py --quest CF4 --christmas-boost --weekly-boost RDR
+> python .\optimize_quests.py --quest CF4 --event-active Christmas --weekly-boost RDR
 Filtered to 1 quest(s) matching 'CF4'
 Ranking quests by PD efficiency...
   Section ID: All (ranking across all Section IDs)

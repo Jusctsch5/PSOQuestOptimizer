@@ -26,6 +26,7 @@ const PYTHON_MODULES = [
     'quests/quest_listing.py',
     'quest_optimizer/__init__.py',
     'quest_optimizer/quest_calculator.py',
+    'quest_optimizer/quest_time_estimate.py',
     'optimize_quests.py',
     'optimize_item_hunting.py',
     'calculate_item_value.py',
@@ -209,7 +210,8 @@ function getOptimizeQuestsParameters() {
         notable_items: parseInt(formData.get('notable-items')) || 5,
         show_details: document.getElementById('show-details').checked,
         exclude_event_quests: document.getElementById('exclude-event-quests').checked,
-        quest_times: {}, // TODO: Load quest times if available
+        time_estimation: document.getElementById('time-estimation').checked,
+        quest_times: {}, // Optional explicit times; heuristic is separate when time_estimation is on
         rbr_active: rbrList !== null,
         rbr_list: rbrList,
         daily_luck,
@@ -269,6 +271,40 @@ function getCalculateItemValueParameters() {
     };
 
     return params;
+}
+
+/**
+ * Initialize beat time widget (Swatch Internet Time based on UTC/BMT).
+ */
+function setupBeatTimeWidget() {
+    const beatValueEl = document.getElementById('beat-time-value');
+    const beatStatusEl = document.getElementById('beat-time-status');
+    if (!beatValueEl || !beatStatusEl) return;
+
+    function updateBeatTime() {
+        const now = new Date();
+        const utcHours = now.getUTCHours();
+        const utcMinutes = now.getUTCMinutes();
+        const utcSeconds = now.getUTCSeconds();
+        const utcMilliseconds = now.getUTCMilliseconds();
+
+        // Swatch Internet Time uses Biel Mean Time (UTC+1), split into 1000 beats/day.
+        const bmtSeconds = ((utcHours + 1) % 24) * 3600 + utcMinutes * 60 + utcSeconds + (utcMilliseconds / 1000);
+        const beatTime = bmtSeconds / 86.4;
+        const beatInt = Math.floor(beatTime);
+        const beatDisplay = `@${beatTime.toFixed(2).padStart(6, '0')}`;
+        const firstDigit = String(beatInt).padStart(3, '0').charAt(0);
+        const firstDigitNum = parseInt(firstDigit, 10);
+        const isEven = Number.isFinite(firstDigitNum) && (firstDigitNum % 2 === 0);
+
+        beatValueEl.textContent = beatDisplay;
+        beatStatusEl.textContent = isEven ? 'Divine Punishment ACTIVE' : 'Divine Punishment INACTIVE';
+        beatStatusEl.classList.toggle('beat-time-status-active', isEven);
+        beatStatusEl.classList.toggle('beat-time-status-inactive', !isEven);
+    }
+
+    updateBeatTime();
+    setInterval(updateBeatTime, 100);
 }
 
 /**
@@ -637,18 +673,29 @@ json.dumps(result)
 }
 
 /**
- * Initialize on page load
+ * Initialize app UI behaviors.
  */
-document.addEventListener('DOMContentLoaded', () => {
+function initializeApp() {
     // Set up tab handlers immediately - don't wait for Pyodide
     setupTabHandlers();
     setupFormHandlers();
+    setupBeatTimeWidget();
     setupQuestShortNameAutocompletes();
     setupItemNameAutocompletes();
 
     // Initialize Pyodide in the background
     initializePyodide();
-});
+}
+
+/**
+ * Initialize on page load (and also handle embedding contexts where
+ * DOMContentLoaded may already have fired before this script executes).
+ */
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    initializeApp();
+}
 
 /**
  * Quest short-name multi-token autocomplete (space-separated tokens).
