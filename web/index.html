@@ -14,6 +14,7 @@
             <div class="header-main">
                 <h1>PSO Optimizer</h1>
                 <p class="header-tagline">Optimize quests, find best item hunting locations, and calculate item values</p>
+                <p class="header-tagline header-tagline-secondary">Tailored for the Ephinea PSOBB Server</p>
             </div>
             <div id="beat-time-widget" class="beat-time-widget"
                 title="Heaven Punisher's special is active when the first digit of the beat time is even.">
@@ -64,7 +65,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="quest-filter">Quest Filter (space-separated short names):</label>
+                                <label for="quest-filter"
+                                    title="Space-separated short names. Filtering on quests speeds up drop rate calculations.">
+                                    Quest Filter:
+                                </label>
                                 <input type="text" id="quest-filter" name="quest-filter" placeholder="e.g., MU1 CF4"
                                     autocomplete="off" spellcheck="false">
                             </div>
@@ -97,7 +101,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="daily-luck">Daily Luck:</label>
+                                <label for="daily-luck"
+                                    title="Rare drop rate increase, 0-5% based on daily /forecast command.">
+                                    Daily Luck:
+                                </label>
                                 <div class="input-with-percent">
                                     <input type="number" id="daily-luck" name="daily-luck" value="0" step="1"
                                         title="Percent added to RDR multiplier">
@@ -106,7 +113,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="rbr-list">RBR Quest List (space-separated short names):</label>
+                                <label for="rbr-list" title="Space-separated short names for RBR quest list.">RBR Quest
+                                    List:</label>
                                 <input type="text" id="rbr-list" name="rbr-list" placeholder="e.g., MU1 MU2 MU3"
                                     autocomplete="off" spellcheck="false">
                             </div>
@@ -116,30 +124,34 @@
                             <h2>Display Options</h2>
 
                             <div class="form-group">
-                                <label for="notable-items">Notable Items:</label>
+                                <label for="notable-items">Notable Items to Display:</label>
                                 <input type="number" id="notable-items" name="notable-items" value="5" min="1" max="10">
                             </div>
 
                             <div class="form-group">
-                                <label>
+                                <label
+                                    title="Shows drop rate values, calculatations, and breakdowns per enemy type and box for resulting quests.">
                                     <input type="checkbox" id="show-details" name="show-details">
                                     Show Detailed Breakdown
                                 </label>
                             </div>
 
                             <div class="form-group">
-                                <label>
+                                <label
+                                    title="Exclude christmas, cookie, and anniversary event quests from results.">
                                     <input type="checkbox" id="exclude-event-quests" name="exclude-event-quests">
                                     Exclude Event Quests
                                 </label>
                             </div>
 
                             <div class="form-group">
-                                <label>
+                                <label
+                                    title="Use estimated quest duration for ranking: 15 minutes per area and 5 minutes per boss. This uses heuristic PD per minute values.">
                                     <input type="checkbox" id="time-estimation" name="time-estimation">
-                                    Time estimation (15 min/area, 5 min/boss — heuristic PD/min)
+                                    Use Time Estimation
                                 </label>
                             </div>
+
                         </div>
                     </div>
 

@@ -187,6 +187,7 @@ function getActiveTab() {
 function getOptimizeQuestsParameters() {
     const form = document.getElementById('optimizer-form');
     const formData = new FormData(form);
+    const timeEstimationCheckbox = document.getElementById('time-estimation');
 
     // Handle RBR list
     const rbrListStr = formData.get('rbr-list');
@@ -210,7 +211,7 @@ function getOptimizeQuestsParameters() {
         notable_items: parseInt(formData.get('notable-items')) || 5,
         show_details: document.getElementById('show-details').checked,
         exclude_event_quests: document.getElementById('exclude-event-quests').checked,
-        time_estimation: document.getElementById('time-estimation').checked,
+        time_estimation: timeEstimationCheckbox ? timeEstimationCheckbox.checked : false,
         quest_times: {}, // Optional explicit times; heuristic is separate when time_estimation is on
         rbr_active: rbrList !== null,
         rbr_list: rbrList,
