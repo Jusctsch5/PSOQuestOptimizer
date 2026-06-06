@@ -63,6 +63,17 @@ function formatNotableItemTooltip(item) {
 }
 
 /**
+ * Button link that opens the data peek panel.
+ */
+function dataPeekLink(type, id, label) {
+    if (!id) {
+        return escapeHtml(label != null ? label : '');
+    }
+    const display = label != null ? label : id;
+    return `<button type="button" class="data-peek-link" data-peek-type="${escapeAttr(type)}" data-peek-id="${escapeAttr(id)}">${escapeHtml(display)}</button>`;
+}
+
+/**
  * Render quest rankings as an HTML table
  */
 function renderResults(rankings, params) {
@@ -128,7 +139,7 @@ function renderResults(rankings, params) {
         
         html += '<tr>';
         html += `<td>${rank}</td>`;
-        html += `<td>${escapeHtml(questName)}</td>`;
+        html += `<td>${dataPeekLink('quest', ranking.quest_name, questName)}</td>`;
         if (showSectionId) {
             html += `<td>${escapeHtml(sectionId)}</td>`;
         }
@@ -150,7 +161,7 @@ function renderResults(rankings, params) {
                 const rewardItems = [];
                 for (const [itemName, data] of Object.entries(ranking.completion_items_breakdown)) {
                     const itemPd = data.total_pd || 0;
-                    rewardItems.push(`${escapeHtml(itemName)} (${itemPd.toFixed(4)})`);
+                    rewardItems.push(`${dataPeekLink('item', itemName, itemName)} (${itemPd.toFixed(4)})`);
                 }
                 rewardStr = rewardItems.join(', ');
             }
@@ -168,7 +179,7 @@ function renderResults(rankings, params) {
                 const sourceLabel = sources.length > 1
                     ? sources.map(s => escapeHtml(s)).join(', ') + ': '
                     : (escapeHtml(sources[0] || 'Unknown') + ': ');
-                const itemStr = `${escapeHtml(itemName)} (${sourceLabel}${pdValue.toFixed(4)})`;
+                const itemStr = `${dataPeekLink('item', itemName, itemName)} (${sourceLabel}${pdValue.toFixed(4)})`;
                 const breakdownTitle = escapeAttr(formatNotableItemTooltip(item));
                 html += `<td class="notable-item-cell" title="${breakdownTitle}">${itemStr}</td>`;
             } else {
@@ -236,7 +247,7 @@ function renderDetailedBreakdown(ranking, params = {}) {
                 
                 html += '<tr>';
                 html += `<td>${escapeHtml(enemy)}</td>`;
-                html += `<td>${escapeHtml(item)}</td>`;
+                html += `<td>${dataPeekLink('item', item, item)}</td>`;
                 html += `<td>${adjustedDar.toFixed(6)}</td>`;
                 html += `<td>${formatRate(adjustedRdr, rateFormat, { asPercent: false, precision: 8 })}</td>`;
                 html += `<td>${formatRate(actualRate, rateFormat, { asPercent: false, precision: 8 })}</td>`;
@@ -276,7 +287,7 @@ function renderDetailedBreakdown(ranking, params = {}) {
             const expValue = data.pd_value || 0;
             
             html += '<tr>';
-            html += `<td>${escapeHtml(itemName)}</td>`;
+            html += `<td>${dataPeekLink('item', itemName, itemName)}</td>`;
             html += `<td>${escapeHtml(area)}</td>`;
             html += `<td>${formatRate(rate, rateFormat, { asPercent: false, precision: 8 })}</td>`;
             html += `<td>${boxCount}</td>`;

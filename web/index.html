@@ -407,6 +407,19 @@
         </div>
     </div>
 
+    <aside id="data-peek-sidebar" class="data-peek-sidebar" aria-labelledby="data-peek-title" hidden>
+        <div class="data-peek-panel">
+            <header class="data-peek-header">
+                <h2 id="data-peek-title" class="data-peek-title"></h2>
+                <button type="button" id="data-peek-close" class="data-peek-close" aria-label="Close">&times;</button>
+            </header>
+            <div id="data-peek-body" class="data-peek-body"></div>
+            <footer class="data-peek-footer">
+                <button type="button" id="data-peek-open-data" class="data-peek-open-data">Open in Data tab →</button>
+            </footer>
+        </div>
+    </aside>
+
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <script src="js/cache.js"></script>
     <script src="js/rate-format.js"></script>
@@ -418,6 +431,7 @@
     <script src="js/render-item-value-results.js"></script>
     <script src="js/quest-list.js"></script>
     <script src="js/price-guide.js"></script>
+    <script src="js/data-peek.js"></script>
 </body>
 
 </html>

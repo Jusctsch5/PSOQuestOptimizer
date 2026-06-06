@@ -102,9 +102,7 @@
         return String(v);
     }
 
-    function renderDetail(item) {
-        const panel = document.getElementById('price-guide-detail');
-        if (!panel) return;
+    function buildItemDetailHtml(item) {
         let html = '<div class="quest-detail-header">';
         html += '<h2>' + escapeHtml(item.name) + '</h2>';
         html += '<p><strong>Category:</strong> ' + escapeHtml(item.category) + '</p>';
@@ -125,8 +123,71 @@
             });
         }
         html += '</div>';
-        panel.innerHTML = html;
+        return html;
+    }
+
+    function renderDetail(item) {
+        const panel = document.getElementById('price-guide-detail');
+        if (!panel) return;
+        panel.innerHTML = buildItemDetailHtml(item);
         panel.classList.remove('quest-detail-placeholder');
+    }
+
+    function findItemByName(itemName) {
+        if (!itemName || !allItems.length) return null;
+        const key = String(itemName).trim().toLowerCase();
+        return allItems.find(function (item) {
+            return (item.name || '').toLowerCase() === key;
+        }) || null;
+    }
+
+    function activateDataSection() {
+        document.querySelectorAll('.section-btn').forEach(function (b) { b.classList.remove('active'); });
+        const dataBtn = document.querySelector('.section-btn[data-section="data"]');
+        if (dataBtn) dataBtn.classList.add('active');
+        document.querySelectorAll('.section-content').forEach(function (el) { el.classList.add('hidden'); });
+        const section = document.getElementById('section-data');
+        if (section) section.classList.remove('hidden');
+    }
+
+    function activatePriceGuideTab() {
+        document.querySelectorAll('.data-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        const tabBtn = document.querySelector('.data-tab-btn[data-data-tab="price-guide"]');
+        if (tabBtn) tabBtn.classList.add('active');
+        document.querySelectorAll('.data-tab-panel').forEach(function (el) { el.classList.add('hidden'); });
+        const panel = document.getElementById('data-price-guide');
+        if (panel) panel.classList.remove('hidden');
+    }
+
+    function selectItemInList(item) {
+        const search = document.getElementById('price-guide-search');
+        const typeSelect = document.getElementById('price-guide-type');
+        if (typeSelect) typeSelect.value = '';
+        if (search) search.value = item.name || '';
+        applyFilters();
+        const idx = filteredItems.findIndex(function (i) {
+            return (i.name || '').toLowerCase() === (item.name || '').toLowerCase();
+        });
+        const container = document.getElementById('price-guide-container');
+        if (container && idx >= 0) {
+            const btn = container.querySelector('.quest-list-item[data-i="' + idx + '"]');
+            if (btn) {
+                btn.click();
+                return;
+            }
+        }
+        renderDetail(item);
+    }
+
+    function openItemInData(itemName) {
+        return loadPriceGuide().then(function () {
+            populateTypeFilter();
+            const item = findItemByName(itemName);
+            if (!item) return;
+            activateDataSection();
+            activatePriceGuideTab();
+            selectItemInList(item);
+        });
     }
 
     function renderList(container, list) {
@@ -210,5 +271,11 @@
     }
 
     window.showPriceGuide = showPriceGuide;
+    window.PriceGuideBrowse = {
+        loadPriceGuide: loadPriceGuide,
+        buildItemDetailHtml: buildItemDetailHtml,
+        findItemByName: findItemByName,
+        openItemInData: openItemInData,
+    };
     document.addEventListener('DOMContentLoaded', setupSearch);
 })();

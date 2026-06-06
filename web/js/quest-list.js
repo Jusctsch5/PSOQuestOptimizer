@@ -44,9 +44,7 @@
         });
     }
 
-    function renderDetail(quest) {
-        const panel = document.getElementById('quest-detail-content');
-        if (!panel) return;
+    function buildQuestDetailHtml(quest) {
         const name = quest.quest_name || '?';
         const long = quest.long_name || name;
         const ep = quest.episode != null ? quest.episode : 1;
@@ -78,8 +76,68 @@
             html += '<div class="quest-detail-completion"><h3>Completion items</h3><p>' + escapeHtml(Object.keys(completion).map(function (k) { return k + ': ' + completion[k]; }).join(', ')) + '</p></div>';
         }
 
-        panel.innerHTML = html;
+        return html;
+    }
+
+    function renderDetail(quest) {
+        const panel = document.getElementById('quest-detail-content');
+        if (!panel) return;
+        panel.innerHTML = buildQuestDetailHtml(quest);
         panel.classList.remove('quest-detail-placeholder');
+    }
+
+    function findQuestByShortName(shortName) {
+        if (!questListData || !shortName) return null;
+        const key = String(shortName).trim().toLowerCase();
+        return questListData.find(function (q) {
+            return (q.quest_name || '').toLowerCase() === key;
+        }) || null;
+    }
+
+    function activateDataSection() {
+        document.querySelectorAll('.section-btn').forEach(function (b) { b.classList.remove('active'); });
+        const dataBtn = document.querySelector('.section-btn[data-section="data"]');
+        if (dataBtn) dataBtn.classList.add('active');
+        document.querySelectorAll('.section-content').forEach(function (el) { el.classList.add('hidden'); });
+        const section = document.getElementById('section-data');
+        if (section) section.classList.remove('hidden');
+    }
+
+    function activateQuestListTab() {
+        document.querySelectorAll('.data-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        const tabBtn = document.querySelector('.data-tab-btn[data-data-tab="quest-list"]');
+        if (tabBtn) tabBtn.classList.add('active');
+        document.querySelectorAll('.data-tab-panel').forEach(function (el) { el.classList.add('hidden'); });
+        const panel = document.getElementById('data-quest-list');
+        if (panel) panel.classList.remove('hidden');
+    }
+
+    function selectQuestInList(quest) {
+        const search = document.getElementById('quest-list-search');
+        if (search) search.value = quest.quest_name || '';
+        applyFilters();
+        const idx = filteredList.findIndex(function (q) {
+            return (q.quest_name || '').toLowerCase() === (quest.quest_name || '').toLowerCase();
+        });
+        const container = document.getElementById('quest-list-container');
+        if (container && idx >= 0) {
+            const btn = container.querySelector('.quest-list-item[data-i="' + idx + '"]');
+            if (btn) {
+                btn.click();
+                return;
+            }
+        }
+        renderDetail(quest);
+    }
+
+    function openQuestInData(shortName) {
+        return loadQuests().then(function () {
+            const quest = findQuestByShortName(shortName);
+            if (!quest) return;
+            activateDataSection();
+            activateQuestListTab();
+            selectQuestInList(quest);
+        });
     }
 
     function renderLeftList(container, list) {
@@ -197,4 +255,11 @@
         setupDataTabs();
         setupFilters();
     });
+
+    window.QuestListBrowse = {
+        loadQuests: loadQuests,
+        buildQuestDetailHtml: buildQuestDetailHtml,
+        findQuestByShortName: findQuestByShortName,
+        openQuestInData: openQuestInData,
+    };
 })();

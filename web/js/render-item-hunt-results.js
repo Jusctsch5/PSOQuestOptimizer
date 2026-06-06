@@ -2,6 +2,22 @@
  * Renderer for item hunt optimization results
  */
 
+function escapeAttr(text) {
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+function dataPeekLink(type, id, label) {
+    if (!id) {
+        return escapeHtml(label != null ? label : '');
+    }
+    const display = label != null ? label : id;
+    return `<button type="button" class="data-peek-link" data-peek-type="${escapeAttr(type)}" data-peek-id="${escapeAttr(id)}">${escapeHtml(display)}</button>`;
+}
+
 /**
  * Render item hunt results
  */
@@ -14,7 +30,7 @@ function renderItemHuntResults(result, params) {
         return;
     }
     
-    let html = `<h3>Item: ${escapeHtml(result.item_type || 'Unknown')} - ${escapeHtml(params.item_name)}</h3>`;
+    let html = `<h3>Item: ${escapeHtml(result.item_type || 'Unknown')} — ${dataPeekLink('item', params.item_name, params.item_name)}</h3>`;
     
     // Quest Results Table
     html += '<h4>Best Quests for Hunting</h4>';
@@ -62,7 +78,7 @@ function renderItemHuntResults(result, params) {
         
         html += '<tr>';
         html += `<td>${rank}</td>`;
-        html += `<td>${escapeHtml(questName)}</td>`;
+        html += `<td>${dataPeekLink('quest', quest.quest_name, questName)}</td>`;
         html += `<td>${escapeHtml(quest.section_id || 'Unknown')}</td>`;
         html += `<td>${dropsFromStr}</td>`;
         html += `<td>${formatRate(probability, rateFormat)}</td>`;
