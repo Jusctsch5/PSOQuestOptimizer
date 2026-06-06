@@ -1,0 +1,54 @@
+{{Item
+|icon=tool
+|color=rare
+|stack=1
+|class=111111111111
+|hex=030F00
+|type=Consumable
+|jp = アドスロット
+|translation=AddSlot
+|desc=Adds one slot to the armor being worn by the user, up to a maximum of 4 slots.
+}}
+{{Tool|rare|AddSlot}} is a rare [[Tools|tool]]. When used from the inventory, it adds one slot to the equipped [[Frames|frame]] when used, to a maximum of four.
+==Availability==
+===Enemy Drops===
+{{DropTableHead}}
+{{DropRow|id=Viridia|idspan=4|diff=Normal|diffspan=3|Dolmolm|1/9102}}
+{{DropRow|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|id=Greenill|idspan=4|diff=Normal|diffspan=3|Barbarous Wolf (E2)|1/9102}}
+{{DropRow|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|id=Skyly|idspan=5|diff=Normal|diffspan=4|Ul Gibbon|1/9102}}
+{{DropRow|Zol Gibbon|1/7802}}
+{{DropRow|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|id=Bluefull|idspan=5|diff=Normal|diffspan=3|Dolmdarl|1/7802}}
+{{DropRow|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|diff=Very Hard|Sinow Gold|1/116}}
+{{DropRow|id=Purplenum|idspan=5|diff=Normal|diffspan=2|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|diff=Very Hard|diffspan=2|Nano Dragon|1/116}}
+{{DropRow|Sinow Gold|1/116}}
+{{DropRow|id=Pinkal|idspan=3|diff=Normal|diffspan=2|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|id=Redria|idspan=6|diff=Normal|diffspan=5|Sinow Gold|1/5461}}
+{{DropRow|Nar Lily (E2)|7/8}}
+{{DropRow|Hildeblue (E2)|7/8}}
+{{DropRow|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|id=Oran|idspan=3|diff=Normal|diffspan=2|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|id=Yellowboze|idspan=4|diff=Normal|diffspan=2|Del Rappy|1/2}}
+{{DropRow|Dorphon|1/256}}
+{{DropRow|diff=Hard|Del Rappy|1/2}}
+{{DropRow|diff=Very Hard

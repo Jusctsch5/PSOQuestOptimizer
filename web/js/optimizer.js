@@ -25,6 +25,7 @@ const PYTHON_MODULES = [
     'quests/__init__.py',
     'quests/quest_listing.py',
     'quest_optimizer/__init__.py',
+    'quest_optimizer/rate_format.py',
     'quest_optimizer/quest_calculator.py',
     'quest_optimizer/quest_time_estimate.py',
     'optimize_quests.py',
@@ -216,6 +217,7 @@ function getOptimizeQuestsParameters() {
         rbr_active: rbrList !== null,
         rbr_list: rbrList,
         daily_luck,
+        rate_format: getStoredRateFormat(),
     };
 
     return params;
@@ -253,6 +255,7 @@ function getOptimizeItemHuntParameters() {
         top_n: parseInt(formData.get('item-hunt-top-n')) || 10,
         show_details: document.getElementById('item-hunt-show-details').checked,
         daily_luck,
+        rate_format: getStoredRateFormat(),
     };
 
     return params;

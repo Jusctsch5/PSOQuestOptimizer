@@ -15,6 +15,7 @@ from quest_optimizer.quest_time_estimate import (
     estimate_quest_minutes_heuristic,
     ranking_efficiency_sort_key,
 )
+from quest_optimizer.rate_format import RateFormat, format_rate, normalize_rate_format
 
 
 class QuestOptimizer:
@@ -401,7 +402,14 @@ class QuestOptimizer:
 
         return results
 
-    def print_rankings(self, rankings: List[Dict], top_n: Optional[int] = None, show_details: bool = False, notable_items_count: int = 5):
+    def print_rankings(
+        self,
+        rankings: List[Dict],
+        top_n: Optional[int] = None,
+        show_details: bool = False,
+        notable_items_count: int = 5,
+        rate_format: RateFormat = RateFormat.DECIMAL,
+    ):
         """
         Print quest rankings in a readable format.
 
@@ -410,7 +418,10 @@ class QuestOptimizer:
             top_n: Show only top N quests (None for all)
             show_details: Show detailed enemy breakdown
             notable_items_count: Number of notable item columns to show (default: 5)
+            rate_format: Display drop rates as decimal/percent or 1/N fractions
         """
+        rate_format = normalize_rate_format(rate_format)
+        rate_width = 14 if rate_format == RateFormat.FRACTION else 12
         full_rankings = list(rankings)
         show_section_id = len(full_rankings) > 0 and any(
             result.get("section_id") != full_rankings[0].get("section_id") for result in full_rankings
@@ -578,8 +589,11 @@ class QuestOptimizer:
                 print("  Enemy Breakdown:")
 
                 # Create table header
-                print(f"  {'Enemy':<20} {'Drop':<30} {'DAR':<10} {'RDR':<12} {'Rate':<12} {'Count':<8} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}")
-                print("  " + "-" * 138)
+                print(
+                    f"  {'Enemy':<20} {'Drop':<30} {'DAR':<10} {'RDR':<{rate_width}} {'Rate':<{rate_width}} "
+                    f"{'Count':<8} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
+                )
+                print("  " + "-" * (134 + rate_width * 2))
 
                 for enemy, data in result["enemy_breakdown"].items():
                     if "error" in data:
@@ -602,9 +616,11 @@ class QuestOptimizer:
                         item_display = item[:28] if len(item) <= 28 else item[:25] + "..."
                         enemy_display = enemy[:18] if len(enemy) <= 18 else enemy[:15] + "..."
 
+                        rdr_display = format_rate(adjusted_rdr, rate_format, as_percent=False, precision=8)
+                        rate_display = format_rate(actual_rate, rate_format, as_percent=False, precision=8)
                         print(
                             f"  {enemy_display:<20} {item_display:<30} "
-                            f"{adjusted_dar:<10.6f} {adjusted_rdr:<12.8f} {actual_rate:<12.8f} "
+                            f"{adjusted_dar:<10.6f} {rdr_display:<{rate_width}} {rate_display:<{rate_width}} "
                             f"{count:<8} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
                         )
                 print()
@@ -612,8 +628,8 @@ class QuestOptimizer:
                 # PD Drop Breakdown table
                 if result.get("pd_drop_breakdown"):
                     print("  PD Drop Breakdown:")
-                    print(f"  {'Enemy':<20} {'DAR':<10} {'PD Rate':<12} {'Count':<8} {'Exp PD Drops':<15}")
-                    print("  " + "-" * 75)
+                    print(f"  {'Enemy':<20} {'DAR':<10} {'PD Rate':<{rate_width}} {'Count':<8} {'Exp PD Drops':<15}")
+                    print("  " + "-" * (67 + rate_width))
 
                     total_pd_drops = result.get("total_pd_drops", 0.0)
                     for enemy, data in result["pd_drop_breakdown"].items():
@@ -622,8 +638,12 @@ class QuestOptimizer:
                         pd_drop_rate = data.get("pd_drop_rate", 0.0)
                         count = data.get("count", 0)
                         expected_pd_drops = data.get("expected_pd_drops", 0.0)
+                        pd_rate_display = format_rate(pd_drop_rate, rate_format, as_percent=False, precision=8)
 
-                        print(f"  {enemy_display:<20} {adjusted_dar:<10.6f} {pd_drop_rate:<12.8f} {count:<8} {expected_pd_drops:<15.8f}")
+                        print(
+                            f"  {enemy_display:<20} {adjusted_dar:<10.6f} {pd_rate_display:<{rate_width}} "
+                            f"{count:<8} {expected_pd_drops:<15.8f}"
+                        )
 
                     print(f"  {'Total':<20} {'':<10} {'':<12} {'':<8} {total_pd_drops:<15.8f}")
                     print()
@@ -631,8 +651,11 @@ class QuestOptimizer:
                 # Box Drop Breakdown table
                 if result.get("box_breakdown"):
                     print("  Box Drop Breakdown:")
-                    print(f"  {'Item':<30} {'Box Count':<12} {'Drop Rate':<12} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}")
-                    print("  " + "-" * 102)
+                    print(
+                        f"  {'Item':<30} {'Box Count':<12} {'Drop Rate':<{rate_width}} "
+                        f"{'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
+                    )
+                    print("  " + "-" * (90 + rate_width))
 
                     total_box_pd = result.get("box_pd", 0.0)
                     for item_name, data in result["box_breakdown"].items():
@@ -645,7 +668,11 @@ class QuestOptimizer:
                         # Truncate long item names
                         item_display = item_name[:28] if len(item_name) <= 28 else item_name[:25] + "..."
 
-                        print(f"  {item_display:<30} {box_count:<12} {drop_rate:<12.8f} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}")
+                        drop_rate_display = format_rate(drop_rate, rate_format, as_percent=False, precision=8)
+                        print(
+                            f"  {item_display:<30} {box_count:<12} {drop_rate_display:<{rate_width}} "
+                            f"{expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
+                        )
 
                     print(f"  {'Total':<30} {'':<12} {'':<12} {'':<12} {'':<12} {'':<12} {total_box_pd:<12.8f}")
                     print()
@@ -689,9 +716,12 @@ class QuestOptimizer:
 
                 print("  Technique Disk Breakdown from Enemies:")
                 if technique_breakdown:
-                    header = f"  {'Technique':<20} {'Area':<25} {'Drop Rate':<12} {'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
+                    header = (
+                        f"  {'Technique':<20} {'Area':<25} {'Drop Rate':<{rate_width}} "
+                        f"{'Exp Drops':<12} {'PD Value':<12} {'Exp Value':<12}"
+                    )
                     print(header)
-                    print("  " + "-" * 102)
+                    print("  " + "-" * (90 + rate_width))
 
                     for technique_key in sorted(technique_breakdown.keys()):
                         data = technique_breakdown[technique_key]
@@ -714,7 +744,11 @@ class QuestOptimizer:
                         if enemy_count > 0:
                             source_info = f" ({enemy_count:.0f} enemies)"
 
-                        row = f"  {technique_display:<20} {area_display:<25} {drop_rate:<12.8f} {expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
+                        drop_rate_display = format_rate(drop_rate, rate_format, as_percent=False, precision=8)
+                        row = (
+                            f"  {technique_display:<20} {area_display:<25} {drop_rate_display:<{rate_width}} "
+                            f"{expected_drops:<12.8f} {item_price_pd:<12.8f} {exp_value:<12.8f}"
+                        )
                         print(row)
                         if source_info:
                             print(f"    {source_info}")
@@ -867,6 +901,14 @@ Examples:
         help="Heuristic quest time: 15 min per area, 5 min per boss area; adds Est (min) and PD/min (est) columns",
     )
 
+    parser.add_argument(
+        "--rate-format",
+        type=str,
+        choices=[fmt.value for fmt in RateFormat],
+        default=RateFormat.DECIMAL.value,
+        help="Display drop rates as decimal/percent (default) or 1/N fractions",
+    )
+
     args = parser.parse_args()
     weekly_boost = WeeklyBoost(args.weekly_boost) if args.weekly_boost else None
 
@@ -1003,7 +1045,13 @@ Examples:
         )
 
     # Print results
-    optimizer.print_rankings(rankings, top_n=args.top_n, show_details=args.details, notable_items_count=args.notable_items)
+    optimizer.print_rankings(
+        rankings,
+        top_n=args.top_n,
+        show_details=args.details,
+        notable_items_count=args.notable_items,
+        rate_format=normalize_rate_format(args.rate_format),
+    )
 
     return 0
 

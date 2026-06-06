@@ -16,6 +16,7 @@ from quest_optimizer.quest_calculator import (
     QuestCalculator,
     WeeklyBoost,
 )
+from quest_optimizer.rate_format import RateFormat, format_rate, format_rate_change, normalize_rate_format
 
 
 def calculate_runs_for_probability(drop_rate: float, target_probability: float = 0.95) -> float:
@@ -49,7 +50,7 @@ def calculate_runs_for_probability(drop_rate: float, target_probability: float =
     return numerator / denominator
 
 
-def display_disk_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
+def display_disk_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost, rate_format=RateFormat.DECIMAL):
     """
     Display disk (technique) drops, grouped by area.
     Shows drop chance per enemy and 10/100/1000 enemy killed drop chances.
@@ -84,11 +85,11 @@ def display_disk_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
                 print(f"  Aggregate Probabilities (using highest drop rate in area):")
                 for num_kills in [10, 100, 1000]:
                     prob = 1 - (1 - max_drop_rate) ** num_kills
-                    print(f"    {num_kills} enemies killed: {prob * 100:.2f}% chance of at least 1 drop")
+                    print(f"    {num_kills} enemies killed: {format_rate(prob, rate_format)} chance of at least 1 drop")
         print()
 
 
-def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
+def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost, rate_format=RateFormat.DECIMAL):
     """Display enemies that drop the item (for non-tool, non-disk items)."""
     if not enemy_drops:
         print(f"\nNo enemies found that drop '{item_name}'.")
@@ -105,13 +106,20 @@ def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
         if enemy_info.get("section_id") is not None:
             print(f"   Section ID: {enemy_info['section_id']}")
         dar_str = f"{enemy_info['dar']:.4f}"
-        rdr_str = f"{enemy_info['rdr']:.6f}"
+        rdr_str = format_rate(enemy_info["rdr"], rate_format, as_percent=False, precision=6)
         if enemy_info["adjusted_dar"] != enemy_info["dar"]:
             dar_str += f" -> {enemy_info['adjusted_dar']:.4f}"
-        if enemy_info.get("adjusted_rdr") and enemy_info["adjusted_rdr"] != enemy_info["rdr"]:
-            rdr_str += f" -> {enemy_info['adjusted_rdr']:.6f}"
+        adjusted_rdr = enemy_info.get("adjusted_rdr", enemy_info["rdr"])
+        if adjusted_rdr != enemy_info["rdr"]:
+            rdr_str = format_rate_change(
+                enemy_info["rdr"],
+                adjusted_rdr,
+                rate_format,
+                as_percent=False,
+                precision=6,
+            )
         print(f"   DAR: {dar_str}, RDR: {rdr_str}")
-        print(f"   Drop Rate: {enemy_info['drop_rate_percent']:.6f}% per kill")
+        print(f"   Drop Rate: {format_rate(enemy_info['drop_rate'], rate_format)} per kill")
         drop_rate = enemy_info["drop_rate"]
         if drop_rate > 0:
             expected_kills = 1 / drop_rate
@@ -128,7 +136,7 @@ def display_enemy_drops(enemy_drops, item_name, rbr_active: bool, weekly_boost):
         print()
 
 
-def display_box_drops(box_drops, item_name):
+def display_box_drops(box_drops, item_name, rate_format=RateFormat.DECIMAL):
     """Display boxes that drop the item."""
     if not box_drops:
         print(f"\nNo boxes found that drop '{item_name}'.")
@@ -145,7 +153,7 @@ def display_box_drops(box_drops, item_name):
             print(f"   Section ID: {box_info['section_id']}")
         else:
             print(f"   (technique drop - not Section ID dependent)")
-        print(f"   Drop Rate: {box_info['drop_rate_percent']:.6f}% per box")
+        print(f"   Drop Rate: {format_rate(box_info['drop_rate'], rate_format)} per box")
         drop_rate = box_info["drop_rate"]
         if drop_rate > 0:
             expected_boxes = 1 / drop_rate
@@ -162,7 +170,14 @@ def display_box_drops(box_drops, item_name):
         print()
 
 
-def display_results(results, item_name, top_n: Optional[int] = 10, is_disk: bool = False, show_details: bool = False):
+def display_results(
+    results,
+    item_name,
+    top_n: Optional[int] = 10,
+    is_disk: bool = False,
+    show_details: bool = False,
+    rate_format=RateFormat.DECIMAL,
+):
     """Display the search results in a formatted way."""
     if not results:
         print(f"\nNo quests found that drop '{item_name}'.")
@@ -178,8 +193,8 @@ def display_results(results, item_name, top_n: Optional[int] = 10, is_disk: bool
     for i, result in enumerate(top_results, 1):
         print(f"{i}. Quest: {result['quest_name']} ({result['long_name']})")
         print(f"   Section ID: {result['section_id']}")
-        print(f"   Drop Probability: {result['percentage']:.6f}% per quest run")
         probability = result["probability"]
+        print(f"   Drop Probability: {format_rate(probability, rate_format)} per quest run")
         expected_runs = 1 / probability
         print(f"   (1 in {expected_runs:.1f} quest runs)")
         # Euler's number: probability of at least 1 drop after N runs = 1 - (1 - p)^N
@@ -210,7 +225,7 @@ def display_results(results, item_name, top_n: Optional[int] = 10, is_disk: bool
             for area in sorted(area_contributions.keys()):
                 area_data = area_contributions[area]
                 print(f"     - Area: {area}")
-                print(f"       Total Contribution: {area_data['total_prob'] * 100:.6f}%")
+                print(f"       Total Contribution: {format_rate(area_data['total_prob'], rate_format)}")
                 enemy_types = len(area_data["enemies"])
                 total_enemies = area_data["total_count"]
                 print(f"       ({total_enemies:.0f} total enemies in this area, of {enemy_types} enemy type(s))")
@@ -218,20 +233,20 @@ def display_results(results, item_name, top_n: Optional[int] = 10, is_disk: bool
             # Display box contributions
             for contrib in box_contributions:
                 print(f"     - Box ({contrib['area']}): {contrib['box_count']} boxes")
-                print(f"       Drop Rate: {contrib['drop_rate']:.6f}")
+                print(f"       Drop Rate: {format_rate(contrib['drop_rate'], rate_format)}")
                 if contrib.get("technique"):
                     print(f"       (technique drop)")
-                print(f"       Contribution: {contrib['probability'] * 100:.6f}%")
+                print(f"       Contribution: {format_rate(contrib['probability'], rate_format)}")
         else:
             # Show detailed contributions
             for contrib in result["contributions"]:
                 if contrib.get("source") == "Box":
                     # Box contribution
                     print(f"     - Box ({contrib['area']}): {contrib['box_count']} boxes")
-                    print(f"       Drop Rate: {contrib['drop_rate']:.6f}")
+                    print(f"       Drop Rate: {format_rate(contrib['drop_rate'], rate_format)}")
                     if contrib.get("technique"):
                         print(f"       (technique drop)")
-                    print(f"       Contribution: {contrib['probability'] * 100:.6f}%")
+                    print(f"       Contribution: {format_rate(contrib['probability'], rate_format)}")
                 elif contrib.get("source") == "Technique":
                     # Technique drop from enemy
                     print(f"     - {contrib['enemy']} (Area: {contrib.get('area', 'Unknown')}): {contrib['count']} kills")
@@ -239,18 +254,25 @@ def display_results(results, item_name, top_n: Optional[int] = 10, is_disk: bool
                     if "adjusted_dar" in contrib and contrib["adjusted_dar"] != contrib["dar"]:
                         dar_str += f" -> {contrib['adjusted_dar']:.4f}"
                     print(f"       DAR: {dar_str} (technique drop - RDR not applicable)")
-                    print(f"       Contribution: {contrib['probability'] * 100:.6f}%")
+                    print(f"       Contribution: {format_rate(contrib['probability'], rate_format)}")
                 else:
                     # Enemy contribution (regular weapon)
                     print(f"     - {contrib['enemy']}: {contrib['count']} kills")
                     dar_str = f"{contrib['dar']:.4f}"
-                    rdr_str = f"{contrib['rdr']:.6f}"
+                    rdr_str = format_rate(contrib["rdr"], rate_format, as_percent=False, precision=6)
                     if "adjusted_dar" in contrib and contrib["adjusted_dar"] != contrib["dar"]:
                         dar_str += f" -> {contrib['adjusted_dar']:.4f}"
-                    if "adjusted_rdr" in contrib and contrib["adjusted_rdr"] != contrib["rdr"]:
-                        rdr_str += f" -> {contrib['adjusted_rdr']:.6f}"
+                    adjusted_rdr = contrib.get("adjusted_rdr", contrib["rdr"])
+                    if adjusted_rdr != contrib["rdr"]:
+                        rdr_str = format_rate_change(
+                            contrib["rdr"],
+                            adjusted_rdr,
+                            rate_format,
+                            as_percent=False,
+                            precision=6,
+                        )
                     print(f"       DAR: {dar_str}, RDR: {rdr_str}")
-                    print(f"       Contribution: {contrib['probability'] * 100:.6f}%")
+                    print(f"       Contribution: {format_rate(contrib['probability'], rate_format)}")
 
         print()
 
@@ -267,7 +289,7 @@ def display_results(results, item_name, top_n: Optional[int] = 10, is_disk: bool
     print(f"BEST OPTION:")
     print(f"  Quest: {best['quest_name']} ({best['long_name']})")
     print(f"  Section ID: {best['section_id']}")
-    print(f"  Drop Chance: {best['percentage']:.6f}% per quest run")
+    print(f"  Drop Chance: {format_rate(best_probability, rate_format)} per quest run")
     print(f"  Expected runs: {best_expected_runs:.1f}")
     print(f"  Probability after {best_expected_runs:.0f} runs: {euler_probability * 100:.2f}% (1 - 1/e)")
     print(f"  Runs for 95% probability: {best_runs_95:.1f}")
@@ -339,9 +361,17 @@ def main():
         action="store_true",
         help="Show detailed contribution breakdown",
     )
+    parser.add_argument(
+        "--rate-format",
+        type=str,
+        choices=[fmt.value for fmt in RateFormat],
+        default=RateFormat.DECIMAL.value,
+        help="Display drop rates as decimal/percent (default) or 1/N fractions",
+    )
     args = parser.parse_args()
     weekly_boost = WeeklyBoost(args.weekly_boost) if args.weekly_boost else None
     event_type = EventType(args.event_active) if args.event_active else None
+    rate_format = normalize_rate_format(args.rate_format)
 
     item = args.item
 
@@ -416,16 +446,28 @@ def main():
     # Display enemy drops based on item type
     if item_type == "disk":
         # For disks (techniques), show area-grouped display
-        display_disk_drops(enemy_drops, item, rbr_active or (rbr_list is not None and len(rbr_list) > 0), weekly_boost)
+        display_disk_drops(
+            enemy_drops,
+            item,
+            rbr_active or (rbr_list is not None and len(rbr_list) > 0),
+            weekly_boost,
+            rate_format=rate_format,
+        )
     else:
         # For regular items, show standard display
-        display_enemy_drops(enemy_drops, item, rbr_active or (rbr_list is not None and len(rbr_list) > 0), weekly_boost)
+        display_enemy_drops(
+            enemy_drops,
+            item,
+            rbr_active or (rbr_list is not None and len(rbr_list) > 0),
+            weekly_boost,
+            rate_format=rate_format,
+        )
 
     # Find boxes that drop the item
     box_drops = calculator.find_boxes_that_drop_weapon(item)
 
     # Display box drops
-    display_box_drops(box_drops, item)
+    display_box_drops(box_drops, item, rate_format=rate_format)
 
     # Find best quests
     results = calculator.find_best_quests_for_item(
@@ -439,7 +481,14 @@ def main():
     )
 
     # Display quest results
-    display_results(results, item, top_n=args.top_n, is_disk=(item_type == "disk"), show_details=args.details)
+    display_results(
+        results,
+        item,
+        top_n=args.top_n,
+        is_disk=(item_type == "disk"),
+        show_details=args.details,
+        rate_format=rate_format,
+    )
 
 
 if __name__ == "__main__":

@@ -152,6 +152,14 @@
                                 </label>
                             </div>
 
+                            <div class="form-group">
+                                <label
+                                    title="Show drop rates as 1/N fractions (PSO drop-chart style) instead of decimal percentages. Modifier-adjusted rates may use decimal denominators (e.g. 1/900.2).">
+                                    <input type="checkbox" class="rate-format-fraction" id="rate-format-fraction">
+                                    Show rates as fractions (1/N)
+                                </label>
+                            </div>
+
                         </div>
                     </div>
 
@@ -237,6 +245,14 @@
                                     <input type="checkbox" id="item-hunt-exclude-event-quests"
                                         name="item-hunt-exclude-event-quests">
                                     Exclude Event Quests
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    title="Show drop rates as 1/N fractions (PSO drop-chart style) instead of decimal percentages.">
+                                    <input type="checkbox" class="rate-format-fraction" id="item-hunt-rate-format-fraction">
+                                    Show rates as fractions (1/N)
                                 </label>
                             </div>
                         </div>
@@ -341,6 +357,7 @@
 
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <script src="js/cache.js"></script>
+    <script src="js/rate-format.js"></script>
     <script src="js/optimizer.js"></script>
     <script src="js/beat-time-widget.js"></script>
     <script src="js/render-quest-results.js"></script>

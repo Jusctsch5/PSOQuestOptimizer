@@ -7,6 +7,7 @@
  */
 function renderItemHuntResults(result, params) {
     const container = document.getElementById('results-table');
+    const rateFormat = params.rate_format || getStoredRateFormat();
     
     if (!result.quest_results || result.quest_results.length === 0) {
         container.innerHTML = '<p>No quests found that drop this item.</p>';
@@ -35,7 +36,6 @@ function renderItemHuntResults(result, params) {
             ? `${quest.long_name} (${quest.quest_name})`
             : quest.quest_name;
         const probability = quest.probability || 0;
-        const percentage = quest.percentage || 0;
         const expectedRuns = probability > 0 ? (1 / probability).toFixed(1) : '∞';
         const runs95 = probability > 0 ? calculateRunsForProbability(probability, 0.95).toFixed(1) : '∞';
         
@@ -65,7 +65,7 @@ function renderItemHuntResults(result, params) {
         html += `<td>${escapeHtml(questName)}</td>`;
         html += `<td>${escapeHtml(quest.section_id || 'Unknown')}</td>`;
         html += `<td>${dropsFromStr}</td>`;
-        html += `<td>${percentage.toFixed(6)}%</td>`;
+        html += `<td>${formatRate(probability, rateFormat)}</td>`;
         html += `<td>${expectedRuns}</td>`;
         html += `<td>${runs95}</td>`;
         html += '</tr>';
@@ -78,11 +78,11 @@ function renderItemHuntResults(result, params) {
             html += '<ul>';
             quest.contributions.forEach(contrib => {
                 if (contrib.source === 'Box') {
-                    html += `<li>Box (${escapeHtml(contrib.area)}): ${contrib.box_count} boxes, ${(contrib.probability * 100).toFixed(6)}%</li>`;
+                    html += `<li>Box (${escapeHtml(contrib.area)}): ${contrib.box_count} boxes, ${formatRate(contrib.probability, rateFormat)}</li>`;
                 } else if (contrib.source === 'Technique') {
-                    html += `<li>${escapeHtml(contrib.enemy)} (${escapeHtml(contrib.area)}): ${contrib.count} kills, ${(contrib.probability * 100).toFixed(6)}%</li>`;
+                    html += `<li>${escapeHtml(contrib.enemy)} (${escapeHtml(contrib.area)}): ${contrib.count} kills, ${formatRate(contrib.probability, rateFormat)}</li>`;
                 } else {
-                    html += `<li>${escapeHtml(contrib.enemy)}: ${contrib.count} kills, ${(contrib.probability * 100).toFixed(6)}%</li>`;
+                    html += `<li>${escapeHtml(contrib.enemy)}: ${contrib.count} kills, ${formatRate(contrib.probability, rateFormat)}</li>`;
                 }
             });
             html += '</ul>';
@@ -114,7 +114,7 @@ function renderItemHuntResults(result, params) {
             html += `<td>${escapeHtml(enemy.enemy)}</td>`;
             html += `<td>${escapeHtml(enemy.section_id || 'N/A')}</td>`;
             html += `<td>${escapeHtml(enemy.area || 'Unknown')}</td>`;
-            html += `<td>${enemy.drop_rate_percent.toFixed(6)}%</td>`;
+            html += `<td>${formatRate(dropRate, rateFormat)}</td>`;
             html += `<td>${expectedKills}</td>`;
             html += '</tr>';
         });
@@ -143,7 +143,7 @@ function renderItemHuntResults(result, params) {
             html += `<td>${escapeHtml(box.area)}</td>`;
             html += `<td>${escapeHtml(box.section_id || 'N/A')}</td>`;
             html += `<td>${box.box_count || 0}</td>`;
-            html += `<td>${box.drop_rate_percent.toFixed(6)}%</td>`;
+            html += `<td>${formatRate(dropRate, rateFormat)}</td>`;
             html += `<td>${expectedBoxes}</td>`;
             html += '</tr>';
         });

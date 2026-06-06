@@ -183,7 +183,7 @@ function renderResults(rankings, params) {
             const fixedCols =
                 6 + (showSectionId ? 1 : 0) + (showTimeEstimation ? 2 : 0) + (hasCompletionItems ? 1 : 0);
             html += `<tr class="details-row"><td colspan="${fixedCols + notableItemsCount}">`;
-            html += renderDetailedBreakdown(ranking);
+            html += renderDetailedBreakdown(ranking, params);
             html += '</td></tr>';
         }
     });
@@ -195,7 +195,8 @@ function renderResults(rankings, params) {
 /**
  * Render detailed breakdown for a quest
  */
-function renderDetailedBreakdown(ranking) {
+function renderDetailedBreakdown(ranking, params = {}) {
+    const rateFormat = params.rate_format || getStoredRateFormat();
     let html = '<div class="detailed-breakdown">';
     html += '<h3>Enemy Breakdown</h3>';
     
@@ -237,8 +238,8 @@ function renderDetailedBreakdown(ranking) {
                 html += `<td>${escapeHtml(enemy)}</td>`;
                 html += `<td>${escapeHtml(item)}</td>`;
                 html += `<td>${adjustedDar.toFixed(6)}</td>`;
-                html += `<td>${adjustedRdr.toFixed(8)}</td>`;
-                html += `<td>${actualRate.toFixed(8)}</td>`;
+                html += `<td>${formatRate(adjustedRdr, rateFormat, { asPercent: false, precision: 8 })}</td>`;
+                html += `<td>${formatRate(actualRate, rateFormat, { asPercent: false, precision: 8 })}</td>`;
                 html += `<td>${count}</td>`;
                 html += `<td>${expectedDrops.toFixed(8)}</td>`;
                 html += `<td>${itemPricePd.toFixed(8)}</td>`;
@@ -277,7 +278,7 @@ function renderDetailedBreakdown(ranking) {
             html += '<tr>';
             html += `<td>${escapeHtml(itemName)}</td>`;
             html += `<td>${escapeHtml(area)}</td>`;
-            html += `<td>${rate.toFixed(8)}</td>`;
+            html += `<td>${formatRate(rate, rateFormat, { asPercent: false, precision: 8 })}</td>`;
             html += `<td>${boxCount}</td>`;
             html += `<td>${expectedDrops.toFixed(8)}</td>`;
             html += `<td>${itemPricePd.toFixed(8)}</td>`;
