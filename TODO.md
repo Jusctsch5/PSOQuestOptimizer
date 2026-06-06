@@ -22,7 +22,7 @@
 - [X] Implement short-name list filtering in optimize_quests.py/UI
 - [X] Add disk drops to drop tables and item value calculation for quests
 - [X] Add coren gambling script
-- [ ] Add BPD Script
+- [X] Add BPD Script
 - [ ] finish updating quests.json with enemies in areas
 - [ ] Central Tower actually shares drops with Seabed Lower not CCA, so fix that for many quests that take place in Tower.
 - [X] Add Lost Soul Blade to quests.json
@@ -31,6 +31,7 @@
 - [ ] Add common weapon value calculation to weapon_value_calculator.py, price guide, and drop tables (note only certain enemies drop common weapons)
 - [ ] Consider reworking slime splitting to only split for drops that are worthwhile to split for
 - [ ] Investigate modeling**
+- [ ] Add "Attribute" value to items. If items drop with meaningful hit (dependnent per weapon), the other attributes become more valuable (probably follow the value as per sphering). 
 
 # UI TODO
 - [X] Implement base of UI
@@ -39,7 +40,7 @@
 - [X] Add browsable quest list to UI
 - [X] Add browsable drop tables to UI
 - [X] Add tooltips to UI
-- [ ] Add links to/from UI to other tools (character viewer, price guide, drop tables, etc)
+- [X] Add links to/from UI to other tools (character viewer, price guide, drop tables, etc)
 
 
 
