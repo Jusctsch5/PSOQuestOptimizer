@@ -7,7 +7,6 @@ const QUEST_RESULTS_HEADER_TOOLTIPS = {
     rank: 'Position in the ranking (1 = best). Sorted by PD per minute when quest times are available; otherwise by total PD.',
     questName: 'Full quest title and short quest code (e.g. MU1).',
     sectionId: 'Section ID used for area-specific rare drop rates (RDR) and which items enemies can drop.',
-    episode: 'Episode: 1, 2, or 4.',
     pdPerQuest:
         'PD per quest: sums expected PD from enemy and box drops, raw photon-drop PD, and completion rewards. Completion rewards are the same entries as the Quest Reward column (when shown)—not a separate quest-item source.',
     enemies: 'Total number of enemies across the quest (used for drop expectations).',
@@ -108,7 +107,6 @@ function renderResults(rankings, params) {
     if (showSectionId) {
         html += thWithTitle('Section ID', QUEST_RESULTS_HEADER_TOOLTIPS.sectionId);
     }
-    html += thWithTitle('Episode', QUEST_RESULTS_HEADER_TOOLTIPS.episode);
     html += thWithTitle('PD/Quest', QUEST_RESULTS_HEADER_TOOLTIPS.pdPerQuest);
     html += thWithTitle('Enemies', QUEST_RESULTS_HEADER_TOOLTIPS.enemies);
     html += thWithTitle('Raw PD/Quest', QUEST_RESULTS_HEADER_TOOLTIPS.rawPdPerQuest);
@@ -131,7 +129,6 @@ function renderResults(rankings, params) {
         const questName = ranking.long_name 
             ? `${ranking.long_name} (${ranking.quest_name})`
             : ranking.quest_name;
-        const episode = ranking.episode || 'N/A';
         const sectionId = ranking.section_id || 'Unknown';
         const totalPd = ranking.total_pd.toFixed(4);
         const enemies = ranking.total_enemies || 0;
@@ -143,7 +140,6 @@ function renderResults(rankings, params) {
         if (showSectionId) {
             html += `<td>${escapeHtml(sectionId)}</td>`;
         }
-        html += `<td>${episode}</td>`;
         html += `<td>${totalPd}</td>`;
         html += `<td>${enemies}</td>`;
         html += `<td>${rawPd}</td>`;
@@ -192,7 +188,7 @@ function renderResults(rankings, params) {
         // Detailed breakdown row (if show_details is true)
         if (showDetails) {
             const fixedCols =
-                6 + (showSectionId ? 1 : 0) + (showTimeEstimation ? 2 : 0) + (hasCompletionItems ? 1 : 0);
+                5 + (showSectionId ? 1 : 0) + (showTimeEstimation ? 2 : 0) + (hasCompletionItems ? 1 : 0);
             html += `<tr class="details-row"><td colspan="${fixedCols + notableItemsCount}">`;
             html += renderDetailedBreakdown(ranking, params);
             html += '</td></tr>';
