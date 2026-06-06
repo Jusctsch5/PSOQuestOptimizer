@@ -16,10 +16,56 @@
                 <p class="header-tagline">Optimize quests, find best item hunting locations, and calculate item values</p>
                 <p class="header-tagline header-tagline-secondary">Tailored for the Ephinea PSOBB Server</p>
             </div>
-            <div id="beat-time-widget" class="beat-time-widget"
-                title="Heaven Punisher's special is active when the first digit of the beat time is even.">
-                <div id="beat-time-value" class="beat-time-value">@000.00</div>
-                <div id="beat-time-status" class="beat-time-status beat-time-status-inactive">Divine Punishment INACTIVE</div>
+            <div class="header-widgets">
+                <div id="weekly-boost-widget" class="weekly-boost-widget"
+                    title="Ephinea weekly boost rotation. Changes 00:00 UTC each Sunday.">
+                    <div class="weekly-boost-widget-title">Weekly Boost</div>
+                    <div class="weekly-boost-cycle">
+                        <div class="weekly-boost-grid">
+                            <div class="weekly-boost-cell" data-boost="XP">
+                                <span class="weekly-boost-cell-name">Experience</span>
+                                <span class="weekly-boost-cell-bonus">+50%</span>
+                            </div>
+                            <div class="weekly-boost-cell" data-boost="RareEnemy">
+                                <span class="weekly-boost-cell-name">Rare Monster</span>
+                                <span class="weekly-boost-cell-bonus">+50%</span>
+                            </div>
+                            <div class="weekly-boost-cell" data-boost="DAR">
+                                <span class="weekly-boost-cell-name">Drop All Rate</span>
+                                <span class="weekly-boost-cell-bonus">+25%</span>
+                            </div>
+                            <div class="weekly-boost-cell" data-boost="RDR">
+                                <span class="weekly-boost-cell-name">Rare Drop Rate</span>
+                                <span class="weekly-boost-cell-bonus">+25%</span>
+                            </div>
+                            <svg class="weekly-boost-arrows" viewBox="0 0 200 88" aria-hidden="true">
+                                <defs>
+                                    <marker id="weekly-boost-arrowhead" markerWidth="6" markerHeight="6"
+                                        refX="5" refY="3" orient="auto">
+                                        <path d="M0,0 L6,3 L0,6 Z" fill="#1f1f1f" />
+                                    </marker>
+                                </defs>
+                                <!-- XP -> DAR -->
+                                <line x1="50" y1="28" x2="50" y2="52" stroke="#1f1f1f" stroke-width="2"
+                                    marker-end="url(#weekly-boost-arrowhead)" />
+                                <!-- DAR -> Rare Monster: right edge of DAR to left side of RM -->
+                                <line x1="93" y1="70" x2="107" y2="22" stroke="#1f1f1f" stroke-width="2"
+                                    marker-end="url(#weekly-boost-arrowhead)" />
+                                <!-- Rare Monster -> RDR -->
+                                <line x1="150" y1="28" x2="150" y2="52" stroke="#1f1f1f" stroke-width="2"
+                                    marker-end="url(#weekly-boost-arrowhead)" />
+                                <!-- RDR -> XP: left edge of RDR to right side of XP -->
+                                <line x1="107" y1="70" x2="93" y2="22" stroke="#1f1f1f" stroke-width="2"
+                                    marker-end="url(#weekly-boost-arrowhead)" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div id="beat-time-widget" class="beat-time-widget"
+                    title="Heaven Punisher's special is active when the first digit of the beat time is even.">
+                    <div id="beat-time-value" class="beat-time-value">@000.00</div>
+                    <div id="beat-time-status" class="beat-time-status beat-time-status-inactive">Divine Punishment INACTIVE</div>
+                </div>
             </div>
         </header>
 
@@ -78,7 +124,10 @@
                             <h2>Boosts</h2>
 
                             <div class="form-group">
-                                <label for="weekly-boost">Weekly Boost:</label>
+                                <label for="weekly-boost"
+                                    title="Auto-filled from Ephinea's weekly rotation (00:00 UTC Sunday). Cycle: XP, DAR, Rare Enemy, RDR.">
+                                    Weekly Boost:
+                                </label>
                                 <select id="weekly-boost" name="weekly-boost">
                                     <option value="">None</option>
                                     <option value="DAR">DAR (Drop Anything Rate)</option>
@@ -186,7 +235,10 @@
                             <h2>Boosts</h2>
 
                             <div class="form-group">
-                                <label for="item-hunt-weekly-boost">Weekly Boost:</label>
+                                <label for="item-hunt-weekly-boost"
+                                    title="Auto-filled from Ephinea's weekly rotation (00:00 UTC Sunday). Cycle: XP, DAR, Rare Enemy, RDR.">
+                                    Weekly Boost:
+                                </label>
                                 <select id="item-hunt-weekly-boost" name="item-hunt-weekly-boost">
                                     <option value="">None</option>
                                     <option value="DAR">DAR (Drop Anything Rate)</option>
@@ -358,6 +410,7 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <script src="js/cache.js"></script>
     <script src="js/rate-format.js"></script>
+    <script src="js/weekly-boost.js"></script>
     <script src="js/optimizer.js"></script>
     <script src="js/beat-time-widget.js"></script>
     <script src="js/render-quest-results.js"></script>
