@@ -16,6 +16,8 @@ from quests.quest_listing import (
     BOX_TYPE_WEAPON,
     Area,
     QuestListing,
+    area_has_enemy_spawns,
+    resolve_area_enemies,
 )
 
 logger = logging.getLogger(__name__)
@@ -159,3 +161,100 @@ def test_get_rare_dropping_box_count(quest_listing: QuestListing):
     # Test non-existent area
     count3 = quest_listing.get_rare_dropping_box_count("MU1", "NONEXISTENT")
     assert count3 == 0
+
+
+def test_resolve_area_enemies_fixed_only():
+    area = {"enemies": {"Booma": 10, "Gobooma": 5}}
+    assert resolve_area_enemies(area) == {"Booma": 10.0, "Gobooma": 5.0}
+
+
+def test_resolve_area_enemies_random_spawns():
+    area = {
+        "enemies": {"Monest": 1},
+        "average_random_enemies": 100,
+        "random_enemies": {
+            "Booma": 50,
+            "Gobooma": 50,
+        },
+    }
+    enemies = resolve_area_enemies(area)
+    assert enemies["Monest"] == pytest.approx(1.0)
+    assert enemies["Booma"] == pytest.approx(50.0)
+    assert enemies["Gobooma"] == pytest.approx(50.0)
+
+
+def test_resolve_area_enemies_normalizes_random_weights():
+    area = {
+        "average_random_enemies": 104,
+        "random_enemies": {
+            "Dimenian": 17,
+            "La Dimenian": 18,
+            "So Dimenian": 19,
+        },
+    }
+    weight_sum = 17 + 18 + 19
+    enemies = resolve_area_enemies(area)
+    assert enemies["Dimenian"] == pytest.approx(104 * 17 / weight_sum)
+    assert sum(enemies.values()) == pytest.approx(104.0)
+
+
+def test_area_has_enemy_spawns():
+    assert area_has_enemy_spawns({"enemies": {"Booma": 1}}) is True
+    assert area_has_enemy_spawns({"random_enemies": {"Booma": 100}}) is True
+    assert area_has_enemy_spawns({"boxes": {"box": 10}}) is False
+
+
+def test_ao1_ruins_2_random_spawns(quest_listing: QuestListing):
+    quest = quest_listing.get_quest("AO1")
+    assert quest is not None
+    ruins = next(area for area in quest["areas"] if area["name"] == "Ruins 2")
+    enemies = resolve_area_enemies(ruins)
+
+    fixed_total = sum(ruins["enemies"].values())
+    weight_sum = sum(ruins["random_enemies"].values())
+    assert sum(enemies.values()) == pytest.approx(fixed_total + ruins["average_random_enemies"])
+    assert enemies["Delsaber"] == pytest.approx(2 + 163 * 11 / weight_sum)
+    assert enemies["Chaos Bringer"] == pytest.approx(1 + 163 * 8 / weight_sum)
+
+
+# Random spawn pools whose weights sum to something other than 100.
+RANDOM_ENEMY_WEIGHT_TOTALS: dict[tuple[str, str], int] = {
+    ("AO4", "Seabed Lower"): 92,
+}
+
+
+def test_random_enemy_weights_valid(quest_listing: QuestListing):
+    """random_enemies weights must be positive and sum to 100 (or a known alternate total)."""
+    failures = []
+    for quest in quest_listing.get_all_quests():
+        quest_name = quest.get("quest_name", "?")
+        for area in quest.get("areas", []):
+            random_enemies = area.get("random_enemies")
+            if not random_enemies:
+                continue
+            area_name = area.get("name", "?")
+            if any(weight <= 0 for weight in random_enemies.values()):
+                failures.append(f"{quest_name} / {area_name}: all weights must be positive")
+                continue
+            total = sum(random_enemies.values())
+            expected_total = RANDOM_ENEMY_WEIGHT_TOTALS.get((quest_name, area_name), 100)
+            if total != expected_total:
+                failures.append(
+                    f"{quest_name} / {area_name}: weights sum to {total}, expected {expected_total}"
+                )
+
+    assert not failures, "invalid random_enemies weights:\n" + "\n".join(failures)
+
+
+def test_ao4_seabed_lower_random_spawns(quest_listing: QuestListing):
+    """AO4 Seabed Lower uses a 92-denominator random pool (not percents)."""
+    quest = quest_listing.get_quest("AO4")
+    assert quest is not None
+    area = next(a for a in quest["areas"] if a["name"] == "Seabed Lower")
+    assert sum(area["random_enemies"].values()) == 92
+
+    enemies = resolve_area_enemies(area)
+    avg = area["average_random_enemies"]
+    assert enemies["Dolmolm"] == pytest.approx(avg * 28 / 92)
+    assert enemies["Delbiter"] == pytest.approx(avg * 7 / 92)
+    assert enemies["Morfos"] == pytest.approx(4 + avg * 9 / 92)

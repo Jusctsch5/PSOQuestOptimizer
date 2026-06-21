@@ -7,7 +7,55 @@ Provides an abstraction layer for quest data access, similar to price_guide.py.
 import json
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
+
+EnemyCount = Union[int, float]
+
+
+def resolve_area_enemies(area: Dict) -> Dict[str, float]:
+    """
+    Merge fixed area enemies with expected counts from random spawns.
+
+    Random spawn fields (per area):
+    - average_random_enemies: expected number of randomly spawned enemies
+    - random_enemies: enemy name -> relative weight; expected count is
+      average_random_enemies × (weight / sum(weights)). Weights are usually
+      percents (sum 100) but may use another total (e.g. 28/92).
+
+    Returns:
+        Enemy name -> expected kill count (fixed + random contribution).
+    """
+    enemies: Dict[str, float] = {}
+    fixed = area.get("enemies") or {}
+    for name, count in fixed.items():
+        enemies[name] = enemies.get(name, 0.0) + float(count)
+
+    random_weights = area.get("random_enemies")
+    if not random_weights:
+        return enemies
+
+    average = area.get("average_random_enemies")
+    if average is None:
+        return enemies
+
+    avg = float(average)
+    if avg <= 0:
+        return enemies
+
+    weight_sum = sum(float(weight) for weight in random_weights.values())
+    if weight_sum <= 0:
+        return enemies
+
+    for name, weight in random_weights.items():
+        expected = avg * float(weight) / weight_sum
+        enemies[name] = enemies.get(name, 0.0) + expected
+
+    return enemies
+
+
+def area_has_enemy_spawns(area: Dict) -> bool:
+    """True if an area defines fixed enemies and/or random spawn weights."""
+    return bool(area.get("enemies") or area.get("random_enemies"))
 
 # Box type constants
 BOX_TYPE_REGULAR = "box"  # Can drop rare items

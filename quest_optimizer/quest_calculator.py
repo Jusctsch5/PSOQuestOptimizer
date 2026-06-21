@@ -24,7 +24,7 @@ from price_guide import (
     PriceGuideFixed,
 )
 from price_guide.armor_value_calculator import ArmorValueCalculator
-from quests.quest_listing import QuestListing
+from quests.quest_listing import EnemyCount, QuestListing, area_has_enemy_spawns, resolve_area_enemies
 
 
 class WeeklyBoost(Enum):
@@ -906,7 +906,7 @@ class QuestCalculator:
 
         return rare_enemy_rate, kondrieu_rate
 
-    def _normalize_quest_enemies(self, enemies: Dict[str, int]) -> Dict[str, int]:
+    def _normalize_quest_enemies(self, enemies: Dict[str, EnemyCount]) -> Dict[str, float]:
         """
         Normalize quest enemy names from non-Ultimate to Ultimate names.
 
@@ -916,12 +916,10 @@ class QuestCalculator:
         Returns:
             Dictionary mapping normalized (Ultimate) enemy names to counts
         """
-        normalized_enemies = {}
+        normalized_enemies: Dict[str, float] = {}
         for enemy_name, count in enemies.items():
             ultimate_name = self._normalize_quest_enemy_to_ultimate(enemy_name)
-            if ultimate_name not in normalized_enemies:
-                normalized_enemies[ultimate_name] = 0
-            normalized_enemies[ultimate_name] += count
+            normalized_enemies[ultimate_name] = normalized_enemies.get(ultimate_name, 0.0) + float(count)
         return normalized_enemies
 
     @staticmethod
@@ -1201,7 +1199,7 @@ class QuestCalculator:
 
     def _process_enemy_list(
         self,
-        enemies: Dict[str, int],
+        enemies: Dict[str, float],
         episode: int,
         section_id: str,
         dar_multiplier: float,
@@ -1212,7 +1210,7 @@ class QuestCalculator:
         area_name: Optional[str] = None,
         event_type: Optional[EventType] = None,
         merge_breakdowns: bool = False,
-    ) -> Tuple[float, float, int, Dict, Dict]:
+    ) -> Tuple[float, float, float, Dict, Dict]:
         """
         Process a list of enemies and return PD values and breakdowns.
 
@@ -1236,7 +1234,7 @@ class QuestCalculator:
         total_pd_drops = 0.0
         enemy_breakdown = {}
         pd_drop_breakdown = {}
-        total_enemies = 0
+        total_enemies = 0.0
 
         # Slime enemies that can be split
         SLIME_ENEMIES = ["Pofuilly Slime", "Pouilly Slime"]
@@ -1393,7 +1391,7 @@ class QuestCalculator:
             {
                 "total_pd": float,
                 "enemy_breakdown": {...},
-                "total_enemies": int
+                "total_enemies": float
             }
         """
         episode = quest_data.get("episode", 1)
@@ -1403,7 +1401,7 @@ class QuestCalculator:
         total_pd_drops = 0.0  # Expected PD drops (not item value)
         enemy_breakdown = {}
         pd_drop_breakdown = {}  # Breakdown of PD drops per enemy
-        total_enemies = 0
+        total_enemies = 0.0
 
         # Calculate boost multipliers and rare enemy rates
         dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(
@@ -1432,13 +1430,13 @@ class QuestCalculator:
         else:
             # Process enemies per area
             # First, check if any areas have explicit enemies
-            areas_with_enemies = [area for area in quest_areas if area.get("enemies")]
+            areas_with_enemies = [area for area in quest_areas if area_has_enemy_spawns(area)]
 
             if areas_with_enemies:
                 # Process enemies from areas that explicitly have them
                 for area in areas_with_enemies:
                     area_name = area.get("name", "")
-                    area_enemies = area.get("enemies", {})
+                    area_enemies = resolve_area_enemies(area)
 
                     area_pd, area_pd_drops, area_total_enemies, area_enemy_breakdown, area_pd_breakdown = self._process_enemy_list(
                         area_enemies, episode, section_id, dar_multiplier, rdr_multiplier, rare_enemy_rate, kondrieu_rate, rare_mapping, area_name, event_type, True
@@ -1979,7 +1977,7 @@ class QuestCalculator:
                 section_totals: Dict[str, Dict[str, Any]] = {}
                 for area in quest_areas:
                     area_name = area.get("name", "")
-                    area_enemies = area.get("enemies", {})
+                    area_enemies = resolve_area_enemies(area)
                     if not area_enemies:
                         area_enemies = normalized_enemies
 
@@ -2197,7 +2195,7 @@ class QuestCalculator:
                     if not self._is_area_eligible_for_technique(area_name, technique_name):
                         continue
 
-                    area_enemies = area.get("enemies", {})
+                    area_enemies = resolve_area_enemies(area)
                     if not area_enemies:
                         area_enemies = quest.get("enemies", {})
 

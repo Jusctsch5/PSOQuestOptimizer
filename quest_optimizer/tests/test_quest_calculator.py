@@ -877,3 +877,25 @@ def test_cf4_technique_drops(quest_calculator: QuestCalculator):
     megid_box_found = any("Megid Lv30" in key for key in box_breakdown.keys())
     assert grants_box_found, "Grants Lv30 should be found in box breakdown from Desert 3"
     assert megid_box_found, "Megid Lv30 should be found in box breakdown from Desert 3"
+
+
+def test_ao1_random_spawn_quest_value(quest_calculator: QuestCalculator):
+    """Random spawn quests include expected random enemy counts in PD calculations."""
+    ao1_quest = next(q for q in quest_calculator.quest_data if q.get("quest_name") == "AO1")
+
+    result = quest_calculator.calculate_quest_value(
+        ao1_quest,
+        "Whitill",
+        rbr_active=False,
+        weekly_boost=None,
+        event_type=None,
+    )
+
+    fixed_total = sum(
+        sum(area.get("enemies", {}).values())
+        for area in ao1_quest["areas"]
+    )
+    random_total = sum(area.get("average_random_enemies", 0) for area in ao1_quest["areas"])
+    assert result["total_enemies"] == pytest.approx(fixed_total + random_total)
+    assert result["total_pd"] > 0
+    assert len(result["enemy_breakdown"]) > len(ao1_quest["areas"][0]["enemies"])

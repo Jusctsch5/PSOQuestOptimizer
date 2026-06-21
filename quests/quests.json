@@ -364,6 +364,110 @@
     ]
   },
   {
+    "quest_name": "AO1",
+    "long_name": "Anomalous Ordeal #1",
+    "episode": 1,
+    "is_in_rbr_rotation": true,
+    "areas": [
+      {
+        "name": "Forest 1",
+        "boxes": {
+          "box": 43
+        },
+        "enemies": {
+          "Monest": 1
+        },
+        "average_random_enemies": 114,
+        "random_enemies": {
+          "Booma": 21,
+          "Gobooma": 17,
+          "Gigobooma": 17,
+          "Savage Wolf": 12,
+          "Barbarous Wolf": 9,
+          "Monest": 2,
+          "Rag Rappy": 6,
+          "Hildebear": 16
+        }
+      },
+      {
+        "name": "Ruins 2",
+        "boxes": {
+          "box": 42
+        },
+        "enemies": {
+          "Delsaber": 2,
+          "Dark Gunner": 15,
+          "Chaos Bringer": 1
+        },
+        "average_random_enemies": 163,
+        "random_enemies": {
+          "Dimenian": 17,
+          "La Dimenian": 18,
+          "So Dimenian": 15,
+          "Claw": 12,
+          "Bulclaw": 8,
+          "Delsaber": 11,
+          "Dark Belra": 5,
+          "Chaos Bringer": 8,
+          "Chaos Sorcerer": 6
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "AO2",
+    "long_name": "Anomalous Ordeal #2",
+    "episode": 1,
+    "is_in_rbr_rotation": true,
+    "areas": [
+      {
+        "name": "Cave 2",
+        "boxes": {
+          "box": 35
+        },
+        "enemies": {
+          "Poison Lily": 5,
+          "Pofuilly Slime": 1,
+          "Grass Assassin": 1,
+          "Nano Dragon": 1
+        },
+        "average_random_enemies": 171,
+        "random_enemies": {
+          "Evil Shark": 21,
+          "Pal Shark": 18,
+          "Guil Shark": 16,
+          "Poison Lily": 11,
+          "Pofuilly Slime": 7,
+          "Grass Assassin": 13,
+          "Nano Dragon": 14
+        }
+      },
+      {
+        "name": "Mine 2",
+        "boxes": {
+          "box": 26
+        },
+        "enemies": {
+          "Gillchic": 1,
+          "Dubchic": 18,
+          "Canadine": 32,
+          "Canane": 14,
+          "Sinow Gold": 2,
+          "Garanz": 2,
+          "Dubwitch": 6
+        },
+        "average_random_enemies": 155,
+        "random_enemies": {
+          "Gillchic": 29,
+          "Canadine": 20,
+          "Sinow Blue": 25,
+          "Sinow Gold": 18,
+          "Garanz": 8
+        }
+      }
+    ]
+  },
+  {
     "quest_name": "SR1",
     "long_name": "Scarlet Realm 1",
     "episode": 1,
@@ -1338,6 +1442,157 @@
       }
     ],
     "is_in_rbr_rotation": true
+  },
+  {
+    "quest_name": "AO3",
+    "long_name": "Anomalous Ordeal #3",
+    "episode": 2,
+    "is_in_rbr_rotation": true,
+    "areas": [
+      {
+        "name": "VR Temple Beta",
+        "boxes": {
+          "box": 24
+        },
+        "enemies": {
+          "Dark Belra": 3
+        },
+        "average_random_enemies": 162,
+        "random_enemies": {
+          "Dimenian": 16,
+          "La Dimenian": 16,
+          "So Dimenian": 15,
+          "Rag Rappy": 9,
+          "Poison Lily": 13,
+          "Hildebear": 11,
+          "Grass Assassin": 10,
+          "Dark Belra": 10
+        }
+      },
+      {
+        "name": "Mountain",
+        "boxes": {
+          "box": 24
+        },
+        "enemies": {
+          "Sinow Berill": 2,
+          "Gibbles": 1
+        },
+        "average_random_enemies": 170,
+        "random_enemies": {
+          "Merillia": 8,
+          "Meriltas": 7,
+          "Ul Gibbon": 23,
+          "Zol Gibbon": 14,
+          "Gee": 10,
+          "Sinow Berill": 12,
+          "Sinow Spigell": 9,
+          "Mericarol": 3,
+          "Merikle": 1,
+          "Mericus": 1,
+          "Gibbles": 8,
+          "Gi Gue": 4
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "AO4",
+    "long_name": "Anomalous Ordeal #4",
+    "episode": 2,
+    "is_in_rbr_rotation": true,
+    "areas": [
+      {
+        "name": "VR Spaceship Beta",
+        "boxes": {
+          "box": 21
+        },
+        "enemies": {
+          "Gillchic": 2,
+          "Dubchic": 12,
+          "Delsaber": 2,
+          "Chaos Sorcerer": 3
+        },
+        "average_random_enemies": 140,
+        "random_enemies": {
+          "Gillchic": 31,
+          "Dubchic": 11,
+          "Savage Wolf": 22,
+          "Barbarous Wolf": 16,
+          "Delsaber": 9,
+          "Pan Arms": 2,
+          "Chaos Sorcerer": 3,
+          "Garanz": 6
+        }
+      },
+      {
+        "name": "Seabed Lower",
+        "boxes": {
+          "box": 36
+        },
+        "enemies": {
+          "Morfos": 4,
+          "Deldepth": 11,
+          "Sinow Zoa": 1,
+          "Sinow Zele": 1
+        },
+        "average_random_enemies": 175,
+        "random_enemies": {
+          "Dolmolm": 28,
+          "Dolmdarl": 23,
+          "Recobox": 9,
+          "Morfos": 9,
+          "Sinow Zoa": 10,
+          "Sinow Zele": 6,
+          "Delbiter": 7
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "AO5",
+    "long_name": "Anomalous Ordeal #5",
+    "episode": 2,
+    "is_in_rbr_rotation": true,
+    "areas": [
+      {
+        "name": "Seaside",
+        "boxes": {
+          "box": 14
+        },
+        "enemies": {},
+        "average_random_enemies": 71,
+        "random_enemies": {
+          "Merillia": 10,
+          "Meriltas": 7,
+          "Ul Gibbon": 22,
+          "Zol Gibbon": 15,
+          "Gee": 17,
+          "Dolmolm": 16,
+          "Dolmdarl": 13
+        }
+      },
+      {
+        "name": "Control Tower",
+        "boxes": {
+          "box": 7
+        },
+        "enemies": {},
+        "average_random_enemies": 151,
+        "random_enemies": {
+          "Recobox": 10,
+          "Delbiter": 13,
+          "Del Lily": 22,
+          "Ill Gill": 20,
+          "Mericarol": 6,
+          "Merikle": 3,
+          "Mericus": 3,
+          "Gibbles": 10,
+          "Gi Gue": 10,
+          "Epsilon": 3
+        }
+      }
+    ]
   },
   {
     "quest_name": "LSR",
