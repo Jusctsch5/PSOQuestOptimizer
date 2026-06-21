@@ -132,6 +132,9 @@ def test_area_mapping_boss_areas(quest_listing: QuestListing):
     mapped = quest_listing.map_quest_area_to_drop_table_area("VR Temple Final")
     assert mapped == "VR Spaceship Alpha"
 
+    mapped = quest_listing.map_quest_area_to_drop_table_area("Control Tower")
+    assert mapped == "Central Control Area"
+
 
 def test_area_mapping_all_areas(quest_listing: QuestListing):
     """Test area mapping for all areas"""

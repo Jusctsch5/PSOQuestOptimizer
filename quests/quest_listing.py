@@ -106,6 +106,7 @@ class Area(Enum):
 
     EAST_TOWER = "East Tower"
     WEST_TOWER = "West Tower"
+    CONTROL_TOWER = "Control Tower"
 
     # Episode 4
     CRATER_EAST = "Crater East"
@@ -133,6 +134,7 @@ AREA_MAPPING = {
     Area.TEST_SUBJECT_DISPOSAL_AREA: Area.SEABED_LOWER_LEVELS,
     Area.EAST_TOWER: Area.CENTRAL_CONTROL_AREA,
     Area.WEST_TOWER: Area.CENTRAL_CONTROL_AREA,
+    Area.CONTROL_TOWER: Area.CENTRAL_CONTROL_AREA,
     # Episode 4
     Area.METEOR_IMPACT_SITE: Area.SUBTERRANEAN_DESERT_3,
 }
