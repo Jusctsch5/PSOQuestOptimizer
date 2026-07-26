@@ -2916,7 +2916,7 @@
     }
   },
   "JIZAI": {
-    "base": 2,
+    "base": "2",
     "modifiers": {},
     "hit_values": {
       "25": "8-15",
@@ -2958,7 +2958,7 @@
     }
   },
   "SANGE & YASHA": {
-    "base": 2,
+    "base": "2",
     "modifiers": {},
     "hit_values": {
       "25": "5-10",
@@ -5163,7 +5163,7 @@
     }
   },
   "STRIKER OF CHAO": {
-    "base": 1,
+    "base": "1",
     "modifiers": {},
     "hit_values": {
       "0": "1",
@@ -6213,18 +6213,18 @@
     }
   },
   "Red Scorpio": {
-    "base": 0
+    "base": "0"
   },
   "Guilty Light": {
-    "base": 0
+    "base": "0"
   },
   "Phonon Maser": {
-    "base": 0
+    "base": "0"
   },
   "Photon Launcher": {
-    "base": 0
+    "base": "0"
   },
   "Custom Ray ver.OO": {
-    "base": 0
+    "base": "0"
   }
 }

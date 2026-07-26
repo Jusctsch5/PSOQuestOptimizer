@@ -118,11 +118,22 @@ class ItemParser:
             "M": machine,
             "D": dark,
         }
-        price, priced = self._safe_price(
-            lambda: self.price_guide.get_price_weapon(  # type: ignore[union-attr]
-                name, weapon_attributes, hit, grinder, element.strip()
+        special_name = ""
+        if item_data[4] not in (0x00, 0x80):
+            special_name = self.get_element(item_data)
+
+        if is_common:
+            price, priced = self._safe_price(
+                lambda: self.price_guide.get_price_common_weapon(  # type: ignore[union-attr]
+                    name, special_name, hit
+                )
             )
-        )
+        else:
+            price, priced = self._safe_price(
+                lambda: self.price_guide.get_price_weapon(  # type: ignore[union-attr]
+                    name, weapon_attributes, hit, grinder, special_name
+                )
+            )
 
         return {
             "name": name,

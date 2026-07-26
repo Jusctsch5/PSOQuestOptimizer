@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from bisect import bisect
 from enum import Enum
 from pathlib import Path
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, Optional, Union
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -78,12 +78,16 @@ class PriceGuideAbstract(ABC):
 
     @staticmethod
     # Parse out the price range value from the price range dictionary
-    def get_price_from_range(price_range: str, bps: BasePriceStrategy) -> float:
+    def get_price_from_range(price_range: Union[str, int, float, None], bps: BasePriceStrategy) -> float:
+        # JSON occasionally stores bare numbers (e.g. JIZAI base: 2)
+        if isinstance(price_range, (int, float)) and not isinstance(price_range, bool):
+            return float(price_range)
+
         # Handle None or empty string
-        if not price_range or price_range.strip() == "":
+        if not price_range or str(price_range).strip() == "":
             return 0.0
 
-        price_range = price_range.strip()
+        price_range = str(price_range).strip()
 
         # Handle special values first
         if price_range.upper() in ["N/A", "NA", "INESTIMABLE", "INEST"]:
@@ -196,6 +200,92 @@ class PriceGuideAbstract(ABC):
             )
 
         return float(base_price) + float(ability_price)
+
+    # Common-weapon specials that use the guide's "Elemental" bucket when not listed by name.
+    _COMMON_ELEMENTAL_SPECIALS = frozenset(
+        {
+            "ICE",
+            "FROST",
+            "FREEZE",
+            "BLIZZARD",
+            "HEAT",
+            "FIRE",
+            "FLAME",
+            "BURNING",
+            "SHOCK",
+            "THUNDER",
+            "STORM",
+            "TEMPEST",
+            "DIM",
+            "SHADOW",
+            "DARK",
+        }
+    )
+
+    def get_price_common_weapon(self, name: str, special: str, hit: int) -> float:
+        """Price a common weapon from common_weapons.json (name + special + hit)."""
+        logger.info(f"get_price_common_weapon: {name} {special} {hit}")
+        weapon_specials = self._find_common_weapon_specials(name)
+        if weapon_specials is None:
+            raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in common_weapon_prices")
+
+        special_key = self._resolve_common_weapon_special(weapon_specials, special)
+        if special_key is None:
+            raise PriceGuideExceptionAbilityNameNotFound(
+                f"Special {special!r} not found for common weapon {name}"
+            )
+
+        hit_values = weapon_specials[special_key]
+        if not hit_values:
+            return 0.0
+
+        sorted_thresholds = sorted(map(int, hit_values.keys()))
+        index = bisect(sorted_thresholds, int(hit)) - 1
+        if index < 0:
+            return 0.0
+
+        threshold = sorted_thresholds[index]
+        return float(self.get_price_from_range(str(hit_values[str(threshold)]), self.bps))
+
+    def _find_common_weapon_specials(self, name: str) -> Optional[Dict[str, Any]]:
+        """Locate a common weapon's special→hit map across category buckets."""
+        for category_weapons in self.common_weapon_prices.values():
+            if not isinstance(category_weapons, dict):
+                continue
+            key = self._ci_key(category_weapons, name)
+            if key is not None:
+                entry = category_weapons[key]
+                return entry if isinstance(entry, dict) else None
+        return None
+
+    def _resolve_common_weapon_special(self, specials: Dict[str, Any], special: str) -> Optional[str]:
+        """Match a game special name onto a common_weapons.json special key."""
+        raw = (special or "").strip()
+        if raw.lower() in ("", "undefined", "unchanged/nothing", "nothing"):
+            return self._ci_key(specials, "None or Any")
+
+        key = self._ci_special_key(specials, raw)
+        if key is not None:
+            return key
+
+        if raw.upper() in self._COMMON_ELEMENTAL_SPECIALS:
+            key = self._ci_key(specials, "Elemental")
+            if key is not None:
+                return key
+
+        return self._ci_key(specials, "None or Any")
+
+    @staticmethod
+    def _ci_special_key(mapping: Dict[str, Any], name: str) -> Optional[str]:
+        """Case-insensitive special lookup; apostrophes optional (Demon's / Demons)."""
+        key = PriceGuideAbstract._ci_key(mapping, name)
+        if key is not None:
+            return key
+        target = re.sub(r"['’]", "", name.upper())
+        for candidate in mapping.keys():
+            if re.sub(r"['’]", "", candidate.upper()) == target:
+                return candidate
+        return None
 
     @staticmethod
     def _normalize_srank_special(special: str) -> str:
@@ -441,7 +531,7 @@ class PriceGuideAbstract(ABC):
 
         if self._ci_key(self.srank_weapon_prices["weapons"], item_norm):
             return ItemType.SRANK_WEAPON.value
-        if self._ci_key(self.common_weapon_prices, item_norm):
+        if self._find_common_weapon_specials(item_norm) is not None:
             return ItemType.COMMON_WEAPON.value
         if self._ci_key(self.weapon_prices, item_norm):
             return ItemType.WEAPON.value
@@ -469,11 +559,11 @@ class PriceGuideAbstract(ABC):
         return self.weapon_prices[key]
 
     def get_common_weapon_data(self, name: str) -> Dict[str, Any]:
-        """Fetch for common weapon price entry."""
-        key = self._ci_key(self.common_weapon_prices, name)
-        if key is None:
+        """Fetch for common weapon price entry (special → hit map)."""
+        entry = self._find_common_weapon_specials(name)
+        if entry is None:
             raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in common_weapon_prices")
-        return self.common_weapon_prices[key]
+        return entry
 
 
 class PriceGuideFixed(PriceGuideAbstract):
@@ -623,6 +713,18 @@ class PriceGuideFixed(PriceGuideAbstract):
             if "hit_values" in weapon_data and weapon_data["hit_values"]:
                 self._fit_inestimable_hit_values(weapon_data["hit_values"])
 
+    def _fit_inestimable_common_weapon_prices(self) -> None:
+        """Fit inestimable hit tiers in nested common_weapons.json entries."""
+        for category_weapons in self.common_weapon_prices.values():
+            if not isinstance(category_weapons, dict):
+                continue
+            for specials in category_weapons.values():
+                if not isinstance(specials, dict):
+                    continue
+                for hit_values in specials.values():
+                    if isinstance(hit_values, dict) and hit_values:
+                        self._fit_inestimable_hit_values(hit_values)
+
     def build_prices(self) -> None:
         """Build price database from local JSON files"""
         logger.info(f"Building price database from {self.directory}")
@@ -631,6 +733,8 @@ class PriceGuideFixed(PriceGuideAbstract):
         if FIT_INESTIMABLE_PRICE:
             self._fit_inestimable_weapon_prices()
         self.common_weapon_prices = self._load_json_file("common_weapons.json")
+        if FIT_INESTIMABLE_PRICE:
+            self._fit_inestimable_common_weapon_prices()
         self.frame_prices = self._load_json_file("frames.json")
         self.barrier_prices = self._load_json_file("barriers.json")
         self.unit_prices = self._load_json_file("units.json")

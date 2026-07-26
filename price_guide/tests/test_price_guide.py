@@ -63,6 +63,23 @@ def test_weapon_pricing_basic(fixed_price_guide: PriceGuideFixed):
     assert fixed_price_guide.get_price_weapon("HANDGUN:MILLA", {}, 15, 0, "") == fixed_price_guide.get_price_weapon(
         "HANDGUN: MILLA", {}, 15, 0, ""
     )
+    # Numeric JSON base (historically unquoted) still prices
+    assert fixed_price_guide.get_price_weapon("JIZAI", {}, 0, 40, "") == 2
+
+
+def test_common_weapon_pricing(fixed_price_guide: PriceGuideFixed):
+    """Common weapons price from common_weapons.json by special + hit."""
+    # Vulcan Berserk 50h = 1-3 → MINIMUM 1
+    assert fixed_price_guide.get_price_common_weapon("Vulcan", "Berserk", 50) == 1.0
+    fixed_price_guide.bps = BasePriceStrategy.MAXIMUM
+    assert fixed_price_guide.get_price_common_weapon("Vulcan", "Berserk", 50) == 3.0
+    fixed_price_guide.bps = BasePriceStrategy.MINIMUM
+
+    # Below listed hit tiers → 0
+    assert fixed_price_guide.get_price_common_weapon("Vulcan", "Berserk", 40) == 0.0
+    # No special → None or Any bucket
+    assert fixed_price_guide.get_price_common_weapon("Vulcan", "", 50) == 0.0
+    assert fixed_price_guide.identify_item_type("Vulcan") == "common_weapon"
 
 
 def test_weapon_hit_adjustments(fixed_price_guide: PriceGuideFixed):
