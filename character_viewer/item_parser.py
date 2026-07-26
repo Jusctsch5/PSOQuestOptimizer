@@ -313,12 +313,17 @@ class ItemParser:
     def other(self, item_code: int, item_data: Sequence[int]) -> Dict[str, Any]:
         name = self.get_item_name(item_code)
         number = item_data[5] if len(item_data) == 28 else item_data[20]
-        # Cells and misc may live in cell/tool tables
-        price, priced = self._safe_price(lambda: self.price_guide.get_price_cell(name))  # type: ignore[union-attr]
+        # Ephinea currencies / materials (0x031xxx) fall outside TOOL_RANGE but live in tools.json
+        qty = number if number and number > 0 else 1
+        price, priced = self._safe_price(
+            lambda: self.price_guide.get_price_tool(name, qty)  # type: ignore[union-attr]
+        )
         if not priced:
             price, priced = self._safe_price(
-                lambda: self.price_guide.get_price_other(name, number)  # type: ignore[union-attr]
+                lambda: self.price_guide.get_price_cell(name)  # type: ignore[union-attr]
             )
+            if priced and qty > 1:
+                price *= qty
         return {
             "name": name,
             "guide_name": name,
