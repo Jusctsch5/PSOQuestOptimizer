@@ -2424,40 +2424,95 @@
     "quest_name": "TTF",
     "long_name": "Toward the Future",
     "episode": 1,
-    "enemies": {
-      "Bartle": 12,
-      "Barble": 6,
-      "Tollaw": 7,
-      "Gulgus": 2,
-      "Gulgus-Gue": 1,
-      "El Rappy": 1,
-      "Hildebear": 4,
-      "Vulmer": 13,
-      "Govulmer": 5,
-      "Melqueek": 7,
-      "Ob Lily": 13,
-      "Pofuilly Slime": 5,
-      "Nano Dragon": 5,
-      "Pan Arms": 4,
-      "Gillchich": 26,
-      "Dubchich": 1,
-      "Dubwitch": 1,
-      "Canabin": 24,
-      "Canune": 1,
-      "Sinow Blue": 12,
-      "Sinow Gold": 2,
-      "Baranz": 3,
-      "Arlan": 17,
-      "Del-D": 4,
-      "Claw": 14,
-      "Indi Belra": 4,
-      "Gran Sorcerer": 2,
-      "Dark Bringer": 4,
-      "Sil Dragon": 1,
-      "Dal Ra Lie": 1,
-      "Vol Opt": 1,
-      "Dark Falz": 1
-    }
+    "areas": [
+      {
+        "name": "Forest 2",
+        "boxes": {
+          "box": 5
+        },
+        "enemies": {
+          "Bartle": 12,
+          "Barble": 6,
+          "Tollaw": 7,
+          "Gulgus": 2,
+          "Gulgus-Gue": 1,
+          "El Rappy": 1,
+          "Hildebear": 4
+        }
+      },
+      {
+        "name": "Under the Dome",
+        "boxes": {
+          "box_tool": 4
+        },
+        "enemies": {
+          "Dragon": 1
+        }
+      },
+      {
+        "name": "Cave 3",
+        "enemies": {
+          "Vulmer": 13,
+          "Govulmer": 5,
+          "Melqueek": 7,
+          "Ob Lily": 13,
+          "Pofuilly Slime": 5,
+          "Nano Dragon": 5,
+          "Pan Arms": 4
+        }
+      },
+      {
+        "name": "Underground Channel",
+        "boxes": {
+          "box": 4
+        },
+        "enemies": {
+          "De Rol Le": 1
+        }
+      },
+      {
+        "name": "Mine 2",
+        "enemies": {
+          "Gillchich": 26,
+          "Dubchich": 1,
+          "Dubwitch": 1,
+          "Canabin": 24,
+          "Canune": 1,
+          "Sinow Blue": 12,
+          "Sinow Gold": 2,
+          "Baranz": 3
+        }
+      },
+      {
+        "name": "Monitor Room",
+        "boxes": {
+          "box_tool": 7
+        },
+        "enemies": {
+          "Vol Opt": 1
+        }
+      },
+      {
+        "name": "Ruins 3",
+        "boxes": {
+          "box": 8
+        },
+        "enemies": {
+          "Dimenian": 17,
+          "So Dimenian": 4,
+          "Claw": 14,
+          "Dark Belra": 4,
+          "Chaos Sorcerer": 2,
+          "Dark Bringer": 4
+        }
+      },
+      {
+        "name": "????",
+        "enemies": {
+          "Dark Falz": 1
+        }
+      }
+    ]
   },
   {
     "quest_name": "POD",
@@ -2530,32 +2585,42 @@
     "quest_name": "VL1",
     "long_name": "Virtual Limits 1",
     "episode": 1,
-    "enemies": {
-      "Dimenian": 55,
-      "La Dimenian": 42,
-      "So Dimenian": 48,
-      "Poison Lily": 43,
-      "Grass Assassin": 31,
-      "Rag Rappy": 28,
-      "Dark Belra": 24,
-      "Hildebear": 22,
-      "Monest": 8
-    }
+    "areas": [
+      {
+        "name": "Cave 1",
+        "enemies": {
+          "Dimenian": 55,
+          "La Dimenian": 42,
+          "So Dimenian": 48,
+          "Poison Lily": 43,
+          "Grass Assassin": 31,
+          "Rag Rappy": 28,
+          "Dark Belra": 24,
+          "Hildebear": 22,
+          "Monest": 8
+        }
+      }
+    ]
   },
   {
     "quest_name": "VL2",
     "long_name": "Virtual Limits 2",
     "episode": 1,
-    "enemies": {
-      "Gillchic": 100,
-      "Dubchic": 29,
-      "Savage Wolf": 75,
-      "Barbarous Wolf": 39,
-      "Delsaber": 49,
-      "Pan Arms": 9,
-      "Garanz": 19,
-      "Chaos Sorcerer": 25
-    }
+    "areas": [
+      {
+        "name": "Cave 3",
+        "enemies": {
+          "Gillchic": 100,
+          "Dubchic": 29,
+          "Savage Wolf": 75,
+          "Barbarous Wolf": 39,
+          "Delsaber": 49,
+          "Pan Arms": 9,
+          "Garanz": 19,
+          "Chaos Sorcerer": 25
+        }
+      }
+    ]
   },
   {
     "quest_name": "CF1",
