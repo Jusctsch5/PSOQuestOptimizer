@@ -1280,3 +1280,146 @@ body.data-peek-open .container {
         font-size: 0.7em;
     }
 }
+
+/* Character Bank tool */
+.form-help {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.character-bank-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.secondary-btn {
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.95em;
+}
+
+.secondary-btn:hover {
+    background: #f0f0f0;
+    border-color: #999;
+}
+
+.character-bank-status {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #444;
+}
+
+.character-bank-status.error-text {
+    color: #b00020;
+}
+
+.character-bank-summary {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: #f7f8fc;
+    border: 1px solid #e3e6f0;
+    border-radius: 6px;
+}
+
+.character-bank-summary-counts {
+    font-size: 0.95em;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.character-bank-summary-totals {
+    font-size: 1em;
+}
+
+.character-bank-pager {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.character-bank-page-btn {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 0.85em;
+}
+
+.character-bank-page-btn.active,
+.character-bank-page-btn:hover {
+    border-color: #667eea;
+    background: #eef1ff;
+}
+
+.character-bank-profile {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.character-bank-profile h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.2em;
+}
+
+.character-bank-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.9em;
+    margin-bottom: 6px;
+}
+
+.character-bank-totals {
+    font-size: 0.95em;
+    margin-bottom: 4px;
+}
+
+.character-bank-table-wrap {
+    overflow-x: auto;
+    max-height: 70vh;
+}
+
+.character-bank-table th,
+.character-bank-table td {
+    padding: 6px 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9em;
+}
+
+.character-bank-table .mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85em;
+}
+
+.character-bank-table .num,
+.character-bank-table th.num {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.character-bank-table th .character-bank-pd-total {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.character-bank-table .unpriced,
+.character-bank-table tr.unpriced-row td {
+    color: #888;
+}
+
+.muted {
+    color: #777;
+    font-weight: normal;
+}

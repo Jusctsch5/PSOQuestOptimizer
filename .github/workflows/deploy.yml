@@ -11,6 +11,7 @@ on:
       - 'price_guide/**'
       - 'quests/**'
       - 'quest_optimizer/**'
+      - 'character_viewer/**'
       - 'py-api/**'
       - 'optimize_*.py'
       - 'calculate_item_value.py'
@@ -52,6 +53,7 @@ jobs:
           cp -r price_guide _site/
           cp -r quests _site/
           cp -r quest_optimizer _site/
+          cp -r character_viewer _site/
           cp -r py-api _site/
           cp optimize_quests.py _site/
           cp optimize_item_hunting.py _site/

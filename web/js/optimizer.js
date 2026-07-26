@@ -31,6 +31,16 @@ const PYTHON_MODULES = [
     'optimize_quests.py',
     'optimize_item_hunting.py',
     'calculate_item_value.py',
+    'character_viewer/__init__.py',
+    'character_viewer/util.py',
+    'character_viewer/item_codes_base.py',
+    'character_viewer/item_codes_en.py',
+    'character_viewer/config.py',
+    'character_viewer/item_parser.py',
+    'character_viewer/inventory_parser.py',
+    'character_viewer/character_parser.py',
+    'character_viewer/bank_parser.py',
+    'character_viewer/decoder.py',
     'py-api/api.py',
 ];
 
@@ -117,6 +127,10 @@ sys.path.insert(0, '/py-api')
         pyodideReady = true;
         loadingIndicator.classList.add('hidden');
         resultsContainer.classList.add('hidden');
+
+        if (typeof window.onPyodideReady === 'function') {
+            window.onPyodideReady();
+        }
 
     } catch (error) {
         console.error('Pyodide initialization error:', error);
@@ -422,6 +436,7 @@ function switchToTab(tabId) {
 
     // Update submit button text
     const submitBtn = document.getElementById('submit-btn');
+    const formActions = document.querySelector('.form-actions');
     if (submitBtn) {
         if (tabId === 'optimize-quests') {
             submitBtn.textContent = 'Optimize Quests';
@@ -430,6 +445,18 @@ function switchToTab(tabId) {
         } else if (tabId === 'calculate-item-value') {
             submitBtn.textContent = 'Calculate Value';
         }
+    }
+    if (formActions) {
+        formActions.classList.toggle('hidden', tabId === 'character-bank');
+    }
+    if (
+        tabId === 'character-bank' &&
+        typeof window.restoreCharacterBankFromCache === 'function' &&
+        pyodideReady &&
+        typeof characterBankParsed !== 'undefined' &&
+        !characterBankParsed
+    ) {
+        window.restoreCharacterBankFromCache();
     }
 }
 

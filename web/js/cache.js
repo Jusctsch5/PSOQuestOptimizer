@@ -158,6 +158,27 @@ async function clearCache() {
     });
 }
 
+const CHARACTER_BANK_CACHE_KEY = 'character_bank_fileData';
+
+/**
+ * Persist uploaded character/bank binaries for restore on next visit.
+ * @param {Array<{filename: string, binary: number[]}>} fileData
+ */
+async function setCharacterBankCache(fileData) {
+    await setCached(CHARACTER_BANK_CACHE_KEY, fileData);
+}
+
+/**
+ * @returns {Promise<Array<{filename: string, binary: number[]}>|null>}
+ */
+async function getCharacterBankCache() {
+    return getCached(CHARACTER_BANK_CACHE_KEY, 30 * 24 * 60 * 60 * 1000); // 30 days
+}
+
+async function clearCharacterBankCache() {
+    await deleteCached(CHARACTER_BANK_CACHE_KEY);
+}
+
 /**
  * Fetch text with cache support
  */

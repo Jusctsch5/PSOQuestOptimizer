@@ -6,7 +6,7 @@ Designed to be called from JavaScript via Pyodide.
 import json
 import traceback
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from calculate_item_value import calculate_item_value as calc_item_value
 from optimize_quests import QuestOptimizer
@@ -689,4 +689,81 @@ def calculate_item_value(
             "item_type": None,
             "value": None,
             "breakdown": None,
+        }
+
+
+def parse_character_data(
+    file_entries: List[Dict[str, Any]],
+    price_guide_data: Dict[str, Dict],
+    params: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """
+    Parse .psochar / .psobank / .psoclassicbank binaries and value items via the price guide.
+
+    Args:
+        file_entries: List of {"filename": str, "binary": list[int]|bytes}
+            A single .zip entry is also accepted and expanded server-side.
+        price_guide_data: Dict mapping filename (e.g. 'weapons.json') to JSON data
+        params: Optional dict with:
+            - price_strategy: "MINIMUM" | "AVERAGE" (default MINIMUM)
+
+    Returns:
+        Dict with characters, share_banks, all_items, totals, and optional error
+    """
+    from character_viewer.decoder import decode_character_files, decode_from_zip
+
+    params = params or {}
+    price_strategy_str = params.get("price_strategy", "MINIMUM")
+
+    base_path = Path("/tmp/pso_data")
+    price_guide_dir = base_path / "price_guide" / "data"
+    price_guide_dir.mkdir(parents=True, exist_ok=True)
+
+    for filename, data in price_guide_data.items():
+        file_path = price_guide_dir / filename
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(data, f)
+
+    try:
+        price_strategy = BasePriceStrategy(price_strategy_str.upper())
+    except ValueError:
+        return {
+            "error": f"Invalid price_strategy: {price_strategy_str}",
+            "characters": [],
+            "share_banks": [],
+            "all_items": [],
+            "totals": {},
+        }
+
+    try:
+        price_guide = PriceGuideFixed(str(price_guide_dir), base_price_strategy=price_strategy)
+
+        # Expand a lone zip upload into character data files
+        expanded: List[Dict[str, Any]] = []
+        for entry in file_entries:
+            name = str(entry.get("filename") or entry.get("name") or "")
+            binary = entry.get("binary")
+            if binary is None:
+                continue
+            if name.lower().endswith(".zip"):
+                if isinstance(binary, list):
+                    zip_bytes = bytes(int(b) & 0xFF for b in binary)
+                else:
+                    zip_bytes = bytes(binary)
+                result = decode_from_zip(zip_bytes, price_guide)
+                result["error"] = None
+                return result
+            expanded.append(entry)
+
+        result = decode_character_files(expanded, price_guide)
+        result["error"] = None
+        return result
+    except Exception as e:
+        tb = traceback.format_exc()
+        return {
+            "error": f"Failed to parse character data: {e}\n\nTraceback:\n{tb}",
+            "characters": [],
+            "share_banks": [],
+            "all_items": [],
+            "totals": {},
         }
