@@ -156,27 +156,61 @@ class PriceGuideAbstract(ABC):
         grinder: int,
         element: str,
     ) -> float:
-        """Get price for S-rank weapon"""
+        """Get price for S-rank / ES weapon.
 
-        actual_key = self._ci_key(self.srank_weapon_prices["weapons"], name)
+        ``name`` may be an ES guide key (``ES NEEDLE``), a bare kind (``NEEDLE``),
+        or a character-viewer display name (``S-RANK ARREST NEEDLE``).
+        ``ability`` / ``element`` are special names looked up in modifiers (case-insensitive).
+        """
+
+        weapon_key = self._normalize_srank_weapon_name(name)
+        actual_key = self._ci_key(self.srank_weapon_prices["weapons"], weapon_key)
 
         if actual_key is None:
             raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in srank_weapon_prices")
 
-        base_price = self.srank_weapon_prices["weapons"][actual_key]["base"]
+        base_price = self.get_price_from_range(
+            str(self.srank_weapon_prices["weapons"][actual_key]["base"]),
+            self.bps,
+        )
 
-        ability_price = 0
-        if ability:
-            actual_ability = self._ci_key(self.srank_weapon_prices["modifiers"], ability)
-
+        ability_price = 0.0
+        special = (ability or element or "").strip()
+        if special and special.lower() not in ("undefined", "unchanged/nothing", "nothing"):
+            actual_ability = self._ci_key(self.srank_weapon_prices["modifiers"], special)
             if actual_ability is None:
-                raise PriceGuideExceptionAbilityNameNotFound(f"Ability {ability} not found in srank_weapon_prices")
+                raise PriceGuideExceptionAbilityNameNotFound(f"Ability {special} not found in srank_weapon_prices")
+            ability_price = self.get_price_from_range(
+                str(self.srank_weapon_prices["modifiers"][actual_ability]["base"]),
+                self.bps,
+            )
 
-            ability_price = self.srank_weapon_prices["modifiers"][actual_ability]["base"]
+        return float(base_price) + float(ability_price)
 
-        total_price = float(base_price) + float(ability_price)
+    @staticmethod
+    def _normalize_srank_weapon_name(name: str) -> str:
+        """Map display / kind names onto srankweapons.json keys like ``ES NEEDLE``."""
+        raw = (name or "").strip()
+        if not raw:
+            return raw
 
-        return total_price
+        upper = raw.upper()
+        # "S-RANK ARREST NEEDLE" / "S-RANK NEEDLE" -> last token(s) as kind
+        if upper.startswith("S-RANK "):
+            parts = upper[len("S-RANK ") :].split()
+            if not parts:
+                return raw
+            # Custom special is usually one token; weapon kind is the remainder
+            # e.g. ARREST NEEDLE, HP REVIVAL would be unusual as multi-word custom
+            kind = parts[-1]
+            # Multi-token kinds in codes: J-BLADE, J-CUTTER (hyphenated single token)
+            if len(parts) >= 2 and parts[-2] in ("J",):
+                kind = f"{parts[-2]}-{parts[-1]}"
+            upper = kind
+
+        if upper.startswith("ES "):
+            return upper
+        return f"ES {upper}"
 
     def get_price_weapon(
         self,
@@ -342,9 +376,18 @@ class PriceGuideAbstract(ABC):
         return self.get_price_for_item_range(price_range, number, self.bps)
 
     def get_price_other(self, name: str, number: int) -> float:
-        """Get price for other items"""
+        """Get price for miscellaneous items (falls back to tools/cells)."""
         logger.info(f"get_price_other: {name} {number}")
-        return 0
+        qty = number if number and number > 0 else 1
+        try:
+            return self.get_price_tool(name, qty)
+        except PriceGuideExceptionItemNameNotFound:
+            pass
+        try:
+            return self.get_price_cell(name) * qty
+        except PriceGuideExceptionItemNameNotFound:
+            pass
+        raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in tool/cell/other prices")
 
     def identify_item_type(self, item_name: str) -> Optional[str]:
         """

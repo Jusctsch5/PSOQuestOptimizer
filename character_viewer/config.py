@@ -49,6 +49,8 @@ class ViewerConfig:
     UNIT_RANGE = (0x010300, 0x010364)
     MAG_RANGE = (0x020000, 0x025200)
     TOOL_RANGE = (0x030000, 0x030900)
+    # Ephinea photon currencies / event items (Photon Drop, Crystal, etc.)
+    EPHINEA_TOOL_RANGE = (0x031000, 0x0318FF)
     DISK_CODE = 0x0302
 
     EPISODE_1_MAX_STAGE = 9

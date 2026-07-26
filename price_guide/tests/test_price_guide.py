@@ -131,6 +131,12 @@ def test_srank_weapons(fixed_price_guide: PriceGuideFixed):
     price = fixed_price_guide.get_price_srank_weapon("ES BLADE", "KING'S", 0, "")
     assert price == 35 + 40
 
+    # Character-bank style names + Arrest needle = 30 + 50
+    assert fixed_price_guide.get_price_srank_weapon("ES NEEDLE", "ARREST", 70, "Arrest") == 80
+    assert fixed_price_guide.get_price_srank_weapon("NEEDLE", "Arrest", 70, "") == 80
+    assert fixed_price_guide.get_price_srank_weapon("S-RANK ARREST NEEDLE", "Arrest", 70, "Arrest") == 80
+    assert fixed_price_guide.get_price_srank_weapon("ES SWORDS", "", 0, "") == 30
+    assert fixed_price_guide.get_price_srank_weapon("ES KATANA", "HELL", 0, "") == 80
 
 def test_frame_pricing(fixed_price_guide: PriceGuideFixed):
     """Test frames with unique pricing structures"""

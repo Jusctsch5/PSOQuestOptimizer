@@ -53,13 +53,15 @@ async function parseCharacterBankViaGlobals(fileEntries) {
     const priceStrategy =
         document.getElementById('character-bank-price-strategy')?.value || 'MINIMUM';
 
-    // Write binaries into Pyodide FS to avoid huge JS↔Python proxy conversion
+    // Write binaries + price guide JSON into Pyodide FS (avoid huge inlined Python literals)
     pyodide.runPython(`
 import os, shutil
 upload_dir = '/tmp/char_upload'
+pg_dir = '/tmp/pso_data/price_guide/data'
 if os.path.exists(upload_dir):
     shutil.rmtree(upload_dir)
 os.makedirs(upload_dir, exist_ok=True)
+os.makedirs(pg_dir, exist_ok=True)
 `);
 
     const manifest = [];
@@ -71,6 +73,11 @@ os.makedirs(upload_dir, exist_ok=True)
         manifest.push({ filename: entry.filename, path });
     }
 
+    for (const [filename, jsonData] of Object.entries(data.price_guide || {})) {
+        const path = `/tmp/pso_data/price_guide/data/${filename}`;
+        pyodide.FS.writeFile(path, JSON.stringify(jsonData));
+    }
+
     const convertToPython = (obj) => {
         return JSON.stringify(obj)
             .replace(/\bnull\b/g, 'None')
@@ -80,10 +87,12 @@ os.makedirs(upload_dir, exist_ok=True)
 
     const result = pyodide.runPython(`
 import json
+from pathlib import Path
 from api import parse_character_data
+from price_guide import BasePriceStrategy, PriceGuideFixed
+from character_viewer.decoder import decode_character_files, decode_from_zip
 
 manifest = ${convertToPython(manifest)}
-price_guide_data = ${convertToPython(data.price_guide)}
 params = ${convertToPython({ price_strategy: priceStrategy })}
 
 file_entries = []
@@ -91,7 +100,23 @@ for item in manifest:
     with open(item['path'], 'rb') as f:
         file_entries.append({'filename': item['filename'], 'binary': list(f.read())})
 
-result = parse_character_data(file_entries, price_guide_data, params)
+price_strategy = BasePriceStrategy(params.get('price_strategy', 'MINIMUM').upper())
+price_guide = PriceGuideFixed('/tmp/pso_data/price_guide/data', base_price_strategy=price_strategy)
+
+# Expand a lone zip upload
+expanded = []
+result = None
+for entry in file_entries:
+    name = str(entry.get('filename') or '')
+    binary = entry.get('binary')
+    if name.lower().endswith('.zip'):
+        result = decode_from_zip(bytes(binary), price_guide)
+        break
+    expanded.append(entry)
+
+if result is None:
+    result = decode_character_files(expanded, price_guide)
+result['error'] = None
 json.dumps(result)
 `);
 

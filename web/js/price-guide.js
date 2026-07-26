@@ -52,8 +52,31 @@
             return fetchOne(filePath)
                 .then(function (data) {
                     if (!data || typeof data !== 'object') return [];
+                    const cat = category(filePath);
+                    const fileName = filePath.split('/').pop();
+                    // srankweapons.json is { weapons: {...}, modifiers: {...} }
+                    if (fileName === 'srankweapons.json' && data.weapons) {
+                        const items = Object.keys(data.weapons).map(function (name) {
+                            return {
+                                name: name,
+                                category: 'srank weapons',
+                                data: data.weapons[name],
+                                modifiers: data.modifiers || {},
+                            };
+                        });
+                        if (data.modifiers) {
+                            Object.keys(data.modifiers).forEach(function (name) {
+                                items.push({
+                                    name: name,
+                                    category: 'srank modifiers',
+                                    data: data.modifiers[name],
+                                });
+                            });
+                        }
+                        return items;
+                    }
                     return Object.keys(data).map(function (name) {
-                        return { name: name, category: category(filePath), data: data[name] };
+                        return { name: name, category: cat, data: data[name] };
                     });
                 })
                 .catch(function () { return []; });
@@ -121,6 +144,15 @@
                     html += '<p><strong>' + escapeHtml(key) + ':</strong> ' + escapeHtml(formatValue(val)) + '</p>';
                 }
             });
+        }
+        if (item.modifiers && typeof item.modifiers === 'object') {
+            html += '<p><strong>Special modifiers (add to base):</strong></p><div class="price-guide-nested"><ul>';
+            Object.keys(item.modifiers).forEach(function (k) {
+                const mod = item.modifiers[k];
+                const base = mod && typeof mod === 'object' ? mod.base : mod;
+                html += '<li>' + escapeHtml(k) + ': +' + escapeHtml(formatValue(base)) + ' PD</li>';
+            });
+            html += '</ul></div>';
         }
         html += '</div>';
         return html;

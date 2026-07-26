@@ -60,7 +60,9 @@ class ItemParser:
         return (item_code >> 8) == self.config.DISK_CODE
 
     def is_tool(self, item_code: int) -> bool:
-        return self.config.TOOL_RANGE[0] <= item_code <= self.config.TOOL_RANGE[1]
+        if self.config.TOOL_RANGE[0] <= item_code <= self.config.TOOL_RANGE[1]:
+            return True
+        return self.config.EPHINEA_TOOL_RANGE[0] <= item_code <= self.config.EPHINEA_TOOL_RANGE[1]
 
     def _parse_item(self, item_data: Sequence[int], item_code: int, item_type: int) -> Dict[str, Any]:
         if item_type == ItemType.SRANK_WEAPON:
@@ -273,21 +275,25 @@ class ItemParser:
     def s_rank_weapon(self, item_code: int, item_data: Sequence[int]) -> Dict[str, Any]:
         custom_name = self.get_custom_name(list(item_data[6:12]))
         weapon_kind = self.config.SRANK_WEAPON_CODES.get(item_code & 0xFFFF00, "UNKNOWN")
-        name = f"S-RANK {custom_name} {weapon_kind}"
+        name = f"S-RANK {custom_name} {weapon_kind}".strip()
         grinder = item_data[3]
         element = self.get_srank_element(item_data)
+        # Price guide keys are "ES NEEDLE" + modifier "ARREST" (custom name / special)
+        guide_weapon = f"ES {weapon_kind}"
+        ability = custom_name or element
         price, priced = self._safe_price(
             lambda: self.price_guide.get_price_srank_weapon(  # type: ignore[union-attr]
-                name, element, grinder, element
+                guide_weapon, ability, grinder, element
             )
         )
         return {
             "name": name,
-            "guide_name": name,
+            "guide_name": guide_weapon,
             "type": int(ItemType.SRANK_WEAPON),
             "itemdata": binary_array_to_hex(item_data),
             "grinder": grinder,
             "element": element,
+            "ability": ability,
             "display": f"{name}{self.grinder_label(grinder)} [{element}]",
             "price": price,
             "priced": priced,
@@ -296,9 +302,8 @@ class ItemParser:
     def tool(self, item_code: int, item_data: Sequence[int]) -> Dict[str, Any]:
         name = self.get_item_name(item_code)
         number = item_data[5] if len(item_data) == 28 else item_data[20]
-        price, priced = self._safe_price(
-            lambda: self.price_guide.get_price_tool(name, number)  # type: ignore[union-attr]
-        )
+        qty = number if number and number > 0 else 1
+        price, priced = self._price_stackable(name, qty)
         return {
             "name": name,
             "guide_name": name,
@@ -313,17 +318,9 @@ class ItemParser:
     def other(self, item_code: int, item_data: Sequence[int]) -> Dict[str, Any]:
         name = self.get_item_name(item_code)
         number = item_data[5] if len(item_data) == 28 else item_data[20]
-        # Ephinea currencies / materials (0x031xxx) fall outside TOOL_RANGE but live in tools.json
+        # Ephinea currencies / materials (0x031xxx) fall outside classic TOOL_RANGE
         qty = number if number and number > 0 else 1
-        price, priced = self._safe_price(
-            lambda: self.price_guide.get_price_tool(name, qty)  # type: ignore[union-attr]
-        )
-        if not priced:
-            price, priced = self._safe_price(
-                lambda: self.price_guide.get_price_cell(name)  # type: ignore[union-attr]
-            )
-            if priced and qty > 1:
-                price *= qty
+        price, priced = self._price_stackable(name, qty)
         return {
             "name": name,
             "guide_name": name,
@@ -334,6 +331,18 @@ class ItemParser:
             "price": price,
             "priced": priced,
         }
+
+    def _price_stackable(self, name: str, qty: int) -> tuple[float, bool]:
+        """Price a stackable via tools, then cells (price guide only)."""
+        price, priced = self._safe_price(
+            lambda: self.price_guide.get_price_tool(name, qty)  # type: ignore[union-attr]
+        )
+        if priced:
+            return price, True
+        price, priced = self._safe_price(
+            lambda: self.price_guide.get_price_cell(name) * qty  # type: ignore[union-attr]
+        )
+        return price, priced
 
     def get_item_name(self, item_code: int) -> str:
         if item_code in self.config.ITEM_CODES:

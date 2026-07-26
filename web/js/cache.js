@@ -12,7 +12,7 @@ function getCacheDisabled() {
 }
 const CACHE_DISABLED = getCacheDisabled();
 const DB_NAME = 'pso_optimizer_cache';
-const DB_VERSION = 2; // Increment to force cache clear on schema change
+const DB_VERSION = 3; // Increment to force cache clear on schema change
 const CACHE_STORE = 'files';
 const VERSION_STORE = 'versions';
 const VERSION_KEY = 'app_version';
@@ -180,6 +180,18 @@ async function clearCharacterBankCache() {
 }
 
 /**
+ * Fetch from network. When ?nocache=1, bypass browser HTTP cache too (not just IndexedDB).
+ */
+async function fetchNetwork(url) {
+    const opts = CACHE_DISABLED ? { cache: 'no-store' } : {};
+    const response = await fetch(url, opts);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+    }
+    return response;
+}
+
+/**
  * Fetch text with cache support
  */
 async function fetchTextWithCache(url) {
@@ -189,17 +201,9 @@ async function fetchTextWithCache(url) {
         return new TextDecoder().decode(cached);
     }
 
-    // Fetch from network
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
-    }
-
-    // Cache the response
+    const response = await fetchNetwork(url);
     const data = await response.arrayBuffer();
     await setCached(url, data);
-
-    // Return the text
     return new TextDecoder().decode(data);
 }
 
@@ -213,17 +217,9 @@ async function fetchJSONWithCache(url) {
         return JSON.parse(new TextDecoder().decode(cached));
     }
 
-    // Fetch from network
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
-    }
-
-    // Cache the response
+    const response = await fetchNetwork(url);
     const data = await response.arrayBuffer();
     await setCached(url, data);
-
-    // Parse and return JSON
     return JSON.parse(new TextDecoder().decode(data));
 }
 
