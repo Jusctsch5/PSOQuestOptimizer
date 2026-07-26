@@ -11,29 +11,23 @@ Other categories: same base lookups as normal drops (units, tools, mags, cells, 
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from price_guide import BasePriceStrategy, PriceGuideAbstract
+from price_guide import BasePriceStrategy, PriceGuideAbstract, PriceGuideFixed
 from price_guide.price_guide import CannotInferBasePriceException, PriceGuideExceptionItemNameNotFound
 
 
 def load_meseta_per_pd_value(price_guide_dir: Path, bps: BasePriceStrategy) -> float:
     """Meseta exchange rate: meseta per one PD (from meseta.json range)."""
-    path = price_guide_dir / "meseta.json"
-    with open(path, encoding="utf-8") as f:
-        data = json.load(f)
-    raw = str(data.get("meseta_per_pd", "")).replace(",", "")
-    return float(PriceGuideAbstract.get_price_from_range(raw, bps))
+    pg = PriceGuideFixed(str(price_guide_dir), base_price_strategy=bps)
+    return pg.get_meseta_per_pd()
 
 
 def meseta_stake_to_pd(stake_meseta: int, price_guide_dir: Path, bps: BasePriceStrategy) -> float:
     """Convert a meseta stake to PD using the configured price strategy on the meseta/PD range."""
-    rate = load_meseta_per_pd_value(price_guide_dir, bps)
-    if rate <= 0:
-        return 0.0
-    return float(stake_meseta) / rate
+    pg = PriceGuideFixed(str(price_guide_dir), base_price_strategy=bps)
+    return pg.get_price_meseta(stake_meseta)
 
 
 def coren_prize_pd(

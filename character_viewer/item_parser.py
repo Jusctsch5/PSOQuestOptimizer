@@ -278,9 +278,10 @@ class ItemParser:
         name = f"S-RANK {custom_name} {weapon_kind}".strip()
         grinder = item_data[3]
         element = self.get_srank_element(item_data)
-        # Price guide keys are "ES NEEDLE" + modifier "ARREST" (custom name / special)
+        # Price guide keys are "ES NEEDLE" + modifier from the S-rank special byte
+        # (element), not the player-engraved custom name.
         guide_weapon = f"ES {weapon_kind}"
-        ability = custom_name or element
+        ability = element
         price, priced = self._safe_price(
             lambda: self.price_guide.get_price_srank_weapon(  # type: ignore[union-attr]
                 guide_weapon, ability, grinder, element

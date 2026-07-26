@@ -2916,7 +2916,7 @@
     }
   },
   "JIZAI": {
-    "base": null,
+    "base": 2,
     "modifiers": {},
     "hit_values": {
       "25": "8-15",
@@ -2958,7 +2958,7 @@
     }
   },
   "SANGE & YASHA": {
-    "base": null,
+    "base": 2,
     "modifiers": {},
     "hit_values": {
       "25": "5-10",
@@ -5163,28 +5163,17 @@
     }
   },
   "STRIKER OF CHAO": {
-    "base": null,
+    "base": 1,
     "modifiers": {},
     "hit_values": {
-      "0": "See Rods (Branch of Pakupaku)",
-      "15": "See Rods (Branch of Pakupaku)",
-      "20": "See Rods (Branch of Pakupaku)",
-      "25": "See Rods (Branch of Pakupaku)",
-      "30": "See Rods (Branch of Pakupaku)",
-      "35": "See Rods (Branch of Pakupaku)",
-      "40": "See Rods (Branch of Pakupaku)",
-      "45": "See Rods (Branch of Pakupaku)",
-      "50": "See Rods (Branch of Pakupaku)",
-      "55": "See Rods (Branch of Pakupaku)",
-      "60": "See Rods (Branch of Pakupaku)",
-      "65": "See Rods (Branch of Pakupaku)",
-      "70": "See Rods (Branch of Pakupaku)",
-      "75": "See Rods (Branch of Pakupaku)",
-      "80": "See Rods (Branch of Pakupaku)",
-      "85": "See Rods (Branch of Pakupaku)",
-      "90": "See Rods (Branch of Pakupaku)",
-      "95": "See Rods (Branch of Pakupaku)",
-      "100": "See Rods (Branch of Pakupaku)"
+      "0": "1",
+      "15": "1",
+      "20": "1",
+      "25": "1",
+      "30": "1",
+      "35": "1",
+      "40": "1",
+      "45": "1"
     }
   },
   "VALKYRIE": {

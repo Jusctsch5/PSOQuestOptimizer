@@ -183,7 +183,7 @@ function itemDisplayHtml(item) {
     if (!guideName && item.name && item.type !== 5 && item.type !== 6 && item.type !== 10) {
         guideName = item.name;
     }
-    // Skip meseta / undefined / unknown codes — no price-guide entry
+    // Skip meseta / undefined / unknown codes — no item detail in price guide browse
     if (
         !guideName ||
         item.type === 10 ||
@@ -209,14 +209,11 @@ function itemRowsHtml(entries) {
             const hex = entry[0];
             const item = entry[1] || {};
             const slot = entry[2];
-            const priced = item.priced !== false && item.type !== 10;
-            const priceCell =
-                item.type === 10
-                    ? '—'
-                    : priced
-                      ? `${formatPd(item.price)} PD`
-                      : `<span class="unpriced" title="Not in price guide">0.00 PD</span>`;
-            return `<tr class="${priced || item.type === 10 ? '' : 'unpriced-row'}">
+            const priced = item.priced === true;
+            const priceCell = priced
+                ? `${formatPd(item.price)} PD`
+                : `<span class="unpriced" title="Not in price guide">0.00 PD</span>`;
+            return `<tr class="${priced ? '' : 'unpriced-row'}">
                 <td class="mono">${escapeHtml(hex)}</td>
                 <td>${itemDisplayHtml(item)}</td>
                 <td>${escapeHtml(slot)}</td>

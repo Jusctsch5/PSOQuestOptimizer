@@ -40,14 +40,24 @@ class InventoryParser:
         slot_label: str,
     ) -> None:
         meseta = ((meseta_data[2] << 8 | meseta_data[1]) << 8) | meseta_data[0]
+        price = 0.0
+        priced = False
+        pg = self.item_parser.price_guide
+        if pg is not None:
+            try:
+                price = float(pg.get_price_meseta(meseta))
+                priced = True
+            except Exception:
+                price = 0.0
+                priced = False
         item: Dict[str, Any] = {
             "type": int(ItemType.MESETA),
             "name": "MESETA",
-            "guide_name": None,
+            "guide_name": "MESETA",
             "value": meseta,
-            "display": f"{meseta} MESETA",
-            "price": 0.0,
-            "priced": False,
+            "display": f"{meseta:,} MESETA",
+            "price": price,
+            "priced": priced,
         }
         inventory.append(
             [

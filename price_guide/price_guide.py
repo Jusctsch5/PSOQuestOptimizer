@@ -4,6 +4,7 @@ Front-end wrapper for the price guide data.
 
 import json
 import logging
+import re
 from abc import ABC, abstractmethod
 from bisect import bisect
 from enum import Enum
@@ -73,6 +74,7 @@ class PriceGuideAbstract(ABC):
         self.cell_prices: Dict[str, Any] = {}
         self.techniques_prices: Dict[str, Any] = {}
         self.tool_prices: Dict[str, Any] = {}
+        self.meseta_prices: Dict[str, Any] = {}
 
     @staticmethod
     # Parse out the price range value from the price range dictionary
@@ -140,12 +142,20 @@ class PriceGuideAbstract(ABC):
 
     @staticmethod
     def _ci_key(mapping: Dict[str, Any], name: str) -> Optional[str]:
-        """Case-insensitive lookup returning the actual key from the mapping."""
+        """Case-insensitive lookup returning the actual key from the mapping.
+
+        Also treats ``FOO:BAR`` and ``FOO: BAR`` as the same (Ephinea guide spacing).
+        """
         if name in mapping:
             return name
-        target = name.upper()
+        candidates = {name.upper(), re.sub(r":\s*", ": ", name.upper()), re.sub(r":\s*", ":", name.upper())}
         for key in mapping.keys():
-            if key.upper() == target:
+            key_u = key.upper()
+            if key_u in candidates:
+                return key
+            key_spaced = re.sub(r":\s*", ": ", key_u)
+            key_tight = re.sub(r":\s*", ":", key_u)
+            if key_spaced in candidates or key_tight in candidates:
                 return key
         return None
 
@@ -175,7 +185,7 @@ class PriceGuideAbstract(ABC):
         )
 
         ability_price = 0.0
-        special = (ability or element or "").strip()
+        special = self._normalize_srank_special(ability or element or "")
         if special and special.lower() not in ("undefined", "unchanged/nothing", "nothing"):
             actual_ability = self._ci_key(self.srank_weapon_prices["modifiers"], special)
             if actual_ability is None:
@@ -186,6 +196,16 @@ class PriceGuideAbstract(ABC):
             )
 
         return float(base_price) + float(ability_price)
+
+    @staticmethod
+    def _normalize_srank_special(special: str) -> str:
+        """Map game S-rank special labels onto srankweapons.json modifier keys."""
+        raw = (special or "").strip()
+        if not raw:
+            return raw
+        upper = raw.upper()
+        # Game element codes say "HP Regeneration"; guide uses "HP REVIVAL"
+        return upper.replace("REGENERATION", "REVIVAL")
 
     @staticmethod
     def _normalize_srank_weapon_name(name: str) -> str:
@@ -232,11 +252,16 @@ class PriceGuideAbstract(ABC):
         hit_values = self.weapon_prices[actual_key].get("hit_values", {})
 
         if base_price_str is None:
-            # If no base price, use 0-hit price as base
+            # If no base price, use 0-hit price as base when present; otherwise
+            # hit-tier rows alone provide value (e.g. HANDGUN: MILLA starts at 15).
             if hit_values and "0" in hit_values:
                 base_price = self.get_price_from_range(hit_values["0"], self.bps)
+            elif hit_values:
+                base_price = 0.0
             else:
-                raise CannotInferBasePriceException(f"Cannot infer base price for weapon '{name}': base is null and no 0-hit value found")
+                raise CannotInferBasePriceException(
+                    f"Cannot infer base price for weapon '{name}': base is null and no hit values found"
+                )
         else:
             base_price = self.get_price_from_range(base_price_str, self.bps)
 
@@ -388,6 +413,19 @@ class PriceGuideAbstract(ABC):
         except PriceGuideExceptionItemNameNotFound:
             pass
         raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in tool/cell/other prices")
+
+    def get_meseta_per_pd(self) -> float:
+        """Meseta required for one PD from meseta.json (respects base price strategy)."""
+        raw = str(self.meseta_prices.get("meseta_per_pd", "")).replace(",", "")
+        return float(self.get_price_from_range(raw, self.bps))
+
+    def get_price_meseta(self, amount: int) -> float:
+        """Convert a meseta amount to PD using meseta.json exchange rate."""
+        logger.info(f"get_price_meseta: {amount}")
+        rate = self.get_meseta_per_pd()
+        if rate <= 0:
+            return 0.0
+        return float(amount) / rate
 
     def identify_item_type(self, item_name: str) -> Optional[str]:
         """
@@ -600,6 +638,7 @@ class PriceGuideFixed(PriceGuideAbstract):
         self.cell_prices = self._load_json_file("cells.json")
         self.techniques_prices = self._load_json_file("techniques.json")
         self.tool_prices = self._load_json_file("tools.json")
+        self.meseta_prices = self._load_json_file("meseta.json")
         logger.info(f"Price database built from {self.directory}")
 
     def _load_json_file(self, filename: str) -> Dict[str, Any]:

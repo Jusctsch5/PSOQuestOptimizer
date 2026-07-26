@@ -55,6 +55,14 @@ def test_weapon_pricing_basic(fixed_price_guide: PriceGuideFixed):
     assert fixed_price_guide.get_price_weapon("EXCALIBUR", {}, 0, 0, "") != 0
     # Test item with only hit values
     assert fixed_price_guide.get_price_weapon("HANDGUN: GULD", {}, 0, 0, "") != 0
+    # Character/item-code form without space after colon
+    assert fixed_price_guide.get_price_weapon("HANDGUN:GULD", {}, 0, 0, "") == fixed_price_guide.get_price_weapon(
+        "HANDGUN: GULD", {}, 0, 0, ""
+    )
+    assert fixed_price_guide.get_price_weapon("HANDGUN: MILLA", {}, 15, 0, "") != 0
+    assert fixed_price_guide.get_price_weapon("HANDGUN:MILLA", {}, 15, 0, "") == fixed_price_guide.get_price_weapon(
+        "HANDGUN: MILLA", {}, 15, 0, ""
+    )
 
 
 def test_weapon_hit_adjustments(fixed_price_guide: PriceGuideFixed):
@@ -137,6 +145,20 @@ def test_srank_weapons(fixed_price_guide: PriceGuideFixed):
     assert fixed_price_guide.get_price_srank_weapon("S-RANK ARREST NEEDLE", "Arrest", 70, "Arrest") == 80
     assert fixed_price_guide.get_price_srank_weapon("ES SWORDS", "", 0, "") == 30
     assert fixed_price_guide.get_price_srank_weapon("ES KATANA", "HELL", 0, "") == 80
+    # Demon's special (not the engraved custom name "DEMONS")
+    assert fixed_price_guide.get_price_srank_weapon("ES MECHGUN", "Demon's", 50, "Demon's") == 85
+    # Game label "HP Regeneration" -> guide "HP REVIVAL"
+    assert fixed_price_guide.get_price_srank_weapon("ES BLADE", "HP Regeneration", 0, "") == 65
+    assert fixed_price_guide.get_price_srank_weapon("ES GUN", "Tempest", 0, "") == 65
+
+def test_meseta_to_pd(fixed_price_guide: PriceGuideFixed):
+    """Meseta converts to PD via meseta.json range (default MINIMUM = 400_000)."""
+    assert fixed_price_guide.get_meseta_per_pd() == 400_000
+    # 400_000 meseta → 1 PD at MINIMUM rate
+    assert fixed_price_guide.get_price_meseta(400_000) == 1.0
+    assert fixed_price_guide.get_price_meseta(0) == 0.0
+    assert abs(fixed_price_guide.get_price_meseta(1_000_000) - 2.5) < 1e-9
+
 
 def test_frame_pricing(fixed_price_guide: PriceGuideFixed):
     """Test frames with unique pricing structures"""

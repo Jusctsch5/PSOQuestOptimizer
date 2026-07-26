@@ -22,10 +22,11 @@
 - [X] Add BPD Script
 - [X] Add Lost Soul Blade to quests.json
 - [X] Add daily luck boost to quest_calculator.py
+- [X] finish updating quests.json with enemies in areas
+- [X] Implement random spawn quests such as AO1 and AO2. These are quests that spawn a random number of enemies in a given area.
 
 
 # CORE TODO
-- [ ] finish updating quests.json with enemies in areas
 - [ ] Central Tower actually shares drops with Seabed Lower not CCA, so fix that for many quests that take place in Tower.
 - [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
 - [ ] Add common weapon value calculation to weapon_value_calculator.py, price guide, and drop tables (note only certain enemies drop common weapons)
@@ -33,7 +34,7 @@
 - [ ] Investigate modeling**
 - [ ] Add "Attribute" value to items. If items drop with meaningful hit (dependnent per weapon), the other attributes become more valuable (probably follow the value as per sphering).
 - [ ] Implement "random Mericarol" behavior. I added them as Mericarols so that spices up HP and other drops
-- [ ] Implement random spawn quests such as AO1 and AO2. These are quests that spawn a random number of enemies in a given area.
+- [ ] Add Mag parsing to price guide (e.g. ephinea specific mag colors, mags that have been transformed into mag from cell)
 
 # UI DONE
 - [X] Implement base of UI
@@ -43,6 +44,7 @@
 - [X] Add browsable drop tables to UI
 - [X] Add tooltips to UI
 - [X] Add links to/from UI to other tools (character viewer, price guide, drop tables, etc)
+- [X] Add character bank uploading to UI
   
 # UI TODO
 - [ ] Add Run Simulation to UI, simulate x runs of a quest and report the results

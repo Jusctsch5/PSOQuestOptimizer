@@ -138,10 +138,10 @@
     "base": "1"
   },
   "Force Wall": {
-    "base": "0"
+    "base": "1"
   },
   "Hunter Wall": {
-    "base": "0"
+    "base": "1"
   },
   "Kasami Bracer": {
     "base": "3-4"
@@ -156,19 +156,37 @@
     "base": "1"
   },
   "Foie Merge": {
-    "base": "Red Barrier"
+    "base": "3.5"
+  },
+  "Gifoie Merge": {
+    "base": "10-15"
+  },
+  "Rifoie Merge": {
+    "base": "4-5"
   },
   "Barta Merge": {
-    "base": "Blue Barrier"
+    "base": "1"
+  },
+  "Rabarta Merge": {
+    "base": "1.5-2.5"
+  },
+  "Gibarta Merge": {
+    "base": "1"
   },
   "Zonde Merge": {
-    "base": "Yellow Barrier"
+    "base": "1"
+  },
+  "Gizonde Merge": {
+    "base": "1.5-2.5"
+  },
+  "Rizonde Merge": {
+    "base": "1"
   },
   "Resta Merge": {
-    "base": "Recovery Barrier"
+    "base": "3-5"
   },
   "Shifta Merge": {
-    "base": "Assist Barrier"
+    "base": "0"
   },
   "Assist Barrier": {
     "base": "1"

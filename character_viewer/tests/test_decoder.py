@@ -90,3 +90,20 @@ def test_all_items_totals(price_guide):
         assert "total_pd" in bucket
         for idx, entry in enumerate(bucket["inventory"]):
             assert entry[-1] == idx
+
+
+def test_meseta_valued_in_pd(price_guide):
+    result = decode_from_zip(DEMO_ZIP.read_bytes(), price_guide)
+    meseta_rows = []
+    for char in result["characters"]:
+        for bag in (char["inventory"], char["bank"]):
+            meseta_rows.extend(e[1] for e in bag if e[1].get("type") == 10)
+    for bank in result["share_banks"]:
+        meseta_rows.extend(e[1] for e in bank["bank"] if e[1].get("type") == 10)
+
+    assert meseta_rows, "expected at least one MESETA entry in demo.zip"
+    for item in meseta_rows:
+        assert item["priced"] is True
+        assert item["value"] >= 0
+        expected = price_guide.get_price_meseta(item["value"])
+        assert abs(float(item["price"]) - expected) < 1e-9
