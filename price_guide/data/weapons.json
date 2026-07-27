@@ -5894,36 +5894,6 @@
       "100": "Inestimable"
     }
   },
-  "SPECIAL RANK": {
-    "base": null,
-    "modifiers": {},
-    "hit_values": {}
-  },
-  "D-RANK": {
-    "base": null,
-    "modifiers": {},
-    "hit_values": {}
-  },
-  "C-RANK": {
-    "base": null,
-    "modifiers": {},
-    "hit_values": {}
-  },
-  "B-RANK": {
-    "base": null,
-    "modifiers": {},
-    "hit_values": {}
-  },
-  "A-RANK": {
-    "base": null,
-    "modifiers": {},
-    "hit_values": {}
-  },
-  "S-RANK": {
-    "base": null,
-    "modifiers": {},
-    "hit_values": {}
-  },
   "TYPESA/SABER": {
     "base": null,
     "modifiers": {},
@@ -5940,13 +5910,11 @@
       "25": "0"
     }
   },
-  "SPIRIT": {
+  "SPIRIT TYPESW/J-SWORD": {
     "base": null,
     "modifiers": {},
     "hit_values": {
-      "30": "5-10",
-      "40": "2",
-      "35": "1"
+      "30": "5-10"
     }
   },
   "TYPESW/SLICER": {
@@ -5957,19 +5925,11 @@
       "25": "0"
     }
   },
-  "BLIZZARD": {
+  "BLIZZARD TYPESW/SLICER": {
     "base": null,
     "modifiers": {},
     "hit_values": {
       "30": "0"
-    }
-  },
-  "TYPESW/SWORD": {
-    "base": null,
-    "modifiers": {},
-    "hit_values": {
-      "0": "None",
-      "25": "0"
     }
   },
   "TYPEBL/BLADE": {
@@ -5996,13 +5956,11 @@
       "25": "0"
     }
   },
-  "CHARGE": {
+  "CHARGE TYPESL/SLICER": {
     "base": null,
     "modifiers": {},
     "hit_values": {
-      "25": "0",
-      "40": "2-5",
-      "35": "2-5"
+      "25": "0"
     }
   },
   "TYPESL/SABER": {
@@ -6037,11 +5995,11 @@
       "25": "0"
     }
   },
-  "ARREST": {
+  "ARREST TYPEDS/D.SABER": {
     "base": null,
     "modifiers": {},
     "hit_values": {
-      "30": "1-5"
+      "30": "0"
     }
   },
   "TYPEDS/ROD": {
@@ -6052,7 +6010,7 @@
       "25": "0"
     }
   },
-  "DEVIL'S": {
+  "DEVIL'S TYPEDS/ROD": {
     "base": null,
     "modifiers": {},
     "hit_values": {
@@ -6060,6 +6018,14 @@
     }
   },
   "TYPEDS/WAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "25": "0"
+    }
+  },
+  "ARREST TYPEDS/WAND": {
     "base": null,
     "modifiers": {},
     "hit_values": {
@@ -6123,15 +6089,6 @@
       "25": "0"
     }
   },
-  "BERSERK": {
-    "base": null,
-    "modifiers": {},
-    "hit_values": {
-      "50": "1",
-      "40": "2-5",
-      "35": "2-5"
-    }
-  },
   "TYPEGU/HAND": {
     "base": null,
     "modifiers": {},
@@ -6140,12 +6097,32 @@
       "25": "0"
     }
   },
-  "HELL": {
+  "BERSERK TYPEGU/HAND": {
     "base": null,
     "modifiers": {},
     "hit_values": {
-      "40": "5-10",
-      "35": "5-10"
+      "40": "2-5"
+    }
+  },
+  "CHARGE TYPEGU/HAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "40": "2-5"
+    }
+  },
+  "SPIRIT TYPEGU/HAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "40": "1"
+    }
+  },
+  "HELL TYPEGU/HAND": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "40": "5-10"
     }
   },
   "TYPEGU/MECHGUN": {
@@ -6156,6 +6133,30 @@
       "25": "0"
     }
   },
+  "BERSERK TYPEGU/MECHGUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "35": "2-5"
+    }
+  },
+  "CHARGE TYPEGU/MECHGUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "35": "2-5"
+    }
+  },
+  "SPIRIT TYPEGU/MECHGUN": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "35": "1"
+    }
+  },
   "TYPERI/RIFLE": {
     "base": null,
     "modifiers": {},
@@ -6164,14 +6165,15 @@
       "25": "0"
     }
   },
-  "TYPEME/MECHGUN": {
+  "HELL TYPERI/RIFLE": {
     "base": null,
     "modifiers": {},
     "hit_values": {
       "0": "None",
-      "25": "0"
+      "40": "5-10"
     }
   },
+
   "TYPESH/SHOT": {
     "base": null,
     "modifiers": {},
@@ -6180,6 +6182,30 @@
       "25": "0"
     }
   },
+  "BERSERK TYPESH/SHOT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "40": "2-5"
+    }
+  },  
+  "CHARGE TYPESH/SHOT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "40": "2-5"
+    }
+  },
+  "SPIRIT TYPESH/SHOT": {
+    "base": null,
+    "modifiers": {},
+    "hit_values": {
+      "0": "None",
+      "40": "2"
+    }
+  },      
   "TYPERO/ROD": {
     "base": null,
     "modifiers": {},

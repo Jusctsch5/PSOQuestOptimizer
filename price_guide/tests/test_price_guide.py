@@ -65,6 +65,9 @@ def test_weapon_pricing_basic(fixed_price_guide: PriceGuideFixed):
     )
     # Numeric JSON base (historically unquoted) still prices
     assert fixed_price_guide.get_price_weapon("JIZAI", {}, 0, 40, "") == 2
+    # Type weapons: special is a name prefix in the guide
+    assert fixed_price_guide.get_price_weapon("TYPEGU/HAND", {}, 40, 0, "Charge") == 2
+    assert fixed_price_guide.get_price_weapon("TYPEGU/HAND", {}, 40, 0, "CHARGE") == 2
 
 
 def test_common_weapon_pricing(fixed_price_guide: PriceGuideFixed):

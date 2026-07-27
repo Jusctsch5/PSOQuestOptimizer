@@ -35,6 +35,8 @@
 - [ ] Add "Attribute" value to items. If items drop with meaningful hit (dependnent per weapon), the other attributes become more valuable (probably follow the value as per sphering).
 - [ ] Implement "random Mericarol" behavior. I added them as Mericarols so that spices up HP and other drops
 - [ ] Add Mag parsing to price guide (e.g. ephinea specific mag colors, mags that have been transformed into mag from cell)
+- [ ] Add Dark Flow parsing to price guide
+- [ ] Add Weapon Heart Transformation parsing to price guide
 
 # UI DONE
 - [X] Implement base of UI

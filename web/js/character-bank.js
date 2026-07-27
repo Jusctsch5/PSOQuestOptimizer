@@ -197,7 +197,7 @@ function itemDisplayHtml(item) {
 
 function itemRowsHtml(entries) {
     if (!entries || !entries.length) {
-        return '<tr><td colspan="4">No items</td></tr>';
+        return '<tr><td colspan="3">No items</td></tr>';
     }
     const sorted = [...entries].sort((a, b) => {
         const pa = Number(a[1]?.price) || 0;
@@ -206,7 +206,6 @@ function itemRowsHtml(entries) {
     });
     return sorted
         .map((entry) => {
-            const hex = entry[0];
             const item = entry[1] || {};
             const slot = entry[2];
             const priced = item.priced === true;
@@ -214,7 +213,6 @@ function itemRowsHtml(entries) {
                 ? `${formatPd(item.price)} PD`
                 : `<span class="unpriced" title="Not in price guide">0.00 PD</span>`;
             return `<tr class="${priced ? '' : 'unpriced-row'}">
-                <td class="mono">${escapeHtml(hex)}</td>
                 <td>${itemDisplayHtml(item)}</td>
                 <td>${escapeHtml(slot)}</td>
                 <td class="num">${priceCell}</td>
@@ -267,7 +265,6 @@ function renderCharacterBankView() {
                     · Bank: <strong>${formatPd(c.bank_pd)} PD</strong>
                     · Total: <strong>${formatPd(c.total_pd)} PD</strong>
                 </div>
-                <div class="muted">${escapeHtml(c.ep1_progress)} · ${escapeHtml(c.ep2_progress)}</div>
             </div>`;
         items = [...(c.inventory || []), ...(c.bank || [])];
         totalPd = c.total_pd;
@@ -300,7 +297,6 @@ function renderCharacterBankView() {
                 <table class="results-table character-bank-table">
                     <thead>
                         <tr>
-                            <th>Code</th>
                             <th>Item</th>
                             <th>Slot</th>
                             <th class="num">PD <span class="character-bank-pd-total">(${formatPd(totalPd)})</span></th>

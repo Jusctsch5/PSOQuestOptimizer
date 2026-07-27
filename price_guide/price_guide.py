@@ -333,7 +333,19 @@ class PriceGuideAbstract(ABC):
     ) -> float:
         """Get price for normal weapon"""
 
-        actual_key = self._ci_key(self.weapon_prices, name)
+        special = (element or "").strip().strip("[]").strip()
+        # Type* weapons store special as a name prefix in the guide
+        # (e.g. CHARGE TYPEGU/HAND), so prefer that key when present.
+        candidates = []
+        if special and special.lower() not in ("undefined", "unchanged/nothing", "nothing"):
+            candidates.append(f"{special} {name}")
+        candidates.append(name)
+
+        actual_key = None
+        for candidate in candidates:
+            actual_key = self._ci_key(self.weapon_prices, candidate)
+            if actual_key is not None:
+                break
 
         if actual_key is None:
             raise PriceGuideExceptionItemNameNotFound(f"Item name {name} not found in weapon_prices")

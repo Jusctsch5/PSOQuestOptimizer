@@ -1,6 +1,6 @@
 """Parse .psochar character files (JS-aligned offsets)."""
 
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, Optional, Sequence
 
 from character_viewer.config import Mode, ViewerConfig
 from character_viewer.inventory_parser import InventoryParser
@@ -21,8 +21,6 @@ class CharacterParser:
         section_id = self.config.SECTION_IDS.get(data[936], "undefined")
         level = data[876] + 1
         experience = 0  # Not decoded by reference viewer either
-        ep1_progress = self._parse_ep1_progress(data)
-        ep2_progress = self._parse_ep2_progress(data)
 
         slot_label = str(slot)
         bank_label = f"{slot} Bank"
@@ -46,8 +44,6 @@ class CharacterParser:
             "section_id": section_id,
             "level": level,
             "experience": experience,
-            "ep1_progress": ep1_progress,
-            "ep2_progress": ep2_progress,
             "inventory": inventory,
             "bank": bank,
             "inventory_pd": inv_total,
@@ -65,27 +61,3 @@ class CharacterParser:
 
     def _parse_guild_card_number(self, array: Sequence[int]) -> str:
         return "".join(str(value & 0x0F) for value in array)
-
-    def _parse_ep1_progress(self, data: List[int]) -> str:
-        count = self._progress_count(data, 11460, self.config.EPISODE_1_MAX_STAGE)
-        if count == 0:
-            return "No Progress"
-        title = self.config.TITLES.get(count, "")
-        return f"Stage {count} Cleared! | {title}"
-
-    def _parse_ep2_progress(self, data: List[int]) -> str:
-        count = self._progress_count(data, 11496, self.config.EPISODE_2_MAX_STAGE)
-        if count == 0:
-            return "No Progress"
-        return f"Stage {count} Cleared!"
-
-    def _progress_count(self, data: List[int], index: int, max_count: int) -> int:
-        count = 0
-        for _ in range(max_count):
-            if index + 4 > len(data):
-                break
-            if sum(data[index : index + 4]) == 0:
-                break
-            count += 1
-            index += 4
-        return count

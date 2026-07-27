@@ -128,16 +128,19 @@ class ItemParser:
                     name, special_name, hit
                 )
             )
+            guide_name = name
         else:
             price, priced = self._safe_price(
                 lambda: self.price_guide.get_price_weapon(  # type: ignore[union-attr]
                     name, weapon_attributes, hit, grinder, special_name
                 )
             )
+            # Type* guide keys are often "CHARGE TYPEGU/HAND"
+            guide_name = f"{special_name} {name}" if special_name and name.upper().startswith("TYPE") else name
 
         return {
             "name": name,
-            "guide_name": name,
+            "guide_name": guide_name,
             "type": int(ItemType.WEAPON),
             "itemdata": binary_array_to_hex(item_data),
             "element": element,
