@@ -3368,5 +3368,380 @@
       "Merissa A": 30,
       "Girtablulu": 6
     }
+  },
+  {
+    "quest_name": "MAEF",
+    "long_name": "Maximum Attack E: Forest",
+    "episode": 1,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Forest 2",
+        "enemies": {
+          "Rag Rappy": 16,
+          "Savage Wolf": 25,
+          "Barbarous Wolf": 7,
+          "Booma": 22,
+          "Gobooma": 17,
+          "Gigobooma": 37,
+          "Monest": 5,
+          "Hildebear": 32
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAEC",
+    "long_name": "Maximum Attack E: Cave",
+    "episode": 1,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Cave 2",
+        "enemies": {
+          "Evil Shark": 28,
+          "Pal Shark": 42,
+          "Guil Shark": 44,
+          "Poison Lily": 46,
+          "Nano Dragon": 30,
+          "Grass Assassin": 23,
+          "Pofuilly Slime": 4
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAEM",
+    "long_name": "Maximum Attack E: Mine",
+    "episode": 1,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Mine 1",
+        "enemies": {
+          "Gillchic": 42,
+          "Dubchic": 12,
+          "Dubwitch": 3,
+          "Canadine": 65,
+          "Canane": 4,
+          "Sinow Beat": 21,
+          "Sinow Gold": 13,
+          "Garanz": 19
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAER",
+    "long_name": "Maximum Attack E: Ruins",
+    "episode": 1,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Ruins 3",
+        "enemies": {
+          "Dimenian": 32,
+          "La Dimenian": 33,
+          "So Dimenian": 18,
+          "Claw": 24,
+          "Bulclaw": 11,
+          "Chaos Sorcerer": 15,
+          "Dark Belra": 12,
+          "Dark Gunner": 6,
+          "Death Gunner": 1,
+          "Chaos Bringer": 11
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "AA1",
+    "long_name": "August Atrocity 1",
+    "episode": 1,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 2
+    },
+    "areas": [
+      {
+        "name": "Mine 2",
+        "enemies": {
+          "Guil Shark": 11,
+          "Pan Arms": 5,
+          "Dubchic": 16,
+          "Canadine": 21,
+          "Canane": 1,
+          "Garanz": 12,
+          "Sinow Beat": 14,
+          "Sinow Gold": 13,
+          "Gillchic": 30,
+          "Dubwitch": 4,
+          "Delsaber": 10,
+          "Chaos Sorcerer": 6,
+          "Dark Belra": 7,
+          "Chaos Bringer": 3,
+          "La Dimenian": 8,
+          "So Dimenian": 14,
+          "Gi Gue": 4,
+          "Sinow Berill": 5,
+          "Sinow Spigell": 9,
+          "Goran": 7,
+          "Pyro Goran": 3,
+          "Goran Detonator": 5,
+          "Recobox": 3,
+          "Sinow Zele": 3,
+          "Sinow Zoa": 3,
+          "Del Lily": 1,
+          "Epsilon": 1
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "AA2",
+    "long_name": "August Atrocity 2",
+    "episode": 2,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 2
+    },
+    "areas": [
+      {
+        "name": "Jungle North",
+        "enemies": {
+          "Booma": 7,
+          "Gobooma": 6,
+          "Gigobooma": 4,
+          "Rag Rappy": 13,
+          "Savage Wolf": 4,
+          "Barbarous Wolf": 2,
+          "Monest": 2,
+          "Hildebear": 18,
+          "Poison Lily": 7,
+          "Canane": 1,
+          "Sinow Beat": 6,
+          "Garanz": 4,
+          "Canadine": 8,
+          "Chaos Sorcerer": 15,
+          "Chaos Bringer": 4,
+          "Dark Gunner": 4,
+          "Del Lily": 2,
+          "Ill Gill": 1,
+          "Merillia": 8,
+          "Meriltas": 4,
+          "Ul Gibbon": 32,
+          "Zol Gibbon": 13,
+          "Gee": 13,
+          "Sinow Berill": 8,
+          "Mericarol": 5,
+          "Mericus": 1,
+          "Merikle": 2,
+          "Gibbles": 5,
+          "Gi Gue": 8,
+          "Dolmdarl": 2,
+          "Morfos": 2,
+          "Epsilon": 1,
+          "Boota": 17,
+          "Ze Boota": 13,
+          "Ba Boota": 16,
+          "Satellite Lizard": 2,
+          "Yowie": 2,
+          "Astark": 6,
+          "Dorphon": 6,
+          "Merissa A": 7,
+          "Girtablulu": 1
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAET",
+    "long_name": "Maximum Attack E: Temple",
+    "episode": 2,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "VR Temple Alpha",
+        "enemies": {
+          "Dimenian": 15,
+          "La Dimenian": 25,
+          "So Dimenian": 28,
+          "Rag Rappy": 22,
+          "Poison Lily": 43,
+          "Hildebear": 22,
+          "Grass Assassin": 20,
+          "Dark Belra": 17
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAESP",
+    "long_name": "Maximum Attack E: Spaceship",
+    "episode": 2,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "VR Spaceship Alpha",
+        "enemies": {
+          "Gillchic": 61,
+          "Dubchic": 12,
+          "Dubwitch": 3,
+          "Savage Wolf": 23,
+          "Barbarous Wolf": 20,
+          "Delsaber": 29,
+          "Pan Arms": 8,
+          "Garanz": 21
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAECCA",
+    "long_name": "Maximum Attack E: CCA",
+    "episode": 2,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Central Control Area",
+        "enemies": {
+          "Merillia": 16,
+          "Meriltas": 13,
+          "Ul Gibbon": 17,
+          "Zol Gibbon": 19,
+          "Gee": 15,
+          "Sinow Berill": 10,
+          "Sinow Spigell": 18,
+          "Mericarol": 14,
+          "Merikle": 2,
+          "Mericus": 2,
+          "Gibbles": 15,
+          "Gi Gue": 5
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAESB",
+    "long_name": "Maximum Attack E: Seabed",
+    "episode": 2,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Seabed Upper",
+        "enemies": {
+          "Dolmolm": 27,
+          "Dolmdarl": 25,
+          "Recobox": 26,
+          "Recon": 260,
+          "Morfos": 12,
+          "Deldepth": 17,
+          "Sinow Zoa": 17,
+          "Sinow Zele": 14,
+          "Delbiter": 18
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAETO",
+    "long_name": "Maximum Attack E: Tower",
+    "episode": 2,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Control Tower",
+        "enemies": {
+          "Recobox": 2,
+          "Recon": 20,
+          "Mericarol": 7,
+          "Merikle": 6,
+          "Mericus": 7,
+          "Gibbles": 9,
+          "Gi Gue": 18,
+          "Delbiter": 8,
+          "Del Lily": 24,
+          "Ill Gill": 19,
+          "Epsilon": 4
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAECR",
+    "long_name": "Maximum Attack E: Crater",
+    "episode": 4,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Crater West",
+        "enemies": {
+          "Boota": 24,
+          "Ze Boota": 23,
+          "Ba Boota": 25,
+          "Satellite Lizard": 36,
+          "Yowie": 23,
+          "Sand Rappy": 18,
+          "Zu": 8,
+          "Astark": 23,
+          "Dorphon": 14
+        }
+      }
+    ]
+  },
+  {
+    "quest_name": "MAED",
+    "long_name": "Maximum Attack E: Desert",
+    "episode": 4,
+    "is_event_quest": true,
+    "quest_completion_items": {
+      "Anniv. Silver Badge": 1
+    },
+    "areas": [
+      {
+        "name": "Desert 3",
+        "enemies": {
+          "Goran": 24,
+          "Pyro Goran": 26,
+          "Goran Detonator": 19,
+          "Satellite Lizard": 30,
+          "Yowie": 20,
+          "Sand Rappy": 13,
+          "Zu": 18,
+          "Merissa A": 22,
+          "Girtablulu": 6
+        }
+      }
+    ]
   }
 ]

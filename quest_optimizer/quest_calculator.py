@@ -693,8 +693,24 @@ class QuestCalculator:
     def _find_enemy_in_drop_table(self, enemy_name: str, episode: int) -> Optional[Dict]:
         """
         Find enemy in drop table, handling name variations.
-        Returns enemy data or None if not found.
+
+        Prefers the quest episode (omnispawn dual-episode enemies use that episode's
+        drops). Falls back to other episodes for enemies that only exist there
+        (e.g. Gi Gue / Goran in August Atrocity 1).
         """
+        found = self._find_enemy_in_episode_drop_table(enemy_name, episode)
+        if found is not None:
+            return found
+        for other_episode in (1, 2, 4):
+            if other_episode == episode:
+                continue
+            found = self._find_enemy_in_episode_drop_table(enemy_name, other_episode)
+            if found is not None:
+                return found
+        return None
+
+    def _find_enemy_in_episode_drop_table(self, enemy_name: str, episode: int) -> Optional[Dict]:
+        """Find enemy in a single episode's drop table, handling name variations."""
         episode_key = f"episode{episode}"
         if episode_key not in self.drop_data:
             return None

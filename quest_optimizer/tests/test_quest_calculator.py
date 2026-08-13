@@ -879,6 +879,111 @@ def test_cf4_technique_drops(quest_calculator: QuestCalculator):
     assert megid_box_found, "Megid Lv30 should be found in box breakdown from Desert 3"
 
 
+def test_anniversary_episode1_event_quests(quest_calculator: QuestCalculator):
+    """MAE Forest/Cave/Mine/Ruins and AA1 load as event quests with silver badge rewards."""
+    expected = {
+        "MAEF": ("Maximum Attack E: Forest", 1, "Forest 2"),
+        "MAEC": ("Maximum Attack E: Cave", 1, "Cave 2"),
+        "MAEM": ("Maximum Attack E: Mine", 1, "Mine 1"),
+        "MAER": ("Maximum Attack E: Ruins", 1, "Ruins 3"),
+        "AA1": ("August Atrocity 1", 2, "Mine 2"),
+    }
+    by_name = {q.get("quest_name"): q for q in quest_calculator.quest_data}
+
+    for short_name, (long_name, badges, area_name) in expected.items():
+        quest = by_name.get(short_name)
+        assert quest is not None, f"{short_name} not found"
+        assert quest["long_name"] == long_name
+        assert quest["episode"] == 1
+        assert quest["is_event_quest"] is True
+        assert quest["quest_completion_items"] == {"Anniv. Silver Badge": badges}
+        assert quest["areas"][0]["name"] == area_name
+
+        result = quest_calculator.calculate_quest_value(
+            quest,
+            "Skyly",
+            rbr_active=False,
+            weekly_boost=None,
+            event_type=None,
+        )
+        assert result["total_pd"] > 0
+        assert result["completion_items_pd"] == pytest.approx(0.1 * badges)
+        assert "Anniv. Silver Badge" in result["completion_items_breakdown"]
+
+
+def test_anniversary_episode2_event_quests(quest_calculator: QuestCalculator):
+    """MAE Temple/Spaceship/CCA/Seabed/Tower and AA2; dual-episode enemies use EP2 drops."""
+    expected = {
+        "AA2": ("August Atrocity 2", 2, "Jungle North"),
+        "MAET": ("Maximum Attack E: Temple", 1, "VR Temple Alpha"),
+        "MAESP": ("Maximum Attack E: Spaceship", 1, "VR Spaceship Alpha"),
+        "MAECCA": ("Maximum Attack E: CCA", 1, "Central Control Area"),
+        "MAESB": ("Maximum Attack E: Seabed", 1, "Seabed Upper"),
+        "MAETO": ("Maximum Attack E: Tower", 1, "Control Tower"),
+    }
+    by_name = {q.get("quest_name"): q for q in quest_calculator.quest_data}
+
+    for short_name, (long_name, badges, area_name) in expected.items():
+        quest = by_name.get(short_name)
+        assert quest is not None, f"{short_name} not found"
+        assert quest["long_name"] == long_name
+        assert quest["episode"] == 2
+        assert quest["is_event_quest"] is True
+        assert quest["quest_completion_items"] == {"Anniv. Silver Badge": badges}
+        assert quest["areas"][0]["name"] == area_name
+
+        result = quest_calculator.calculate_quest_value(
+            quest,
+            "Skyly",
+            rbr_active=False,
+            weekly_boost=None,
+            event_type=None,
+        )
+        assert result["total_pd"] > 0
+        assert result["completion_items_pd"] == pytest.approx(0.1 * badges)
+
+    aa1 = by_name["AA1"]
+    aa2 = by_name["AA2"]
+    maesp = by_name["MAESP"]
+    aa1_result = quest_calculator.calculate_quest_value(aa1, "Skyly", rbr_active=False, weekly_boost=None, event_type=None)
+    aa2_result = quest_calculator.calculate_quest_value(aa2, "Skyly", rbr_active=False, weekly_boost=None, event_type=None)
+    maesp_result = quest_calculator.calculate_quest_value(maesp, "Skyly", rbr_active=False, weekly_boost=None, event_type=None)
+
+    # Hildebear: EP1 Skyly = Flowen's Sword (3064); EP2 Skyly = Ancient Saber
+    assert aa2_result["enemy_breakdown"]["Hildelt"]["item"] == "Ancient Saber"
+    # Gillchic: EP1 Skyly = Justy-23ST; EP2 Skyly = Agito (1975)
+    assert aa1_result["enemy_breakdown"]["Gillchich"]["item"] == "Justy-23ST"
+    assert maesp_result["enemy_breakdown"]["Gillchich"]["item"] == "Agito (1975)"
+
+
+def test_anniversary_episode4_event_quests(quest_calculator: QuestCalculator):
+    """MAE Crater and Desert load as episode 4 event quests with silver badge rewards."""
+    expected = {
+        "MAECR": ("Maximum Attack E: Crater", 1, "Crater West"),
+        "MAED": ("Maximum Attack E: Desert", 1, "Desert 3"),
+    }
+    by_name = {q.get("quest_name"): q for q in quest_calculator.quest_data}
+
+    for short_name, (long_name, badges, area_name) in expected.items():
+        quest = by_name.get(short_name)
+        assert quest is not None, f"{short_name} not found"
+        assert quest["long_name"] == long_name
+        assert quest["episode"] == 4
+        assert quest["is_event_quest"] is True
+        assert quest["quest_completion_items"] == {"Anniv. Silver Badge": badges}
+        assert quest["areas"][0]["name"] == area_name
+
+        result = quest_calculator.calculate_quest_value(
+            quest,
+            "Skyly",
+            rbr_active=False,
+            weekly_boost=None,
+            event_type=None,
+        )
+        assert result["total_pd"] > 0
+        assert result["completion_items_pd"] == pytest.approx(0.1 * badges)
+
+
 def test_ao1_random_spawn_quest_value(quest_calculator: QuestCalculator):
     """Random spawn quests include expected random enemy counts in PD calculations."""
     ao1_quest = next(q for q in quest_calculator.quest_data if q.get("quest_name") == "AO1")
