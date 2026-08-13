@@ -118,6 +118,9 @@
                                 </label>
                                 <input type="text" id="quest-filter" name="quest-filter" placeholder="e.g., MU1 CF4"
                                     autocomplete="off" spellcheck="false">
+                                <button type="button" class="secondary-btn quest-preset-btn" id="use-anniversary-quests"
+                                    data-quest-filter="quest-filter"
+                                    data-exclude-event="exclude-event-quests">Use anniversary event quests</button>
                             </div>
                         </div>
 
@@ -229,6 +232,10 @@
                                 <label for="item-hunt-quest-filter">Quest Filter (space-separated short names):</label>
                                 <input type="text" id="item-hunt-quest-filter" name="item-hunt-quest-filter"
                                     placeholder="e.g., MU1 CF4" autocomplete="off" spellcheck="false">
+                                <button type="button" class="secondary-btn quest-preset-btn"
+                                    id="item-hunt-use-anniversary-quests"
+                                    data-quest-filter="item-hunt-quest-filter"
+                                    data-exclude-event="item-hunt-exclude-event-quests">Use anniversary event quests</button>
                             </div>
                         </div>
 
@@ -459,7 +466,7 @@
     <script src="js/cache.js?v=3"></script>
     <script src="js/rate-format.js"></script>
     <script src="js/weekly-boost.js"></script>
-    <script src="js/optimizer.js?v=3"></script>
+    <script src="js/optimizer.js?v=4"></script>
     <script src="js/beat-time-widget.js"></script>
     <script src="js/render-quest-results.js"></script>
     <script src="js/render-item-hunt-results.js"></script>

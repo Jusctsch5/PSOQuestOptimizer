@@ -543,6 +543,27 @@ function setupFormHandlers() {
         document.getElementById('results-container').classList.add('hidden');
         document.getElementById('error-display').classList.add('hidden');
     });
+
+    setupAnniversaryQuestPresetButtons();
+}
+
+const ANNIVERSARY_EVENT_QUESTS =
+    'AA1 AA2 MAEF MAEC MAEM MAER MAET MAESP MAECCA MAESB MAETO MAECR MAED';
+
+function setupAnniversaryQuestPresetButtons() {
+    document.querySelectorAll('.quest-preset-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const filter = document.getElementById(btn.dataset.questFilter);
+            if (filter) {
+                filter.value = ANNIVERSARY_EVENT_QUESTS;
+                filter.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            const exclude = document.getElementById(btn.dataset.excludeEvent);
+            if (exclude) {
+                exclude.checked = false;
+            }
+        });
+    });
 }
 
 /**
