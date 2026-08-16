@@ -1,0 +1,203 @@
+"""One-shot generator for drop_tables/armor_stat_ranges.json from Ephinea wiki ranges.
+
+Keys match price_guide/data/frames.json and barriers.json names.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+# Absolute DFP/EVP [min, max] from https://wiki.pioneer2.net/w/Frames
+FRAMES: dict[str, dict] = {
+    "Brightness Circle": {"dfp": [190, 240], "evp": [116, 136]},
+    "Chu Chu Fever": {"dfp": [5, 5], "evp": [5, 5]},
+    "Dress Plate": {"dfp": [30, 30], "evp": [30, 30]},
+    "Electro Frame": {"dfp": [196, 246], "evp": [120, 140]},
+    "Love Heart": {"dfp": [196, 246], "evp": [140, 160]},
+    "Stealth Suit": {"dfp": [1, 1], "evp": [300, 325]},
+    "Wedding Dress": {"dfp": [30, 30], "evp": [30, 30]},
+    "Sense Plate": {"dfp": [25, 32], "evp": [30, 38]},
+    "Blue Odoshi Violet Nimaidou": {"dfp": [156, 166], "evp": [181, 191]},
+    "Samurai Armor": {"dfp": [121, 121], "evp": [102, 102]},
+    "Thirteen": {"dfp": [113, 121], "evp": [136, 144]},
+    "Ignition Cloak": {"dfp": [168, 176], "evp": [143, 151]},
+    "Mother Garb": {"dfp": [165, 180], "evp": [85, 90]},
+    "Mother Garb+": {"dfp": [175, 190], "evp": [95, 100]},
+    "Select Cloak": {"dfp": [172, 180], "evp": [146, 154]},
+    "Black Odoshi Domaru": {"dfp": [124, 134], "evp": [82, 92]},
+    "Black Odoshi Red Nimaidou": {"dfp": [128, 138], "evp": [143, 153]},
+    "Crimson Coat": {"dfp": [158, 170], "evp": [136, 148]},
+    "D-Parts ver1.01": {"dfp": [115, 125], "evp": [85, 92]},
+    "D-Parts ver2.10": {"dfp": [125, 135], "evp": [90, 98]},
+    "Morning Prayer": {"dfp": [120, 130], "evp": [140, 160]},
+    "Red Coat": {"dfp": [152, 162], "evp": [131, 141]},
+    "Red Odoshi Domaru": {"dfp": [112, 122], "evp": [108, 118]},
+    "Sweetheart": {"dfp": [176, 226], "evp": [164, 184]},
+    "Congeal Cloak": {"dfp": [168, 176], "evp": [143, 151]},
+    "Cursed Cloak": {"dfp": [172, 180], "evp": [146, 154]},
+    "Dirty Lifejacket": {"dfp": [5, 5], "evp": [5, 5]},
+    "Tempest Cloak": {"dfp": [168, 176], "evp": [143, 151]},
+    "Stink Frame": {"dfp": [40, 125], "evp": [15, 100]},
+    "Aura Field": {"dfp": [235, 285], "evp": [134, 154]},
+    "Spirit Garment": {"dfp": [100, 107], "evp": [92, 97]},
+    "Custom Frame ver.OO": {"dfp": [80, 90], "evp": [85, 95]},
+    "Sacred Cloth": {"dfp": [100, 150], "evp": [50, 70]},
+    "Luminous Field": {"dfp": [206, 256], "evp": [124, 144]},
+    "Lieutenant Gear": {"dfp": [168, 186], "evp": [112, 128]},
+    "Lieutenant Mantle": {"dfp": [195, 216], "evp": [126, 144]},
+    "DF Field": {"dfp": [203, 253], "evp": [116, 136]},
+    "Guard Wave": {"dfp": [173, 223], "evp": [110, 130]},
+    "Flame Garment": {"dfp": [180, 230], "evp": [114, 134]},
+    "Star Cuirass": {"dfp": [250, 270], "evp": [0, 0]},
+    "Black Hound Cuirass": {"dfp": [300, 330], "evp": [-200, -200]},
+    "Smoking Plate": {"dfp": [223, 273], "evp": [122, 142]},
+    "Flowen's Frame": {"dfp": [82, 92], "evp": [72, 82]},
+    "Celestial Armor": {"dfp": [120, 130], "evp": [72, 82]},
+}
+
+# Absolute DFP/EVP [min, max] from https://wiki.pioneer2.net/w/Barriers
+BARRIERS: dict[str, dict] = {
+    "Bunny Ears": {"dfp": [2, 2], "evp": [25, 25]},
+    "Cat Ears": {"dfp": [2, 2], "evp": [25, 25]},
+    "DF Shield": {"dfp": [60, 145], "evp": [170, 195]},
+    "Epsiguard": {"dfp": [120, 195], "evp": [180, 255]},
+    'Gods Shield "Byakko"': {"dfp": [45, 45], "evp": [80, 80]},
+    'Gods Shield "Genbu"': {"dfp": [45, 45], "evp": [80, 80]},
+    'Gods Shield "Suzaku"': {"dfp": [50, 50], "evp": [100, 100]},
+    'Gods Shield "Seiryuu"': {
+        "dfp": [50, 50],
+        "evp": [100, 100],
+        "notes": "Price-guide spelling; wiki name is Gods Shield \"Seiryu\"",
+    },
+    'Gods Shield "Kouryu"': {"dfp": [95, 95], "evp": [180, 180]},
+    "Honeycomb Reflector": {"dfp": [110, 120], "evp": [140, 150]},
+    "Rupika": {"dfp": [120, 130], "evp": [180, 200]},
+    "Safety Heart": {"dfp": [106, 156], "evp": [248, 263]},
+    "Secure Feet": {"dfp": [83, 133], "evp": [230, 245]},
+    "Shield of Delsaber": {"dfp": [65, 72], "evp": [115, 122]},
+    "Standstill Shield": {"dfp": [163, 213], "evp": [175, 190]},
+    "Stink Shield": {"dfp": [50, 125], "evp": [55, 130]},
+    "Angel Ring": {"dfp": [40, 40], "evp": [60, 60]},
+    "Attribute Wall": {"dfp": [75, 85], "evp": [100, 110]},
+    "Black Gear": {"dfp": [23, 28], "evp": [80, 85]},
+    "Custom Barrier ver.OO": {"dfp": [65, 75], "evp": [65, 75]},
+    "DB's Shield": {"dfp": [67, 77], "evp": [67, 77]},
+    "De Rol Le Shield": {"dfp": [180, 255], "evp": [120, 195]},
+    "Flowen's Shield": {"dfp": [62, 72], "evp": [70, 80]},
+    "From the Depths": {"dfp": [160, 160], "evp": [240, 240]},
+    "Genpei": {"dfp": [158, 158], "evp": [237, 237]},
+    'Gods Shield "Seiryu"': {"dfp": [50, 50], "evp": [100, 100]},
+    "Gratia": {"dfp": [130, 150], "evp": [200, 215]},
+    "Hunter's Shell": {"dfp": [88, 138], "evp": [222, 237]},
+    "Invisible Guard": {"dfp": [15, 23], "evp": [70, 78]},
+    "Light Relief": {"dfp": [20, 27], "evp": [70, 77]},
+    "Proto Regene Gear": {"dfp": [40, 47], "evp": [85, 92]},
+    "Ragol Ring": {"dfp": [105, 105], "evp": [130, 130]},
+    "Regene Gear Adv.": {"dfp": [45, 52], "evp": [90, 97]},
+    "Regenerate Gear": {"dfp": [40, 47], "evp": [85, 92]},
+    "Regenerate Gear B.P.": {"dfp": [90, 97], "evp": [180, 187]},
+    "Rico's Earring": {"dfp": [96, 181], "evp": [237, 262]},
+    "Rico's Glasses": {"dfp": [1, 1], "evp": [1, 1]},
+    "S-Parts ver1.16": {"dfp": [20, 28], "evp": [60, 68]},
+    "Sacred Guard": {"dfp": [5, 13], "evp": [15, 23]},
+    "Secret Gear": {"dfp": [75, 85], "evp": [105, 115]},
+    "Striker Plus": {"dfp": [80, 90], "evp": [200, 205]},
+    "Three Seals": {"dfp": [33, 36], "evp": [33, 36]},
+    "Tripolic Reflector": {"dfp": [95, 145], "evp": [235, 250]},
+    "Tripolic Shield": {"dfp": [95, 145], "evp": [231, 246]},
+    "Union Guard": {
+        "dfp": [50, 50],
+        "evp": [0, 200],
+        "notes": "EVP gains +2 per team member; range is team-dependent",
+    },
+    "Combat Gear": {"dfp": [0, 0], "evp": [0, 0]},
+    "Force Wall": {"dfp": [65, 75], "evp": [140, 150]},
+    "Hunter Wall": {"dfp": [70, 80], "evp": [135, 145]},
+    "Kasami Bracer": {"dfp": [96, 146], "evp": [235, 250]},
+    "Ranger Wall": {"dfp": [70, 80], "evp": [145, 155]},
+    "S-Parts ver2.01": {"dfp": [25, 32], "evp": [65, 72]},
+    "Yata Mirror": {"dfp": [40, 60], "evp": [200, 225]},
+    "Foie Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Gifoie Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Rafoie Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Barta Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Rabarta Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Gibarta Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Zonde Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Gizonde Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Rizonde Merge": {
+        "dfp": [2, 7],
+        "evp": [25, 30],
+        "notes": "Price-guide spelling; wiki name is Razonde Merge",
+    },
+    "Resta Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Shifta Merge": {"dfp": [2, 7], "evp": [25, 30]},
+    "Assist Barrier": {"dfp": [2, 7], "evp": [25, 30]},
+    "Blue Barrier": {"dfp": [2, 7], "evp": [25, 30]},
+    "Recovery Barrier": {"dfp": [2, 7], "evp": [25, 30]},
+    "Red Barrier": {"dfp": [2, 7], "evp": [25, 30]},
+    "Yellow Barrier": {"dfp": [2, 7], "evp": [25, 30]},
+    "Anti-Dark Ring": {"dfp": [20, 20], "evp": [135, 135]},
+    "Anti-Light Ring": {"dfp": [90, 90], "evp": [80, 80]},
+    "Black Ring": {"dfp": [35, 40], "evp": [130, 135]},
+    "Blue Ring": {"dfp": [35, 40], "evp": [130, 135]},
+    "Green Ring": {"dfp": [35, 40], "evp": [130, 135]},
+    "Purple Ring": {"dfp": [35, 40], "evp": [130, 135]},
+    "Red Ring": {"dfp": [150, 235], "evp": [232, 257]},
+    "White Ring": {"dfp": [35, 40], "evp": [130, 135]},
+    "Yellow Ring": {"dfp": [35, 40], "evp": [130, 135]},
+}
+
+SKIP_FRAME_KEYS = {"Common frames", "Common armors"}
+
+
+def _validate_ranges(kind: str, data: dict[str, dict]) -> None:
+    for name, stats in data.items():
+        for axis in ("dfp", "evp"):
+            lo, hi = stats[axis]
+            if not isinstance(lo, int) or not isinstance(hi, int):
+                raise TypeError(f"{kind} {name} {axis} must be ints")
+            if lo > hi:
+                raise ValueError(f"{kind} {name} {axis}: {lo} > {hi}")
+
+
+def main() -> None:
+    pg_frames = set(json.loads((ROOT / "price_guide/data/frames.json").read_text(encoding="utf-8")))
+    pg_barriers = set(json.loads((ROOT / "price_guide/data/barriers.json").read_text(encoding="utf-8")))
+
+    missing_f = sorted((pg_frames - SKIP_FRAME_KEYS) - set(FRAMES))
+    extra_f = sorted(set(FRAMES) - pg_frames)
+    missing_b = sorted(pg_barriers - set(BARRIERS))
+    extra_b = sorted(set(BARRIERS) - pg_barriers)
+    if missing_f or extra_f or missing_b or extra_b:
+        raise SystemExit(
+            f"Name mismatch vs price guide:\n"
+            f"  missing frames: {missing_f}\n"
+            f"  extra frames: {extra_f}\n"
+            f"  missing barriers: {missing_b}\n"
+            f"  extra barriers: {extra_b}"
+        )
+
+    _validate_ranges("frames", FRAMES)
+    _validate_ranges("barriers", BARRIERS)
+
+    out = {
+        "_comment": (
+            "Absolute DFP/EVP ranges from Ephinea wiki. "
+            "Uniform over each integer inclusive. Fixed stats use equal min/max. "
+            "Not market prices — see price_guide/data."
+        ),
+        "_source": "https://wiki.pioneer2.net/w/Frames and https://wiki.pioneer2.net/w/Barriers",
+        "frames": FRAMES,
+        "barriers": BARRIERS,
+    }
+    path = ROOT / "drop_tables/armor_stat_ranges.json"
+    path.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"Wrote {path} ({len(FRAMES)} frames, {len(BARRIERS)} barriers)")
+
+
+if __name__ == "__main__":
+    main()

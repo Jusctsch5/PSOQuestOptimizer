@@ -5,8 +5,8 @@ Script to calculate average item value based on drop location and patterns.
 This script demonstrates the item value calculation and shows
 the probability distributions for different item types:
 - Weapons: based on drop location and Pattern 5
-- Frames (Armor): based on stat tier probabilities
-- Barriers (Shields): based on stat tier probabilities
+- Frames (Armor): uniform DFP over wiki range, mapped to price-guide tiers
+- Barriers (Shields): uniform EVP over wiki range, mapped to price-guide tiers
 - Other items: units, cells, tools, mags, disks (base price only)
 """
 

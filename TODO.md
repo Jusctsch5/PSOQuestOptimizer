@@ -28,7 +28,7 @@
 
 # CORE TODO
 - [ ] Central Tower actually shares drops with Seabed Lower not CCA, so fix that for many quests that take place in Tower.
-- [ ] Manage frame/shield values (what is "base" value for these items, how does it relate to Min stat?)
+- [X] Manage frame/shield values: wire ArmorValueCalculator to drop_tables/armor_stat_ranges.json (uniform DFP/EVP), map rolls to price-guide tiers / clarify base vs Min Stat
 - [ ] Add common weapon value calculation to weapon_value_calculator.py, price guide, and drop tables (note only certain enemies drop common weapons)
 - [ ] Consider reworking slime splitting to only split for drops that are worthwhile to split for
 - [ ] Investigate modeling**

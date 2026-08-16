@@ -1126,6 +1126,24 @@ body.data-peek-open .container {
     border-bottom: 1px solid #eee;
 }
 
+.armor-price-groups {
+    max-height: 360px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.armor-price-groups .results-table {
+    margin-bottom: 0;
+}
+
+.armor-price-groups thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 1;
+}
+
 /* Utility classes */
 .hidden {
     display: none !important;

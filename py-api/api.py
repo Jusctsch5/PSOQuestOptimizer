@@ -634,46 +634,8 @@ def calculate_item_value(
                         for detail in breakdown.get("attribute_details", [])
                     ],
                 }
-            elif item_type == "frame":
-                serializable_breakdown = {
-                    "frame_name": breakdown.get("frame_name"),
-                    "total_value": float(breakdown.get("total_value", 0.0)),
-                    "base_price": float(breakdown.get("base_price", 0.0)),
-                    "base_price_str": breakdown.get("base_price_str", "0"),
-                    "stat_probs": {k: float(v) for k, v in breakdown.get("stat_probs", {}).items()},
-                    "tier_details": [
-                        {
-                            "tier": detail.get("tier"),
-                            "stat_key": detail.get("stat_key"),
-                            "price_range": str(detail.get("price_range", "N/A")),
-                            "price": float(detail.get("price", 0.0)),
-                            "probability": float(detail.get("probability", 0.0)),
-                            "contribution": float(detail.get("contribution", 0.0)),
-                        }
-                        for detail in breakdown.get("tier_details", [])
-                    ],
-                    "stat_tier_contributions": {k: float(v) for k, v in breakdown.get("stat_tier_contributions", {}).items()},
-                }
-            elif item_type == "barrier":
-                serializable_breakdown = {
-                    "barrier_name": breakdown.get("barrier_name"),
-                    "total_value": float(breakdown.get("total_value", 0.0)),
-                    "base_price": float(breakdown.get("base_price", 0.0)),
-                    "base_price_str": breakdown.get("base_price_str", "0"),
-                    "stat_probs": {k: float(v) for k, v in breakdown.get("stat_probs", {}).items()},
-                    "tier_details": [
-                        {
-                            "tier": detail.get("tier"),
-                            "stat_key": detail.get("stat_key"),
-                            "price_range": str(detail.get("price_range", "N/A")),
-                            "price": float(detail.get("price", 0.0)),
-                            "probability": float(detail.get("probability", 0.0)),
-                            "contribution": float(detail.get("contribution", 0.0)),
-                        }
-                        for detail in breakdown.get("tier_details", [])
-                    ],
-                    "stat_tier_contributions": {k: float(v) for k, v in breakdown.get("stat_tier_contributions", {}).items()},
-                }
+            elif item_type in ("frame", "barrier"):
+                serializable_breakdown = _serialize_armor_breakdown(breakdown)
 
         return {
             "item_type": item_type,
@@ -690,6 +652,53 @@ def calculate_item_value(
             "value": None,
             "breakdown": None,
         }
+
+
+def _serialize_armor_breakdown(breakdown: Dict[str, Any]) -> Dict[str, Any]:
+    """JSON-safe armor/frame/barrier breakdown for the Calculate Item Value UI."""
+    tiers = breakdown.get("tier_prices") or {}
+    stat_range = breakdown.get("stat_range") or {}
+    roll_details = breakdown.get("roll_details") or []
+    primary_range = list(breakdown.get("primary_range") or [])
+    outcome_count = int(breakdown.get("outcome_count") or len(roll_details))
+    per_outcome = float(roll_details[0]["probability"]) if roll_details else 0.0
+
+    return {
+        "item_name": breakdown.get("item_name"),
+        "kind": breakdown.get("kind"),
+        "primary_stat": breakdown.get("primary_stat"),
+        "total_value": float(breakdown.get("total_value", 0.0)),
+        "base_price": float(breakdown.get("base_price", 0.0)),
+        "base_price_str": str(breakdown.get("base_price_str", "0")),
+        "stat_range": {
+            "dfp": [int(v) for v in (stat_range.get("dfp") or [])],
+            "evp": [int(v) for v in (stat_range.get("evp") or [])],
+        },
+        "primary_range": [int(v) for v in primary_range],
+        "dfp_outcomes": int(breakdown.get("dfp_outcomes") or 0),
+        "evp_outcomes": int(breakdown.get("evp_outcomes") or 0),
+        "outcome_count": outcome_count,
+        "per_outcome_probability": per_outcome,
+        "both_max_probability": float(breakdown.get("both_max_probability", 0.0)),
+        "both_max_contribution": float(breakdown.get("both_max_contribution", 0.0)),
+        "tier_prices": {
+            "min": float(tiers.get("min", 0.0)),
+            "med": float(tiers.get("med", 0.0)),
+            "high": float(tiers.get("high", 0.0)),
+            "max": float(tiers.get("max", 0.0)),
+            "max_key": tiers.get("max_key") or "",
+        },
+        "price_groups": [
+            {
+                "price": float(group.get("price", 0.0)),
+                "values": [int(v) for v in group.get("values", [])],
+                "probability": float(group.get("probability", 0.0)),
+                "contribution": float(group.get("contribution", 0.0)),
+                "includes_both_max": bool(group.get("includes_both_max", False)),
+            }
+            for group in breakdown.get("price_groups", [])
+        ],
+    }
 
 
 def parse_character_data(

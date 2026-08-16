@@ -17,6 +17,7 @@ const PYTHON_MODULES = [
     // Core modules
     'drop_tables/__init__.py',
     'drop_tables/weapon_patterns.py',
+    'drop_tables/armor_stat_ranges.py',
     'price_guide/__init__.py',
     'price_guide/price_guide.py',
     'price_guide/weapon_value_calculator.py',
@@ -42,6 +43,12 @@ const PYTHON_MODULES = [
     'character_viewer/bank_parser.py',
     'character_viewer/decoder.py',
     'py-api/api.py',
+];
+
+// Non-Python files that must sit next to modules in the Pyodide FS
+// (e.g. armor_stat_ranges.py loads armor_stat_ranges.json via Path(__file__))
+const PYTHON_SIDECAR_DATA = [
+    'drop_tables/armor_stat_ranges.json',
 ];
 
 // Data files to load
@@ -89,8 +96,9 @@ async function initializePyodide() {
         await initCache();
         await checkVersion(basePath);
 
-        // Load Python modules
-        for (const modulePath of PYTHON_MODULES) {
+        // Load Python modules (+ sidecar data next to them in the virtual FS)
+        const filesToMirror = [...PYTHON_MODULES, ...PYTHON_SIDECAR_DATA];
+        for (const modulePath of filesToMirror) {
             try {
                 const fetchUrl = `${basePath}${modulePath}`;
                 const code = await fetchTextWithCache(fetchUrl);
@@ -112,7 +120,7 @@ os.makedirs("${dirPath}", exist_ok=True)
                 pyodide.FS.writeFile(pyodidePath, code);
             } catch (error) {
                 console.error(`Error loading ${modulePath}:`, error);
-                throw new Error(`Failed to load Python module ${modulePath}: ${error.message}`);
+                throw new Error(`Failed to load ${modulePath}: ${error.message}`);
             }
         }
 
