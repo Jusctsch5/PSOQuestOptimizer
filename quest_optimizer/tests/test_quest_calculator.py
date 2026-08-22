@@ -11,7 +11,13 @@ from pathlib import Path
 import pytest
 
 from price_guide.price_guide import PriceGuideExceptionItemNameNotFound
-from quest_optimizer.quest_calculator import EventType, QuestCalculator, WeeklyBoost
+from quest_optimizer.quest_calculator import (
+    EventType,
+    QuestCalculator,
+    WeeklyBoost,
+    anniversary_boost_multipliers,
+    anniversary_boost_summary,
+)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -36,6 +42,70 @@ QuestOptimizer = optimize_quests.QuestOptimizer
 def quest_calculator():
     """Create a QuestCalculator instance for testing"""
     return QuestCalculator(DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH)
+
+
+def test_anniversary_boost_multipliers_product():
+    """Anniversary stacks all weeklies + unlocked modeled milestones."""
+    dar, rdr, enemy, pd = anniversary_boost_multipliers()
+    assert dar == pytest.approx(1.25 * 1.10)
+    assert rdr == pytest.approx(1.25 * 1.10 * 1.15)
+    assert enemy == pytest.approx(1.50 * 1.10 * 1.15)
+    assert pd == pytest.approx(1.10 * 1.15 * 1.25)
+
+
+def test_anniversary_boost_summary_marks_unknown_and_unmodeled():
+    summary = anniversary_boost_summary()
+    assert summary[0]["points"] == 0
+    assert summary[0]["modeled"] is True
+    unknown = [row for row in summary if row["label"] == "? ? ?"]
+    assert len(unknown) == 3
+    assert all(row["modeled"] is False for row in unknown)
+    meseta = next(row for row in summary if "Meseta" in row["label"])
+    assert meseta["modeled"] is False
+    rdr = next(row for row in summary if row["points"] == 1000)
+    assert rdr["modeled"] is True
+
+
+def test_qcalc_anniversary_event_increases_value(quest_calculator: QuestCalculator):
+    """Anniversary (all weeklies + milestones) should beat no-boost and single DAR week."""
+    mu1_quest = next(q for q in quest_calculator.quest_data if q.get("quest_name") == "MU1")
+    section_id = "Skyly"
+
+    result_none = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
+    )
+    result_dar = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=WeeklyBoost.DAR, event_type=None
+    )
+    result_anniv = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=WeeklyBoost.DAR, event_type=EventType.Anniversary
+    )
+
+    assert result_anniv["total_pd"] > result_none["total_pd"]
+    assert result_anniv["total_pd"] > result_dar["total_pd"]
+    assert result_anniv["total_pd_drops"] > result_dar["total_pd_drops"]
+
+
+def test_qcalc_anniversary_applies_pd_rate_multiplier(quest_calculator: QuestCalculator):
+    """Photon Drop milestones should raise raw PD drops beyond DAR-only effects."""
+    mu1_quest = next(q for q in quest_calculator.quest_data if q.get("quest_name") == "MU1")
+    section_id = "Skyly"
+
+    # Use a dummy quest path via boost helpers: compare anniversary vs forcing only DAR weekly
+    # by checking pd_drop_breakdown rates when anniversary is on.
+    result_anniv = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=EventType.Anniversary
+    )
+    result_none = quest_calculator.calculate_quest_value(
+        mu1_quest, section_id, rbr_active=False, weekly_boost=None, event_type=None
+    )
+
+    # Grab any enemy PD breakdown entry
+    anniv_entry = next(iter(result_anniv["pd_drop_breakdown"].values()))
+    none_entry = next(iter(result_none["pd_drop_breakdown"].values()))
+    assert anniv_entry["pd_rate_multiplier"] == pytest.approx(1.10 * 1.15 * 1.25)
+    assert none_entry.get("pd_rate_multiplier", 1.0) == pytest.approx(1.0)
+    assert anniv_entry["pd_drop_rate"] > none_entry["pd_drop_rate"]
 
 
 def test_qcalc_christmas_event_boosts_dar_week(quest_calculator: QuestCalculator):

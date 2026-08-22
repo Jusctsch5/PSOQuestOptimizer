@@ -75,6 +75,82 @@ BASE_PD_DROP_RATE = 1.0 / 375.0  # 1/375 chance for PD drop
 BASE_RARE_ENEMY_RATE = 1.0 / 512  # 1/512 base chance for rare enemy spawn
 RARE_ENEMY_RATE_KONDRIEU = 1.0 / 10  # 1/10 chance for rare enemy spawn as Kondrieu
 
+# Anniversary milestone rewards:
+# When Anniversary is active, all four weekly boosts are also active (wiki), p
+# plus unlocked milestones below. Unknown ??? tiers are listed for UI but not applied.
+# Meseta / EXP / Badge milestones are not modeled in PD calculations.
+ANNIVERSARY_MILESTONE_BOOSTS = [
+    {"points": 1000, "label": "+10% Rare Drop Rate", "rdr": 0.10},
+    {"points": 2000, "label": "+25% Meseta Drops", "meseta": 0.25},
+    {"points": 3500, "label": "+10% Photon Drop Rate", "pd": 0.10},
+    {"points": 4500, "label": "+50% Experience Rate (EXP)", "xp": 0.50},
+    {"points": 5500, "label": "+10% Rare Enemy Rate", "rare_enemy": 0.10},
+    {"points": 7000, "label": "+25% Badge Drop Rate", "badge": 0.25},
+    {"points": 8000, "label": "+15% Rare Enemy Rate", "rare_enemy": 0.15},
+    {"points": 9500, "label": "+15% Rare Drop Rate", "rdr": 0.15},
+    {"points": 10000, "label": "+25% Badge Drop Rate", "badge": 0.25},
+    {"points": 11500, "label": "+15% Photon Drop Rate", "pd": 0.15},
+    {"points": 12500, "label": "+10% Drop Anything Rate (DAR)", "dar": 0.10},
+    {"points": 14000, "label": "+75% Meseta Drops", "meseta": 0.75},
+    {"points": 15000, "label": "+25% Photon Drop Rate", "pd": 0.25},
+    {"points": 16500, "label": "? ? ?", "unknown": True},
+    {"points": 18000, "label": "? ? ?", "unknown": True},
+    {"points": 20000, "label": "? ? ?", "unknown": True},
+]
+
+
+def anniversary_boost_multipliers() -> Tuple[float, float, float, float]:
+    """
+    Multipliers while Anniversary event is active.
+
+    Returns:
+        (dar_multiplier, rdr_multiplier, enemy_rate_multiplier, pd_rate_multiplier)
+        relative to a no-boost baseline of 1.0 each. Does not include RBR or daily luck.
+    """
+    dar = 1.0 + WEEKLY_DAR_BOOST
+    rdr = 1.0 + WEEKLY_RDR_BOOST
+    enemy = 1.0 + WEEKLY_ENEMY_RATE_BOOST
+    pd = 1.0
+
+    for boost in ANNIVERSARY_MILESTONE_BOOSTS:
+        if boost.get("unknown"):
+            continue
+        if "dar" in boost:
+            dar *= 1.0 + float(boost["dar"])
+        if "rdr" in boost:
+            rdr *= 1.0 + float(boost["rdr"])
+        if "rare_enemy" in boost:
+            enemy *= 1.0 + float(boost["rare_enemy"])
+        if "pd" in boost:
+            pd *= 1.0 + float(boost["pd"])
+
+    return dar, rdr, enemy, pd
+
+
+def anniversary_boost_summary() -> List[Dict[str, Any]]:
+    """UI/docs-friendly list of anniversary milestone rows and whether each is modeled."""
+    summary: List[Dict[str, Any]] = [
+        {
+            "points": 0,
+            "label": "All weekly boosts active (DAR +25%, RDR +25%, Rare Enemy +50%, XP +25%)",
+            "modeled": True,
+            "notes": "XP is not used in PD calculations",
+        }
+    ]
+    for boost in ANNIVERSARY_MILESTONE_BOOSTS:
+        modeled_keys = {"dar", "rdr", "rare_enemy", "pd"}
+        modeled = (not boost.get("unknown")) and any(k in boost for k in modeled_keys)
+        summary.append(
+            {
+                "points": boost["points"],
+                "label": boost["label"],
+                "modeled": modeled,
+                "notes": ("Unknown / not yet revealed" if boost.get("unknown") else (None if modeled else "Not modeled (Meseta / EXP / Badge do not affect PD EV)")),
+            }
+        )
+    return summary
+
+
 # Event drop rates
 CHRISTMAS_PRESENT_DROP_RATE = 1.0 / 2250.0  # 1/2250 chance for Christmas Present
 HALLOWEEN_COOKIE_DROP_RATE = 1.0 / 1500.0  # 1/1500 base chance for Halloween Cookie
@@ -850,7 +926,7 @@ class QuestCalculator:
         weekly_boost: Optional[WeeklyBoost],
         event_type: Optional[EventType],
         daily_luck: int = 0,
-    ) -> Tuple[float, float, float]:
+    ) -> Tuple[float, float, float, float]:
         """
         Calculate boost multipliers for a quest, dependent on a number of factors.
 
@@ -862,7 +938,7 @@ class QuestCalculator:
             daily_luck: Bonus to RDR as an integer percent added to the RDR multiplier, e.g. 5 means +5%. 0 = no change.
 
         Returns:
-            Tuple of (dar_multiplier, rdr_multiplier, enemy_rate_multiplier)
+            Tuple of (dar_multiplier, rdr_multiplier, enemy_rate_multiplier, pd_rate_multiplier)
         """
         # Check if this is a Hallow quest (uses Halloween boosts instead of weekly boosts)
         is_hallow = self._is_hallow_quest(quest_data)
@@ -874,31 +950,42 @@ class QuestCalculator:
             dar_multiplier = 1.0 + HOLLOWEEN_QUEST_DAR_BOOST
             rdr_multiplier = 1.0 + HOLLOWEEN_QUEST_RDR_BOOST
             enemy_rate_multiplier = 1.0 + HOLLOWEEN_QUEST_RARE_ENEMY_BOOST
+            pd_rate_multiplier = 1.0
         else:
-            # Regular quests use RBR and weekly boosts
+            # Regular quests use RBR and weekly/event boosts
             dar_multiplier = 1.0
             rdr_multiplier = 1.0
             enemy_rate_multiplier = 1.0
+            pd_rate_multiplier = 1.0
 
             # RBR boosts only apply if quest is in RBR rotation
             if in_rbr_rotation and rbr_active:
                 dar_multiplier *= 1.0 + RBR_DAR_BOOST
                 rdr_multiplier *= 1.0 + RBR_RDR_BOOST
 
-            # Apply weekly boosts (doubled if Christmas event is active)
-            christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
+            if event_type == EventType.Anniversary:
+                # Anniversary: all weekly boosts active + unlocked milestone boosts.
+                # Selected weekly_boost is ignored (already covered by "all weeklies").
+                a_dar, a_rdr, a_enemy, a_pd = anniversary_boost_multipliers()
+                dar_multiplier *= a_dar
+                rdr_multiplier *= a_rdr
+                enemy_rate_multiplier *= a_enemy
+                pd_rate_multiplier *= a_pd
+            else:
+                # Apply weekly boosts (doubled if Christmas event is active)
+                christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
 
-            if weekly_boost == WeeklyBoost.DAR:
-                dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
-            elif weekly_boost == WeeklyBoost.RDR:
-                rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
-            elif weekly_boost == WeeklyBoost.RareEnemy:
-                enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * christmas_multiplier)
+                if weekly_boost == WeeklyBoost.DAR:
+                    dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
+                elif weekly_boost == WeeklyBoost.RDR:
+                    rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
+                elif weekly_boost == WeeklyBoost.RareEnemy:
+                    enemy_rate_multiplier *= 1.0 + (WEEKLY_ENEMY_RATE_BOOST * christmas_multiplier)
 
         # Daily luck: user-configured bonus applied to rare drop rate multiplier
         rdr_multiplier *= 1.0 + daily_luck / 100.0
 
-        return dar_multiplier, rdr_multiplier, enemy_rate_multiplier
+        return dar_multiplier, rdr_multiplier, enemy_rate_multiplier, pd_rate_multiplier
 
     @staticmethod
     def _calculate_rare_enemy_rates(enemy_rate_multiplier: float) -> Tuple[float, float]:
@@ -962,6 +1049,7 @@ class QuestCalculator:
         rdr_multiplier: float,
         area_name: Optional[str] = None,
         event_type: Optional[EventType] = None,
+        pd_rate_multiplier: float = 1.0,
     ) -> Tuple[float, float, Dict, Dict]:
         """
         Process drops for a single enemy type.
@@ -1008,15 +1096,18 @@ class QuestCalculator:
                     "error": f"No item drops for Section ID {section_id}",
                 }
 
-        # Calculate PD drops for ALL enemies (DAR affects, but RDR is fixed at 1/375)
-        expected_pd_drops = count * adjusted_dar * BASE_PD_DROP_RATE
+        # Calculate PD drops for ALL enemies (DAR affects; PD rate can be event-boosted)
+        adjusted_pd_drop_rate = BASE_PD_DROP_RATE * pd_rate_multiplier
+        expected_pd_drops = count * adjusted_dar * adjusted_pd_drop_rate
         total_pd_drops += expected_pd_drops
 
         pd_drop_breakdown[enemy_name] = {
             "count": count,
             "dar": dar,
             "adjusted_dar": adjusted_dar,
-            "pd_drop_rate": BASE_PD_DROP_RATE,
+            "pd_drop_rate": adjusted_pd_drop_rate,
+            "base_pd_drop_rate": BASE_PD_DROP_RATE,
+            "pd_rate_multiplier": pd_rate_multiplier,
             "expected_pd_drops": expected_pd_drops,
         }
 
@@ -1226,6 +1317,7 @@ class QuestCalculator:
         area_name: Optional[str] = None,
         event_type: Optional[EventType] = None,
         merge_breakdowns: bool = False,
+        pd_rate_multiplier: float = 1.0,
     ) -> Tuple[float, float, float, Dict, Dict]:
         """
         Process a list of enemies and return PD values and breakdowns.
@@ -1242,6 +1334,7 @@ class QuestCalculator:
             area_name: Optional area name for technique drops
             event_type: Optional event type
             merge_breakdowns: If True, merge entries when they already exist (for multi-area processing)
+            pd_rate_multiplier: Photon Drop rate multiplier (Anniversary milestones, etc.)
 
         Returns:
             Tuple of (total_pd, total_pd_drops, enemy_breakdown, pd_drop_breakdown)
@@ -1281,12 +1374,28 @@ class QuestCalculator:
 
                 # Process normal version
                 normal_pd, normal_pd_drops, normal_breakdown, normal_pd_breakdown = self._process_enemy_drops(
-                    enemy_name, normal_count, episode, section_id, dar_multiplier, rdr_multiplier, area_name, event_type
+                    enemy_name,
+                    normal_count,
+                    episode,
+                    section_id,
+                    dar_multiplier,
+                    rdr_multiplier,
+                    area_name,
+                    event_type,
+                    pd_rate_multiplier,
                 )
 
                 # Process rare version
                 rare_pd, rare_pd_drops, rare_breakdown, rare_pd_breakdown = self._process_enemy_drops(
-                    rare_variant, rare_count, episode, section_id, dar_multiplier, rdr_multiplier, area_name, event_type
+                    rare_variant,
+                    rare_count,
+                    episode,
+                    section_id,
+                    dar_multiplier,
+                    rdr_multiplier,
+                    area_name,
+                    event_type,
+                    pd_rate_multiplier,
                 )
 
                 # Combine results
@@ -1347,7 +1456,15 @@ class QuestCalculator:
             else:
                 # Process normally (no rare variant)
                 normal_pd, normal_pd_drops, normal_breakdown, normal_pd_breakdown = self._process_enemy_drops(
-                    enemy_name, count, episode, section_id, dar_multiplier, rdr_multiplier, area_name, event_type
+                    enemy_name,
+                    count,
+                    episode,
+                    section_id,
+                    dar_multiplier,
+                    rdr_multiplier,
+                    area_name,
+                    event_type,
+                    pd_rate_multiplier,
                 )
 
                 total_pd += normal_pd
@@ -1420,7 +1537,7 @@ class QuestCalculator:
         total_enemies = 0.0
 
         # Calculate boost multipliers and rare enemy rates
-        dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(
+        dar_multiplier, rdr_multiplier, enemy_rate_multiplier, pd_rate_multiplier = self._calculate_boost_multipliers(
             quest_data, rbr_active, weekly_boost, event_type, daily_luck
         )
         rare_enemy_rate, kondrieu_rate = self._calculate_rare_enemy_rates(enemy_rate_multiplier)
@@ -1434,7 +1551,18 @@ class QuestCalculator:
         # If no areas defined, process enemies globally (backward compatibility)
         if not quest_areas:
             area_pd, area_pd_drops, area_total_enemies, area_enemy_breakdown, area_pd_breakdown = self._process_enemy_list(
-                enemies, episode, section_id, dar_multiplier, rdr_multiplier, rare_enemy_rate, kondrieu_rate, rare_mapping, None, event_type, False
+                enemies,
+                episode,
+                section_id,
+                dar_multiplier,
+                rdr_multiplier,
+                rare_enemy_rate,
+                kondrieu_rate,
+                rare_mapping,
+                None,
+                event_type,
+                False,
+                pd_rate_multiplier,
             )
             total_pd += area_pd
             total_pd_drops += area_pd_drops
@@ -1455,7 +1583,18 @@ class QuestCalculator:
                     area_enemies = resolve_area_enemies(area)
 
                     area_pd, area_pd_drops, area_total_enemies, area_enemy_breakdown, area_pd_breakdown = self._process_enemy_list(
-                        area_enemies, episode, section_id, dar_multiplier, rdr_multiplier, rare_enemy_rate, kondrieu_rate, rare_mapping, area_name, event_type, True
+                        area_enemies,
+                        episode,
+                        section_id,
+                        dar_multiplier,
+                        rdr_multiplier,
+                        rare_enemy_rate,
+                        kondrieu_rate,
+                        rare_mapping,
+                        area_name,
+                        event_type,
+                        True,
+                        pd_rate_multiplier,
                     )
                     total_pd += area_pd
                     total_pd_drops += area_pd_drops
@@ -1480,7 +1619,18 @@ class QuestCalculator:
                 area_name = quest_areas[0].get("name", "") if quest_areas else None
 
                 area_pd, area_pd_drops, area_total_enemies, area_enemy_breakdown, area_pd_breakdown = self._process_enemy_list(
-                    enemies, episode, section_id, dar_multiplier, rdr_multiplier, rare_enemy_rate, kondrieu_rate, rare_mapping, area_name, event_type, False
+                    enemies,
+                    episode,
+                    section_id,
+                    dar_multiplier,
+                    rdr_multiplier,
+                    rare_enemy_rate,
+                    kondrieu_rate,
+                    rare_mapping,
+                    area_name,
+                    event_type,
+                    False,
+                    pd_rate_multiplier,
                 )
                 total_pd += area_pd
                 total_pd_drops += area_pd_drops
@@ -1653,9 +1803,7 @@ class QuestCalculator:
         results = {}
         for section_id_enum in SectionIds:
             section_id: str = section_id_enum.value
-            results[section_id] = self.calculate_quest_value(
-                quest_data, section_id, rbr_active, weekly_boost, event_type, daily_luck
-            )
+            results[section_id] = self.calculate_quest_value(quest_data, section_id, rbr_active, weekly_boost, event_type, daily_luck)
 
         return results
 
@@ -1976,7 +2124,7 @@ class QuestCalculator:
                 quest_rbr_active = quest_name.lower() in rbr_list_lower
 
             # Calculate quest-specific boost multipliers and rare enemy rates
-            dar_multiplier, rdr_multiplier, enemy_rate_multiplier = self._calculate_boost_multipliers(
+            dar_multiplier, rdr_multiplier, enemy_rate_multiplier, _pd_rate_multiplier = self._calculate_boost_multipliers(
                 quest, quest_rbr_active, weekly_boost, event_type, daily_luck
             )
             rare_enemy_rate, kondrieu_rate = self._calculate_rare_enemy_rates(enemy_rate_multiplier)
@@ -2053,9 +2201,7 @@ class QuestCalculator:
                                 contributions.extend(box_contrib)
 
                         if total_prob > 0:
-                            bucket = section_totals.setdefault(
-                                section_id, {"total_prob": 0.0, "contributions": []}
-                            )
+                            bucket = section_totals.setdefault(section_id, {"total_prob": 0.0, "contributions": []})
                             bucket["total_prob"] += total_prob
                             bucket["contributions"].extend(contributions)
 
@@ -2194,10 +2340,14 @@ class QuestCalculator:
             if rbr_active or (rbr_list and len(rbr_list) > 0):
                 dar_multiplier *= 1.0 + RBR_DAR_BOOST
 
-            # Apply weekly boosts (doubled if Christmas event is active)
-            christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
-            if weekly_boost == WeeklyBoost.DAR:
-                dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
+            if event_type == EventType.Anniversary:
+                a_dar, _a_rdr, _a_enemy, _a_pd = anniversary_boost_multipliers()
+                dar_multiplier *= a_dar
+            else:
+                # Apply weekly boosts (doubled if Christmas event is active)
+                christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
+                if weekly_boost == WeeklyBoost.DAR:
+                    dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
 
             # Search through all quests to find enemies in eligible areas
             seen = set()
@@ -2267,13 +2417,18 @@ class QuestCalculator:
             dar_multiplier *= 1.0 + RBR_DAR_BOOST
             rdr_multiplier *= 1.0 + RBR_RDR_BOOST
 
-        # Apply weekly boosts (doubled if Christmas event is active)
-        christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
+        if event_type == EventType.Anniversary:
+            a_dar, a_rdr, _a_enemy, _a_pd = anniversary_boost_multipliers()
+            dar_multiplier *= a_dar
+            rdr_multiplier *= a_rdr
+        else:
+            # Apply weekly boosts (doubled if Christmas event is active)
+            christmas_multiplier = 2.0 if event_type == EventType.Christmas else 1.0
 
-        if weekly_boost == WeeklyBoost.DAR:
-            dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
-        elif weekly_boost == WeeklyBoost.RDR:
-            rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
+            if weekly_boost == WeeklyBoost.DAR:
+                dar_multiplier *= 1.0 + (WEEKLY_DAR_BOOST * christmas_multiplier)
+            elif weekly_boost == WeeklyBoost.RDR:
+                rdr_multiplier *= 1.0 + (WEEKLY_RDR_BOOST * christmas_multiplier)
 
         rdr_multiplier *= 1.0 + daily_luck / 100.0
 

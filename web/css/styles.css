@@ -1144,6 +1144,47 @@ body.data-peek-open .container {
     z-index: 1;
 }
 
+.event-boost-details {
+    margin-top: 8px;
+    font-size: 0.85em;
+    color: #444;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 6px 10px;
+    background: #fafafa;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.event-boost-details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+}
+
+.event-boost-details ul {
+    margin: 8px 0 4px;
+    padding-left: 1.2em;
+}
+
+.event-boost-details li {
+    margin: 2px 0;
+}
+
+.event-boost-details .boost-modeled {
+    color: #222;
+}
+
+.event-boost-details .boost-unmodeled {
+    color: #888;
+}
+
+.event-boost-details .boost-note {
+    margin: 6px 0 0;
+    color: #777;
+    font-size: 0.95em;
+}
+
 /* Utility classes */
 .hidden {
     display: none !important;

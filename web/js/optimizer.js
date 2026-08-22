@@ -553,10 +553,79 @@ function setupFormHandlers() {
     });
 
     setupAnniversaryQuestPresetButtons();
+    setupAnniversaryBoostDetails();
 }
 
 const ANNIVERSARY_EVENT_QUESTS =
     'AA1 AA2 MAEF MAEC MAEM MAER MAET MAESP MAECCA MAESB MAETO MAECR MAED';
+
+/** Mirrors quest_optimizer.quest_calculator ANNIVERSARY_MILESTONE_BOOSTS + all-weeklies note */
+const ANNIVERSARY_BOOST_ROWS = [
+    { points: 0, label: 'All weekly boosts active (DAR +25%, RDR +25%, Rare Enemy +50%, XP +25%)', modeled: true, notes: 'XP is not used in PD calculations' },
+    { points: 1000, label: '+10% Rare Drop Rate', modeled: true },
+    { points: 2000, label: '+25% Meseta Drops', modeled: false, notes: 'Not modeled' },
+    { points: 3500, label: '+10% Photon Drop Rate', modeled: true },
+    { points: 4500, label: '+50% Experience Rate (EXP)', modeled: false, notes: 'Not modeled' },
+    { points: 5500, label: '+10% Rare Enemy Rate', modeled: true },
+    { points: 7000, label: '+25% Badge Drop Rate', modeled: false, notes: 'Not modeled' },
+    { points: 8000, label: '+15% Rare Enemy Rate', modeled: true },
+    { points: 9500, label: '+15% Rare Drop Rate', modeled: true },
+    { points: 10000, label: '+25% Badge Drop Rate', modeled: false, notes: 'Not modeled' },
+    { points: 11500, label: '+15% Photon Drop Rate', modeled: true },
+    { points: 12500, label: '+10% Drop Anything Rate (DAR)', modeled: true },
+    { points: 14000, label: '+75% Meseta Drops', modeled: false, notes: 'Not modeled' },
+    { points: 15000, label: '+25% Photon Drop Rate', modeled: true },
+    { points: 16500, label: '? ? ?', modeled: false, notes: 'Unknown / not yet revealed' },
+    { points: 18000, label: '? ? ?', modeled: false, notes: 'Unknown / not yet revealed' },
+    { points: 20000, label: '? ? ?', modeled: false, notes: 'Unknown / not yet revealed' },
+];
+
+function formatAnniversaryBoostListHtml() {
+    const esc = (text) => {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    };
+    let html = '<ul>';
+    for (const row of ANNIVERSARY_BOOST_ROWS) {
+        const cls = row.modeled ? 'boost-modeled' : 'boost-unmodeled';
+        const points = row.points > 0 ? `${row.points.toLocaleString()} pts — ` : '';
+        const note = row.notes ? ` <em>(${esc(row.notes)})</em>` : '';
+        html += `<li class="${cls}">${points}${esc(row.label)}${note}</li>`;
+    }
+    html += '</ul>';
+    html += '<p class="boost-note">Modeled boosts stack into DAR / RDR / rare enemy / Photon Drop rates. Badge, Meseta, EXP, and unknown tiers are ignored for PD EV.</p>';
+    return html;
+}
+
+function setupAnniversaryBoostDetails() {
+    const listHtml = formatAnniversaryBoostListHtml();
+    document.querySelectorAll('[data-anniversary-boost-list]').forEach((el) => {
+        el.innerHTML = listHtml;
+    });
+
+    const pairs = [
+        { selectId: 'event-active', detailsId: 'anniversary-boost-details' },
+        { selectId: 'item-hunt-event-active', detailsId: 'item-hunt-anniversary-boost-details' },
+    ];
+
+    for (const { selectId, detailsId } of pairs) {
+        const select = document.getElementById(selectId);
+        const details = document.getElementById(detailsId);
+        if (!select || !details) {
+            continue;
+        }
+        const sync = () => {
+            const isAnniversary = select.value === 'Anniversary';
+            details.classList.toggle('hidden', !isAnniversary);
+            if (!isAnniversary) {
+                details.open = false;
+            }
+        };
+        select.addEventListener('change', sync);
+        sync();
+    }
+}
 
 function setupAnniversaryQuestPresetButtons() {
     document.querySelectorAll('.quest-preset-btn').forEach((btn) => {
