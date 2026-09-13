@@ -76,8 +76,8 @@ BASE_RARE_ENEMY_RATE = 1.0 / 512  # 1/512 base chance for rare enemy spawn
 RARE_ENEMY_RATE_KONDRIEU = 1.0 / 10  # 1/10 chance for rare enemy spawn as Kondrieu
 
 # Anniversary milestone rewards:
-# When Anniversary is active, all four weekly boosts are also active (wiki), p
-# plus unlocked milestones below. Unknown ??? tiers are listed for UI but not applied.
+# When Anniversary is active, all four weekly boosts are also active (wiki),
+# plus unlocked milestones below. Unknown ??? at 20k is listed for UI but not applied.
 # Meseta / EXP / Badge milestones are not modeled in PD calculations.
 ANNIVERSARY_MILESTONE_BOOSTS = [
     {"points": 1000, "label": "+10% Rare Drop Rate", "rdr": 0.10},
@@ -93,8 +93,8 @@ ANNIVERSARY_MILESTONE_BOOSTS = [
     {"points": 12500, "label": "+10% Drop Anything Rate (DAR)", "dar": 0.10},
     {"points": 14000, "label": "+75% Meseta Drops", "meseta": 0.75},
     {"points": 15000, "label": "+25% Photon Drop Rate", "pd": 0.25},
-    {"points": 16500, "label": "? ? ?", "unknown": True},
-    {"points": 18000, "label": "? ? ?", "unknown": True},
+    {"points": 16500, "label": "+25% Rare Enemy Rate", "rare_enemy": 0.25},
+    {"points": 18000, "label": "+15% Drop Anything Rate (DAR)", "dar": 0.15},
     {"points": 20000, "label": "? ? ?", "unknown": True},
 ]
 

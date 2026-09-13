@@ -47,9 +47,9 @@ def quest_calculator():
 def test_anniversary_boost_multipliers_product():
     """Anniversary stacks all weeklies + unlocked modeled milestones."""
     dar, rdr, enemy, pd = anniversary_boost_multipliers()
-    assert dar == pytest.approx(1.25 * 1.10)
+    assert dar == pytest.approx(1.25 * 1.10 * 1.15)
     assert rdr == pytest.approx(1.25 * 1.10 * 1.15)
-    assert enemy == pytest.approx(1.50 * 1.10 * 1.15)
+    assert enemy == pytest.approx(1.50 * 1.10 * 1.15 * 1.25)
     assert pd == pytest.approx(1.10 * 1.15 * 1.25)
 
 
@@ -58,12 +58,15 @@ def test_anniversary_boost_summary_marks_unknown_and_unmodeled():
     assert summary[0]["points"] == 0
     assert summary[0]["modeled"] is True
     unknown = [row for row in summary if row["label"] == "? ? ?"]
-    assert len(unknown) == 3
-    assert all(row["modeled"] is False for row in unknown)
+    assert len(unknown) == 1
+    assert unknown[0]["points"] == 20000
+    assert unknown[0]["modeled"] is False
     meseta = next(row for row in summary if "Meseta" in row["label"])
     assert meseta["modeled"] is False
     rdr = next(row for row in summary if row["points"] == 1000)
     assert rdr["modeled"] is True
+    assert next(row for row in summary if row["points"] == 16500)["modeled"] is True
+    assert next(row for row in summary if row["points"] == 18000)["modeled"] is True
 
 
 def test_qcalc_anniversary_event_increases_value(quest_calculator: QuestCalculator):

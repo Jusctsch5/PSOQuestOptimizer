@@ -575,8 +575,8 @@ const ANNIVERSARY_BOOST_ROWS = [
     { points: 12500, label: '+10% Drop Anything Rate (DAR)', modeled: true },
     { points: 14000, label: '+75% Meseta Drops', modeled: false, notes: 'Not modeled' },
     { points: 15000, label: '+25% Photon Drop Rate', modeled: true },
-    { points: 16500, label: '? ? ?', modeled: false, notes: 'Unknown / not yet revealed' },
-    { points: 18000, label: '? ? ?', modeled: false, notes: 'Unknown / not yet revealed' },
+    { points: 16500, label: '+25% Rare Enemy Rate', modeled: true },
+    { points: 18000, label: '+15% Drop Anything Rate (DAR)', modeled: true },
     { points: 20000, label: '? ? ?', modeled: false, notes: 'Unknown / not yet revealed' },
 ];
 
