@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from quest_optimizer.quest_calculator import EventType, QuestCalculator, WeeklyBoost
+from quest_optimizer.quest_calculator import EventType, GameMode, QuestCalculator, WeeklyBoost, drop_table_filename_for_mode
 from quest_optimizer.quest_time_estimate import (
     estimate_quest_minutes_heuristic,
     ranking_efficiency_sort_key,
@@ -263,6 +263,8 @@ class QuestOptimizer:
 
         # Normalize rbr_list to lowercase for case-insensitive matching
         rbr_list_lower = [q.lower() for q in rbr_list] if rbr_list else None
+
+        quests_data = self.calculator.filter_quests_for_game_mode(quests_data)
 
         for quest_data in quests_data:
             # Apply episode filter
@@ -871,10 +873,18 @@ Examples:
     )
 
     parser.add_argument(
+        "--game-mode",
+        type=str,
+        choices=[m.value for m in GameMode],
+        default=GameMode.REGULAR.value,
+        help="Regular Ephinea vs Classic (Devaloka). Classic uses classic drop charts and no boosts.",
+    )
+
+    parser.add_argument(
         "--drop-table",
         type=str,
         default=None,
-        help="Path to drop_tables_ultimate.json (default: drop_tables/drop_tables_ultimate.json)",
+        help="Path to drop table JSON (default: ultimate or classic ultimate based on --game-mode)",
     )
 
     parser.add_argument("--price-guide", type=str, default=None, help="Path to price guide directory (default: ../price_guide/data)")
@@ -915,7 +925,9 @@ Examples:
     # Set up paths
     base_path = Path(__file__).parent
 
-    drop_table_path = Path(args.drop_table) if args.drop_table else base_path / "drop_tables" / "drop_tables_ultimate.json"
+    game_mode = GameMode(args.game_mode)
+    default_drop = base_path / "drop_tables" / drop_table_filename_for_mode(game_mode)
+    drop_table_path = Path(args.drop_table) if args.drop_table else default_drop
     price_guide_path = Path(args.price_guide) if args.price_guide else base_path / "price_guide" / "data"
     quests_file_path = Path(args.quests_data) if args.quests_data else base_path / "quests" / "quests.json"
     times_path = Path(args.quest_times) if args.quest_times else base_path / "quest_times.json"
@@ -934,7 +946,7 @@ Examples:
         print(f"Error: Quests file not found at {quests_file_path}")
         return 1
 
-    calculator = QuestCalculator(drop_table_path, price_guide_path, quests_file_path)
+    calculator = QuestCalculator(drop_table_path, price_guide_path, quests_file_path, game_mode=game_mode)
     optimizer = QuestOptimizer(calculator)
 
     # Filter to specific quest(s) if requested
@@ -945,6 +957,11 @@ Examples:
     else:
         quests_data = calculator.quest_data
         print(f"Loaded {len(quests_data)} quests")
+
+    if game_mode == GameMode.CLASSIC:
+        before = len(quests_data)
+        quests_data = calculator.filter_quests_for_game_mode(quests_data)
+        print(f"Classic mode: {len(quests_data)} quest(s) (excluded {before - len(quests_data)})")
 
     # Filter out event quests if requested
     if args.exclude_event_quests:
@@ -962,8 +979,13 @@ Examples:
     rbr_active = args.rbr_active
     rbr_list = args.rbr_list if args.rbr_list else None
 
-    # Parse event type
-    event_type = EventType(args.event_active) if args.event_active else None
+    # Parse event type (ignored in Classic mode)
+    event_type = None if game_mode == GameMode.CLASSIC else (EventType(args.event_active) if args.event_active else None)
+    weekly_boost = None if game_mode == GameMode.CLASSIC else weekly_boost
+    if game_mode == GameMode.CLASSIC:
+        args.daily_luck = 0
+        rbr_active = False
+        rbr_list = None
 
     # Rank quests
     print(f"Ranking quests by PD efficiency...")

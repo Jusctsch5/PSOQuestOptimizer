@@ -56,6 +56,8 @@ FRAMES: dict[str, dict] = {
     "Smoking Plate": {"dfp": [223, 273], "evp": [122, 142]},
     "Flowen's Frame": {"dfp": [82, 92], "evp": [72, 82]},
     "Celestial Armor": {"dfp": [120, 130], "evp": [72, 82]},
+    "Divinity Armor": {"dfp": [105, 109], "evp": [57, 59]},
+    "Ultimate Frame": {"dfp": [110, 114], "evp": [60, 62]},
 }
 
 # Absolute DFP/EVP [min, max] from https://wiki.pioneer2.net/w/Barriers

@@ -13,7 +13,31 @@ from optimize_quests import QuestOptimizer
 from quest_optimizer.quest_time_estimate import ranking_efficiency_sort_key
 from price_guide import BasePriceStrategy, PriceGuideFixed
 from price_guide.item_value_calculator import ItemValueCalculator
-from quest_optimizer.quest_calculator import EventType, QuestCalculator, WeeklyBoost
+from quest_optimizer.quest_calculator import (
+    EventType,
+    GameMode,
+    QuestCalculator,
+    WeeklyBoost,
+    drop_table_filename_for_mode,
+)
+
+
+def _parse_game_mode(params: Dict[str, Any]) -> GameMode:
+    raw = params.get("game_mode") or GameMode.REGULAR.value
+    try:
+        return GameMode(raw)
+    except ValueError:
+        return GameMode.REGULAR
+
+
+def _neutralize_classic_boost_params(params: Dict[str, Any], game_mode: GameMode) -> None:
+    if game_mode != GameMode.CLASSIC:
+        return
+    params["weekly_boost"] = None
+    params["event_active"] = None
+    params["daily_luck"] = 0
+    params["rbr_active"] = False
+    params["rbr_list"] = None
 
 
 def optimize_quests(
@@ -53,11 +77,14 @@ def optimize_quests(
             - error: Optional[str] error message
     """
 
+    game_mode = _parse_game_mode(params)
+    _neutralize_classic_boost_params(params, game_mode)
+
     # Create temporary directory structure in Pyodide filesystem
     base_path = Path("/tmp/pso_data")
     base_path.mkdir(parents=True, exist_ok=True)
 
-    drop_table_path = base_path / "drop_tables_ultimate.json"
+    drop_table_path = base_path / drop_table_filename_for_mode(game_mode)
     quests_path = base_path / "quests.json"
     price_guide_dir = base_path / "price_guide" / "data"
     price_guide_dir.mkdir(parents=True, exist_ok=True)
@@ -82,6 +109,7 @@ def optimize_quests(
             drop_table_path=drop_table_path,
             price_guide_path=price_guide_dir,
             quest_data_path=quests_path,
+            game_mode=game_mode,
         )
         optimizer = QuestOptimizer(calculator)
     except Exception as e:
@@ -140,6 +168,8 @@ def optimize_quests(
 
     if exclude_event_quests:
         quests_to_process = [q for q in quests_to_process if not calculator._is_event_quest(q)]
+
+    quests_to_process = calculator.filter_quests_for_game_mode(quests_to_process)
 
     # Rank quests
     try:
@@ -275,11 +305,14 @@ def optimize_item_hunting(
             - error: Optional[str] error message
     """
 
+    game_mode = _parse_game_mode(params)
+    _neutralize_classic_boost_params(params, game_mode)
+
     # Create temporary directory structure in Pyodide filesystem
     base_path = Path("/tmp/pso_data")
     base_path.mkdir(parents=True, exist_ok=True)
 
-    drop_table_path = base_path / "drop_tables_ultimate.json"
+    drop_table_path = base_path / drop_table_filename_for_mode(game_mode)
     quests_path = base_path / "quests.json"
     price_guide_dir = base_path / "price_guide" / "data"
     price_guide_dir.mkdir(parents=True, exist_ok=True)
@@ -304,6 +337,7 @@ def optimize_item_hunting(
             drop_table_path=drop_table_path,
             price_guide_path=price_guide_dir,
             quest_data_path=quests_path,
+            game_mode=game_mode,
         )
     except Exception as e:
         tb = traceback.format_exc()
@@ -376,6 +410,7 @@ def optimize_item_hunting(
     # Filter quests if needed
     if exclude_event_quests:
         calculator.quest_data = [q for q in calculator.quest_data if not calculator._is_event_quest(q)]
+    calculator.quest_data = calculator.filter_quests_for_game_mode(calculator.quest_data)
 
     try:
         # Identify item type

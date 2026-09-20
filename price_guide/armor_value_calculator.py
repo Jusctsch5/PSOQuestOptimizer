@@ -246,8 +246,21 @@ class ArmorValueCalculator:
 
     def get_frame_value_breakdown(self, frame_name: str) -> Dict[str, Any]:
         frame_key, frame_data = self._get_frame_data(frame_name)
-        stat_range = self._require_stat_range(frame_key, "frame")
         tier_prices = self._resolve_tier_prices(frame_data, ("Max Stat", "Max DFP"))
+        stat_range = self.armor_stat_ranges.get_frame(frame_key)
+        if stat_range is None:
+            # Price guide entry exists but no DFP/EVP range yet — use base/Min tier only
+            total = float(tier_prices.get("min", 0.0))
+            return {
+                "item_name": frame_key,
+                "kind": "frame",
+                "primary_stat": "dfp",
+                "stat_range": None,
+                "tier_prices": tier_prices,
+                "roll_details": [],
+                "total": total,
+                "item_data": frame_data,
+            }
         dfp_lo, dfp_hi = stat_range.dfp
         evp_lo, evp_hi = stat_range.evp
         total, roll_details = self._expected_value_for_joint_rolls(
@@ -267,8 +280,20 @@ class ArmorValueCalculator:
 
     def get_barrier_value_breakdown(self, barrier_name: str) -> Dict[str, Any]:
         barrier_key, barrier_data = self._get_barrier_data(barrier_name)
-        stat_range = self._require_stat_range(barrier_key, "barrier")
         tier_prices = self._resolve_tier_prices(barrier_data, ("Max EVP", "Max Stat"))
+        stat_range = self.armor_stat_ranges.get_barrier(barrier_key)
+        if stat_range is None:
+            total = float(tier_prices.get("min", 0.0))
+            return {
+                "item_name": barrier_key,
+                "kind": "barrier",
+                "primary_stat": "evp",
+                "stat_range": None,
+                "tier_prices": tier_prices,
+                "roll_details": [],
+                "total": total,
+                "item_data": barrier_data,
+            }
         dfp_lo, dfp_hi = stat_range.dfp
         evp_lo, evp_hi = stat_range.evp
         total, roll_details = self._expected_value_for_joint_rolls(
@@ -298,6 +323,20 @@ class ArmorValueCalculator:
         tier_prices = breakdown["tier_prices"]
         roll_details = breakdown["roll_details"]
         primary = breakdown["primary_stat"]
+        if not breakdown.get("stat_range"):
+            return {
+                "item_name": breakdown["item_name"],
+                "kind": breakdown["kind"],
+                "primary_stat": primary,
+                "stat_range": None,
+                "tier_prices": tier_prices,
+                "outcome_count": 0,
+                "both_max_probability": 0.0,
+                "both_max_contribution": 0.0,
+                "price_groups": [],
+                "total": breakdown["total"],
+                "notes": "No DFP/EVP range in armor_stat_ranges; using base/Min Stat price only",
+            }
         dfp_lo, dfp_hi = breakdown["stat_range"]["dfp"]
         evp_lo, evp_hi = breakdown["stat_range"]["evp"]
         n_dfp = dfp_hi - dfp_lo + 1

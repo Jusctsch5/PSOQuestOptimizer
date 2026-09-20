@@ -216,5 +216,11 @@
   },
   "Celestial Armor": {
     "base": "0"
+  },
+  "Divinity Armor": {
+    "base": "0"
+  },
+  "Ultimate Frame": {
+    "base": "0"
   }
 }

@@ -53,7 +53,8 @@ const PYTHON_SIDECAR_DATA = [
 
 // Data files to load
 const DATA_FILES = {
-    drop_table: 'drop_tables/drop_tables_ultimate.json',
+    drop_table_regular: 'drop_tables/drop_tables_ultimate.json',
+    drop_table_classic: 'drop_tables/drop_tables_classic_ultimate.json',
     quests: 'quests/quests.json',
     price_guide: [
         'price_guide/data/weapons.json',
@@ -152,11 +153,23 @@ sys.path.insert(0, '/py-api')
 /**
  * Load data files and return as objects
  */
-async function loadDataFiles() {
+function getSelectedGameMode() {
+    const el = document.getElementById('game-mode');
+    return el && el.value === 'classic' ? 'classic' : 'regular';
+}
+
+function dropTablePathForGameMode(gameMode) {
+    return gameMode === 'classic'
+        ? DATA_FILES.drop_table_classic
+        : DATA_FILES.drop_table_regular;
+}
+
+async function loadDataFiles(gameMode = getSelectedGameMode()) {
     const data = {
         drop_table: null,
         quests: null,
         price_guide: {},
+        game_mode: gameMode,
     };
 
     try {
@@ -167,7 +180,8 @@ async function loadDataFiles() {
 
         // Load drop table (using cache)
         try {
-            data.drop_table = await fetchJSONWithCache(`${basePath}${DATA_FILES.drop_table}`);
+            const dropPath = dropTablePathForGameMode(gameMode);
+            data.drop_table = await fetchJSONWithCache(`${basePath}${dropPath}`);
         } catch (error) {
             throw new Error(`Failed to load drop table: ${error.message}`);
         }
@@ -226,19 +240,21 @@ function getOptimizeQuestsParameters() {
     const dailyLuck = dlRaw === null || dlRaw === '' ? 0 : parseInt(dlRaw, 10);
     const daily_luck = Number.isFinite(dailyLuck) ? dailyLuck : 0;
 
+    const game_mode = getSelectedGameMode();
     const params = {
+        game_mode,
         section_id: formData.get('section-id') || 'All',
         quest_filter: quest_filter,
-        weekly_boost: formData.get('weekly-boost') || null,
-        event_active: formData.get('event-active') || null,
+        weekly_boost: game_mode === 'classic' ? null : (formData.get('weekly-boost') || null),
+        event_active: game_mode === 'classic' ? null : (formData.get('event-active') || null),
         notable_items: parseInt(formData.get('notable-items')) || 5,
         show_details: document.getElementById('show-details').checked,
         exclude_event_quests: document.getElementById('exclude-event-quests').checked,
         time_estimation: timeEstimationCheckbox ? timeEstimationCheckbox.checked : false,
         quest_times: {}, // Optional explicit times; heuristic is separate when time_estimation is on
-        rbr_active: rbrList !== null,
-        rbr_list: rbrList,
-        daily_luck,
+        rbr_active: game_mode === 'classic' ? false : rbrList !== null,
+        rbr_list: game_mode === 'classic' ? null : rbrList,
+        daily_luck: game_mode === 'classic' ? 0 : daily_luck,
         rate_format: getStoredRateFormat(),
     };
 
@@ -266,17 +282,19 @@ function getOptimizeItemHuntParameters() {
     const ihDailyLuck = ihDlRaw === null || ihDlRaw === '' ? 0 : parseInt(ihDlRaw, 10);
     const daily_luck = Number.isFinite(ihDailyLuck) ? ihDailyLuck : 0;
 
+    const game_mode = getSelectedGameMode();
     const params = {
+        game_mode,
         item_name: formData.get('item-name'),
         quest_filter: quest_filter,
-        rbr_active: false,  // Not used when rbr_list is provided
-        rbr_list: rbrList,
-        weekly_boost: formData.get('item-hunt-weekly-boost') || null,
-        event_active: formData.get('item-hunt-event-active') || null,
+        rbr_active: false,
+        rbr_list: game_mode === 'classic' ? null : rbrList,
+        weekly_boost: game_mode === 'classic' ? null : (formData.get('item-hunt-weekly-boost') || null),
+        event_active: game_mode === 'classic' ? null : (formData.get('item-hunt-event-active') || null),
         exclude_event_quests: document.getElementById('item-hunt-exclude-event-quests').checked,
         top_n: parseInt(formData.get('item-hunt-top-n')) || 10,
         show_details: document.getElementById('item-hunt-show-details').checked,
-        daily_luck,
+        daily_luck: game_mode === 'classic' ? 0 : daily_luck,
         rate_format: getStoredRateFormat(),
     };
 
@@ -443,20 +461,7 @@ function switchToTab(tabId) {
     }
 
     // Update submit button text
-    const submitBtn = document.getElementById('submit-btn');
-    const formActions = document.querySelector('.form-actions');
-    if (submitBtn) {
-        if (tabId === 'optimize-quests') {
-            submitBtn.textContent = 'Optimize Quests';
-        } else if (tabId === 'optimize-item-hunt') {
-            submitBtn.textContent = 'Find Best Quests';
-        } else if (tabId === 'calculate-item-value') {
-            submitBtn.textContent = 'Calculate Value';
-        }
-    }
-    if (formActions) {
-        formActions.classList.toggle('hidden', tabId === 'character-bank');
-    }
+    // Submit/Reset live inside each tab; no shared form-actions to retarget.
     if (
         tabId === 'character-bank' &&
         typeof window.restoreCharacterBankFromCache === 'function' &&
@@ -465,6 +470,9 @@ function switchToTab(tabId) {
         !characterBankParsed
     ) {
         window.restoreCharacterBankFromCache();
+    }
+    if (typeof window.syncGameModeSectionVisibility === 'function') {
+        window.syncGameModeSectionVisibility();
     }
 }
 
@@ -505,7 +513,6 @@ function setupTabHandlers() {
  */
 function setupFormHandlers() {
     const form = document.getElementById('optimizer-form');
-    const resetBtn = document.getElementById('reset-btn');
 
     // Handle form submission
     form.addEventListener('submit', async (e) => {
@@ -546,14 +553,50 @@ function setupFormHandlers() {
     });
 
     // Handle reset
-    resetBtn.addEventListener('click', () => {
-        form.reset();
-        document.getElementById('results-container').classList.add('hidden');
-        document.getElementById('error-display').classList.add('hidden');
+    document.querySelectorAll('.reset-btn').forEach((resetBtn) => {
+        resetBtn.addEventListener('click', () => {
+            form.reset();
+            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('error-display').classList.add('hidden');
+            if (typeof window.syncGameModeSectionVisibility === 'function') {
+                window.syncGameModeSectionVisibility();
+            }
+            const boostsSections = document.querySelectorAll('.boosts-section');
+            const isClassic = getSelectedGameMode() === 'classic';
+            boostsSections.forEach((el) => el.classList.toggle('hidden', isClassic));
+        });
     });
 
+    setupGameModeUI();
     setupAnniversaryQuestPresetButtons();
     setupAnniversaryBoostDetails();
+}
+
+function setupGameModeUI() {
+    const gameModeSelect = document.getElementById('game-mode');
+    const boostsSections = document.querySelectorAll('.boosts-section');
+    const gameModeSection = document.getElementById('game-mode-section');
+
+    const syncBoosts = () => {
+        const isClassic = getSelectedGameMode() === 'classic';
+        boostsSections.forEach((el) => {
+            el.classList.toggle('hidden', isClassic);
+        });
+    };
+
+    window.syncGameModeSectionVisibility = () => {
+        const tab = getActiveTab();
+        const show = tab === 'optimize-quests' || tab === 'optimize-item-hunt';
+        if (gameModeSection) {
+            gameModeSection.classList.toggle('hidden', !show);
+        }
+    };
+
+    if (gameModeSelect) {
+        gameModeSelect.addEventListener('change', syncBoosts);
+    }
+    syncBoosts();
+    window.syncGameModeSectionVisibility();
 }
 
 const ANNIVERSARY_EVENT_QUESTS =

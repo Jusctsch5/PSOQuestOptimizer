@@ -13,8 +13,10 @@ from typing import Optional
 
 from quest_optimizer.quest_calculator import (
     EventType,
+    GameMode,
     QuestCalculator,
     WeeklyBoost,
+    drop_table_filename_for_mode,
 )
 from quest_optimizer.rate_format import RateFormat, format_rate, format_rate_change, normalize_rate_format
 
@@ -368,16 +370,24 @@ def main():
         default=RateFormat.DECIMAL.value,
         help="Display drop rates as decimal/percent (default) or 1/N fractions",
     )
+    parser.add_argument(
+        "--game-mode",
+        type=str,
+        choices=[m.value for m in GameMode],
+        default=GameMode.REGULAR.value,
+        help="Regular Ephinea vs Classic (Devaloka). Classic uses classic drop charts and no boosts.",
+    )
     args = parser.parse_args()
-    weekly_boost = WeeklyBoost(args.weekly_boost) if args.weekly_boost else None
-    event_type = EventType(args.event_active) if args.event_active else None
+    game_mode = GameMode(args.game_mode)
+    weekly_boost = None if game_mode == GameMode.CLASSIC else (WeeklyBoost(args.weekly_boost) if args.weekly_boost else None)
+    event_type = None if game_mode == GameMode.CLASSIC else (EventType(args.event_active) if args.event_active else None)
     rate_format = normalize_rate_format(args.rate_format)
 
     item = args.item
 
     # Set up paths
     script_dir = Path(__file__).parent
-    drop_table_path = script_dir / "drop_tables" / "drop_tables_ultimate.json"
+    drop_table_path = script_dir / "drop_tables" / drop_table_filename_for_mode(game_mode)
     price_guide_path = script_dir / "price_guide" / "data"
     quest_data_path = script_dir / "quests" / "quests.json"
 
@@ -392,8 +402,12 @@ def main():
 
     # Initialize calculator
     print("Loading quest and drop table data...")
-    calculator = QuestCalculator(drop_table_path, price_guide_path, quest_data_path)
+    calculator = QuestCalculator(drop_table_path, price_guide_path, quest_data_path, game_mode=game_mode)
     print(f"Loaded {len(calculator.quest_data)} quests.")
+    if game_mode == GameMode.CLASSIC:
+        before = len(calculator.quest_data)
+        calculator.quest_data = calculator.filter_quests_for_game_mode(calculator.quest_data)
+        print(f"Classic mode: {len(calculator.quest_data)} quest(s) (excluded {before - len(calculator.quest_data)})")
 
     # Filter out event quests if requested
     if args.exclude_event_quests:
@@ -406,8 +420,9 @@ def main():
     print()
 
     # Determine RBR settings
-    rbr_active = args.rbr_active
-    rbr_list = args.rbr_list if args.rbr_list else None
+    rbr_active = False if game_mode == GameMode.CLASSIC else args.rbr_active
+    rbr_list = None if game_mode == GameMode.CLASSIC else (args.rbr_list if args.rbr_list else None)
+    daily_luck = 0 if game_mode == GameMode.CLASSIC else args.daily_luck
 
     # Find best quests
     print(f"Searching for '{item}' across all quests and Section IDs...")
@@ -440,7 +455,7 @@ def main():
         rbr_list=rbr_list,
         weekly_boost=weekly_boost,
         event_type=event_type,
-        daily_luck=args.daily_luck,
+        daily_luck=daily_luck,
     )
 
     # Display enemy drops based on item type
@@ -477,7 +492,7 @@ def main():
         weekly_boost=weekly_boost,
         quest_filter=args.quests,
         event_type=event_type,
-        daily_luck=args.daily_luck,
+        daily_luck=daily_luck,
     )
 
     # Display quest results

@@ -13,6 +13,7 @@ import pytest
 from price_guide.price_guide import PriceGuideExceptionItemNameNotFound
 from quest_optimizer.quest_calculator import (
     EventType,
+    GameMode,
     QuestCalculator,
     WeeklyBoost,
     anniversary_boost_multipliers,
@@ -25,6 +26,7 @@ logger.setLevel(logging.INFO)
 # Paths to test data
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 DROP_TABLE_PATH = PROJECT_ROOT / "drop_tables" / "drop_tables_ultimate.json"
+CLASSIC_DROP_TABLE_PATH = PROJECT_ROOT / "drop_tables" / "drop_tables_classic_ultimate.json"
 PRICE_GUIDE_PATH = PROJECT_ROOT / "price_guide" / "data"
 QUEST_DATA_PATH = PROJECT_ROOT / "quests" / "quests.json"
 
@@ -42,6 +44,12 @@ QuestOptimizer = optimize_quests.QuestOptimizer
 def quest_calculator():
     """Create a QuestCalculator instance for testing"""
     return QuestCalculator(DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH)
+
+
+@pytest.fixture
+def classic_quest_calculator():
+    """QuestCalculator using Classic Ultimate drop charts and Classic mode rules."""
+    return QuestCalculator(CLASSIC_DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH, game_mode=GameMode.CLASSIC)
 
 
 def test_anniversary_boost_multipliers_product():
@@ -1077,3 +1085,44 @@ def test_ao1_random_spawn_quest_value(quest_calculator: QuestCalculator):
     assert result["total_enemies"] == pytest.approx(fixed_total + random_total)
     assert result["total_pd"] > 0
     assert len(result["enemy_breakdown"]) > len(ao1_quest["areas"][0]["enemies"])
+
+
+def test_classic_boost_multipliers_neutral(classic_quest_calculator: QuestCalculator):
+    """Classic mode ignores RBR, weekly, event, and daily luck."""
+    mu1 = next(q for q in classic_quest_calculator.quest_data if q["quest_name"] == "MU1")
+    dar, rdr, enemy, pd = classic_quest_calculator._calculate_boost_multipliers(
+        mu1,
+        rbr_active=True,
+        weekly_boost=WeeklyBoost.DAR,
+        event_type=EventType.Anniversary,
+        daily_luck=5,
+    )
+    assert dar == pytest.approx(1.0)
+    assert rdr == pytest.approx(1.0)
+    assert enemy == pytest.approx(1.0)
+    assert pd == pytest.approx(1.0)
+
+
+def test_classic_quest_filter_excludes_ep4_and_non_classic(classic_quest_calculator: QuestCalculator):
+    filtered = classic_quest_calculator.filter_quests_for_game_mode(classic_quest_calculator.quest_data)
+    assert len(filtered) >= 1
+    assert all(q.get("episode") in (1, 2) for q in filtered)
+    assert all(classic_quest_calculator._is_classic_quest(q) for q in filtered)
+    assert all(not classic_quest_calculator._is_event_quest(q) for q in filtered)
+    names = {q["quest_name"] for q in filtered}
+    assert "MU1" in names
+    assert "EN1" not in names
+    assert "CF4" not in names
+    assert "SU10" not in names
+    assert "CF1" not in names
+    assert "HBF" not in names
+
+
+def test_classic_hildebear_pinkal_differs_from_ultimate():
+    classic = QuestCalculator(CLASSIC_DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH, game_mode=GameMode.CLASSIC)
+    regular = QuestCalculator(DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH)
+    classic_pinkal = classic.drop_data["episode1"]["enemies"]["Hildebear"]["section_ids"]["Pinkal"]
+    ultimate_pinkal = regular.drop_data["episode1"]["enemies"]["Hildebear"]["section_ids"]["Pinkal"]
+    assert classic_pinkal["item"] == "Elysion"
+    assert ultimate_pinkal["item"] == "Smartlink"
+    assert classic_pinkal["rate"] != ultimate_pinkal["rate"]

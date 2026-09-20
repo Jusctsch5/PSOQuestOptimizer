@@ -44,6 +44,23 @@ class EventType(Enum):
     Anniversary = "Anniversary"
 
 
+class GameMode(Enum):
+    """Regular Ephinea vs Classic (Devaloka) ship."""
+
+    REGULAR = "regular"
+    CLASSIC = "classic"
+
+
+REGULAR_DROP_TABLE_FILENAME = "drop_tables_ultimate.json"
+CLASSIC_DROP_TABLE_FILENAME = "drop_tables_classic_ultimate.json"
+
+
+def drop_table_filename_for_mode(game_mode: GameMode) -> str:
+    if game_mode == GameMode.CLASSIC:
+        return CLASSIC_DROP_TABLE_FILENAME
+    return REGULAR_DROP_TABLE_FILENAME
+
+
 class SectionIds(Enum):
     Viridia = "Viridia"
     Greenill = "Greenill"
@@ -218,15 +235,23 @@ class DropTableNotFoundError(Exception):
 class QuestCalculator:
     """Calculate quest values based on drop tables and price guide."""
 
-    def __init__(self, drop_table_path: Path, price_guide_path: Path, quest_data_path: Path):
+    def __init__(
+        self,
+        drop_table_path: Path,
+        price_guide_path: Path,
+        quest_data_path: Path,
+        game_mode: GameMode = GameMode.REGULAR,
+    ):
         """
         Initialize calculator with drop table and price guide paths.
 
         Args:
-            drop_table_path: Path to drop_tables_ultimate.json
+            drop_table_path: Path to drop_tables_ultimate.json or drop_tables_classic_ultimate.json
             price_guide_path: Path to price guide directory
             quest_data_path: Path to quests.json file
+            game_mode: Regular Ephinea vs Classic (Devaloka); Classic disables boosts/events
         """
+        self.game_mode = game_mode
         self.price_guide = PriceGuideFixed(str(price_guide_path))
         self.drop_data = self._load_drop_table(drop_table_path)
         self.quest_listing = QuestListing(quest_data_path)
@@ -288,6 +313,22 @@ class QuestCalculator:
         """
         # Default to False - quests must be explicitly marked as event quests
         return quest_data.get("is_event_quest", False)
+
+    def _is_classic_quest(self, quest_data: Dict) -> bool:
+        """True when quest is flagged for Classic (Devaloka) mode."""
+        return bool(quest_data.get("is_classic_quest"))
+
+    def filter_quests_for_game_mode(self, quests: List[Dict]) -> List[Dict]:
+        """Classic: Episode 1/2, is_classic_quest, and no event quests. Regular: unchanged."""
+        if self.game_mode != GameMode.CLASSIC:
+            return quests
+        return [
+            quest
+            for quest in quests
+            if quest.get("episode") in (1, 2)
+            and self._is_classic_quest(quest)
+            and not self._is_event_quest(quest)
+        ]
 
     def _get_weapon_expected_value(
         self,
@@ -940,6 +981,9 @@ class QuestCalculator:
         Returns:
             Tuple of (dar_multiplier, rdr_multiplier, enemy_rate_multiplier, pd_rate_multiplier)
         """
+        if self.game_mode == GameMode.CLASSIC:
+            return 1.0, 1.0, 1.0, 1.0
+
         # Check if this is a Hallow quest (uses Halloween boosts instead of weekly boosts)
         is_hallow = self._is_hallow_quest(quest_data)
         # Check if quest is in RBR rotation (RBR boosts only apply if in rotation)
@@ -1527,6 +1571,12 @@ class QuestCalculator:
                 "total_enemies": float
             }
         """
+        if self.game_mode == GameMode.CLASSIC:
+            rbr_active = False
+            weekly_boost = None
+            event_type = None
+            daily_luck = 0
+
         episode = quest_data.get("episode", 1)
         enemies = quest_data.get("enemies", {})
 
@@ -2107,6 +2157,8 @@ class QuestCalculator:
             quests_to_search = [quest for quest in self.quest_data if quest.get("quest_name", "").lower() in quest_filter_lower]
         else:
             quests_to_search = self.quest_data
+
+        quests_to_search = self.filter_quests_for_game_mode(quests_to_search)
 
         for quest in quests_to_search:
             quest_name = quest.get("quest_name", "Unknown")

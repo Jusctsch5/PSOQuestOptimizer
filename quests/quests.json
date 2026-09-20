@@ -20,7 +20,8 @@
       }
     ],
     "episode": 1,
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "MU2",
@@ -42,7 +43,8 @@
       }
     ],
     "episode": 1,
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "MU3",
@@ -67,7 +69,8 @@
       }
     ],
     "episode": 1,
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "MU4",
@@ -92,7 +95,8 @@
       }
     ],
     "episode": 1,
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "SU1",
@@ -117,7 +121,8 @@
       }
     ],
     "episode": 1,
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "SU2",
@@ -142,7 +147,8 @@
       }
     ],
     "episode": 1,
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "SU3",
@@ -165,7 +171,8 @@
       }
     ],
     "episode": 1,
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "SU4",
@@ -190,7 +197,8 @@
           "Dark Bringer": 11
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "EN1",
@@ -232,7 +240,8 @@
           "Hildebear": 8
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "EN2",
@@ -274,7 +283,8 @@
           "Nano Dragon": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "EN3",
@@ -317,7 +327,8 @@
           "Garanz": 7
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "EN4",
@@ -361,7 +372,8 @@
           "Chaos Bringer": 13
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "AO1",
@@ -412,7 +424,8 @@
           "Chaos Sorcerer": 6
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "AO2",
@@ -465,7 +478,8 @@
           "Garanz": 8
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "SR1",
@@ -505,7 +519,8 @@
           "Hildebear": 15
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "SR2",
@@ -544,7 +559,8 @@
           "Pan Arms": 23
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "SR3",
@@ -581,7 +597,8 @@
           "Garanz": 22
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "SR4",
@@ -624,7 +641,8 @@
           "Chaos Bringer": 15
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "SA1",
@@ -664,7 +682,8 @@
           "Chaos Sorcerer": 13
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "SA2",
@@ -704,7 +723,8 @@
           "Garanz": 34
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "LHS",
@@ -757,7 +777,8 @@
           "Dragon": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "LIS",
@@ -823,7 +844,8 @@
           "Dal Ra Lie": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "LSB",
@@ -869,7 +891,8 @@
           "Vol Opt": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "LHP",
@@ -935,7 +958,8 @@
           "Dark Falz": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "PW1",
@@ -978,7 +1002,8 @@
     ],
     "quest_completion_items": {
       "Lucky Coin": 4
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "PW2",
@@ -1019,7 +1044,8 @@
     ],
     "quest_completion_items": {
       "Lucky Coin": 4
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "PW3_BOX",
@@ -1037,7 +1063,8 @@
           "Morfos": 2
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "PW3",
@@ -1082,7 +1109,8 @@
     ],
     "quest_completion_items": {
       "Lucky Coin": 4
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "SU5",
@@ -1109,7 +1137,8 @@
           "Indi Belra": 19
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "SU6",
@@ -1134,7 +1163,8 @@
           "Baranz": 11
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "SU7",
@@ -1163,7 +1193,8 @@
           "Gi Gue": 3
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "SU8",
@@ -1188,7 +1219,8 @@
           "Delbiter": 9
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "PS1",
@@ -1230,7 +1262,8 @@
           "Dark Belra": 29
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "PS2",
@@ -1268,7 +1301,8 @@
           "Chaos Sorcerer": 61
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "PS3",
@@ -1330,7 +1364,8 @@
           "Gibbles": 2
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "PS4",
@@ -1358,7 +1393,8 @@
           "Gi Gue": 8
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "PS5",
@@ -1397,7 +1433,8 @@
           "Delbiter": 11
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "PS6",
@@ -1441,7 +1478,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "AO3",
@@ -1494,7 +1532,8 @@
           "Gi Gue": 4
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "AO4",
@@ -1547,7 +1586,8 @@
           "Delbiter": 7
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "AO5",
@@ -1592,7 +1632,8 @@
           "Epsilon": 3
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "LSR",
@@ -1643,7 +1684,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "LBA",
@@ -1681,7 +1723,8 @@
       "Baranz": 25,
       "Gran Sorcerer": 31,
       "Gol Dragon": 1
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "LFC",
@@ -1786,7 +1829,8 @@
           "Gal Gryphon": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "LDR",
@@ -1823,7 +1867,8 @@
       "Sinow Zele": 32,
       "Delbiter": 25,
       "Olga Flow": 1
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "LCV",
@@ -1869,7 +1914,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "TET",
@@ -1908,7 +1954,8 @@
       "Ill Gill": 7,
       "Del Lily": 4,
       "Epsilon": 1
-    }
+    },
+    "is_classic_quest": true
   },
   {
     "quest_name": "TWT",
@@ -1945,7 +1992,8 @@
       "Del Lily": 9,
       "Ill Gill": 8,
       "Epsilon": 1
-    }
+    },
+    "is_classic_quest": true
   },
   {
     "quest_name": "RT",
@@ -2031,7 +2079,8 @@
       "Del Lily": 3,
       "Ill Gill": 3,
       "Epsilon": 1
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "WOL1",
@@ -2056,7 +2105,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "WOL2",
@@ -2081,7 +2131,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "WOL3",
@@ -2104,7 +2155,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "WOL4",
@@ -2129,7 +2181,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "WOL5",
@@ -2154,7 +2207,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "NMU1",
@@ -2179,7 +2233,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "NMU2",
@@ -2204,7 +2259,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "NMU3",
@@ -2227,7 +2283,8 @@
           "Zu": 4
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "NMU4",
@@ -2251,7 +2308,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "NMU5",
@@ -2276,7 +2334,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "SU10",
@@ -2301,7 +2360,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "SU11",
@@ -2326,7 +2386,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "SU12",
@@ -2351,7 +2412,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "SU13",
@@ -2376,7 +2438,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "SU14",
@@ -2401,7 +2464,8 @@
         }
       }
     ],
-    "is_in_rbr_rotation": true
+    "is_in_rbr_rotation": true,
+    "is_classic_quest": false
   },
   {
     "quest_name": "TTF_short",
@@ -2418,7 +2482,8 @@
       "Dark Bringer": 1,
       "Arlan": 1,
       "Dark Falz": 1
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "TTF",
@@ -2512,7 +2577,8 @@
           "Dark Falz": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "POD",
@@ -2579,7 +2645,8 @@
           "Shambertin": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "VL1",
@@ -2600,7 +2667,8 @@
           "Monest": 8
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "VL2",
@@ -2620,7 +2688,8 @@
           "Chaos Sorcerer": 25
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "CF1",
@@ -2673,7 +2742,8 @@
           "Chaos Bringer": 27
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "CF2",
@@ -2731,7 +2801,8 @@
           "Delbiter": 30
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "CF4",
@@ -2787,7 +2858,8 @@
           "Girtablulu": 7
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "DD1",
@@ -2861,7 +2933,8 @@
           "Dark Gunner": 10
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "DD2",
@@ -2958,7 +3031,8 @@
           "Epsilon": 6
         }
       }
-    ]
+    ],
+    "is_classic_quest": true
   },
   {
     "quest_name": "MA4C",
@@ -2999,7 +3073,8 @@
           "Girtablulu": 6
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAE4",
@@ -3049,7 +3124,8 @@
           "Saint-Milion": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "TE_FOREST",
@@ -3073,7 +3149,8 @@
           "Dragon": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "TE",
@@ -3146,7 +3223,8 @@
           "Dark Falz": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "HBF",
@@ -3170,7 +3248,8 @@
       }
     ],
     "episode": 1,
-    "is_event_quest": true
+    "is_event_quest": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "HBC",
@@ -3193,7 +3272,8 @@
       }
     ],
     "episode": 1,
-    "is_event_quest": true
+    "is_event_quest": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "HBM",
@@ -3216,7 +3296,8 @@
       }
     ],
     "episode": 1,
-    "is_event_quest": true
+    "is_event_quest": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "HBR",
@@ -3240,7 +3321,8 @@
       }
     ],
     "episode": 1,
-    "is_event_quest": true
+    "is_event_quest": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "HRT",
@@ -3264,7 +3346,8 @@
         }
       }
     ],
-    "is_event_quest": true
+    "is_event_quest": true,
+    "is_classic_quest": true
   },
   {
     "quest_name": "HRS",
@@ -3279,7 +3362,8 @@
       "Delsaber": 24,
       "Pan Arms": 7,
       "Baranz": 18
-    }
+    },
+    "is_classic_quest": true
   },
   {
     "quest_name": "HBCCA",
@@ -3299,7 +3383,8 @@
       "Mericus": 2,
       "Gibbles": 8,
       "Gi Gue": 8
-    }
+    },
+    "is_classic_quest": true
   },
   {
     "quest_name": "HBS",
@@ -3315,7 +3400,8 @@
       "Sinow Zoa": 21,
       "Sinow Zele": 17,
       "Delbiter": 14
-    }
+    },
+    "is_classic_quest": true
   },
   {
     "quest_name": "HBTO",
@@ -3333,7 +3419,8 @@
       "Del Lily": 16,
       "Ill Gill": 25,
       "Epsilon": 7
-    }
+    },
+    "is_classic_quest": true
   },
   {
     "quest_name": "HBW",
@@ -3350,7 +3437,8 @@
       "Zu": 20,
       "Astark": 19,
       "Dorphon": 15
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "HBD",
@@ -3367,7 +3455,8 @@
       "Zu": 18,
       "Merissa A": 30,
       "Girtablulu": 6
-    }
+    },
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAEF",
@@ -3391,7 +3480,8 @@
           "Hildebear": 32
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAEC",
@@ -3414,7 +3504,8 @@
           "Pofuilly Slime": 4
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAEM",
@@ -3438,7 +3529,8 @@
           "Garanz": 19
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAER",
@@ -3464,7 +3556,8 @@
           "Chaos Bringer": 11
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "AA1",
@@ -3507,7 +3600,8 @@
           "Epsilon": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "AA2",
@@ -3564,7 +3658,8 @@
           "Girtablulu": 1
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAET",
@@ -3588,7 +3683,8 @@
           "Dark Belra": 17
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAESP",
@@ -3612,7 +3708,8 @@
           "Garanz": 21
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAECCA",
@@ -3640,7 +3737,8 @@
           "Gi Gue": 5
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAESB",
@@ -3665,7 +3763,8 @@
           "Delbiter": 18
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAETO",
@@ -3692,7 +3791,8 @@
           "Epsilon": 4
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAECR",
@@ -3717,7 +3817,8 @@
           "Dorphon": 14
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   },
   {
     "quest_name": "MAED",
@@ -3742,6 +3843,7 @@
           "Girtablulu": 6
         }
       }
-    ]
+    ],
+    "is_classic_quest": false
   }
 ]

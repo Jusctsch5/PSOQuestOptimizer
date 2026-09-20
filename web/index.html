@@ -89,6 +89,20 @@
 
             <div class="main-content">
                 <form id="optimizer-form">
+                    <div class="form-section game-mode-section" id="game-mode-section">
+                        <h2>Game Mode</h2>
+                        <div class="form-group">
+                            <label for="game-mode"
+                                title="Classic (Devaloka): GC/Xbox Ultimate drop charts, no boosts or Episode 4.">
+                                Game Mode:
+                            </label>
+                            <select id="game-mode" name="game-mode">
+                                <option value="regular" selected>Regular (Ephinea Ultimate)</option>
+                                <option value="classic">Classic (Devaloka)</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <!-- Optimize Quests Tab -->
                     <div class="tab-content" id="tab-optimize-quests">
                         <div class="form-section">
@@ -125,7 +139,7 @@
                             </div>
                         </div>
 
-                        <div class="form-section">
+                        <div class="form-section boosts-section" id="optimize-quests-boosts">
                             <h2>Boosts</h2>
 
                             <div class="form-group">
@@ -176,6 +190,11 @@
                                 <input type="text" id="rbr-list" name="rbr-list" placeholder="e.g., MU1 MU2 MU3"
                                     autocomplete="off" spellcheck="false">
                             </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">Optimize Quests</button>
+                            <button type="button" class="reset-btn">Reset</button>
                         </div>
 
                         <div class="form-section">
@@ -245,7 +264,7 @@
                             </div>
                         </div>
 
-                        <div class="form-section">
+                        <div class="form-section boosts-section" id="item-hunt-boosts">
                             <h2>Boosts</h2>
 
                             <div class="form-group">
@@ -292,6 +311,11 @@
                                 <input type="text" id="item-hunt-rbr-list" name="item-hunt-rbr-list"
                                     placeholder="e.g., MU1 MU2 MU3" autocomplete="off" spellcheck="false">
                             </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">Find Best Quests</button>
+                            <button type="button" class="reset-btn">Reset</button>
                         </div>
 
                         <div class="form-section">
@@ -358,6 +382,11 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">Calculate Value</button>
+                            <button type="button" class="reset-btn">Reset</button>
+                        </div>
                     </div>
 
                     <!-- Character Bank Tab -->
@@ -394,10 +423,6 @@
                         </div>
                     </div>
 
-                    <div class="form-actions">
-                        <button type="submit" id="submit-btn">Submit</button>
-                        <button type="button" id="reset-btn">Reset</button>
-                    </div>
                 </form>
 
                 <div id="results-container" class="hidden">

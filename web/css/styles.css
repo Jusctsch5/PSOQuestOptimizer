@@ -826,7 +826,8 @@ header .header-tagline {
 .form-actions {
     display: flex;
     gap: 10px;
-    margin-top: 30px;
+    margin-top: 16px;
+    margin-bottom: 8px;
 }
 
 button {
@@ -838,21 +839,21 @@ button {
     transition: background-color 0.3s;
 }
 
-#submit-btn {
+.form-actions .submit-btn {
     background: #667eea;
     color: white;
 }
 
-#submit-btn:hover {
+.form-actions .submit-btn:hover {
     background: #5568d3;
 }
 
-#reset-btn {
+.form-actions .reset-btn {
     background: #6c757d;
     color: white;
 }
 
-#reset-btn:hover {
+.form-actions .reset-btn:hover {
     background: #5a6268;
 }
 
