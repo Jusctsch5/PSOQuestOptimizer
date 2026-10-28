@@ -249,6 +249,98 @@ def test_random_enemy_weights_valid(quest_listing: QuestListing):
     assert not failures, "invalid random_enemies weights:\n" + "\n".join(failures)
 
 
+def _weighted(counts: tuple[float, ...], probs: tuple[float, ...]) -> float:
+    return sum(count * prob for count, prob in zip(counts, probs))
+
+
+def test_xrd1_route_expected_counts(quest_listing: QuestListing):
+    """Random Attack Xrd Stage (E1) counts are appearance-weighted.
+
+    One path per run. Cave base is always cleared. Green (50%) continues through
+    Ruins 3 base plus one ruins color, then Dark Falz (75%) or Spaceship and
+    De Rol Le (25%). Red (50%) continues through Yellow or Blue, then Mine 1
+    base plus one mine color. Mine Green splits Vol Opt / Palace then Dragon;
+    Mine Red is Vol Opt. Counts use the wiki appearance table, which matches
+    the published per-run enemy ranges.
+    """
+    quest = quest_listing.get_quest("XRD1")
+    assert quest is not None
+    assert quest["long_name"] == "Random Attack Xrd Stage (E1)"
+    assert quest["episode"] == 1
+    areas = {area["name"]: area for area in quest["areas"]}
+
+    cave_probs = (1.0, 0.5, 0.5, 0.25, 0.25)
+    half_probs = (0.5, 0.25, 0.25)
+    rare = 0.125
+
+    cave = areas["Cave 1"]["enemies"]
+    assert cave["Evil Shark"] == pytest.approx(_weighted((3, 11, 3, 3, 4), cave_probs))
+    assert cave["Pal Shark"] == pytest.approx(_weighted((8, 4, 4, 8, 6), cave_probs))
+    assert cave["Guil Shark"] == pytest.approx(_weighted((2, 4, 7, 10, 4), cave_probs))
+    assert cave["Poison Lily"] == pytest.approx(_weighted((8, 2, 16, 11, 8), cave_probs))
+    assert cave["Grass Assassin"] == pytest.approx(_weighted((6, 2, 9, 4, 2), cave_probs))
+    assert cave["Nano Dragon"] == pytest.approx(_weighted((7, 2, 3, 3, 2), cave_probs))
+    assert cave["Pan Arms"] == pytest.approx(_weighted((0, 2, 5, 4, 1), cave_probs))
+
+    mine = areas["Mine 1"]["enemies"]
+    assert mine["Gillchic"] == pytest.approx(_weighted((17, 7, 20), half_probs))
+    assert mine["Dubchic"] == pytest.approx(_weighted((14, 8, 17), half_probs))
+    assert mine["Dubwitch"] == pytest.approx(_weighted((2, 2, 0), half_probs))
+    assert mine["Canadine"] == pytest.approx(_weighted((12, 16, 54), half_probs))
+    assert mine["Canane"] == pytest.approx(_weighted((1, 2, 6), half_probs))
+    assert mine["Sinow Beat"] == pytest.approx(_weighted((6, 6, 3), half_probs))
+    assert mine["Sinow Gold"] == pytest.approx(_weighted((3, 22, 2), half_probs))
+    assert mine["Garanz"] == pytest.approx(_weighted((1, 16, 5), half_probs))
+
+    ruins = areas["Ruins 3"]["enemies"]
+    assert ruins["Dimenian"] == pytest.approx(_weighted((12, 20, 3), half_probs))
+    assert ruins["La Dimenian"] == pytest.approx(_weighted((9, 14, 2), half_probs))
+    assert ruins["So Dimenian"] == pytest.approx(_weighted((11, 6, 11), half_probs))
+    assert ruins["Claw"] == pytest.approx(_weighted((8, 0, 0), half_probs))
+    assert ruins["Bulclaw"] == pytest.approx(_weighted((9, 3, 2), half_probs))
+    assert ruins["Dark Belra"] == pytest.approx(_weighted((12, 7, 3), half_probs))
+    assert ruins["Dark Gunner"] == pytest.approx(_weighted((10, 5, 0), half_probs))
+    assert ruins["Chaos Sorcerer"] == pytest.approx(_weighted((8, 6, 0), half_probs))
+    assert ruins["Chaos Bringer"] == pytest.approx(_weighted((8, 1, 3), half_probs))
+
+    palace = areas["Palace"]["enemies"]
+    assert palace["Hildebear"] == pytest.approx(8 * rare)
+    assert palace["Grass Assassin"] == pytest.approx(6 * rare)
+    assert palace["Sinow Beat"] == pytest.approx(12 * rare)
+    assert palace["Sinow Gold"] == pytest.approx(16 * rare)
+    assert palace["Delsaber"] == pytest.approx(8 * rare)
+    assert palace["Chaos Bringer"] == pytest.approx(30 * rare)
+
+    spaceship = areas["Spaceship"]["enemies"]
+    assert spaceship["Hildebear"] == pytest.approx(9 * rare)
+    assert spaceship["Guil Shark"] == pytest.approx(6 * rare)
+    assert spaceship["Grass Assassin"] == pytest.approx(52 * rare)
+    assert spaceship["Sinow Beat"] == pytest.approx(9 * rare)
+    assert spaceship["Delsaber"] == pytest.approx(13 * rare)
+    assert spaceship["Chaos Bringer"] == pytest.approx(7 * rare)
+
+    assert areas["Under the Dome"]["enemies"]["Dragon"] == pytest.approx(rare)
+    assert areas["Underground Channel"]["enemies"]["De Rol Le"] == pytest.approx(rare)
+    assert areas["Monitor Room"]["enemies"]["Vol Opt"] == pytest.approx(0.375)
+    assert areas["????"]["enemies"]["Dark Falz"] == pytest.approx(0.375)
+
+    assert areas["Underground Channel"]["boxes"]["box"] == pytest.approx(4 * rare)
+    assert areas["Under the Dome"]["boxes"]["box_weapon"] == pytest.approx(8 * rare)
+    assert areas["Monitor Room"]["boxes"]["box_tool"] == pytest.approx(7 * 0.375)
+    assert areas["????"]["boxes"]["box_armor"] == pytest.approx(5 * 0.375)
+
+    material_chance = (rare + rare) / 6
+    for material in (
+        "Mind Material",
+        "Evade Material",
+        "HP Material",
+        "TP Material",
+        "Def Material",
+        "Luck Material",
+    ):
+        assert quest["quest_completion_items"][material] == pytest.approx(material_chance)
+
+
 def test_ao4_seabed_lower_random_spawns(quest_listing: QuestListing):
     """AO4 Seabed Lower uses a 92-denominator random pool (not percents)."""
     quest = quest_listing.get_quest("AO4")

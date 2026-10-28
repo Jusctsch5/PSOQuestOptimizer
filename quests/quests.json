@@ -3845,5 +3845,125 @@
       }
     ],
     "is_classic_quest": false
+  },
+  {
+    "quest_name": "XRD1",
+    "long_name": "Random Attack Xrd Stage (E1)",
+    "episode": 1,
+    "quest_completion_items": {
+      "Mind Material": 0.041666666666666664,
+      "Evade Material": 0.041666666666666664,
+      "HP Material": 0.041666666666666664,
+      "TP Material": 0.041666666666666664,
+      "Def Material": 0.041666666666666664,
+      "Luck Material": 0.041666666666666664
+    },
+    "areas": [
+      {
+        "name": "Cave 1",
+        "enemies": {
+          "Evil Shark": 11.75,
+          "Pal Shark": 15.5,
+          "Guil Shark": 11,
+          "Poison Lily": 21.75,
+          "Grass Assassin": 13,
+          "Nano Dragon": 10.75,
+          "Pan Arms": 4.75
+        }
+      },
+      {
+        "name": "Mine 1",
+        "enemies": {
+          "Gillchic": 15.25,
+          "Dubchic": 13.25,
+          "Dubwitch": 1.5,
+          "Canadine": 23.5,
+          "Canane": 2.5,
+          "Sinow Beat": 5.25,
+          "Sinow Gold": 7.5,
+          "Garanz": 5.75
+        }
+      },
+      {
+        "name": "Ruins 3",
+        "enemies": {
+          "Dimenian": 11.75,
+          "La Dimenian": 8.5,
+          "So Dimenian": 9.75,
+          "Claw": 4,
+          "Bulclaw": 5.75,
+          "Dark Belra": 8.5,
+          "Dark Gunner": 6.25,
+          "Chaos Sorcerer": 5.5,
+          "Chaos Bringer": 5
+        }
+      },
+      {
+        "name": "Palace",
+        "enemies": {
+          "Hildebear": 1,
+          "Grass Assassin": 0.75,
+          "Sinow Beat": 1.5,
+          "Sinow Gold": 2,
+          "Delsaber": 1,
+          "Chaos Bringer": 3.75
+        }
+      },
+      {
+        "name": "Spaceship",
+        "enemies": {
+          "Hildebear": 1.125,
+          "Guil Shark": 0.75,
+          "Grass Assassin": 6.5,
+          "Sinow Beat": 1.125,
+          "Delsaber": 1.625,
+          "Chaos Bringer": 0.875
+        }
+      },
+      {
+        "name": "Under the Dome",
+        "boxes": {
+          "box_armor": 0.5,
+          "box_weapon": 1,
+          "box_tool": 0.5
+        },
+        "enemies": {
+          "Dragon": 0.125
+        }
+      },
+      {
+        "name": "Underground Channel",
+        "boxes": {
+          "box": 0.5,
+          "box_armor": 0.25,
+          "box_weapon": 0.25
+        },
+        "enemies": {
+          "De Rol Le": 0.125
+        }
+      },
+      {
+        "name": "Monitor Room",
+        "boxes": {
+          "box_armor": 1.125,
+          "box_weapon": 1.125,
+          "box_tool": 2.625
+        },
+        "enemies": {
+          "Vol Opt": 0.375
+        }
+      },
+      {
+        "name": "????",
+        "boxes": {
+          "box_armor": 1.875,
+          "box_weapon": 4.5
+        },
+        "enemies": {
+          "Dark Falz": 0.375
+        }
+      }
+    ],
+    "is_classic_quest": false
   }
 ]

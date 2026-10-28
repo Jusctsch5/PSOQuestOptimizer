@@ -1118,6 +1118,20 @@ def test_classic_quest_filter_excludes_ep4_and_non_classic(classic_quest_calcula
     assert "HBF" not in names
 
 
+def test_xrd1_calculates(quest_calculator: QuestCalculator):
+    """Random Attack Xrd Stage enemy and box tables resolve in the drop data."""
+    quest = quest_calculator.quest_listing.get_quest("XRD1")
+    assert quest is not None
+    result = quest_calculator.calculate_quest_value(quest, "Skyly", rbr_active=False, weekly_boost=None, event_type=None)
+    assert result["total_pd"] > 0
+    counts = {name: data["count"] for name, data in result["enemy_breakdown"].items()}
+    assert counts["Sil Dragon"] == pytest.approx(0.125)
+    assert counts["Dal Ra Lie"] == pytest.approx(0.125)
+    assert counts["Vol Opt"] == pytest.approx(0.375)
+    assert counts["Dark Falz"] == pytest.approx(0.375)
+    assert result["completion_items_breakdown"]["HP Material"]["quantity"] == pytest.approx(0.25 / 6)
+
+
 def test_classic_hildebear_pinkal_differs_from_ultimate():
     classic = QuestCalculator(CLASSIC_DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH, game_mode=GameMode.CLASSIC)
     regular = QuestCalculator(DROP_TABLE_PATH, PRICE_GUIDE_PATH, QUEST_DATA_PATH)
